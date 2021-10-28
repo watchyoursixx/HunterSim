@@ -7,9 +7,12 @@ h1 {
 p {
   color: #f1c232;
 }
-body { margin: 60px auto; width: 70%; background-color: #2e2e33; }
+body {
+  margin: 60px auto; 
+  width: 70%; 
+  background-color: #2e2e33; 
+}
 
-a { text-decoration: none; color: #999; }
 a:hover { text-decoration: underline; }
 
 p, ul { font-size: 1.5em; line-height: 1.4em; color: #333; }
