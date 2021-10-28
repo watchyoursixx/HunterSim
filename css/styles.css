@@ -29,14 +29,6 @@ nav ul li, footer ul li { display: inline; margin-right: 20px; }
 footer { border-top: 1px solid #d5d5d5; font-size: .8em; }
 .sidebar{min-width:320px;min-height:600px;width:20%;height:100vh;background:#171717;border-right:2px solid #727272;box-sizing:border-box;position:fixed;left:0;top:0}
 .sidebar .bg{background-position:top;background-repeat:no-repeat;background-size:80% auto;position:absolute;left:0;top:380px;width:100%;height:100%;opacity:.1;pointer-events:none}
-.sidebar .bg[data-race=Human]{background-image:url(../img/human.png)}
-.sidebar .bg[data-race=Gnome]{background-image:url(../img/gnome.png)}
-.sidebar .bg[data-race=Dwarf]{background-image:url(../img/dwarf.png)}
-.sidebar .bg[data-race="Night Elf"]{background-image:url(../img/nightelf.png)}
-.sidebar .bg[data-race=Orc]{background-image:url(../img/orc.png)}
-.sidebar .bg[data-race=Undead]{background-image:url(../img/undead.png)}
-.sidebar .bg[data-race=Tauren]{background-image:url(../img/tauren.png)}
-.sidebar .bg[data-race=Troll]{background-image:url(../img/troll.png)}
 .sidebar .character{padding:20px 0}
 .sidebar .character>p{text-align:center;font-size:14px;font-weight:700;margin:4px 0;text-shadow:1px 1px #00008b}
 .sidebar ul{list-style:none;margin:20px auto;padding:0;width:80%}
@@ -45,35 +37,3 @@ footer { border-top: 1px solid #d5d5d5; font-size: .8em; }
 .sidebar li:last-child{border:0}
 .sidebar li span{float:right}
 .sidebar li small{font-size:10px;color:hsla(0,0%,100%,.5)}
-.sidebar figure{max-width:150px;margin:0 auto;display:none}
-.sidebar figure img{height:auto;width:100%}
-.sidebar .bottom{position:absolute;bottom:60px;left:50%;transform:translateX(-50%)}
-.sidebar #weights-div{position:relative;left:50%;margin-bottom:10px;display:none}
-.sidebar #weights-div>div{position:relative;height:27px}
-.sidebar #weights-div .spinner{left:0;width:52px;top:calc(50% - 8px)}
-.sidebar #weights-div .spinner>span{width:14px;height:14px}
-.sidebar #weights-div .loading .stat-dps,.sidebar #weights-div .loading .stat-error{display:none}
-.sidebar #weights-div .stat-name{position:absolute;right:100%;bottom:2px;margin-right:4px;white-space:nowrap;font-size:14px;font-weight:700}
-.sidebar #weights-div .stat-dps{font-size:20px;font-weight:700;color:#1eff00}
-.sidebar #weights-div .stat-dps:after{content:" DPS";font-size:12px}
-.sidebar #weights-div .stat-dps:empty:after{display:none}
-.sidebar #weights-div .stat-error{font-size:12px;font-weight:700;color:#1eff00}
-.sidebar #weights-div .stat-error:before{content:" \00b1"}
-.sidebar #weights-div .stat-error:empty:before{display:none}
-.sidebar #dps-box{text-align:center}
-.sidebar #dps{font-size:26px;font-weight:700;color:#1eff00}
-.sidebar #dps:after{content:" DPS";font-size:14px}
-.sidebar #dps:empty:after{display:none}
-.sidebar #dpserr{font-size:14px;font-weight:700;color:#1eff00}
-.sidebar #dpserr:before{content:" \00b1"}
-.sidebar #dpserr:empty:before{display:none}
-.sidebar #time{font-size:14px;font-weight:700;text-align:center;margin-bottom:20px;min-height:19px}
-.sidebar #time:after{content:" s"}
-.sidebar #time:empty:after{display:none}
-.sidebar #stats{text-align:center;font-size:12px;margin-bottom:14px;font-weight:700;min-height:17px}
-.sidebar .author{bottom:48px;font-size:10px;opacity:.5;font-style:italic}
-.sidebar .author,.sidebar .manual{position:absolute;left:0;width:100%;text-align:center}
-.sidebar .manual{bottom:20px;text-transform:uppercase;font-weight:700;font-size:12px}
-.sidebar .manual a{color:#fff}.sidebar #sets{text-align:right}
-.sidebar #sets a{color:#ddd!important;text-decoration:none}
-.settings{width:0;height:100%;min-height:1060px;background:#272727;transition:all .3s ease-in-out;box-sizing:border-box;overflow:hidden;position:absolute;left:20%;top:0;z-index:3}
