@@ -11,6 +11,7 @@ body {
   margin: 60px auto; 
   width: 70%; 
   background-color: #2e2e33; 
+  color: white;
 }
 
 a:hover { text-decoration: underline; }
