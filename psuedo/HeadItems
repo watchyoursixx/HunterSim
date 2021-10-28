@@ -1,0 +1,52 @@
+Item	Str	Agi	Stam	Int	mAP	rAP	Crit	Hit	mp5	Resil	ArP	Haste	Quality	Location	Valid	Socket 1	Socket 2	Socket 3	Str	Agi	Stam	Int	AP	rAP	Crit	Hit	mp5	Resil	ArP	SB Txt
+Coif of Alleria		43	45	25	126	126	34				182		2	Sunwell	TRUE	Meta	Red	No		4										+4 Agi
+Surestrike Goggles v3.0			47		124	124	51	26					2	Crafting	TRUE	Meta	Blue	No		4										+4 Agi
+		37	67	27	66	66	30	17		22	84		2	Arena Reward	FALSE	Meta	Red	No										4		+4 Resil
+Duplicitous Guise		43	57		126	126		30				34	2	Sunwell	TRUE	Meta	Red	No								4				+4 Hit
+Coif of the Jungle Stalker		36	40	35	72	72					140		2	Zul'Aman	TRUE	Red	Yellow	Blue					8	8						+8 AP
+Grimgrin Faceguard		40	48		82	82		24					2	Zul'Aman	TRUE	Red	Yellow	Blue					8	8						+8 AP
+		33	61	22	58	58	26	12		22	84		2	Arena Reward	FALSE	Meta	Red	No										4		+4 Resil
+Forest Prowler's Helm		42	29	28	100	100	20						2	Black Temple	TRUE	Meta	Red	No									2			+2 mp5
+Gronnstalker's Helmet		45	45	29	90	90			8				2	Mount Hyjal	TRUE	Meta	Red	No							4					+4 Crit
+Cursed Vision of Sargeras		39	46		108	108	38	21					2	Black Temple	TRUE	Meta	Yellow	No			6									+6 Stam
+Warpstalker Helm		24	36	32	48	48							2	Badge Reward	TRUE	Meta	Red	No												
+Rift Stalker Helm		40	36	25	82	82			10				2	SerpentShrine Cavern	TRUE	Meta	Yellow	No			6									+6 Stam
+Surestrike Goggles v2.0			28		96	96	38	13					2	Crafting	TRUE	Meta	Blue	No		4										+4 Agi
+		37	55	19	50	50	22			22			2	Arena Reward	FALSE	Meta	Red	No										4		+4 Resil
+Demon Stalker Greathelm		35	28	27	66	66							2	Karazhan	TRUE	Meta	Yellow	No		4										+4 Agi
+		34	49	18	36	36	20			20			2	Arena Reward	FALSE	Meta	Red	No										4		+4 Resil
+Mask of the Deceiver		32	36		64	64		16					2	Badge Reward	TRUE	Meta	Yellow	No												
+Helm of Desolation			21	25	66	66	14						1	Dungeon	TRUE	Meta	Yellow	No								4				+4 Hit
+Beast Lord Helm		25	21	22	50	50							1	Dungeon	TRUE	Meta	Red	No									2			+2 mp5
+Stalker's Chain Helm		20	30	14	28	28	14			15			1	Reputation Reward	TRUE	Meta	Red	No										4		+4 Resil
+Earthwarden's Coif		25	25	18	34	34			7				1	Quest Reward	TRUE	Meta	Red	No		4										+4 Agi
+		20	35	15	20	20	10			12			1	PvP Reward	FALSE	Meta	No	No		2										+2 Agi
+Stalker's Helmet of Second Sight		31	12	8	60	60			4				1	Quest Reward	TRUE	Blue	Blue	Blue					8	8						+8 AP
+Maulgar's Warhelm			43	31	86	86	42						2	Gruul's Lair	TRUE	No	No	No												
+Mok'Nathal Mask of Battle		32	21	21	30	30		19					1	Dungeon	TRUE	No	No	No												
+Mok'Nathal Beast-Mask		23	22	15	24	24							1	Dungeon	TRUE	Red	Red	Yellow									2			+2 mp5
+Storm Helm				30	44	44	22		9				2	Crafting	TRUE	Red	Blue	Yellow			6									+6 Stam
+Cenarion Thicket Helm			24		34	34		16					0	Quest Reward	TRUE	Yellow	Red	Blue			6									+6 Stam
+Dream-Wing Helm			16	25	66	66	20	13	6				1	Dungeon	TRUE	No	No	No												
+Steelspine Faceguard		36	34	34	62	62			9				2	Karazhan	TRUE	No	No	No												
+Foreman's Reinforced Helmet		30	48		62	62							2	Crafting	TRUE	No	No	No												
+Malefactor's Eyepatch		30	24	18	60	60			7				1	Quest Reward	TRUE	No	No	No												
+Netherdrake Helm			16	26	64	64	31		12				2	Crafting	TRUE	No	No	No												
+Gurn's Horned Helmet		20		15	72	72							0	Quest Reward	TRUE	No	No	No												
+Wild Horned Helm		20		14	70	70							0	Quest Reward	TRUE	No	No	No												
+Coif of the Wicked		26	39		52	52			10				1	Quest Reward	TRUE	No	No	No												
+Helm of Lupine Grace		23	34		46	46							0	Quest Reward	TRUE	No	No	No												
+Vindicator's Chain Helm		23	33		44	44							0	Quest Reward	TRUE	No	No	No												
+Cryptstalker Headpiece		21	30	12	40	40	28		3				2	Naxx	TRUE	No	No	No												
+Stylin' Crimson Hat				30	96	96							1	Crafting	TRUE	No	No	No												
+Crown of Cinders		21	30	20	40	40			8				0	Quest Reward	TRUE	No	No	No												
+Headdress of Inner Rage	32	28		20					8				1	World Drop	TRUE	No	No	No												
+Flesh Handler's Headpiece			26	24	52	52			8				0	Quest Reward	TRUE	No	No	No												
+Fel Iron Chain Coif			33	21	42	42							0	Crafting	TRUE	No	No	No												
+Malefic Mask of the Shadows			45		84	84	42	31					2	Gruul's Lair	TRUE	No	No	No												
+Wastewalker Helm			30		56	56	22	18					1	Dungeon	TRUE	Meta	Blue	No					8	8						+8 AP
+Cowl of Defiance		34	33		100	100		24					2	Karazhan	TRUE	No	No	No												
+Helm of Assassination			23		66	66	25						1	Dungeon	TRUE	Meta	Yellow	No												
+Cobrascale Hood		37	42		74	74		18					2	Crafting	TRUE	No	No	No												
+Custom		40	36	25	82	82			10					Custom	TRUE	Meta	Yellow	No			6									
+None															TRUE	No	No	No												
