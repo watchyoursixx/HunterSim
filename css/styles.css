@@ -1,6 +1,3 @@
-body {
-  background-color: #2e2e33;
-}
 h1 {
   color: white;
   background-color: #252529;
@@ -10,3 +7,19 @@ h1 {
 p {
   color: #f1c232;
 }
+body { margin: 60px auto; width: 70%; background-color: #2e2e33; }
+
+a { text-decoration: none; color: #999; }
+a:hover { text-decoration: underline; }
+
+p, ul { font-size: 1.5em; line-height: 1.4em; color: #333; }
+
+h1, h2, h3, h4 { font-family: 'Helvetica', 'Arial', 'Sans-Serif'; }
+h2 { font-size: 2.7em; }
+h3 { font-size: 2.3em; }
+h4 { font-size: 1.9em; }
+
+nav ul, footer ul { font-size: 1em; font-family: 'Helvetica', 'Arial', 'Sans-Serif'; padding: 0px; list-style: none; font-weight: bold; }
+nav ul li, footer ul li { display: inline; margin-right: 20px; }
+
+footer { border-top: 1px solid #d5d5d5; font-size: .8em; }
