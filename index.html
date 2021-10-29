@@ -49,6 +49,49 @@
 	  background: #555; 
 	}
     </style>
+	  <style>
+        table.scrolldown {
+            width: 100%;
+              
+            /* border-collapse: collapse; */
+            border-spacing: 0;
+            border: 2px solid black;
+        }
+          
+        /* To display the block as level element */
+        table.scrolldown tbody, table.scrolldown thead {
+            display: block;
+        } 
+          
+        thead tr th {
+            height: 40px; 
+            line-height: 40px;
+        }
+          
+        table.scrolldown tbody {
+              
+            /* Set the height of table body */
+            height: 50px; 
+              
+            /* Set vertical scroll */
+            overflow-y: auto;
+              
+            /* Hide the horizontal scroll */
+            overflow-x: hidden; 
+        }
+          
+        tbody { 
+            border-top: 2px solid black;
+        }
+          
+        tbody td, thead th {
+            width : 200px;
+            border-right: 2px solid black;
+        }
+        td {
+            text-align:center;
+        }
+    </style>
   </head>
   <body data-home-page="Main.html" data-home-page-title="Main" class="u-body"><header class="u-black u-clearfix u-header u-sticky u-sticky-ca90 u-header" id="sec-f767"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="#" class="u-image u-logo u-image-1" data-image-width="256" data-image-height="256">
@@ -219,6 +262,7 @@
         <div class="u-container-layout u-valign-top u-container-layout-1">
           <div class="u-expanded-width u-table u-table-responsive u-table-1">
             <table class="u-table-entity">
+	    <table class="scrolldown">
               <colgroup>
                 <col width="47.8%">
                 <col width="11.1%">
@@ -289,7 +333,7 @@
                   <td class="u-table-cell"></td>
                 </tr>
               </tbody>
-            </table>
+		    </table></table>
           </div>
         </div><button class="u-dialog-close-button u-icon u-text-grey-40 u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 16 16" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-73c0"></use></svg><svg class="u-svg-content" viewBox="0 0 16 16" x="0px" y="0px" id="svg-73c0"><rect x="7" y="0" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.3138 8.0002)" width="2" height="16"></rect><rect x="0" y="7" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.3138 8.0002)" width="16" height="2"></rect></svg></button>
       </div>
