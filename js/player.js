@@ -3,6 +3,9 @@ const CritRatingRatio = 22.08;
 const HasteRatingRatio = 15.77;
 const AgiToCrit = 40;
 const BaseCritChance = -1.53;
+const BaseHitChance = 92;
+const CritPenalty = -4.8;
+const HitPenalty = -1;
 
 // initialize base stats
 var BaseRAP = 0;
@@ -38,41 +41,11 @@ var rangedmgmod = 1;
 
 // temp settings to test with
 var CarefulAimTalent = (0 * 0.15);
-var selectedRace = 3; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp?
+var selectedRace = 0; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
 var equippedRangeType = 1; // 0 for gun, 1 for bow, 2 for crossbow
-// included here to test usage from same file
+// included here to test usage from same set of code -- will remove later
 var races = [
    {
-      name: 'Night Elf',
-      str: 61,
-      agi: 156,
-      sta: 107,
-      int: 77,
-      spi: 83,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
-   },{
-      name: 'Dwarf',
-      str: 66,
-      agi: 147,
-      sta: 111,
-      int: 76,
-      spi: 82,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
-   },{
-      name: 'Draenei',
-      str: 65,
-      agi: 148,
-      sta: 107,
-      int: 78,
-      spi: 85,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
-   },{
       name: 'Orc',
       str: 67,
       agi: 148,
@@ -82,36 +55,7 @@ var races = [
       mAP: 120,
       rAP: 130,
       critchance: 0,
-   },{
-      name: 'Troll',
-      str: 65,
-      agi: 153,
-      sta: 109,
-      int: 73,
-      spi: 84,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
-   },{
-      name: 'Tauren',
-      str: 69,
-      agi: 146,
-      sta: 110,
-      int: 72,
-      spi: 85,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
-   },{
-      name: 'Blood Elf',
-      str: 61,
-      agi: 153,
-      sta: 106,
-      int: 81,
-      spi: 82,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
+      hitchance: 0,
    },
 ];
 function checkWeaponType(){
@@ -127,21 +71,37 @@ function checkWeaponType(){
 var GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0, MP5:0, Resil:0, ArP:0, Haste:0}; 
 var BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:155, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0}; // added 155 for hawk for now
 var TalentStats = {CritChance:0, RangeCritChance:0, HitChance:0, agimod:1, mapmod:1, rapmod:1, intmod:1, dmgmod:1, rangedmgmod:1};
+var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, RangeCrit:0, Hit:0, RangeHit:0, MP5:0, Resil:0, ArP:0, Haste:0, dmgbonus:0, rangedmgbonus:0}; 
 
 // test function for initializing base stats
 function calcBaseStats() {
+   
   // Main Stats
-  Str = Math.floor((GearStats.Str + BuffStats.Str + races[selectedRace].str) * strmod);
-  Agi = Math.floor((GearStats.Agi + BuffStats.Agi + races[selectedRace].agi) * agimod);
-  Stam = Math.floor((GearStats.Stam + BuffStats.Stam + races[selectedRace].stam) * stammod);
-  Int = Math.floor((GearStats.Int + BuffStats.Int + races[selectedRace].int) * intmod);
-  Spi = Math.floor((GearStats.Spi + BuffStats.Spi + races[selectedRace].spi) * spimod);
+  Str = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str) * strmod);
+  Agi = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi) * agimod);
+  Stam = Math.floor((GearStats.Stam + BuffStats.Stam + EnchantStats.Stam + races[selectedRace].stam) * stammod);
+  Int = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int) * intmod);
+  Spi = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
+   
   // Attack Power
-  BaseMAP = (GearStats.MAP + BuffStats.MAP + Agi + Str + races[selectedRace].mAP) * mapmod;
-  BaseRAP = (GearStats.RAP + BuffStats.RAP + Agi + races[selectedRace].rAP + Int * (CarefulAimTalent)) * rapmod;
+  BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP) * mapmod;
+  BaseRAP = (GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * (CarefulAimTalent)) * rapmod;
+   
   // Crit rating and crit chance
-  MeleeCritRating = GearStats.Crit + BuffStats.Crit;
-  RangeCritRating = GearStats.Crit + BuffStats.Crit;
-  MeleeCritChance = BaseCritChance + Agi / AgiToCrit + MeleeCritRating / CritRatingRatio + BuffStats.CritChance + races[selectedRace].critchance;
-  RangeCritChance = BaseCritChance + Agi / AgiToCrit + RangeCritRating / CritRatingRatio + BuffStats.CritChance + TalentStats.RangedCritChance + races[selectedRace].critchance;
+   let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
+  MeleeCritRating = critrating;
+  RangeCritRating = critrating + EnchantStats.RangeCrit;
+   let crit = BaseCritChance + Agi / AgiToCrit + races[selectedRace].critchance + BuffStats.CritChance + TalentStats.CritChance;
+  MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
+  RangeCritChance = crit + RangeCritRating / CritRatingRatio + TalentStats.RangedCritChance;
+   
+  // Hit rating and hit chance
+   let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
+  MeleeHitRating = hitrating;
+  RangeHitRating = hitrating + EnchantStats.RangeHit;
+   let hit = BaseHitChance + TalentStats.HitChance;
+  MeleeHitChance = hit + MeleeHitRating / HitRatingRatio;
+  RangeHitChance = hit + RangeHitRating / HitRatingRatio;
+  MeleeMissChance = 1 - MeleeHitChance - (MeleeHitChance >= 1) ? HitPenalty:0;
+  
 }
