@@ -140,6 +140,6 @@ function calcBaseStats() {
   // Crit rating and crit chance
   MeleeCritRating = GearStats.Crit + BuffStats.Crit;
   RangeCritRating = GearStats.Crit + BuffStats.Crit;
-  MeleeCritChance = BaseCritChance + Agi / AgiToCrit + MeleeCritRating / CritRatingRatio + BuffStats.CritChance;
-  RangeCritChance = BaseCritChance + Agi / AgiToCrit + RangeCritRating / CritRatingRatio + BuffStats.CritChance + TalentStats.RangedCritChance;
+  MeleeCritChance = BaseCritChance + Agi / AgiToCrit + MeleeCritRating / CritRatingRatio + BuffStats.CritChance + races[selectedRace].critchance;
+  RangeCritChance = BaseCritChance + Agi / AgiToCrit + RangeCritRating / CritRatingRatio + BuffStats.CritChance + TalentStats.RangedCritChance + races[selectedRace].critchance;
 }
