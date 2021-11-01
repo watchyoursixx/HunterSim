@@ -9,6 +9,8 @@ const CritPenalty = -3;
 const CritAuraPenalty = -1.8;
 const HitPenalty = -1;
 const ExpertiseRatio = 3.9;
+const GlanceDmgReduction = 0.75;
+const GlanceChance = 0.24;
 
 // initialize stat variables
 var RangeCritRating = 0;
@@ -49,8 +51,9 @@ var rangedmgmod = 1;
 // temp settings to test with
 var CarefulAimTalent = (0 * 0.15);
 var selectedRace = 0; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
-var equippedRangeType = 1; // 0 for gun, 1 for bow, 2 for crossbow
-var equippedMHType = 3;
+var equippedRanged = 15808;
+var equippedMainhand = 28587;
+var offhandDisabled = false;
 
 // included here to test usage from same set of code -- will remove later
 var races = [
@@ -58,7 +61,7 @@ var races = [
       name: 'Orc',
       str: 67,
       agi: 148,
-      sta: 110,
+      stam: 110,
       int: 74,
       spi: 86,
       mAP: 120,
@@ -68,6 +71,38 @@ var races = [
       expertise: 0,
    },
 ];
+// adding in test rangeweps
+var rangeweps = {
+    15808:  {
+                name: 'Fine Light Crossbow',
+                mindmg: 29,
+                maxdmg: 29,
+                speed: 2.7,
+                type: 2,
+                itemid: 15808,
+    }
+};
+// adding in test mainhandweps
+var mainhandweps = {
+    28587:  {
+                name: 'Legacy',
+                Agi: 40,
+                Stam: 46,
+                MAP: 80,
+                RAP: 80,
+                MP5: 8,
+                mindmg: 319,
+                maxdmg: 479,
+                speed: 3.5,
+                itemid: 28587,
+                type: 3,
+                hand: 3,
+    }
+};
+
+var equippedRangeType = rangeweps[equippedRanged].type; // 0 for gun, 1 for bow, 2 for crossbow
+var equippedMHType = mainhandweps[equippedMainhand].type;
+
 function checkWeaponType(){
    // check for gun and dwarf, or bow and troll
    if ((equippedRangeType === 0 && selectedRace === 1) || (equippedRangeType === 1 && selectedRace === 4)) {
@@ -81,10 +116,18 @@ function checkWeaponType(){
    } else {
       races[selectedRace].expertise = 0;
    }
+   // hand options: 0 for main-hand, 1 for one-hand, 2 for off-hand, 3 for two-hand
+   offhandDisabled = (mainhandweps[equippedMainhand].hand === 3) ? true:false; 
 }
       
 // gear, buff, talent objects to sum out of combat gear and buff stats
 var GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0, MP5:0, Resil:0, ArP:0, Haste:0, ExpRating:0}; 
+function addGear(){
+    for(let prop in GearStats) {
+        GearStats[prop] += mainhandweps[equippedMainhand][prop] || 0;
+    }
+}
+
 var BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:155, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0}; // added 155 for hawk for now
 var TalentStats = {CritChance:0, RangeCritChance:0, HitChance:0, agimod:1, mapmod:1, rapmod:1, intmod:1, dmgmod:1, rangedmgmod:1};
 var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, RangeCrit:0, Hit:0, RangeHit:0, MP5:0, Resil:0, ArP:0, Haste:0, dmgbonus:0, rangedmgbonus:0}; 
@@ -93,11 +136,11 @@ var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Ra
 function calcBaseStats() {
    
   // Main Stats
-  Str = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str) * strmod);
-  Agi = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi) * agimod);
+  Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str) * strmod);
+  Agi  = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi) * agimod);
   Stam = Math.floor((GearStats.Stam + BuffStats.Stam + EnchantStats.Stam + races[selectedRace].stam) * stammod);
-  Int = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int) * intmod);
-  Spi = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
+  Int  = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int) * intmod);
+  Spi  = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
    
   // Attack Power
   BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP) * mapmod;
