@@ -1,32 +1,39 @@
+// initialize constants
 const HitRatingRatio = 15.77;
 const CritRatingRatio = 22.08;
 const HasteRatingRatio = 15.77;
 const AgiToCrit = 40;
 const BaseCritChance = -1.53;
-const BaseHitChance = 92;
-const CritPenalty = -4.8;
+const BaseHitChance = 0;
+const CritPenalty = -3;
+const CritAuraPenalty = -1.8;
 const HitPenalty = -1;
+const ExpertiseRatio = 3.9;
 
-// initialize base stats
-var BaseRAP = 0;
-var RangedCritRating = 0;
-var RangedCritChance = 0;
+// initialize stat variables
+var RangeCritRating = 0;
+var RangeCritChance = 0;
 var Str = 0;
 var Agi = 0;
 var Stam = 0;
 var Int = 0;
+var Spi = 0;
 var BaseMAP = 0;
+var BaseRAP = 0;
 var MeleeCritRating = 0;
 var MeleeCritChance = 0;
 var ManaPer5 = 0;
 var Resilience = 0;
 var ArmorPen = 0;
 var HasteRating = 0;
-var RangedHitRating = 0;
+var RangeHitRating = 0;
+var RangeHitChance = 0;
+var RangeMissChance = 0;
 var MeleeHitRating = 0;
+var MeleeHitChance = 0;
+var MeleeMissChance = 0;
 var Expertise = 0;
 var ExpertiseRating = 0;
-var Spi = 0;
 
 // stat modifiers
 var strmod = 1;
@@ -43,6 +50,8 @@ var rangedmgmod = 1;
 var CarefulAimTalent = (0 * 0.15);
 var selectedRace = 0; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
 var equippedRangeType = 1; // 0 for gun, 1 for bow, 2 for crossbow
+var equippedMHType = 3;
+
 // included here to test usage from same set of code -- will remove later
 var races = [
    {
@@ -56,6 +65,7 @@ var races = [
       rAP: 130,
       critchance: 0,
       hitchance: 0,
+      expertise: 0,
    },
 ];
 function checkWeaponType(){
@@ -65,10 +75,16 @@ function checkWeaponType(){
    } else {
       races[selectedRace].critchance = 0;
    }
+   // check for axe and orc
+   if (equippedMHType === 3 && selectedRace === 0) {
+      races[selectedRace].expertise = 5;
+   } else {
+      races[selectedRace].expertise = 0;
+   }
 }
       
 // gear, buff, talent objects to sum out of combat gear and buff stats
-var GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0, MP5:0, Resil:0, ArP:0, Haste:0}; 
+var GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0, MP5:0, Resil:0, ArP:0, Haste:0, ExpRating:0}; 
 var BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:155, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0}; // added 155 for hawk for now
 var TalentStats = {CritChance:0, RangeCritChance:0, HitChance:0, agimod:1, mapmod:1, rapmod:1, intmod:1, dmgmod:1, rangedmgmod:1};
 var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, RangeCrit:0, Hit:0, RangeHit:0, MP5:0, Resil:0, ArP:0, Haste:0, dmgbonus:0, rangedmgbonus:0}; 
@@ -93,7 +109,7 @@ function calcBaseStats() {
   RangeCritRating = critrating + EnchantStats.RangeCrit;
    let crit = BaseCritChance + Agi / AgiToCrit + races[selectedRace].critchance + BuffStats.CritChance + TalentStats.CritChance;
   MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
-  RangeCritChance = crit + RangeCritRating / CritRatingRatio + TalentStats.RangedCritChance;
+  RangeCritChance = crit + RangeCritRating / CritRatingRatio + TalentStats.RangeCritChance;
    
   // Hit rating and hit chance
    let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
@@ -102,6 +118,12 @@ function calcBaseStats() {
    let hit = BaseHitChance + TalentStats.HitChance;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio;
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
-  MeleeMissChance = 1 - MeleeHitChance - (MeleeHitChance >= 1) ? HitPenalty:0;
+   let penalty = (MeleeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
+  MeleeMissChance = 8 - MeleeHitChance - penalty;
+  RangeMissChance = 8 - RangeHitChance - penalty;
+   
+  // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
+  Expertise = Math.floor(GearStats.ExpRating / ExpertiseRatio + races[selectedRace].expertise);
+  DodgeChance = 6.5 - Expertise * 0.25;
   
 }
