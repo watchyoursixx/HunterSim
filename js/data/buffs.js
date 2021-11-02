@@ -1,9 +1,17 @@
+const BOK = {
+  name: 'Greater Blessing of Kings',
+  id: 25898,
+  icon: 'spell_magic_greaterblessingofkings',
+}
+
+const WF = {
+  name: 'Windfury Totem',
+  id: 25587,
+  icon: 'spell_nature_windfury'
+}
+
 const BUFFS = [
-  {
-    name: 'Greater Blessing of Kings',
-    id: 25898,
-    icon: 'spell_magic_greaterblessingofkings'
-  },
+  BOK,
   {
     name: 'Greater Blessing of Might',
     id: 27141,
@@ -75,11 +83,7 @@ const BUFFS = [
       MP5: 50
     }
   },
-  {
-    name: 'Windfury Totem',
-    id: 25587,
-    icon: 'spell_nature_windfury'
-  },
+  WF,
   {
     name: 'Arcane Brilliance',
     id: 27127,
@@ -130,7 +134,7 @@ const BUFFS = [
 ]
 
 function getStatsFromBuffs(buffs) {
-  return buffs.reduce((stats, buffData) => {
+  return buffs.reduce(({stats, talents}, buffData) => {
     let buffId = buffData
     let isImproved = false
 
@@ -139,30 +143,17 @@ function getStatsFromBuffs(buffs) {
       buffId = buffData.id
     }
 
-    const buff = BUFFS.find(buff => buffId === buff.id)
-    if (!buff) throw Error(`Detected invalid buff id ${id}`)
+    if (buffId === BOK.id) talents.kingsMod = 1.1
+    else if (buffId === WF.id) talents.windfury = 1
+    else {
+      const buff = BUFFS.find(buff => buffId === buff.id)
+      if (!buff) throw Error(`Detected invalid buff id ${id}`)
 
-    const ratio = isImproved ? buff.improve_ratio || 1 : 1
-    if (buff.stats)
-      Object.entries(buff.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount * ratio)
+      const ratio = isImproved ? buff.improve_ratio || 1 : 1
+      if (buff.stats)
+        Object.entries(buff.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount * ratio)
+    }
 
-    return stats
-  }, {})
+    return { stats, talents }
+  }, { stats: {}, talents: { kingsMod: 1, windfury: 0 } })
 }
-
-const result = getStatsFromBuffs([
-  25898,
-  { id: 27141, improved: true },
-  { id: 27143, improved: true },
-  17007,
-  { id: 25359, improved: true },
-  { id: 25528, improved: true },
-  25570,
-  27127,
-  { id: 26991, improved: true },
-  { id: 25392, improved: true },
-  { id: 27268, improved: false },
-  6562
-])
-
-console.log(result)
