@@ -401,23 +401,3 @@ function getPlayerStatsFromConsumes(consumables) {
 function getPetStatsFromConsumes(consumables) {
   return getStatsFromConsumes(consumables, PET_CONSUMABLES)
 }
-
-const playerStats = getPlayerStatsFromConsumes({
-  food: 27664,
-  battle_elixir: 22831,
-  guardian_elixir: 22840,
-  agi_scroll: 27498,
-  str_scroll: 27503
-})
-
-const petStats = getPetStatsFromConsumes({
-  pet_food: 33874,
-  agi_scroll: 27498,
-  str_scroll: 27503
-})
-
-console.log('Player stats are:')
-console.log(playerStats)
-
-console.log('Pet stats are:')
-console.log(petStats)
