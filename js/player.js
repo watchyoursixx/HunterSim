@@ -49,11 +49,10 @@ var dmgmod = 1;
 var rangedmgmod = 1;
 
 // temp settings to test with
-var CarefulAimTalent = (0 * 0.15);
 var selectedRace = 0; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
 var offhandDisabled = false;
 
-// initial variables for item id's (like a profile)
+// initial variables for itemid's (like a profile)
 const gear = {head:0,neck:0,shoulder:0,back:0,chest:0,wrist:0,hand:0,waist:0,leg:0,feet:0,ring1:0,ring2:0,trinket1:0,trinket2:0,mainhand:28587,offhand:0,range:15808};
 
 // included here to test usage from same set of code -- will remove later
@@ -72,7 +71,7 @@ var races = [
       expertise: 0,
    },
 ];
-// adding in test rangelist
+// adding in test range list
 const range = {
     15808:  {
                 name: 'Fine Light Crossbow',
@@ -83,7 +82,7 @@ const range = {
                 itemid: 15808,
     }
 };
-// adding in test mainhandlist
+// adding in test mainhand list
 const mainhand = {
     28587:  {
                 name: 'Legacy',
@@ -102,7 +101,7 @@ const mainhand = {
 };
 
 function checkWeaponType(){
-
+   
    let equippedRangeType = range[gear.range].type; 
    let equippedMHType = mainhand[gear.mainhand].type;
    // check for gun and dwarf, or bow and troll
@@ -117,7 +116,7 @@ function checkWeaponType(){
    } else {
       races[selectedRace].expertise = 0;
    }
-   // hand options: 0 for main-hand, 1 for one-hand, 2 for off-hand, 3 for two-hand
+   // disable offhand if two hand selected
    offhandDisabled = (mainhand[gear.mainhand].hand === 'two') ? true:false; 
 }
       
@@ -230,7 +229,7 @@ function calcBaseStats() {
   MeleeHitRating = hitrating;
   RangeHitRating = hitrating + EnchantStats.RangeHit;
    let hit = BaseHitChance + TalentStats.HitChance;
-  MeleeHitChance = hit + MeleeHitRating / HitRatingRatio;
+  MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
    let penalty = (MeleeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
   MeleeMissChance = 8 - MeleeHitChance - penalty;
