@@ -1,102 +1,92 @@
-const BOK = {
-  name: 'Greater Blessing of Kings',
-  id: 25898,
-  icon: 'spell_magic_greaterblessingofkings',
-}
+const BOK_ID = 25898
+const WF_ID = 25587
+const IMP_SANC_AURA_ID = 31870
 
-const WF = {
-  name: 'Windfury Totem',
-  id: 25587,
-  icon: 'spell_nature_windfury'
-}
-
-const BUFFS = [
-  BOK,
-  {
+const BUFFS = {
+  [BOK_ID]: {
+    name: 'Greater Blessing of Kings',
+    icon: 'spell_magic_greaterblessingofkings',
+  },
+  27141: {
     name: 'Greater Blessing of Might',
-    id: 27141,
     icon: 'spell_holy_greaterblessingofkings',
-    improve_ratio: 1.2,
+    talented_ratio: 1.2,
     stats: {
       MAP: 220,
       RAP: 220,
     }
   },
-  {
+  27143: {
     name: 'Greater Blessing of Wisdom',
-    id: 27143,
     icon: 'spell_holy_greaterblessingofwisdom',
-    improve_ratio: 1.2,
+    talented_ratio: 1.2,
     stats: {
       MP5: 41
     }
   },
-  {
+  2048: {
     name: 'Battle Shout',
-    id: 2048,
     icon: 'ability_warrior_battleshout',
-    improve_ratio: 1.25,
+    t2_3p_bonus: 30,
+    solarian_sapphire_bonus: 70,
+    talented_ratio: 1.25,
     stats: {
       MAP: 306
     }
   },
-  {
+  27077: {
     name: 'Trueshot Aura',
-    id: 27066,
     icon: 'ability_trueshot',
     stats: {
       MAP: 125,
       RAP: 125
     }
   },
-  {
+  17007: {
     name: 'Leader of the Pack',
-    id: 17007,
     icon: 'spell_nature_unyeildingstamina',
     stats: {
       CritChance: 5
     }
   },
-  {
+  25359: {
     name: 'Grace of Air Totem',
-    id: 25359,
     icon: 'spell_nature_invisibilitytotem',
-    improve_ratio: 1.15,
+    talented_ratio: 1.15,
     stats: {
       Agi: 77
     }
   },
-  {
+  25528: {
     name: 'Strength of Earth Totem',
-    id: 25528,
     icon: 'spell_nature_earthbindtotem',
-    improve_ratio: 1.15,
+    talented_ratio: 1.15,
     stats: {
       Str: 86
     }
   },
-  {
+  25570: {
     name: 'Mana Spring Totem',
-    id: 25570,
     icon: 'spell_nature_manaregentotem',
     stats: {
       MP5: 50
     }
   },
-  WF,
-  {
+  [WF_ID] : {
+    name: 'Windfury Totem',
+    icon: 'spell_nature_windfury'
+  },
+  27127: {
     name: 'Arcane Brilliance',
-    id: 27127,
     icon: 'spell_holy_arcaneintellect',
     stats: {
       Int: 40
     }
   },
-  {
+  26991: {
     name: 'Gift of the Wild',
-    id: 26991,
     icon: 'spell_nature_giftofthewild',
-    improve_ratio: 1.35,
+    talented_ratio: 1.35,
     stats: {
       Str: 14,
       Agi: 14,
@@ -105,55 +95,63 @@ const BUFFS = [
       Spi: 14
     }
   },
-  {
+  25392: {
     name: 'Prayer of Fortitude',
-    id: 25392,
     icon: 'spell_holy_prayeroffortitude',
-    improve_ratio: 1.3,
+    talented_ratio: 1.3,
     stats: {
       Stam: 79
     }
   },
-  {
+  27268: {
     name: 'Blood Pact',
-    id: 27268,
     icon: 'spell_shadow_bloodboil',
-    improve_ratio: 1.3,
+    talented_ratio: 1.3,
     stats: {
       Stam: 70
     }
   },
-  {
+  [IMP_SANC_AURA_ID] : {
+    name: 'Improved Sanctity Aura',
+    icon: 'spell_holy_mindvision'
+  },
+  6562: {
     name: 'Heroic Presence',
-    id: 6562,
     icon: 'inv_helmet_21',
     stats: {
       HitChance: 1
     }
   },
-]
+}
 
 function getStatsFromBuffs(buffs) {
   return buffs.reduce(({stats, talents}, buffData) => {
     let buffId = buffData
-    let isImproved = false
+    let props = {}
 
-    if (typeof buffData === 'object') {
-      isImproved = buffData.improved
-      buffId = buffData.id
-    }
+    if (typeof buffData === 'object')
+      ({ id: buffId, ...props } = buffData)
 
-    if (buffId === BOK.id) talents.kingsMod = 1.1
-    else if (buffId === WF.id) talents.windfury = 1
+    if (buffId === BOK_ID) talents.kingsMod += 10/100
+    else if (buffId === WF_ID) talents.windfury = true
+    else if (buffId === IMP_SANC_AURA_ID) talents.impSancAura += 2/100
     else {
-      const buff = BUFFS.find(buff => buffId === buff.id)
-      if (!buff) throw Error(`Detected invalid buff id ${id}`)
+      if (!BUFFS[buffId]) throw Error(`Detected invalid buff id ${id}`)
+      const buff = BUFFS[buffId]
 
-      const ratio = isImproved ? buff.improve_ratio || 1 : 1
+      let bonus = 0
+      let ratio = 1
+      Object.entries(props).forEach(([name, value]) => {
+        if (!value) return;
+        if (buff[name + "_bonus"]) bonus += buff[name + "_bonus"]
+        else if (buff[name + "_ratio"]) ratio *= buff[name + "_ratio"]
+        else throw Error(`Detected invalid property "${name}" for buff "${buff.name}"`)
+      })
+
       if (buff.stats)
-        Object.entries(buff.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount * ratio)
+        Object.entries(buff.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + (amount + bonus)* ratio)
     }
 
     return { stats, talents }
-  }, { stats: {}, talents: { kingsMod: 1, windfury: 0 } })
+  }, { stats: {}, talents: { impSancAura: 1, kingsMod: 1, windfury: false } })
 }
