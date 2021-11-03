@@ -34,7 +34,7 @@ const BUFFS = {
       MAP: 306
     }
   },
-  27077: {
+  27066: {
     name: 'Trueshot Aura',
     icon: 'ability_trueshot',
     stats: {
