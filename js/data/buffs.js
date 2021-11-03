@@ -125,12 +125,17 @@ const BUFFS = {
 }
 
 function getStatsFromBuffs(buffs) {
+  const usedBuffs = {}
+
   return buffs.reduce(({stats, talents}, buffData) => {
     let buffId = buffData
     let props = {}
 
     if (typeof buffData === 'object')
       ({ id: buffId, ...props } = buffData)
+
+    if (usedBuffs[buffId]) throw Error(`Buff with ID ${buffId} is being used more than once!`)
+    usedBuffs[buffId] = true
 
     if (buffId === BOK_ID) talents.kingsMod += 10/100
     else if (buffId === WF_ID) talents.windfury = true
