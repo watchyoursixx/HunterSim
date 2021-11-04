@@ -16,4 +16,4 @@ let meleehit = Math.round(MeleeHitChance * 100) / 100;
 document.getElementById("meleehit").innerHTML = meleehit + " %";
 let meleecrit = Math.round(MeleeCritChance * 100) / 100;
 document.getElementById("meleecrit").innerHTML = meleecrit + " %";
-document.getElementById("exp").innerHTML = Expertise + "1";
+document.getElementById("exp").innerHTML = Expertise;
