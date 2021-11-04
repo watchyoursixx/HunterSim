@@ -11,6 +11,12 @@
 <link rel="stylesheet" href="Main.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="js/data/buffs.js"></script>
+    <script class="u-script" type="text/javascript" src="js/data/consumables.js"></script>
+    <script class="u-script" type="text/javascript" src="js/data/races.js"></script>
+    <script class="u-script" type="text/javascript" src="js/data/talents.js"></script>
+    <script class="u-script" type="text/javascript" src="js/player.js"></script>
+    <script class="u-script" type="text/javascript" src="js/ui.js"></script>
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
     <script>const whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: true};</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
@@ -139,20 +145,20 @@
                   <p class="u-align-right u-text u-text-2">Strength<br>Agility<br>Stamina<br>Intellect<br>Spirit<br>
                     <br>Ranged AP<br>Ranged Hit Chance<br>Ranged Crit Chance<br>Haste<br>Armor Pen<br>Melee Attack Power<br>Melee Hit Chance<br>Melee Crit Chance<br>Expertise
                   </p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-3">70</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-4">650</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-5">500</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-6">251</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-7">89</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-8">2431</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-9">9.01%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-10">25.42%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-11">0</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-12">0</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-13">2530</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-14">9.01%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-15">20.42%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16">0</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-3" id="str">70</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-4" id="agi">650</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-5" id="stam">500</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-6" id="int">251</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-7" id="spi">89</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-8" id="rap">2431</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-9" id="rangehit">9.01%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-10" id="rangecrit">25.42%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-11" id="haste">0</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-12" id="arp">0</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-13" id="map">2530</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-14" id="meleehit">9.01%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-15" id="meleecrit">20.42%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
                   <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Calc dps</a>
                   <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Settings</a>
                   <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Stat Weights</a>
