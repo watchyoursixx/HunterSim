@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs')
+const data = require('./data.json')
 
 const skip = ['valid', 'DPS']
 
@@ -62,6 +63,8 @@ function parseCsvFile(fileName) {
 
   const items = lines.map(parseLine)
   const result = items.reduce((obj, item) => {
+    item.icon = data.find(elem => elem.itemId === item.itemid)?.icon
+    if (!item.icon) console.log('Missing icon for element ' + JSON.stringify(item, null, 4))
     obj[item.itemid] = item
     delete item.itemid
     return obj
