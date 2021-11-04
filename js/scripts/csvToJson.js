@@ -10,6 +10,7 @@ const as = { str: 'Str', agi: 'Agi', sta: 'Stam', int: 'Int', map: 'MAP', rap: '
              hit: 'Hit', mp5: 'MP5', resil: 'Resil', arp: 'ArP', haste: 'Haste', location: 'Location',
              phase: 'Phase' }
 
+const AURA_KEYS = ['PPM', 'proc_type', 'proc_chance', 'is_proc']
 
 
 function createLineParser(headersStr) {
@@ -44,7 +45,7 @@ function createLineParser(headersStr) {
             if (!obj.aura.stats) obj.aura.stats = {}
             obj.aura.stats[aura_key] = value
           } else obj.aura[aura_key] =  value
-        } else if (key === 'PPM' || key === 'proc_type') {
+        } else if (AURA_KEYS.includes(key)) {
           if (!obj.aura) obj.aura = {}
           obj.aura[key] =  value
         }

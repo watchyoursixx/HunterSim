@@ -1,202 +1,326 @@
 const SETS = {
-  652: {
-    name: 'Rift Stalker Armor',
-    abrv: 't5',
-    bonuses: {
-      2: { pet_heal_ratio: 0.15 },
-      4: { ss_crit: 5 }
-    }
-  },
   650: {
     name: 'Beast Lord Armor',
-    abrv: 'bl',
+    abrv: 'beast_lord',
     bonuses: {
       2: { trap_cdr: -4 },
       4: { kc_arp: 600 }
     }
   },
+  '-7': {
+    name: "Brutal Gladiator's Pursuit",
+    abrv: 'brutal_gladiator_pursuit',
+    bonuses: {
+      2: { stats: { Resil: 35 } },
+      4: { multishot_cdr: 1 }
+    }
+  },
   530: {
     name: 'Cryptstalker Armor',
-    abrv: 't3',
+    abrv: 'cryptstalker',
     bonuses: {
       2: { rf_duration: 4 },
-      4: { ap_increase: 50 },
+      4: { stats: { RAP: 50, MAP: 50 } },
       6: { crit_mana_return: 50 },
       8: { reduced_mana_cost: 20 },
     }
   },
+  651: {
+    name: 'Demon Stalker Armor',
+    abrv: 'demon_stalker',
+    bonuses: {
+      2: { fd_resist: 0.05 },
+      4: { reduced_ms_mana_ratio: 0.9 },
+    }
+  },
+  660: {
+    name: 'Desolation Battlegear',
+    abrv: 'desolation_battlegear',
+    bonuses: {
+      2: { stats: { Hit: 35 }},
+      4: { aura: { stats: { MAP: 160, RAP: 160 }, duration: 15, is_proc: true, proc_type: 2, proc_chance: 0.01 }}
+    }
+  },
+  561: {
+    name: 'Fel Iron Chain',
+    abrv: 'fel_iron_chain',
+    bonuses: {
+      2: { stats: { Crit: 14 } },
+      4: { stats: { MP5: 8 } },
+    }
+  },
+  611: {
+    name: 'Felscale Armor',
+    abrv: 'felscale',
+    bonuses: {
+      2: { stats: { Crit: 15 } },
+      4: { stats: { Stam: 20 } },
+    }
+  },
+  575: {
+    name: 'Felstalker Armor',
+    abrv: 'felstalker',
+    bonuses: {
+      2: { stats: { Hit: 20 } }
+    }
+  },
+  586: {
+    name: "Gladiator's Pursuit",
+    abrv: 'gladiator_pursuit',
+    bonuses: {
+      2: { stats: { Resil: 35 } },
+      4: { multishot_cdr: 1 }
+    }
+  },
   669: {
     name: "Gronnstalker's Armor",
-    abrv: 't6',
+    abrv: 'gronnstalker',
     bonuses: {
-      2: { base: 1, viper_mana_gain: 0.05 },
-      4: { base: 1, steady_shot_dmg: 0.1 }
+      2: { viper_mana_gain_ratio: 0.05 },
+      4: { steady_shot_dmg_ratio: 0.1 }
     }
+  },
+  706: {
+    name: "Merciless Gladiator's Pursuit",
+    abrv: 'merciless_gladiator_pursuit',
+    bonuses: {
+      2: { stats: { Resil: 35 } },
+      4: { multishot_cdr: 1 }
+    }
+  },
+  616: {
+    name: 'Netherscale Armor',
+    abrv: 'netherscale',
+    bonuses: {
+      2: { stats: { Hit: 20 } }
+    }
+  },
+  619: {
+    name: 'Primal Intent',
+    abrv: 'primalstrike',
+    bonuses: {
+        2: { stats: { MAP: 40, RAP: 40 } }
+    }
+  },
+  652: {
+    name: 'Rift Stalker Armor',
+    abrv: 'rift_stalker',
+    bonuses: {
+      2: { pet_heal_on_dmg: 0.15 },
+      4: { ss_crit: 5 }
+    }
+  },
+  749: {
+      name: "Stalker's Chain Battlegear",
+      abrv: 'stalker_chain_battlegear',
+      bonuses: {
+        2: { stats: { Resil: +35 } },
+        4: { conc_shot_cdr: 1 }
+      }
+  },
+  723: {
+    name: "Vengeful Gladiator's Pursuit",
+    abrv: 'vengeful_gladiator_pursuit',
+    bonuses: {
+      2: { stats: { Resil: 35 } },
+      4: { multishot_cdr: 1 }
+    }
+  },
+  659: {
+      name: 'Wastewalker Armor',
+      abrv: 'wastewalker',
+      bonuses: {
+        2: { stats: { Hit: 35 } },
+        4: { aura: { stats: { MAP: 160, RAP: 160 }, duration: 15, is_proc: true, proc_type: 2, proc_chance: 0.02 }}
+      }
   }
 }
 
 const AMMOS = {
-  10513: {
-      name: "Mysterious Shell",
-      ammo_dps: 46.5,
-      Location: "Reputation Reward",
-      Phase: 2,
-      icon: "inv_ammo_bullet_01"
-  },
-  11285: {
-      name: "Timeless Shell",
-      ammo_dps: 53,
-      Location: "Reputation Reward",
-      Phase: 3,
-      icon: "inv_weapon_shortblade_25"
-  },
-  12654: {
-      name: "Warden's Arrow",
-      ammo_dps: 37,
-      Location: "Cenarion Expedition - Revered",
-      Phase: 1,
-      icon: "ability_hunter_criticalshot"
-  },
-  15997: {
-      name: "Ironbite Shell",
-      ammo_dps: 32,
-      Location: "Vendor",
-      Phase: 1,
-      icon: "inv_ammo_bullet_03"
-  },
-  18042: {
-      name: "Halaani Grimshot",
-      ammo_dps: 34,
-      Location: "Vendor",
-      Phase: 1,
-      icon: "inv_ammo_arrow_02"
-  },
-  19316: {
-      name: "Thorium Headed Arrow",
-      ammo_dps: 17.5,
-      Location: "Crafted - Eng",
-      Phase: 1,
-      icon: "spell_frost_iceshard"
-  },
-  19317: {
-      name: "Ice Threaded Arrow",
-      ammo_dps: 16.5,
-      Location: "Honor Reward",
-      Phase: 1,
-      icon: "spell_frost_frostblast"
-  },
-  23772: {
-      name: "Halaani Razorshaft",
-      ammo_dps: 34,
-      Location: "Halaa Vendor (if faction controlled)",
-      Phase: 1,
-      icon: "inv_gizmo_felironshell"
-  },
-  23773: {
-      name: "Timeless Arrow",
-      ammo_dps: 53,
-      Location: "The Scale of the Sands - Honored",
-      Phase: 3,
-      icon: "inv_misc_ammo_bullet_04"
-  },
-  24417: {
-      name: "Hellfire Shot",
-      ammo_dps: 37,
-      Location: "Reputation Reward",
-      Phase: 1,
-      icon: "inv_misc_ammo_arrow_05"
-  },
-  28053: {
-      name: "Mithril Gyro-Shot",
-      ammo_dps: 15,
-      Location: "Crafted - Eng",
-      Phase: 1,
-      icon: "inv_misc_ammo_arrow_03"
-  },
-  28056: {
-      name: "Adamantite Stinger",
-      ammo_dps: 43,
-      Location: "Crafted - Eng",
-      Phase: 3,
-      icon: "inv_misc_ammo_arrow_01"
-  },
-  28061: {
-      name: "Jagged Arrow",
-      ammo_dps: 15,
-      Location: "Vendor",
-      Phase: 1,
-      icon: "inv_misc_ammo_bullet_06"
-  },
-  30611: {
-      name: "Wicked Arrow",
-      ammo_dps: 22,
-      Location: "Vendor",
-      Phase: 1,
-      icon: "inv_misc_ammo_arrow_03"
-  },
-  30612: {
-      name: "Scout's Arrow",
-      ammo_dps: 26,
-      Location: "Cenarion Expedition - Friendly",
-      Phase: 1,
-      icon: "inv_misc_ammo_bullet_04"
-  },
-  31735: {
-      name: "Thorium Shells",
-      ammo_dps: 17.5,
-      Location: "Crafted - Eng",
-      Phase: 1,
-      icon: "inv_misc_ammo_bullet_02"
-  },
-  31737: {
-      name: "Fel Iron Shells",
-      ammo_dps: 26,
-      Location: "Crafted - Eng",
-      Phase: 1,
-      icon: "inv_misc_ammo_arrow_04"
-  },
-  31949: {
-      name: "Ice Threaded Bullet",
-      ammo_dps: 16.5,
-      Location: "Honor Reward",
-      Phase: 1,
-      icon: "inv_misc_ammo_arrow_02"
-  },
-  32882: {
-      name: "Doomshot",
-      ammo_dps: 20,
-      Location: "Dungeon",
-      Phase: 1,
-      icon: "inv_misc_ammo_bullet_02"
-  },
-  32883: {
-      name: "Blackflight Arrow",
-      ammo_dps: 32,
-      Location: "Vendor",
-      Phase: 1,
-      icon: "inv_misc_ammo_bullet_02"
-  },
-  33803: {
-      name: "Mysterious Arrow",
-      ammo_dps: 46.5,
-      Location: "The Violet Eye - Revered",
-      Phase: 2,
-      icon: "inv_ammo_arrow_02"
-  },
-  34581: {
-      name: "Adamantite Shells",
-      ammo_dps: 43,
-      Location: "Crafted - Eng",
-      Phase: 3,
-      icon: "inv_misc_ammo_arrow_02"
-  },
-  34582: {
-      name: "Felbane Slugs",
-      ammo_dps: 37,
-      Location: "Reputation Reward",
-      Phase: 1,
-      icon: "inv_misc_ammo_bullet_02"
-  }
+    10513: {
+        name: "Mithril Gyro-Shot",
+        ammo_dps: 15,
+        Location: "Crafted - Eng",
+        Phase: 1,
+        type: "bullet",
+        icon: "inv_ammo_bullet_01"
+    },
+    11285: {
+        name: "Jagged Arrow",
+        ammo_dps: 13,
+        Location: "Vendor",
+        Phase: 1,
+        type: "arrow",
+        icon: "inv_weapon_shortblade_25"
+    },
+    12654: {
+        name: "Doomshot",
+        ammo_dps: 20,
+        Location: "Dungeon",
+        Phase: 1,
+        type: "arrow",
+        icon: "ability_hunter_criticalshot"
+    },
+    15997: {
+        name: "Thorium Shells",
+        ammo_dps: 17.5,
+        Location: "Crafted - Eng",
+        Phase: 1,
+        type: "bullet",
+        icon: "inv_ammo_bullet_03"
+    },
+    18042: {
+        name: "Thorium Headed Arrow",
+        ammo_dps: 17.5,
+        Location: "Crafted - Eng",
+        Phase: 1,
+        type: "arrow",
+        icon: "inv_ammo_arrow_02"
+    },
+    19316: {
+        name: "Ice Threaded Arrow",
+        ammo_dps: 16.5,
+        Location: "Honor Reward",
+        Phase: 1,
+        type: "arrow",
+        icon: "spell_frost_iceshard"
+    },
+    19317: {
+        name: "Ice Threaded Bullet",
+        ammo_dps: 16.5,
+        Location: "Honor Reward",
+        Phase: 1,
+        type: "bullet",
+        icon: "spell_frost_frostblast"
+    },
+    23772: {
+        name: "Fel Iron Shells",
+        ammo_dps: 26,
+        Location: "Crafted - Eng",
+        Phase: 1,
+        type: "bullet",
+        icon: "inv_gizmo_felironshell"
+    },
+    23773: {
+        name: "Adamantite Shells",
+        ammo_dps: 43,
+        Location: "Crafted - Eng",
+        Phase: 2,
+        type: "bullet",
+        icon: "inv_misc_ammo_bullet_04"
+    },
+    24417: {
+        name: "Scout's Arrow",
+        ammo_dps: 26,
+        Location: "Cenarion Expedition - Friendly",
+        Phase: 1,
+        type: "arrow",
+        icon: "inv_misc_ammo_arrow_05"
+    },
+    28053: {
+        name: "Wicked Arrow",
+        ammo_dps: 22,
+        Location: "Vendor",
+        Phase: 1,
+        type: "arrow",
+        icon: "inv_misc_ammo_arrow_03"
+    },
+    28056: {
+        name: "Blackflight Arrow",
+        ammo_dps: 32,
+        Location: "Vendor",
+        Phase: 1,
+        type: "arrow",
+        icon: "inv_misc_ammo_arrow_01"
+    },
+    28061: {
+        name: "Ironbite Shell",
+        ammo_dps: 32,
+        Location: "Vendor",
+        Phase: 1,
+        type: "bullet",
+        icon: "inv_misc_ammo_bullet_06"
+    },
+    30611: {
+        name: "Halaani Razorshaft",
+        ammo_dps: 34,
+        Location: "Halaa Vendor (if faction controlled)",
+        Phase: 1,
+        type: "arrow",
+        icon: "inv_misc_ammo_arrow_03"
+    },
+    30612: {
+        name: "Halaani Grimshot",
+        ammo_dps: 34,
+        Location: "Vendor",
+        Phase: 1,
+        type: "bullet",
+        icon: "inv_misc_ammo_bullet_04"
+    },
+    31735: {
+        name: "Timeless Shell",
+        ammo_dps: 53,
+        Location: "Reputation Reward",
+        Phase: 3,
+        type: "bullet",
+        icon: "inv_misc_ammo_bullet_02"
+    },
+    31737: {
+        name: "Timeless Arrow",
+        ammo_dps: 53,
+        Location: "The Scale of the Sands - Honored",
+        Phase: 3,
+        type: "arrow",
+        icon: "inv_misc_ammo_arrow_04"
+    },
+    31949: {
+        name: "Warden's Arrow",
+        ammo_dps: 37,
+        Location: "Cenarion Expedition - Revered",
+        Phase: 1,
+        type: "arrow",
+        icon: "inv_misc_ammo_arrow_02"
+    },
+    32882: {
+        name: "Hellfire Shot",
+        ammo_dps: 37,
+        Location: "Reputation Reward",
+        Phase: 1,
+        type: "bullet",
+        icon: "inv_misc_ammo_bullet_02"
+    },
+    32883: {
+        name: "Felbane Slugs",
+        ammo_dps: 37,
+        Location: "Reputation Reward",
+        Phase: 1,
+        type: "bullet",
+        icon: "inv_misc_ammo_bullet_02"
+    },
+    33803: {
+        name: "Adamantite Stinger",
+        ammo_dps: 43,
+        Location: "Crafted - Eng",
+        Phase: 2,
+        type: "arrow",
+        icon: "inv_ammo_arrow_02"
+    },
+    34581: {
+        name: "Mysterious Arrow",
+        ammo_dps: 46.5,
+        Location: "The Violet Eye - Revered",
+        Phase: 3,
+        type: "arrow",
+        icon: "inv_misc_ammo_arrow_02"
+    },
+    34582: {
+        name: "Mysterious Shell",
+        ammo_dps: 46.5,
+        Location: "Reputation Reward",
+        Phase: 3,
+        type: "bullet",
+        icon: "inv_misc_ammo_bullet_02"
+    }
 }
 
 const BACKS = {
@@ -629,6 +753,7 @@ const CHESTS = {
   },
   22436: {
       name: "Cryptstalker Tunic",
+      set: 530,
       stats: {
           Agi: 30,
           Stam: 27,
@@ -645,6 +770,7 @@ const CHESTS = {
   },
   23490: {
       name: "Fel Iron Chain Tunic",
+      set: 561,
       stats: {
           Stam: 36,
           Int: 24,
@@ -783,6 +909,7 @@ const CHESTS = {
   },
   25657: {
       name: "Felscale Breastplate",
+      set: 661,
       stats: {
           Agi: 30,
           MAP: 72,
@@ -794,6 +921,7 @@ const CHESTS = {
   },
   25696: {
       name: "Felstalker Breastplate",
+      set: 575,
       stats: {
           Agi: 26,
           Int: 26,
@@ -911,6 +1039,7 @@ const CHESTS = {
   },
   28228: {
       name: "Beast Lord Cuirass",
+      set: 650,
       stats: {
           Agi: 20,
           Stam: 30,
@@ -933,6 +1062,7 @@ const CHESTS = {
   },
   28264: {
       name: "Wastewalker Tunic",
+      set: 659,
       stats: {
           Agi: 28,
           Stam: 36,
@@ -953,6 +1083,7 @@ const CHESTS = {
   },
   28334: {
       name: "Gladiator's Chain Armor",
+      set: 586,
       stats: {
           Agi: 27,
           Stam: 51,
@@ -976,6 +1107,7 @@ const CHESTS = {
   },
   28401: {
       name: "Hauberk of Desolation",
+      set: 660,
       stats: {
           Stam: 28,
           Int: 25,
@@ -1024,6 +1156,7 @@ const CHESTS = {
   },
   29082: {
       name: "Demon Stalker Harness",
+      set: 651,
       stats: {
           Agi: 26,
           Stam: 24,
@@ -1080,6 +1213,7 @@ const CHESTS = {
   },
   29515: {
       name: "Ebon Netherscale Breastplate",
+      set: 616,
       stats: {
           Stam: 25,
           Int: 23,
@@ -1102,6 +1236,7 @@ const CHESTS = {
   },
   29525: {
       name: "Primalstrike Vest",
+      set: 619,
       stats: {
           Agi: 38,
           Stam: 39,
@@ -1193,6 +1328,7 @@ const CHESTS = {
   },
   30139: {
       name: "Rift Stalker Hauberk",
+      set: 652,
       stats: {
           Agi: 40,
           Stam: 40,
@@ -1310,6 +1446,7 @@ const CHESTS = {
   },
   31004: {
       name: "Gronnstalker's Chestguard",
+      set: 669,
       stats: {
           Agi: 40,
           Stam: 52,
@@ -1371,6 +1508,7 @@ const CHESTS = {
   },
   31960: {
       name: "Merciless Gladiator's Chain Armor",
+      set: 706,
       stats: {
           Agi: 31,
           Stam: 57,
@@ -1456,6 +1594,7 @@ const CHESTS = {
   },
   33664: {
       name: "Vengeful Gladiator's Chain Armor",
+      set: 723,
       stats: {
           Agi: 27,
           Stam: 63,
@@ -1650,6 +1789,7 @@ const CHESTS = {
   },
   34990: {
       name: "Brutal Gladiator's Chain Armor",
+      set: '-7',
       stats: {
           Agi: 32,
           Stam: 70,
@@ -1675,6 +1815,7 @@ const CHESTS = {
   },
   35376: {
       name: "Stalker's Chain Armor",
+      set: 749,
       stats: {
           Agi: 20,
           Stam: 42,
@@ -1713,6 +1854,7 @@ const FEET = {
   },
   22440: {
       name: "Cryptstalker Boots",
+      set: 530,
       stats: {
           Agi: 22,
           Stam: 19,
@@ -1727,6 +1869,7 @@ const FEET = {
   },
   25655: {
       name: "Felscale Boots",
+      set: 661,
       stats: {
           Agi: 20,
           MAP: 44,
@@ -2266,6 +2409,7 @@ const FEET = {
   },
   34570: {
       name: "Gronnstalker's Boots",
+      set: 669,
       stats: {
           Agi: 30,
           Stam: 21,
@@ -3460,6 +3604,7 @@ const GEMS = {
 const HANDS = {
   22441: {
       name: "Cryptstalker Handguards",
+      set: 530,
       stats: {
           Agi: 16,
           Stam: 21,
@@ -3475,6 +3620,7 @@ const HANDS = {
   },
   23491: {
       name: "Fel Iron Chain Gloves",
+      set: 561,
       stats: {
           Stam: 24,
           Int: 17,
@@ -3557,6 +3703,7 @@ const HANDS = {
   },
   25654: {
       name: "Felscale Gloves",
+      set: 661,
       stats: {
           Agi: 19,
           MAP: 40,
@@ -3600,6 +3747,7 @@ const HANDS = {
   },
   27474: {
       name: "Beast Lord Handguards",
+      set: 650,
       stats: {
           Agi: 25,
           Stam: 12,
@@ -3633,6 +3781,7 @@ const HANDS = {
   },
   27528: {
       name: "Gauntlets of Desolation",
+      set: 660,
       stats: {
           Stam: 25,
           Int: 16,
@@ -3651,6 +3800,7 @@ const HANDS = {
   },
   27531: {
       name: "Wastewalker Gloves",
+      set: 659,
       stats: {
           Agi: 32,
           Stam: 33,
@@ -3710,6 +3860,8 @@ const HANDS = {
   },
   28335: {
       name: "Gladiator's Chain Gauntlets",
+      set: 586,
+      special: { multishot_dmg_inc_ratio: 1.05 },
       stats: {
           Agi: 26,
           Stam: 41,
@@ -3821,6 +3973,7 @@ const HANDS = {
   },
   29085: {
       name: "Demon Stalker Gauntlets",
+      set: 651,
       stats: {
           Agi: 28,
           Stam: 24,
@@ -3861,6 +4014,7 @@ const HANDS = {
   },
   30140: {
       name: "Rift Stalker Gauntlets",
+      set: 652,
       stats: {
           Agi: 34,
           Stam: 29,
@@ -3915,6 +4069,7 @@ const HANDS = {
   },
   31001: {
       name: "Gronnstalker's Gloves",
+      set: 669,
       stats: {
           Agi: 35,
           Stam: 31,
@@ -3969,6 +4124,8 @@ const HANDS = {
   },
   31961: {
       name: "Merciless Gladiator's Chain Gauntlets",
+      set: 706,
+      special: { multishot_dmg_inc_ratio: 1.05 },
       stats: {
           Agi: 30,
           Stam: 48,
@@ -4078,6 +4235,8 @@ const HANDS = {
   },
   33665: {
       name: "Vengeful Gladiator's Chain Gauntlets",
+      set: 723,
+      special: { multishot_dmg_inc_ratio: 1.05 },
       stats: {
           Agi: 33,
           Stam: 52,
@@ -4191,6 +4350,8 @@ const HANDS = {
   },
   34991: {
       name: "Brutal Gladiator's Chain Gauntlets",
+      set: '-7',
+      special: { multishot_dmg_inc_ratio: 1.05 },
       stats: {
           Agi: 37,
           Stam: 56,
@@ -4206,6 +4367,8 @@ const HANDS = {
   },
   35475: {
       name: "Stalker's Chain Gauntlets",
+      set: 749,
+      special: { multishot_dmg_inc_ratio: 1.05 },
       stats: {
           Agi: 21,
           Stam: 31,
@@ -4224,6 +4387,7 @@ const HANDS = {
 const HEADS = {
   22438: {
       name: "Cryptstalker Headpiece",
+      set: 530,
       stats: {
           Agi: 21,
           Stam: 30,
@@ -4239,6 +4403,7 @@ const HEADS = {
   },
   23493: {
       name: "Fel Iron Chain Coif",
+      set: 561,
       stats: {
           Stam: 33,
           Int: 21,
@@ -4396,6 +4561,7 @@ const HEADS = {
   },
   28192: {
       name: "Helm of Desolation",
+      set: 660,
       stats: {
           Stam: 21,
           Int: 25,
@@ -4430,6 +4596,7 @@ const HEADS = {
   },
   28224: {
       name: "Wastewalker Helm",
+      set: 659,
       stats: {
           Stam: 30,
           MAP: 56,
@@ -4451,6 +4618,7 @@ const HEADS = {
   },
   28275: {
       name: "Beast Lord Helm",
+      set: 650,
       stats: {
           Agi: 25,
           Stam: 21,
@@ -4471,6 +4639,7 @@ const HEADS = {
   },
   28331: {
       name: "Gladiator's Chain Helm",
+      set: 586,
       stats: {
           Agi: 34,
           Stam: 49,
@@ -4584,6 +4753,7 @@ const HEADS = {
   },
   29081: {
       name: "Demon Stalker Greathelm",
+      set: 651,
       stats: {
           Agi: 35,
           Stam: 28,
@@ -4644,6 +4814,7 @@ const HEADS = {
   },
   30141: {
       name: "Rift Stalker Helm",
+      set: 652,
       stats: {
           Agi: 40,
           Stam: 36,
@@ -4692,6 +4863,7 @@ const HEADS = {
   },
   31003: {
       name: "Gronnstalker's Helmet",
+      set: 669,
       stats: {
           Agi: 45,
           Stam: 45,
@@ -4786,6 +4958,7 @@ const HEADS = {
   },
   31962: {
       name: "Merciless Gladiator's Chain Helm",
+      set: 706,
       stats: {
           Agi: 37,
           Stam: 55,
@@ -4951,6 +5124,7 @@ const HEADS = {
   },
   33666: {
       name: "Vengeful Gladiator's Chain Helm",
+      set: 723,
       stats: {
           Agi: 33,
           Stam: 61,
@@ -5038,6 +5212,7 @@ const HEADS = {
   },
   34992: {
       name: "Brutal Gladiator's Chain Helm",
+      set: '-7',
       stats: {
           Agi: 37,
           Stam: 67,
@@ -5062,6 +5237,7 @@ const HEADS = {
   },
   35378: {
       name: "Stalker's Chain Helm",
+      set: 749,
       stats: {
           Agi: 20,
           Stam: 30,
@@ -5087,6 +5263,7 @@ const HEADS = {
 const LEGS = {
   22437: {
       name: "Cryptstalker Legguards",
+      set: 530,
       stats: {
           Agi: 28,
           Stam: 26,
@@ -5124,6 +5301,7 @@ const LEGS = {
   },
   25656: {
       name: "Felscale Pants",
+      set: 661,
       stats: {
           Agi: 31,
           MAP: 60,
@@ -5288,6 +5466,7 @@ const LEGS = {
   },
   27837: {
       name: "Wastewalker Leggings",
+      set: 659,
       stats: {
           Agi: 31,
           Stam: 27,
@@ -5309,6 +5488,7 @@ const LEGS = {
   },
   27874: {
       name: "Beast Lord Leggings",
+      set: 650,
       stats: {
           Agi: 30,
           Stam: 25,
@@ -5336,6 +5516,7 @@ const LEGS = {
   },
   27936: {
       name: "Greaves of Desolation",
+      set: 660,
       stats: {
           Stam: 24,
           Int: 33,
@@ -5386,6 +5567,7 @@ const LEGS = {
   },
   28332: {
       name: "Gladiator's Chain Leggings",
+      set: 586,
       stats: {
           Agi: 35,
           Stam: 53,
@@ -5442,6 +5624,7 @@ const LEGS = {
   },
   29083: {
       name: "Demon Stalker Greaves",
+      set: 651,
       stats: {
           Agi: 40,
           Stam: 30,
@@ -5538,6 +5721,7 @@ const LEGS = {
   },
   30142: {
       name: "Rift Stalker Leggings",
+      set: 652,
       stats: {
           Agi: 40,
           Stam: 39,
@@ -5670,6 +5854,7 @@ const LEGS = {
   },
   31005: {
       name: "Gronnstalker's Leggings",
+      set: 669,
       stats: {
           Agi: 37,
           Stam: 43,
@@ -5740,6 +5925,7 @@ const LEGS = {
   },
   31963: {
       name: "Merciless Gladiator's Chain Leggings",
+      set: 706,
       stats: {
           Agi: 38,
           Stam: 58,
@@ -5782,6 +5968,7 @@ const LEGS = {
   },
   33667: {
       name: "Vengeful Gladiator's Chain Leggings",
+      set: 723,
       stats: {
           Agi: 34,
           Stam: 64,
@@ -5906,6 +6093,7 @@ const LEGS = {
   },
   34993: {
       name: "Brutal Gladiator's Chain Leggings",
+      set: '-7',
       stats: {
           Agi: 38,
           Stam: 70,
@@ -5923,6 +6111,7 @@ const LEGS = {
   },
   35379: {
       name: "Stalker's Chain Leggings",
+      set: 749,
       stats: {
           Agi: 28,
           Stam: 42,
@@ -9692,7 +9881,7 @@ const RANGED_WEAPONS = {
           Agi: 3,
           Hit: 10
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 99,
       maxdmg: 149,
       speed: 3.2,
@@ -9701,7 +9890,7 @@ const RANGED_WEAPONS = {
   },
   15808: {
       name: "Fine Light Crossbow",
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 29,
       maxdmg: 29,
       speed: 2.7,
@@ -9714,7 +9903,7 @@ const RANGED_WEAPONS = {
           Stam: 6,
           Crit: 14
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 89,
       maxdmg: 167,
       speed: 2.6,
@@ -9742,7 +9931,7 @@ const RANGED_WEAPONS = {
       stats: {
           Stam: 3
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 90,
       maxdmg: 90,
       speed: 2.3,
@@ -9755,7 +9944,7 @@ const RANGED_WEAPONS = {
           MAP: 24,
           RAP: 24
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 97,
       maxdmg: 180,
       speed: 2.6,
@@ -9784,7 +9973,7 @@ const RANGED_WEAPONS = {
           Agi: 4,
           Stam: 10
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 68,
       maxdmg: 128,
       speed: 2.4,
@@ -9798,7 +9987,7 @@ const RANGED_WEAPONS = {
           MAP: 24,
           RAP: 24
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 124,
       maxdmg: 186,
       speed: 3.1,
@@ -9811,7 +10000,7 @@ const RANGED_WEAPONS = {
           Stam: 10,
           RAP: 31
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 103,
       maxdmg: 192,
       speed: 2.6,
@@ -9826,7 +10015,7 @@ const RANGED_WEAPONS = {
           Stam: 5,
           Hit: 10
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 126,
       maxdmg: 189,
       speed: 3.1,
@@ -9840,7 +10029,7 @@ const RANGED_WEAPONS = {
           MAP: 20,
           RAP: 20
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 80,
       maxdmg: 150,
       speed: 2.9,
@@ -9854,7 +10043,7 @@ const RANGED_WEAPONS = {
           RAP: 24,
           Crit: 14
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 151,
       maxdmg: 281,
       speed: 3.2,
@@ -9868,7 +10057,7 @@ const RANGED_WEAPONS = {
           MAP: 22,
           RAP: 22
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 126,
       maxdmg: 234,
       speed: 3,
@@ -9881,7 +10070,7 @@ const RANGED_WEAPONS = {
           Stam: 12,
           Crit: 13
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 104,
       maxdmg: 194,
       speed: 2.4,
@@ -9894,7 +10083,7 @@ const RANGED_WEAPONS = {
           Agi: 14,
           Hit: 13
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 144,
       maxdmg: 268,
       speed: 3.1,
@@ -9908,7 +10097,7 @@ const RANGED_WEAPONS = {
           MAP: 24,
           RAP: 24
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 124,
       maxdmg: 187,
       speed: 2.9,
@@ -9917,7 +10106,7 @@ const RANGED_WEAPONS = {
   },
   25248: {
       name: "Talbuk Hunting Bow",
-      Location: "Bow",
+      type: "Bow",
       mindmg: 102,
       maxdmg: 190,
       speed: 2.7,
@@ -9926,7 +10115,7 @@ const RANGED_WEAPONS = {
   },
   25249: {
       name: "Ranger's Recurved Bow",
-      Location: "Bow",
+      type: "Bow",
       mindmg: 104,
       maxdmg: 195,
       speed: 2.7,
@@ -9935,7 +10124,7 @@ const RANGED_WEAPONS = {
   },
   25260: {
       name: "Archer's Crossbow",
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 96,
       maxdmg: 179,
       speed: 2.7,
@@ -9944,7 +10133,7 @@ const RANGED_WEAPONS = {
   },
   25262: {
       name: "Battle Damaged Crossbow",
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 102,
       maxdmg: 190,
       speed: 2.7,
@@ -9953,7 +10142,7 @@ const RANGED_WEAPONS = {
   },
   25263: {
       name: "Assassins' Silent Crossbow",
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 104,
       maxdmg: 195,
       speed: 2.7,
@@ -9962,7 +10151,7 @@ const RANGED_WEAPONS = {
   },
   25267: {
       name: "Rampant Crossbow",
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 115,
       maxdmg: 215,
       speed: 2.7,
@@ -9971,7 +10160,7 @@ const RANGED_WEAPONS = {
   },
   25278: {
       name: "Nessingwary Longrifle",
-      Location: "Gun",
+      type: "Gun",
       mindmg: 107,
       maxdmg: 200,
       speed: 2.7,
@@ -9985,7 +10174,7 @@ const RANGED_WEAPONS = {
           RAP: 24,
           Crit: 12
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 103,
       maxdmg: 193,
       speed: 2.5,
@@ -9998,7 +10187,7 @@ const RANGED_WEAPONS = {
           Stam: 13,
           Crit: 14
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 120,
       maxdmg: 181,
       speed: 2.7,
@@ -10011,7 +10200,7 @@ const RANGED_WEAPONS = {
           Agi: 15,
           Hit: 10
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 159,
       maxdmg: 239,
       speed: 3,
@@ -10025,7 +10214,7 @@ const RANGED_WEAPONS = {
           RAP: 26,
           Hit: 14
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 108,
       maxdmg: 202,
       speed: 2.4,
@@ -10038,7 +10227,7 @@ const RANGED_WEAPONS = {
           Stam: 13,
           Crit: 16
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 131,
       maxdmg: 244,
       speed: 2.9,
@@ -10051,7 +10240,7 @@ const RANGED_WEAPONS = {
           Stam: 19,
           Crit: 15
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 130,
       maxdmg: 242,
       speed: 2.8,
@@ -10065,7 +10254,7 @@ const RANGED_WEAPONS = {
           RAP: 30,
           Crit: 10
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 90,
       maxdmg: 168,
       speed: 2,
@@ -10080,7 +10269,7 @@ const RANGED_WEAPONS = {
           RAP: 16,
           Crit: 12
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 93,
       maxdmg: 175,
       speed: 2.5,
@@ -10094,7 +10283,7 @@ const RANGED_WEAPONS = {
           MAP: 30,
           RAP: 30
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 135,
       maxdmg: 252,
       speed: 3,
@@ -10108,7 +10297,7 @@ const RANGED_WEAPONS = {
           MAP: 28,
           RAP: 28
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 139,
       maxdmg: 259,
       speed: 3,
@@ -10123,7 +10312,7 @@ const RANGED_WEAPONS = {
           Crit: 12,
           Resil: 12
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 204,
       maxdmg: 307,
       speed: 3.1,
@@ -10137,7 +10326,7 @@ const RANGED_WEAPONS = {
           RAP: 14,
           Crit: 18
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 159,
       maxdmg: 239,
       speed: 3,
@@ -10151,7 +10340,7 @@ const RANGED_WEAPONS = {
           RAP: 30,
           Hit: 16
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 155,
       maxdmg: 288,
       speed: 2.8,
@@ -10165,7 +10354,7 @@ const RANGED_WEAPONS = {
           MAP: 32,
           RAP: 32
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 149,
       maxdmg: 278,
       speed: 2.7,
@@ -10179,7 +10368,7 @@ const RANGED_WEAPONS = {
           MAP: 34,
           RAP: 34
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 169,
       maxdmg: 314,
       speed: 2.9,
@@ -10194,7 +10383,7 @@ const RANGED_WEAPONS = {
           RAP: 28,
           Crit: 7
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 111,
       maxdmg: 207,
       speed: 2.4,
@@ -10209,7 +10398,7 @@ const RANGED_WEAPONS = {
           RAP: 22,
           Hit: 11
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 139,
       maxdmg: 259,
       speed: 2.7,
@@ -10224,7 +10413,7 @@ const RANGED_WEAPONS = {
           RAP: 22,
           Hit: 11
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 144,
       maxdmg: 269,
       speed: 2.8,
@@ -10238,7 +10427,7 @@ const RANGED_WEAPONS = {
           MAP: 28,
           RAP: 28
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 158,
       maxdmg: 295,
       speed: 3,
@@ -10251,7 +10440,7 @@ const RANGED_WEAPONS = {
           Agi: 20,
           Hit: 19
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 177,
       maxdmg: 329,
       speed: 2.9,
@@ -10266,7 +10455,7 @@ const RANGED_WEAPONS = {
           RAP: 38,
           Crit: 16
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 217,
       maxdmg: 327,
       speed: 3,
@@ -10282,7 +10471,7 @@ const RANGED_WEAPONS = {
           RAP: 14,
           Hit: 7
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 97,
       maxdmg: 181,
       speed: 2.5,
@@ -10297,7 +10486,7 @@ const RANGED_WEAPONS = {
           RAP: 32,
           Crit: 6
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 87,
       maxdmg: 163,
       speed: 2.2,
@@ -10312,7 +10501,7 @@ const RANGED_WEAPONS = {
           MAP: 24,
           RAP: 24
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 104,
       maxdmg: 195,
       speed: 2.7,
@@ -10324,7 +10513,7 @@ const RANGED_WEAPONS = {
       stats: {
           Agi: 16
       },
-      Location: "Gun",
+      type: "Gun",
       sockets: [
           "Red",
           "Red"
@@ -10344,7 +10533,7 @@ const RANGED_WEAPONS = {
           Stam: 28,
           Crit: 25
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 201,
       maxdmg: 374,
       speed: 3,
@@ -10359,7 +10548,7 @@ const RANGED_WEAPONS = {
           MAP: 30,
           RAP: 30
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 114,
       maxdmg: 213,
       speed: 2.6,
@@ -10389,7 +10578,7 @@ const RANGED_WEAPONS = {
           MAP: 36,
           RAP: 36
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 112,
       maxdmg: 210,
       speed: 2.8,
@@ -10404,7 +10593,7 @@ const RANGED_WEAPONS = {
           RAP: 22,
           Crit: 10
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 130,
       maxdmg: 242,
       speed: 2.8,
@@ -10413,7 +10602,7 @@ const RANGED_WEAPONS = {
   },
   31323: {
       name: "Don Santos' Famous Hunting Rifle",
-      Location: "Gun",
+      type: "Gun",
       mindmg: 139,
       maxdmg: 259,
       speed: 2.7,
@@ -10428,7 +10617,7 @@ const RANGED_WEAPONS = {
           MAP: 24,
           RAP: 24
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 85,
       maxdmg: 159,
       speed: 2.2,
@@ -10443,7 +10632,7 @@ const RANGED_WEAPONS = {
           Crit: 15,
           Resil: 13
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 211,
       maxdmg: 318,
       speed: 3,
@@ -10456,7 +10645,7 @@ const RANGED_WEAPONS = {
           Agi: 21,
           Stam: 30
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 184,
       maxdmg: 342,
       speed: 2.9,
@@ -10468,7 +10657,7 @@ const RANGED_WEAPONS = {
       stats: {
           Stam: 31
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 120,
       maxdmg: 224,
       speed: 1.9,
@@ -10481,7 +10670,7 @@ const RANGED_WEAPONS = {
           MAP: 26,
           RAP: 26
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 201,
       maxdmg: 374,
       speed: 3,
@@ -10495,7 +10684,7 @@ const RANGED_WEAPONS = {
           Stam: 16,
           Hit: 11
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 144,
       maxdmg: 269,
       speed: 2.8,
@@ -10507,7 +10696,7 @@ const RANGED_WEAPONS = {
       stats: {
           Stam: 27
       },
-      Location: "Gun",
+      type: "Gun",
       sockets: [
           "Yellow"
       ],
@@ -10528,7 +10717,7 @@ const RANGED_WEAPONS = {
           Crit: 16,
           Resil: 13
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 223,
       maxdmg: 336,
       speed: 3,
@@ -10542,7 +10731,7 @@ const RANGED_WEAPONS = {
           RAP: 38,
           ArP: 126
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 181,
       maxdmg: 337,
       speed: 3,
@@ -10556,7 +10745,7 @@ const RANGED_WEAPONS = {
           RAP: 38,
           Haste: 18
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 175,
       maxdmg: 326,
       speed: 2.9,
@@ -10571,7 +10760,7 @@ const RANGED_WEAPONS = {
           RAP: 34,
           ArP: 175
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 204,
       maxdmg: 380,
       speed: 3,
@@ -10605,7 +10794,7 @@ const RANGED_WEAPONS = {
           Crit: 16,
           Resil: 13
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 223,
       maxdmg: 336,
       speed: 3,
@@ -10620,7 +10809,7 @@ const RANGED_WEAPONS = {
           Crit: 16,
           Resil: 13
       },
-      Location: "Gun",
+      type: "Gun",
       mindmg: 223,
       maxdmg: 336,
       speed: 3,
@@ -10636,7 +10825,7 @@ const RANGED_WEAPONS = {
           MAP: 20,
           RAP: 20
       },
-      Location: "Bow",
+      type: "Bow",
       mindmg: 138,
       maxdmg: 207,
       speed: 2.6,
@@ -10651,7 +10840,7 @@ const RANGED_WEAPONS = {
           Crit: 18,
           Hit: 14
       },
-      Location: "Xbow",
+      type: "Xbow",
       mindmg: 182,
       maxdmg: 339,
       speed: 2.8,
@@ -10674,6 +10863,7 @@ const RINGS = {
   },
   23067: {
       name: "Ring of the Cryptstalker",
+      set: 530,
       stats: {
           Agi: 20,
           MAP: 40,
@@ -11405,6 +11595,7 @@ const RINGS = {
 const SHOULDERS = {
   22439: {
       name: "Cryptstalker Spaulders",
+      set: 530,
       stats: {
           Agi: 20,
           Stam: 23,
@@ -11483,6 +11674,7 @@ const SHOULDERS = {
   },
   27713: {
       name: "Pauldrons of Desolation",
+      set: 660,
       stats: {
           Agi: 23,
           Stam: 16,
@@ -11521,6 +11713,7 @@ const SHOULDERS = {
   },
   27797: {
       name: "Wastewalker Shoulderpads",
+      set: 659,
       stats: {
           Agi: 25,
           Stam: 13,
@@ -11541,6 +11734,7 @@ const SHOULDERS = {
   },
   27801: {
       name: "Beast Lord Mantle",
+      set: 650,
       stats: {
           Agi: 25,
           Int: 12,
@@ -11587,6 +11781,7 @@ const SHOULDERS = {
   },
   28333: {
       name: "Gladiator's Chain Spaulders",
+      set: 586,
       stats: {
           Agi: 27,
           Stam: 39,
@@ -11654,6 +11849,7 @@ const SHOULDERS = {
   },
   29084: {
       name: "Demon Stalker Shoulderguards",
+      set: 651,
       stats: {
           Stam: 23,
           Int: 23,
@@ -11743,6 +11939,7 @@ const SHOULDERS = {
   },
   30143: {
       name: "Rift Stalker Mantle",
+      set: 652,
       stats: {
           Agi: 26,
           Stam: 26,
@@ -11829,6 +12026,7 @@ const SHOULDERS = {
   },
   31006: {
       name: "Gronnstalker's Spaulders",
+      set: 669,
       stats: {
           Agi: 34,
           Stam: 39,
@@ -11887,6 +12085,7 @@ const SHOULDERS = {
   },
   31964: {
       name: "Merciless Gladiator's Chain Spaulders",
+      set: 706,
       stats: {
           Agi: 32,
           Stam: 45,
@@ -12007,6 +12206,7 @@ const SHOULDERS = {
   },
   33668: {
       name: "Vengeful Gladiator's Chain Spaulders",
+      set: 723,
       stats: {
           Agi: 35,
           Stam: 49,
@@ -12076,6 +12276,7 @@ const SHOULDERS = {
   },
   34994: {
       name: "Brutal Gladiator's Chain Spaulders",
+      set: '-7',
       stats: {
           Agi: 39,
           Stam: 53,
@@ -12098,6 +12299,7 @@ const SHOULDERS = {
   },
   35380: {
       name: "Stalker's Chain Spaulders",
+      set: 749,
       stats: {
           Agi: 14,
           Stam: 31,
@@ -12303,9 +12505,9 @@ const TRINKETS = {
           RAP: 54
       },
       Location: "PvP Reward",
-      is_proc: "Yes",
-      proc_chance: "13.0%",
       aura: {
+          is_proc: "Yes",
+          proc_chance: "13.0%",
           proc_type: 2
       },
       Phase: 1,
@@ -12317,17 +12519,17 @@ const TRINKETS = {
           Crit: 32
       },
       Location: "Dungeon",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           stats: {
               MAP: 300,
               RAP: 300
           },
           duration: 10,
           cd: 50,
+          proc_chance: 0.1,
           proc_type: 1
       },
-      proc_chance: 0.1,
       Phase: 1,
       icon: "inv_gizmo_khoriumpowercore"
   },
@@ -12398,8 +12600,8 @@ const TRINKETS = {
           Hit: 35
       },
       Location: "Karazhan",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           PPM: 1,
           proc_type: 2
       },
@@ -12413,8 +12615,8 @@ const TRINKETS = {
           RAP: 40
       },
       Location: "Gruul's Lair",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           stats: {
               Haste: 325
           },
@@ -12475,7 +12677,9 @@ const TRINKETS = {
   30448: {
       name: "Talon of Al'ar",
       Location: "The Eye",
-      is_proc: "Yes",
+      aura: {
+          is_proc: "Yes"
+      },
       Phase: 2,
       icon: "spell_fire_soulburn"
   },
@@ -12495,17 +12699,17 @@ const TRINKETS = {
           Hit: 10
       },
       Location: "Serpentshrine Cavern",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           stats: {
               MAP: 340,
               RAP: 340
           },
           duration: 10,
           cd: 45,
+          proc_chance: 0.1,
           proc_type: 1
       },
-      proc_chance: 0.1,
       Phase: 2,
       icon: "spell_nature_unrelentingstorm"
   },
@@ -12538,8 +12742,8 @@ const TRINKETS = {
   31856: {
       name: "Darkmoon Card: Crusade",
       Location: "World Drop",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           duration: 10,
           proc_type: 2
       },
@@ -12549,7 +12753,9 @@ const TRINKETS = {
   31857: {
       name: "Darkmoon Card: Wrath",
       Location: "World Drop",
-      is_proc: "Yes",
+      aura: {
+          is_proc: "Yes"
+      },
       Phase: 1,
       icon: "inv_misc_ticket_tarot_wrath"
   },
@@ -12559,7 +12765,9 @@ const TRINKETS = {
           Stam: 51
       },
       Location: "World Drop",
-      is_proc: "Yes",
+      aura: {
+          is_proc: "Yes"
+      },
       Phase: 1,
       icon: "inv_misc_ticket_tarot_vengeance"
   },
@@ -12569,23 +12777,25 @@ const TRINKETS = {
           Stam: 51
       },
       Location: "World Drop",
-      is_proc: "Yes",
+      aura: {
+          is_proc: "Yes"
+      },
       Phase: 1,
       icon: "inv_misc_ticket_tarot_madness"
   },
   32487: {
       name: "Ashtongue Talisman of Swiftness",
       Location: "Black Temple",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           stats: {
               MAP: 275,
               RAP: 275
           },
           duration: 8,
+          proc_chance: 0.15,
           proc_type: 3
       },
-      proc_chance: 0.15,
       Phase: 3,
       icon: "inv_jewelry_talisman_09"
   },
@@ -12597,8 +12807,8 @@ const TRINKETS = {
           Hit: 20
       },
       Location: "Black Temple",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           duration: 10,
           PPM: 1,
           proc_type: 2
@@ -12691,13 +12901,13 @@ const TRINKETS = {
           Haste: 54
       },
       Location: "Sunwell",
-      is_proc: "Yes",
       aura: {
+          is_proc: "Yes",
           duration: 20,
           cd: 45,
+          proc_chance: "10.0%",
           proc_type: 2
       },
-      proc_chance: "10.0%",
       Phase: 5,
       icon: "inv_jewelry_talisman_16"
   },
@@ -12762,6 +12972,7 @@ const TRINKETS = {
 const WAISTS = {
   22442: {
       name: "Cryptstalker Girdle",
+      set: 530,
       stats: {
           Agi: 16,
           Stam: 22,
@@ -12803,6 +13014,7 @@ const WAISTS = {
   },
   25695: {
       name: "Felstalker Belt",
+      set: 575,
       stats: {
           Agi: 18,
           Int: 17,
@@ -13007,6 +13219,7 @@ const WAISTS = {
   },
   28828: {
       name: "Gronnstalker's Belt",
+      set: 669,
       stats: {
           Agi: 29,
           Stam: 21,
@@ -13068,6 +13281,7 @@ const WAISTS = {
   },
   29516: {
       name: "Ebon Netherscale Belt",
+      set: 616,
       stats: {
           Stam: 21,
           Int: 14,
@@ -13089,6 +13303,7 @@ const WAISTS = {
   },
   29526: {
       name: "Primalstrike Belt",
+      set: 619,
       stats: {
           Agi: 20,
           Stam: 32,
@@ -13432,6 +13647,7 @@ const WAISTS = {
 const WRISTS = {
   22443: {
       name: "Cryptstalker Wristguards",
+      set: 530,
       stats: {
           Agi: 18,
           Stam: 16,
@@ -13445,6 +13661,7 @@ const WRISTS = {
   },
   23494: {
       name: "Fel Iron Chain Bracers",
+      set: 561,
       stats: {
           Agi: 13,
           Stam: 19,
@@ -13493,6 +13710,7 @@ const WRISTS = {
   },
   25697: {
       name: "Felstalker Bracers",
+      set: 575,
       stats: {
           Agi: 18,
           Int: 11,
@@ -13618,6 +13836,7 @@ const WRISTS = {
   },
   29517: {
       name: "Ebon Netherscale Bracers",
+      set: 616,
       stats: {
           Stam: 25,
           Int: 8,
@@ -13638,6 +13857,7 @@ const WRISTS = {
   },
   29527: {
       name: "Primalstrike Bracers",
+      set: 619,
       stats: {
           Agi: 15,
           Stam: 21,
@@ -13953,6 +14173,7 @@ const WRISTS = {
   },
   34443: {
       name: "Gronnstalker's Bracers",
+      set: 669,
       stats: {
           Agi: 23,
           Stam: 16,
@@ -14001,59 +14222,66 @@ const GEAR_MAP = {
   chest: CHESTS,
   feet: FEET,
   gem: GEMS,
-  hands: HANDS,
+  hand: HANDS,
   head: HEADS,
-  legs: LEGS,
-  main_hand: MELEE_WEAPONS,
+  leg: LEGS,
+  mainhand: MELEE_WEAPONS,
   neck: NECKS,
-  off_hand: MELEE_WEAPONS,
+  offhand: MELEE_WEAPONS,
   quiver: QUIVERS,
-  ranged_weapon: RANGED_WEAPONS,
+  range: RANGED_WEAPONS,
   ring1: RINGS,
   ring2: RINGS,
-  shoulders: SHOULDERS,
+  shoulder: SHOULDERS,
   trinket1: TRINKETS,
   trinket2: TRINKETS,
   waist: WAISTS,
-  wrists: WRISTS
+  wrist: WRISTS
 }
 
-const ALLOWED_IN_MAIN_HAND = ['Two', 'Main', 'One']
-const ALLOWED_IN_OFF_HAND = ['Off', 'One']
+const ALLOWED_IN_MAINHAND = ['Two', 'Main', 'One']
+const ALLOWED_IN_OFFHAND = ['Off', 'One']
 
 function getStatsFromGear(gear) {
   const setPieces = {}
 
-  const result =  Object.entries(gear).reduce(({ stats, auras }, [type, id]) => {
+  const result =  Object.entries(gear).reduce(({ stats, auras, special }, [type, id]) => {
     if (!GEAR_MAP[type]) throw Error(`Detected invalid gear type "${type}"`)
     if (!GEAR_MAP[type][id]) throw Error(`Detected invalid gear piece of type "${type}" with id "${id}"`)
     const gearPiece = GEAR_MAP[type][id]
 
-    if (type === 'main_hand') {
-      if (!ALLOWED_IN_MAIN_HAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
-      if (gearPiece.hand === 'Two' && gear.off_hand) throw new Error(`Can't use a two-handed weapon and an offhand weapon!`)
-    } else if (type === 'off_hand' && !ALLOWED_IN_OFF_HAND.includes(gearPiece.hand))
-      throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
+    if (type === 'mainhand') {
+      if (!ALLOWED_IN_MAINHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
+      if (gearPiece.hand === 'Two' && gear.offhand) throw new Error(`Can't use a two-handed weapon and an offhand weapon!`)
+    } else if (type === 'offhand' && !ALLOWED_IN_OFFHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
+    else if (type === 'ammo') {
+        if (gearPiece.type === 'arrow' && gearPiece.range?.type === 'Gun') throw new Error(`Tried to use arrows on a gun`)
+        else if (gearPiece.type === 'bullet' && gearPiece.range?.type !== 'Gun') throw new Error(`Tried to use bullets on a bow/x-bow`)
+    }
 
-    Object.entries(gearPiece.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount) // Accumulate gear piece stats on the general stats
+    if (gearPiece.stats) Object.entries(gearPiece.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount) // Accumulate gear piece stats on the general stats
     if (gearPiece.aura) auras[id] = gearPiece.aura    // If gear piece has an aura, add it to the general auras object
+    if (gearPiece.special) special = { ...special, ...gearPiece.special } // If gear piece has an special, put it in the special object
     if (gearPiece.set) { // If gear belongs to a set, add to the sum of pieces of that set
       if (!SETS[gearPiece.set]) throw Error(`Gear piece "${gearPiece.name}" is linked to set with id ${gearPiece.set}, but no related set could be found.`)
       setPieces[gearPiece.set] = (setPieces[gearPiece.set] || 0) + 1
     }
 
-    return { stats, auras }
-  }, { stats: {}, auras: {} })
+    return { stats, auras, special }
+  }, { stats: {}, auras: {}, special: { multishot_dmg_inc_ratio: 1 } } )
 
   // Add bonus sets, based on amount of pieces of each set.
   result.set_bonuses = Object.entries(SETS).reduce((bonuses, [setId, setData]) => {
     const pieces = setPieces[setId] || 0
 
     Object.entries(setData.bonuses).forEach(([requiredPieces, bonus]) => {
-      const base = bonus.base || 0
       Object.entries(bonus).forEach(([name, val]) => {
-        if (name === 'base') return
-        bonuses[`${setData.abrv}_${requiredPieces}p_${name}`] = base + (pieces >= requiredPieces ? val : 0)
+        if (name === 'stats') Object.entries(val).forEach(([stat, amount]) => result.stats[stat] = (result.stats[stat] || 0) + amount )
+        else if (name === 'aura' && pieces >= requiredPieces) result.auras[setId] = val
+        else {
+          const base = name.match(/_ratio$/) ? 1 : 0
+          bonuses[`${setData.abrv}_${requiredPieces}p_${name}`] = base + (pieces >= requiredPieces ? val : 0)
+        }
       })
     })
 
@@ -14072,42 +14300,46 @@ const DST_BB_COMBO = {
 const PRERAID_BM_GEAR = {
   head: 28275,
   neck: 29381,
-  shoulders: 27801,
+  shoulder: 27801,
   back: 24259,
   chest: 28228,
-  wrists: 29246,
-  main_hand: 27903,
-  hands: 27474,
+  wrist: 29246,
+  mainhand: 27903,
+  hand: 27474,
   waist: 29247,
-  legs: 30538,
+  leg: 30538,
   feet: 25686,
   ring1: 30860,
   ring2: 31077,
   trinket1: 29383,
   trinket2: 28288,
-  ranged_weapon: 29351,
+  range: 29351,
+  ammo: 12654,
+  quiver: 18714
 }
 
 const P1_BM_GEAR = {
   head: 28275,
-  shoulders: 27801,
+  shoulder: 27801,
   chest: 28228,
-  wrists: 29246,
-  hands: 27474,
+  wrist: 29246,
+  hand: 27474,
   waist: 28828,
-  legs: 28741,
+  leg: 28741,
   feet: 28545,
   ring1: 28757,
   ...DST_BB_COMBO,
-  ranged_weapon: 30105
+  range: 30105,
+  ammo: 12654,
+  quiver: 18714
 }
 
 const P1_BM_6HIT_1H_GEAR = {
   ...P1_BM_GEAR,
   neck: 29381,
   back: 24259,
-  main_hand: 27846,
-  off_hand: 28572,
+  mainhand: 27846,
+  offhand: 28572,
   ring2: 28791,
 }
 
@@ -14115,8 +14347,8 @@ const P1_BM_9HIT_1H_GEAR = {
   ...P1_BM_GEAR,
   neck: 28509,
   back: 28672,
-  main_hand: 27846,
-  off_hand: 28572,
+  mainhand: 27846,
+  offhand: 28572,
   ring2: 28649,
 }
 
@@ -14124,7 +14356,7 @@ const P1_BM_6HIT_MW_GEAR = {
   ...P1_BM_GEAR,
   neck: 29381,
   back: 24259,
-  main_hand: 28435,
+  mainhand: 28435,
   ring2: 28791,
 }
 
@@ -14132,185 +14364,196 @@ const P1_BM_9HIT_MW_GEAR = {
   ...P1_BM_GEAR,
   neck: 28509,
   back: 28672,
-  main_hand: 28435,
+  mainhand: 28435,
   ring2: 28649,
 }
 
 const P2_BM_GEAR = {
   head: 30141,
   neck: 30017,
-  shoulders: 30143,
+  shoulder: 30143,
   back: 29994,
   chest: 30139,
-  wrists: 29966,
-  hands: 30140,
+  wrist: 29966,
+  hand: 30140,
   waist: 30040,
-  legs: 29995,
+  leg: 29995,
   feet: 30104,
   ring1: 29997,
   ...DST_BB_COMBO,
-  ranged_weapon: 30105
+  range: 30105,
+  ammo: 33803,
+  quiver: 18714
 }
 
 const P2_BM_6HIT_1H_GEAR = {
   ...P2_BM_GEAR,
-  main_hand: 32944,
-  off_hand: 29948,
+  mainhand: 32944,
+  offhand: 29948,
   ring2: 28791,
 }
 
 const P2_BM_6HIT_MW_GEAR = {
   ...P2_BM_GEAR,
-  main_hand: 29993,
+  mainhand: 29993,
   ring2: 28791,
 }
 
 const P2_BM_9HIT_1H_GEAR = {
   ...P2_BM_GEAR,
-  main_hand: 32944,
-  off_hand: 29948,
+  mainhand: 32944,
+  offhand: 29948,
   ring2: 30052,
 }
 
 const P3_BM_6HIT_1H_GEAR = {
   head: 32235,
   neck: 32591,
-  shoulders: 31006,
+  shoulder: 31006,
   back: 29994,
   chest: 31004,
-  wrists: 32324,
-  main_hand: 30901,
-  off_hand: 30881,
-  hands: 31001,
+  wrist: 32324,
+  mainhand: 30901,
+  offhand: 30881,
+  hand: 31001,
   waist: 30879,
-  legs: 31005,
+  leg: 31005,
   feet: 32366,
   ring1: 29301,
   ring2: 32497,
   trinket1: 28830,
   trinket2: 32505,
-  ranged_weapon: 30906
+  range: 30906,
+  ammo: 31737,
+  quiver: 34105
 }
 
 // SV GEAR SETS
 const P1_SV_DMG_GEAR = {
   head: 28275,
-  shoulders: 27801,
+  shoulder: 27801,
   chest: 28228,
-  wrists: 25697,
-  hands: 27474,
+  wrist: 25697,
+  hand: 27474,
   waist: 28750,
-  legs: 28741,
+  leg: 28741,
   feet: 28545,
   ring1: 28791,
   ring2: 31277,
   ...DST_BB_COMBO,
-  ranged_weapon: 30105
+  range: 30105,
+  ammo: 12654,
+  quiver: 18714
 }
 
 const P1_SV_DMG_3HIT_1H_GEAR = {
   ...P1_SV_DMG_GEAR,
   neck: 28343,
   back: 29382,
-  main_hand: 27846,
-  off_hand: 28572,
+  mainhand: 27846,
+  offhand: 28572,
 }
 
 const P1_SV_DMG_6HIT_1H_GEAR = {
   ...P1_SV_DMG_GEAR,
   neck: 25562,
   back: 28672,
-  main_hand: 27846,
-  off_hand: 28572,
+  mainhand: 27846,
+  offhand: 28572,
 }
 
 const P1_SV_DMG_3HIT_MW_GEAR = {
   ...P1_SV_DMG_GEAR,
   neck: 28343,
   back: 29382,
-  main_hand: 28587,
+  mainhand: 28587,
 }
 
 const P1_SV_DMG_6HIT_MW_GEAR = {
   ...P1_SV_DMG_GEAR,
   neck: 29381,
   back: 28672,
-  main_hand: 28587,
+  mainhand: 28587,
 }
 
 const P1_SV_AGI_GEAR = {
   head: 29081,
   neck: 28343,
-  shoulders: 27776,
+  shoulder: 27776,
   back: 29382,
   chest: 25838,
-  wrists:  25697,
-  hands: 28506,
+  wrist:  25697,
+  hand: 28506,
   waist: 28750,
-  legs: 28741,
+  leg: 28741,
   feet: 28545,
   ring1: 28791,
   ring2: 31277,
   ...DST_BB_COMBO,
-  ranged_weapon: 28772
+  range: 28772,
+  ammo: 12654,
 }
 
 const P1_SV_AGI_1H_GEAR = {
   ...P1_SV_AGI_GEAR,
-  main_hand: 27846,
-  off_hand: 28572,
+  mainhand: 27846,
+  offhand: 28572,
 }
 
 const P1_SV_AGI_MW_GEAR = {
   ...P1_SV_AGI_GEAR,
-  main_hand: 28587,
+  mainhand: 28587,
 }
 
 const P2_SV_GEAR = {
   head: 30141,
   neck: 30017,
-  shoulders: 30143,
+  shoulder: 30143,
   back: 29994,
   chest: 30139,
-  wrists: 29966,
-  hands: 28506,
+  wrist: 29966,
+  hand: 28506,
   waist: 30040,
-  legs: 30142,
+  leg: 30142,
   feet: 30104,
   ring1: 28791,
   ring2: 29298,
   ...DST_BB_COMBO,
-  ranged_weapon: 30105
+  range: 30105,
+  ammo: 33803,
+  quiver: 18714
 }
 
 const P2_SV_1H_GEAR = {
   ...P2_SV_GEAR,
-  main_hand: 29924,
-  off_hand: 29948,
+  mainhand: 29924,
+  offhand: 29948,
 }
 
 const P2_SV_MW_GEAR = {
   ...P2_SV_GEAR,
-  main_hand: 29993,
+  mainhand: 29993,
 }
 
 const P3_SV_1H_GEAR = {
   head: 31003,
   neck: 30017,
-  shoulders: 31006,
+  shoulder: 31006,
   back: 29994,
   chest: 31004,
-  wrists: 32324,
-  main_hand: 30881,
-  off_hand: 30881,
-  hands: 31001,
+  wrist: 32324,
+  mainhand: 30881,
+  offhand: 30881,
+  hand: 31001,
   waist: 30040,
-  legs: 30900,
+  leg: 30900,
   feet: 32366,
   ring1: 29301,
   ring2: 30052,
   ...DST_BB_COMBO,
-  ranged_weapon: 30906
+  range: 30906,
+  ammo: 31737,
+  quiver: 34105
 }
 
 const DEFAULT_GEAR_SETS = [
