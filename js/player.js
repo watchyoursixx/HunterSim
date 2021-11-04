@@ -1,7 +1,6 @@
 /*****************************************************************************/
 /* this script contains relevant calculations for stats and damage of player */
-/* 
-/* -- WatchYourSixx                                                          */
+/*****************************************************************************/
 // initialize constants
 const HitRatingRatio = 15.77;
 const CritRatingRatio = 22.08;
