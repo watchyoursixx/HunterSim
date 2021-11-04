@@ -316,9 +316,11 @@ mainhand_wep.maxdmg = mainhand[gear.mainhand].maxdmg;
 mainhand_wep.flatdmg = GearStats.dmgbonus + EnchantStats.dmgbonus;
 mainhand_wep.basedmgmod = dmgmod;
 
+console.log(HasteRating);
+console.log(ArmorPen);
 console.log(mainhand_wep);
 console.log(range_wep);
-/*
+
 console.log("Str: " + Str);
 console.log("Agi: " + Agi);
 console.log("Stam: " + Stam);
@@ -330,7 +332,7 @@ console.log("Melee Crit Chance: " + MeleeCritChance);
 console.log("Range Crit Chance: " + RangeCritChance);
 console.log("Melee Hit Chance: " + MeleeHitChance);
 console.log("Range Hit Chance: " + RangeHitChance);
-*/
+
 
 function update() {
 }
