@@ -127,7 +127,7 @@ const BUFFS = {
 function getStatsFromBuffs(buffs) {
   const usedBuffs = {}
 
-  return buffs.reduce(({stats, talents}, buffData) => {
+  return buffs.reduce(({stats, special}, buffData) => {
     let buffId = buffData
     let props = {}
 
@@ -137,9 +137,9 @@ function getStatsFromBuffs(buffs) {
     if (usedBuffs[buffId]) throw Error(`Buff with ID ${buffId} is being used more than once!`)
     usedBuffs[buffId] = true
 
-    if (buffId === BOK_ID) talents.kingsMod += 10/100
-    else if (buffId === WF_ID) talents.windfury = true
-    else if (buffId === IMP_SANC_AURA_ID) talents.impSancAura += 2/100
+    if (buffId === BOK_ID) special.kingsMod += 10/100
+    else if (buffId === WF_ID) special.windfury = true
+    else if (buffId === IMP_SANC_AURA_ID) special.impSancAura += 2/100
     else {
       if (!BUFFS[buffId]) throw Error(`Detected invalid buff id ${id}`)
       const buff = BUFFS[buffId]
@@ -157,6 +157,6 @@ function getStatsFromBuffs(buffs) {
         Object.entries(buff.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + (amount + bonus)* ratio)
     }
 
-    return { stats, talents }
-  }, { stats: {}, talents: { impSancAura: 1, kingsMod: 1, windfury: false } })
+    return { stats, special }
+  }, { stats: {}, special: { impSancAura: 1, kingsMod: 1, windfury: false } })
 }

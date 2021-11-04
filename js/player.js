@@ -1,3 +1,7 @@
+/*****************************************************************************/
+/* this script contains relevant calculations for stats and damage of player */
+/* 
+/* -- WatchYourSixx                                                          */
 // initialize constants
 const HitRatingRatio = 15.77;
 const CritRatingRatio = 22.08;
@@ -11,6 +15,7 @@ const HitPenalty = -1;
 const ExpertiseRatio = 3.9;
 const GlanceDmgReduction = 0.75;
 const GlanceChance = 0.24;
+const QuiverSpeed = 1.15;
 
 // initialize stat variables
 var RangeCritRating = 0;
@@ -36,6 +41,9 @@ var MeleeHitChance = 0;
 var MeleeMissChance = 0;
 var Expertise = 0;
 var ExpertiseRating = 0;
+var Mana = 0;
+var MeleeCritDamage = 2;
+var RangeCritDamage = 2;
 
 // stat modifiers
 var strmod = 1;
@@ -47,94 +55,27 @@ var mapmod = 1;
 var rapmod = 1;
 var dmgmod = 1;
 var rangedmgmod = 1;
+var relentless_crit_mod = 1;
 
 // temp settings to test with
 var selectedRace = 0; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
 var offhandDisabled = false;
 
 // initial variables for itemid's (like a profile)
-const gear = {head:0,neck:0,shoulder:0,back:0,chest:0,wrist:0,hand:0,waist:0,leg:0,feet:0,ring1:0,ring2:0,trinket1:0,trinket2:0,mainhand:28587,offhand:0,range:15808};
-
-// included here to test usage from same set of code -- will remove later
-var races = [
-   {
-      name: 'Orc',
-      str: 67,
-      agi: 148,
-      stam: 110,
-      int: 74,
-      spi: 86,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
-      hitchance: 0,
-      expertise: 0,
-   },
-];
-// adding in test range list
-const range = {
-    15808:  {
-                name: 'Fine Light Crossbow',
-                mindmg: 29,
-                maxdmg: 29,
-                speed: 2.7,
-                type: 'crossbow',
-                itemid: 15808,
-    }
-};
-// adding in test mainhand list
-const mainhand = {
-    28587:  {
-                name: 'Legacy',
-                Agi: 40,
-                Stam: 46,
-                MAP: 80,
-                RAP: 80,
-                MP5: 8,
-                mindmg: 319,
-                maxdmg: 479,
-                speed: 3.5,
-                itemid: 28587,
-                type: 'axe',
-                hand: 'two',
-    }
-};
-
-function checkWeaponType(){
-   
-   let equippedRangeType = range[gear.range].type; 
-   let equippedMHType = mainhand[gear.mainhand].type;
-   // check for gun and dwarf, or bow and troll
-   if ((equippedRangeType === 'gun' && selectedRace === 1) || (equippedRangeType === 'bow' && selectedRace === 4)) {
-      races[selectedRace].critchance = 1;
-   } else {
-      races[selectedRace].critchance = 0;
+const gear = {head:0,neck:0,shoulder:0,back:0,chest:0,wrist:0,hand:0,waist:0,leg:0,feet:0,ring1:0,ring2:0,trinket1:0,trinket2:0,mainhand:28587,offhand:0,range:15808,ammo:28506,quiver:0};
+var ammo = {
+   28506: {
+      name: "Adamantite Stinger",
+      dps: 43.0,
+      location: "Crafted",
+      phase: 3,
    }
-   // check for axe and orc
-   if (equippedMHType === 'axe' && selectedRace === 0) {
-      races[selectedRace].expertise = 5;
-   } else {
-      races[selectedRace].expertise = 0;
-   }
-   // disable offhand if two hand selected
-   offhandDisabled = (mainhand[gear.mainhand].hand === 'two') ? true:false; 
 }
-      
-// gear, buff, talent objects to sum out of combat gear and buff stats
-var GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0, MP5:0, Resil:0, ArP:0, Haste:0, Exp:0}; 
-
-function addGear(){
-      for(let prop in GearStats) {
-
-        GearStats[prop] += range[gear.range][prop] || 0;
-        GearStats[prop] += mainhand[gear.mainhand][prop] || 0;
-      
-      }
-}
-
-var BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:155, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0}; // added 155 for hawk for now
-var TalentStats = {CritChance:0, RangeCritChance:0, HitChance:0, agimod:1, mapmod:1, rapmod:1, intmod:1, dmgmod:1, rangedmgmod:1};
-var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, RangeCrit:0, Hit:0, RangeHit:0, MP5:0, Resil:0, ArP:0, Haste:0, dmgbonus:0, rangedmgbonus:0}; 
+// initialize variables for use - temp
+const buffs = {
+   stats: { MAP:264, RAP:264 },
+   special: { kingsMod: 1.1 }
+};
 var talents = {
    imp_hawk: 1.15,
    end_training: 1.01,
@@ -201,10 +142,109 @@ var talents = {
    master_tac: 0,
    readiness: 0
  }
-
-// test function for initializing base stats
-function calcBaseStats() {
+// included here to test usage from same set of code -- will remove later
+var races = [
+   {
+      name: 'Orc',
+      str: 67,
+      agi: 148,
+      stam: 110,
+      int: 74,
+      spi: 86,
+      mAP: 120,
+      rAP: 130,
+      critchance: 0,
+      hitchance: 0,
+      expertise: 0,
+   },
+];
+// adding in test range list
+const range = {
+    15808:  {
+                name: 'Fine Light Crossbow',
+                mindmg: 29,
+                maxdmg: 29,
+                speed: 2.7,
+                type: 'crossbow',
+                itemid: 15808,
+    }
+};
+// adding in test mainhand list
+const mainhand = {
+    28587:  {
+                name: 'Legacy',
+                Agi: 40,
+                Stam: 46,
+                MAP: 80,
+                RAP: 80,
+                MP5: 8,
+                mindmg: 319,
+                maxdmg: 479,
+                speed: 3.5,
+                itemid: 28587,
+                type: 'axe',
+                hand: 'two',
+    }
+};
+/********************/
+/* Start functions  */
+/********************/
+function checkWeaponType(){
    
+   let equippedRangeType = range[gear.range].type; 
+   let equippedMHType = mainhand[gear.mainhand].type;
+   // check for gun and dwarf, or bow and troll
+   if ((equippedRangeType === 'gun' && selectedRace === 1) || (equippedRangeType === 'bow' && selectedRace === 4)) {
+      races[selectedRace].critchance = 1;
+   } else {
+      races[selectedRace].critchance = 0;
+   }
+   // check for axe and orc ** change later to 3 for orc
+   if (equippedMHType === 'axe' && selectedRace === 0) {
+      races[selectedRace].expertise = 5;
+   } else {
+      races[selectedRace].expertise = 0;
+   }
+   // disable offhand if two hand selected
+   offhandDisabled = (mainhand[gear.mainhand].hand === 'two') ? true:false; 
+}
+      
+// gear, buff, talent objects to sum out of combat gear and buff stats
+var GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0, MP5:0, Resil:0, ArP:0, Haste:0, Exp:0, dmgbonus:0, rangedmgbonus:0}; 
+
+function addGear(){
+      for(let prop in GearStats) {
+
+        GearStats[prop] += range[gear.range][prop] || 0;
+        GearStats[prop] += mainhand[gear.mainhand][prop] || 0;
+      
+      }
+}
+
+var BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:155, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0}; // added 155 for hawk for now
+function addBuffs(){
+      for(let prop in BuffStats) {
+         let stats = buffs.stats;
+         BuffStats[prop] += stats[prop] || 0;
+
+      }
+}
+
+// var TalentStats = {CritChance:0, RangeCritChance:0, HitChance:0, agimod:1, mapmod:1, rapmod:1, intmod:1, dmgmod:1, rangedmgmod:1};
+var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, RangeCrit:0, Hit:0, RangeHit:0, MP5:0, Resil:0, ArP:0, Haste:0, dmgbonus:0, rangedmgbonus:0}; 
+
+// initialize base stats - called when talents, gear/enchants, static buffs/consumes, race are changed
+function calcBaseStats() {
+   // todo add slaying
+  dmgmod = (1 + talents.focused_fire / 100);
+  rangedmgmod = (1 + talents.focused_fire / 100) * (talents.ranged_weap_spec);
+
+  strmod = buffs.special.kingsMod;
+  agimod = buffs.special.kingsMod * (1 + talents.combat_exp) * talents.light_reflexes;
+  stammod = buffs.special.kingsMod;
+  intmod = buffs.special.kingsMod * (1 + talents.combat_exp * 3);
+  spimod = buffs.special.kingsMod;
+
   // Main Stats
   Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str) * strmod);
   Agi  = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi) * agimod);
@@ -220,15 +260,17 @@ function calcBaseStats() {
    let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
   MeleeCritRating = critrating;
   RangeCritRating = critrating + EnchantStats.RangeCrit;
-   let crit = BaseCritChance + Agi / AgiToCrit + BuffStats.CritChance + TalentStats.CritChance;
+   let crit = BaseCritChance + Agi / AgiToCrit + BuffStats.CritChance + talents.killer_instinct;
   MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
-  RangeCritChance = crit + RangeCritRating / CritRatingRatio + TalentStats.RangeCritChance + races[selectedRace].critchance;
-   
+  RangeCritChance = crit + RangeCritRating / CritRatingRatio + talents.lethal_shots + races[selectedRace].critchance;
+  // todo add slaying
+  MeleeCritDamage = 2 * (relentless_crit_mod * 1);
+  RangeCritDamage = 1 + (talents.mortal_shots) * (2 * 1 * relentless_crit_mod - 1);
   // Hit rating and hit chance - split between ranged and melee because of hit scope and crit scope and racial
    let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
   MeleeHitRating = hitrating;
   RangeHitRating = hitrating + EnchantStats.RangeHit;
-   let hit = BaseHitChance + TalentStats.HitChance;
+   let hit = BaseHitChance + talents.surefooted;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
    let penalty = (MeleeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
@@ -238,5 +280,138 @@ function calcBaseStats() {
   // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
   Expertise = Math.floor(GearStats.Exp / ExpertiseRatio + races[selectedRace].expertise);
   DodgeChance = 6.5 - Expertise * 0.25;
+
+  // to do armorpen, mp5, haste, speed, base damage, mana, hp, spirit mp5
+  ArmorPen = GearStats.ArP;
+  ManaPer5 = BuffStats.MP5 + GearStats.MP5 + EnchantStats.MP5;
+  // base of 3253 always then add int
+  Mana = 3253 + (Int - 10) * 15;
+  
+  HasteRating = BuffStats.Haste + GearStats.Haste + EnchantStats.Haste;
+  
+  BaseSpeed = range[gear.range].speed / QuiverSpeed / talents.serp_swift;
   
 }
+
+function initialize(){
+   checkWeaponType();
+   addGear();
+   addBuffs();
+   calcBaseStats();
+}
+// call above functions
+initialize();
+// initialize range_wep obj
+var range_wep = {};
+range_wep.speed = range[gear.range].speed;
+range_wep.mindmg = range[gear.range].mindmg;
+range_wep.maxdmg = range[gear.range].maxdmg;
+range_wep.ammodps = ammo[gear.ammo].dps;
+range_wep.flatdmg = GearStats.rangedmgbonus + GearStats.dmgbonus + EnchantStats.rangedmgbonus + EnchantStats.dmgbonus;
+range_wep.basedmgmod = rangedmgmod;
+// initialize mainhand_wep obj
+var mainhand_wep = {};
+mainhand_wep.speed = mainhand[gear.mainhand].speed;
+mainhand_wep.mindmg = mainhand[gear.mainhand].mindmg;
+mainhand_wep.maxdmg = mainhand[gear.mainhand].maxdmg;
+mainhand_wep.flatdmg = GearStats.dmgbonus + EnchantStats.dmgbonus;
+mainhand_wep.basedmgmod = dmgmod;
+
+console.log(mainhand_wep);
+console.log(range_wep);
+/*
+console.log("Str: " + Str);
+console.log("Agi: " + Agi);
+console.log("Stam: " + Stam);
+console.log("Int: " + Int);
+console.log("Spi: " + Spi);
+console.log("Base MAP: " + BaseMAP);
+console.log("Base RAP: " + BaseRAP);
+console.log("Melee Crit Chance: " + MeleeCritChance);
+console.log("Range Crit Chance: " + RangeCritChance);
+console.log("Melee Hit Chance: " + MeleeHitChance);
+console.log("Range Hit Chance: " + RangeHitChance);
+*/
+
+function update() {
+}
+// handling for auras
+function updateAuras() {
+}
+// handling for mana changes per gain/loss
+function updateMana() {
+}
+// handling for dynamic armor reduction - BL, badge, armor debuffs 
+function updateArmorReduction() {
+}
+
+// handling for RAP changes from auras - remember target specific AP needs to be separate for pet calcs
+function updateRAP() {
+}
+// handling for MAP changes from auras
+function updateMAP() {
+}
+// handling for Agi changes from mongoose proc, badge of tenacity, and twisting grace of air if selected
+function updateAgi() {
+}
+// handling for updating range speed - remember auto shot CD doesn't change until current CD ends
+function updateRangeSpeed() {
+}
+// handling for updating mainhand speed
+function updateMainhandSpeed() {
+}
+// handling for dmg mod changes from auras - bestial wrath, ferocious insp, blood frenzy
+function updateDamageMod() {
+}
+// maybe not bother with for TBC, just keep in mind due to ZHC for classic
+function updateBonusDamage() {
+}
+// handling for crit changes from master tactician, agi gains, and imp crusader debuff
+function updateCritChance() {
+}
+// check warrior sim for how it's implemented - looks like simple timer reduction each call
+function steptimer() {
+}
+// related to above
+function stepitemtimer() {
+}
+// related to above - specifically timing of auras
+function stepauras() {
+}
+// ending auras im guessing for stat changes
+function endauras() {
+}
+// hit table calc for mainhand
+function rollMainhandWep(mainhand_wep) { 
+}
+// hit table calc for ranged
+function rollRangeWep(range_wep) {
+}
+// hit table for spells - need condition for dodge for melee only
+function rollSpell(spell) {
+}
+// attack with mainhand calc
+function attackMainhand(mainhand_wep) {
+}
+// attack with auto shot calc
+function attackRange(range_wep) {
+}
+// cast spell (possibly add individual spells)
+function cast(spell) {
+}
+// final damage calculation after rolls
+function dealdamage(dmg, result, weapon, spell) {
+}
+// handling for procs by crits
+function proccrit() {
+}
+// handling for procs by normal hits - melee or ranegd
+function procattack(spell, weapon, result) {
+}
+// handling for magic dmg procs from trinkets (think rumulo's)
+function magicproc() {
+}
+// handling for physical dmg procs from trinkets
+function physproc() {
+}
+
