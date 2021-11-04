@@ -122,6 +122,13 @@ const BUFFS = {
       HitChance: 1
     }
   },
+  31025: {
+    name: 'Braided Eternium Chain',
+    icon: 'inv_jewelry_necklace_08',
+    stats: {
+      Crit: 28
+    }
+  }
 }
 
 function getStatsFromBuffs(buffs) {
