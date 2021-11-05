@@ -2735,12 +2735,16 @@ const GEMS = {
   25894: {
       name: "Swift Skyfire Diamond",
       meta: "Y",
-      stats: {
-          MAP: 24,
-          RAP: 24
+      activation: gemsUsed => {
+        const bonus = { swift_metagem_run_speed_increase: 1.00 }
+
+        if (gemsUsed.yellow >= 2 && gemsUsed.red >= 1) {
+            bonus.stats = { MAP: 24, RAP: 24 }
+            bonus.swift_metagem_run_speed_increase = 1.08
+        }
+
+        return bonus
       },
-      meta_red_req: 1,
-      meta_yellow_req: 2,
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_07"
@@ -2748,11 +2752,14 @@ const GEMS = {
   25895: {
       name: "Enigmatic Skyfire Diamond",
       meta: "Y",
-      stats: {
-          Crit: 12
+      activation: gemsUsed => {
+        const bonus = {}
+
+        if (gemsUsed.red > gemsUsed.yellow)
+            bonus.stats = { Crit: 12 }
+
+        return bonus
       },
-      meta_more_color_req: "Red",
-      meta_less_color_req: "Yellow",
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_07"
@@ -2760,10 +2767,14 @@ const GEMS = {
   25896: {
       name: "Powerful Earthstorm Diamond",
       meta: "Y",
-      stats: {
-          Stam: 18
+      activation: gemsUsed => {
+        const bonus = {}
+
+        if (gemsUsed.blue >= 3)
+            bonus.stats = { Stam: 18 }
+
+        return bonus
       },
-      meta_blue_req: 3,
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_06"
@@ -2771,12 +2782,14 @@ const GEMS = {
   25901: {
       name: "Insightful Earthstorm Diamond",
       meta: "Y",
-      stats: {
-          Int: 12
+      activation: gemsUsed => {
+        const bonus = {}
+
+        if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2)
+            bonus.stats = { Int: 12 }
+
+        return bonus
       },
-      meta_red_req: 2,
-      meta_blue_req: 2,
-      meta_yellow_req: 2,
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_06"
@@ -2790,7 +2803,8 @@ const GEMS = {
           Resil: 10
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_misc_gem_topaz_01"
   },
   27809: {
@@ -2804,7 +2818,8 @@ const GEMS = {
           Crit: 4
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Rare",
+      unique: true,
       icon: "inv_misc_gem_deepperidot_01"
   },
   28290: {
@@ -2829,7 +2844,8 @@ const GEMS = {
           RAP: 14
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Rare",
+      unique: true,
       icon: "inv_misc_gem_bloodstone_02"
   },
   28459: {
@@ -2920,12 +2936,16 @@ const GEMS = {
   28556: {
       name: "Swift Windfire Diamond",
       meta: "Y",
-      stats: {
-          MAP: 20,
-          RAP: 20
+      activation: gemsUsed => {
+        const bonus = { swift_metagem_run_speed_increase: 1.00 }
+
+        if (gemsUsed.yellow >= 2 && gemsUsed.red >= 1) {
+            bonus.stats = { MAP: 20, RAP: 20 }
+            bonus.swift_metagem_run_speed_increase = 1.08
+        }
+
+        return bonus
       },
-      meta_red_req: 1,
-      meta_yellow_req: 2,
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_07"
@@ -2954,7 +2974,8 @@ const GEMS = {
           Stam: 6
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_nightseye_03"
   },
   30550: {
@@ -2968,7 +2989,8 @@ const GEMS = {
           MP5: 2
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_talasite_03"
   },
   30553: {
@@ -2983,7 +3005,8 @@ const GEMS = {
           Hit: 4
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30556: {
@@ -2997,7 +3020,8 @@ const GEMS = {
           Hit: 4
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30574: {
@@ -3012,7 +3036,8 @@ const GEMS = {
           RAP: 10
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_nightseye_03"
   },
   30582: {
@@ -3027,7 +3052,8 @@ const GEMS = {
           Crit: 5
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30583: {
@@ -3041,7 +3067,8 @@ const GEMS = {
           Int: 5
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_talasite_03"
   },
   30589: {
@@ -3055,7 +3082,8 @@ const GEMS = {
           MP5: 2
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_talasite_03"
   },
   30591: {
@@ -3070,7 +3098,8 @@ const GEMS = {
           Resil: 5
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30592: {
@@ -3084,7 +3113,8 @@ const GEMS = {
           Resil: 5
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_talasite_03"
   },
   30602: {
@@ -3098,7 +3128,8 @@ const GEMS = {
           Crit: 5
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_talasite_03"
   },
   31118: {
@@ -3112,8 +3143,9 @@ const GEMS = {
           MAP: 10,
           RAP: 10
       },
-      Phase: 3,
-      quality: "Rare",
+      Phase: 1,
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_nightseye_03"
   },
   31862: {
@@ -3215,7 +3247,7 @@ const GEMS = {
           Agi: 10
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_crimsonspinel_02"
   },
   32200: {
@@ -3251,7 +3283,7 @@ const GEMS = {
           Int: 10
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32205: {
@@ -3263,7 +3295,7 @@ const GEMS = {
           Crit: 10
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32206: {
@@ -3275,7 +3307,7 @@ const GEMS = {
           Hit: 10
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32209: {
@@ -3287,7 +3319,7 @@ const GEMS = {
           Resil: 10
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32212: {
@@ -3394,12 +3426,16 @@ const GEMS = {
   32409: {
       name: "Relentless Earthstorm Diamond",
       meta: "Y",
-      stats: {
-          Agi: 12
+      activation: gemsUsed => {
+        const bonus = { relentless_metagem_crit_dmg_inc: 1.00 }
+
+        if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
+            bonus.stats = { Agi: 12 }
+            bonus.relentless_metagem_crit_dmg_inc = 1.03
+        }
+
+        return bonus
       },
-      meta_red_req: 2,
-      meta_blue_req: 2,
-      meta_yellow_req: 2,
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_06"
@@ -3407,9 +3443,22 @@ const GEMS = {
   32410: {
       name: "Thundering Skyfire Diamond",
       meta: "Y",
-      meta_red_req: 2,
-      meta_blue_req: 2,
-      meta_yellow_req: 2,
+      activation: gemsUsed => {
+        const bonus = {}
+
+        if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
+            bonus.aura = {
+                stats: { Haste: 240 },
+                is_proc: 'Y',
+                cd: 40,
+                PPM: 1,
+                proc_type: 2,
+                duration: 6,
+            }
+        }
+
+        return bonus
+      },
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_07"
@@ -3425,8 +3474,9 @@ const GEMS = {
           MAP: 8,
           RAP: 8
       },
-      Phase: 1,
+      Phase: 2,
       quality: "Rare",
+      unique: true,
       icon: "inv_jewelcrafting_shadowsongamethyst_01"
   },
   32635: {
@@ -3439,8 +3489,9 @@ const GEMS = {
           Stam: 6,
           Int: 4
       },
-      Phase: 1,
+      Phase: 2,
       quality: "Rare",
+      unique: true,
       icon: "inv_misc_gem_deepperidot_03"
   },
   32637: {
@@ -3454,19 +3505,20 @@ const GEMS = {
           RAP: 8,
           Crit: 4
       },
-      Phase: 1,
+      Phase: 2,
       quality: "Rare",
+      unique: true,
       icon: "inv_misc_gem_opal_01"
   },
   32640: {
       name: "Potent Unstable Diamond",
       meta: "Y",
-      stats: {
-          MAP: 24,
-          RAP: 24
+      activation: gemsUsed => {
+        const bonus = {}
+        if (gemsUsed.blue > gemsUsed.yellow) bonus.stats = { MAP: 24, RAP: 24 }
+
+        return bonus
       },
-      meta_more_color_req: "Blue",
-      meta_less_color_req: "Yellow",
       Phase: 1,
       quality: "Rare",
       icon: "inv_misc_gem_diamond_07"
@@ -3481,7 +3533,8 @@ const GEMS = {
           RAP: 24
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_crimsonspinel_02"
   },
   33135: {
@@ -3493,7 +3546,8 @@ const GEMS = {
           Stam: 18
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
   33138: {
@@ -3505,7 +3559,8 @@ const GEMS = {
           Resil: 12
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_lionseye_02"
   },
   33143: {
@@ -3517,7 +3572,8 @@ const GEMS = {
           Crit: 12
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_jewelcrafting_lionseye_02"
   },
   33782: {
@@ -3543,7 +3599,8 @@ const GEMS = {
           Stam: 15
       },
       Phase: 4,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_misc_gem_pearl_07"
   },
   35487: {
@@ -3556,10 +3613,10 @@ const GEMS = {
           RAP: 20
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_crimsonspinel_02"
   },
-  38545: {
+  28362: {
       name: "Bold Ornate Ruby",
       colors: [
           "red"
@@ -3569,10 +3626,11 @@ const GEMS = {
           RAP: 20
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_misc_gem_ruby_02"
   },
-  38547: {
+  28363: {
       name: "Inscribed Ornate Topaz",
       colors: [
           "red",
@@ -3584,10 +3642,11 @@ const GEMS = {
           Crit: 5
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_misc_gem_opal_01"
   },
-  38550: {
+  28119: {
       name: "Smooth Ornate Dawnstone",
       colors: [
           "yellow"
@@ -3596,7 +3655,8 @@ const GEMS = {
           Crit: 10
       },
       Phase: 1,
-      quality: "Rare",
+      quality: "Epic",
+      unique: true,
       icon: "inv_misc_gem_topaz_01"
   }
 }
@@ -4550,8 +4610,8 @@ const HEADS = {
       },
       Location: "Quest Reward",
       sockets: [
+          "Red",
           "Meta",
-          "Red"
       ],
       socketBonus: {
           Agi: 4
@@ -4571,8 +4631,8 @@ const HEADS = {
       },
       Location: "Dungeon",
       sockets: [
+          "Yellow",
           "Meta",
-          "Yellow"
       ],
       socketBonus: {
           Hit: 4
@@ -4606,8 +4666,8 @@ const HEADS = {
       },
       Location: "Dungeon",
       sockets: [
+          "Blue",
           "Meta",
-          "Blue"
       ],
       socketBonus: {
           MAP: 8,
@@ -4628,8 +4688,8 @@ const HEADS = {
       },
       Location: "Dungeon",
       sockets: [
+          "Red",
           "Meta",
-          "Red"
       ],
       socketBonus: {
           MP5: 2
@@ -4670,8 +4730,8 @@ const HEADS = {
       },
       Location: "Dungeon",
       sockets: [
+          "Yellow",
           "Meta",
-          "Yellow"
       ],
       socketBonus: {},
       Phase: 1,
@@ -4763,8 +4823,8 @@ const HEADS = {
       },
       Location: "Karazhan",
       sockets: [
+          "Yellow",
           "Meta",
-          "Yellow"
       ],
       socketBonus: {
           Agi: 4
@@ -4825,8 +4885,8 @@ const HEADS = {
       },
       Location: "SerpentShrine Cavern",
       sockets: [
+          "Yellow",
           "Meta",
-          "Yellow"
       ],
       socketBonus: {
           Stam: 6
@@ -4874,8 +4934,8 @@ const HEADS = {
       },
       Location: "Mount Hyjal",
       sockets: [
+          "Red",
           "Meta",
-          "Red"
       ],
       socketBonus: {
           Crit: 4
@@ -4990,8 +5050,8 @@ const HEADS = {
       },
       Location: "Badge Reward",
       sockets: [
+          "Red",
           "Meta",
-          "Red"
       ],
       socketBonus: {},
       Phase: 3,
@@ -5008,8 +5068,8 @@ const HEADS = {
       },
       Location: "Badge Reward",
       sockets: [
+          "Yellow",
           "Meta",
-          "Yellow"
       ],
       socketBonus: {},
       Phase: 1,
@@ -5048,8 +5108,8 @@ const HEADS = {
       },
       Location: "Black Temple",
       sockets: [
+          "Red",
           "Meta",
-          "Red"
       ],
       socketBonus: {
           MP5: 2
@@ -5181,8 +5241,8 @@ const HEADS = {
       },
       Location: "Sunwell",
       sockets: [
+          "Red",
           "Meta",
-          "Red"
       ],
       socketBonus: {
           Agi: 4
@@ -7130,6 +7190,27 @@ const MELEE_WEAPONS = {
       icon: "inv_weapon_shortblade_38"
   },
   28572: {
+    name: 'Blade of the Unrequited',
+    stats: {
+      MAP: 18,
+      RAP: 18,
+      Crit: 9
+    },
+    Location: 'Karazhan',
+    sockets: [
+      "Red",
+      "Yellow",
+      "Blue"
+  ],
+    type: 1,
+    speed: 1.6,
+    mindmg: 112,
+    maxdmg: 168,
+    hand: 'One',
+    Phase: 1,
+    icon: 'inv_weapon_shortblade_39'
+  },
+  34894: {
       name: "Blade of Serration",
       stats: {
           Stam: 30,
@@ -7144,7 +7225,7 @@ const MELEE_WEAPONS = {
       maxdmg: 241,
       hand: "One",
       Phase: 5,
-      icon: "inv_weapon_shortblade_39"
+      icon: "inv_weapon_shortblade_78"
   },
   28584: {
       name: "Big Bad Wolf's Paw",
@@ -12507,7 +12588,7 @@ const TRINKETS = {
       Location: "PvP Reward",
       aura: {
           is_proc: "Yes",
-          proc_chance: "13.0%",
+          proc_chance: 0.13,
           proc_type: 2
       },
       Phase: 1,
@@ -12905,7 +12986,7 @@ const TRINKETS = {
           is_proc: "Yes",
           duration: 20,
           cd: 45,
-          proc_chance: "10.0%",
+          proc_chance: 0.1,
           proc_type: 2
       },
       Phase: 5,
@@ -13217,7 +13298,7 @@ const WAISTS = {
       Phase: 1,
       icon: "inv_belt_20"
   },
-  28828: {
+  34549: {
       name: "Gronnstalker's Belt",
       set: 669,
       stats: {
@@ -13604,7 +13685,7 @@ const WAISTS = {
       Phase: 3,
       icon: "inv_belt_20"
   },
-  34549: {
+  28828: {
       name: "Gronn-Stitched Girdle",
       stats: {
           Stam: 27,
@@ -14242,24 +14323,66 @@ const GEAR_MAP = {
 const ALLOWED_IN_MAINHAND = ['Two', 'Main', 'One']
 const ALLOWED_IN_OFFHAND = ['Off', 'One']
 
+function sumStats(src, dst) {
+    Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + amount)
+}
+
 function getStatsFromGear(gear) {
   const setPieces = {}
+  let usedMeta
+  const gemCount = { red: 0, yellow: 0, blue: 0 }
+  const usedUniqueGems = []
 
-  const result =  Object.entries(gear).reduce(({ stats, auras, special }, [type, id]) => {
+  const result =  Object.entries(gear).reduce(({ stats, auras, special }, [type, gearData]) => {
+    const { id, gems = [], enchant } = gearData
+
+    if (id === 0) return
     if (!GEAR_MAP[type]) throw Error(`Detected invalid gear type "${type}"`)
     if (!GEAR_MAP[type][id]) throw Error(`Detected invalid gear piece of type "${type}" with id "${id}"`)
+
     const gearPiece = GEAR_MAP[type][id]
+    let isBonusFulfilled = gems.filter(id => id !== 0).length === (gearPiece.sockets?.length || 0)
+
+    const sockets = gearPiece.sockets || 0
+    if (gems.length > sockets)
+      throw new Error(`Tried to put ${gems.length} gems in "${gearPiece.name}", which only has ${sockets} sockets.`)
+
+    // Loop over gems and add stats, checking bonuses
+    gems.forEach((gemId, i) => {
+      if (gemId === 0) return;
+      if (!GEMS[gemId]) throw new Error(`Detected invalid gem with id ${gemId}`)
+
+      const gem = GEMS[gemId]
+      const socket = gearPiece.sockets[i]
+
+      if (gem.unique) {
+          if (usedUniqueGems.includes(gemId)) throw new Error(`Tried to used unique gem "${gem.name}" more than once.`)
+          else usedUniqueGems.push(gemId)
+      }
+
+      if (gem.meta === 'Y') {
+        if (socket !== 'Meta') throw new Error(`Tried to fit non-meta gem in meta socket`)
+        usedMeta = gemId
+      } else {
+        sumStats(gem.stats, stats)
+        gem.colors.forEach(color => ++gemCount[color])
+        if (!gem.colors.includes(socket.toLowerCase())) isBonusFulfilled = false
+      }
+    })
+
+    if (isBonusFulfilled && gearPiece.socketBonus) sumStats(gearPiece.socketBonus, stats)
+
 
     if (type === 'mainhand') {
       if (!ALLOWED_IN_MAINHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
       if (gearPiece.hand === 'Two' && gear.offhand) throw new Error(`Can't use a two-handed weapon and an offhand weapon!`)
     } else if (type === 'offhand' && !ALLOWED_IN_OFFHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
     else if (type === 'ammo') {
-        if (gearPiece.type === 'arrow' && gearPiece.range?.type === 'Gun') throw new Error(`Tried to use arrows on a gun`)
-        else if (gearPiece.type === 'bullet' && gearPiece.range?.type !== 'Gun') throw new Error(`Tried to use bullets on a bow/x-bow`)
+      if (gearPiece.type === 'arrow' && gearPiece.range?.type === 'Gun') throw new Error(`Tried to use arrows on a gun`)
+      else if (gearPiece.type === 'bullet' && gearPiece.range?.type !== 'Gun') throw new Error(`Tried to use bullets on a bow/x-bow`)
     }
 
-    if (gearPiece.stats) Object.entries(gearPiece.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount) // Accumulate gear piece stats on the general stats
+    if (gearPiece.stats) sumStats(gearPiece.stats, stats)
     if (gearPiece.aura) auras[id] = gearPiece.aura    // If gear piece has an aura, add it to the general auras object
     if (gearPiece.special) special = { ...special, ...gearPiece.special } // If gear piece has an special, put it in the special object
     if (gearPiece.set) { // If gear belongs to a set, add to the sum of pieces of that set
@@ -14270,13 +14393,23 @@ function getStatsFromGear(gear) {
     return { stats, auras, special }
   }, { stats: {}, auras: {}, special: { multishot_dmg_inc_ratio: 1 } } )
 
-  // Add bonus sets, based on amount of pieces of each set.
+  // Loop over metagems, and add active/inactive bonuses
+  Object.entries(GEMS).filter(([, gemData]) => gemData.meta === 'Y').forEach(([gemId, gemData]) => {
+      const metaBonus = gemData.activation(gemId === usedMeta ? gemsUsed : { yellow: 0, red: 0, blue: 0 })
+      Object.entries(metaBonus).forEach(([bonus, val]) => {
+          if (bonus === 'aura') auras[gemId] = val
+          else if (bonus === 'stats') sumStats(val, result.stats)
+          else result.special[bonus] = val
+      })
+  })
+
+    // Add bonus sets, based on amount of pieces of each set.
   result.set_bonuses = Object.entries(SETS).reduce((bonuses, [setId, setData]) => {
     const pieces = setPieces[setId] || 0
 
     Object.entries(setData.bonuses).forEach(([requiredPieces, bonus]) => {
       Object.entries(bonus).forEach(([name, val]) => {
-        if (name === 'stats') Object.entries(val).forEach(([stat, amount]) => result.stats[stat] = (result.stats[stat] || 0) + amount )
+        if (name === 'stats' && pieces >= requiredPieces) sumStats(val, result.stats)
         else if (name === 'aura' && pieces >= requiredPieces) result.auras[setId] = val
         else {
           const base = name.match(/_ratio$/) ? 1 : 0
@@ -14292,268 +14425,347 @@ function getStatsFromGear(gear) {
 }
 
 const DST_BB_COMBO = {
-  trinket1: 29383,
-  trinket2: 28830,
+  trinket1: { id: 29383 },
+  trinket2: { id: 28830 },
 }
 
 // BM GEAR SETS
 const PRERAID_BM_GEAR = {
-  head: 28275,
-  neck: 29381,
-  shoulder: 27801,
-  back: 24259,
-  chest: 28228,
-  wrist: 29246,
-  mainhand: 27903,
-  hand: 27474,
-  waist: 29247,
-  leg: 30538,
-  feet: 25686,
-  ring1: 30860,
-  ring2: 31077,
-  trinket1: 29383,
-  trinket2: 28288,
-  range: 29351,
-  ammo: 12654,
-  quiver: 18714
-}
-
-const P1_BM_GEAR = {
-  head: 28275,
-  shoulder: 27801,
-  chest: 28228,
-  wrist: 29246,
-  hand: 27474,
-  waist: 28828,
-  leg: 28741,
-  feet: 28545,
-  ring1: 28757,
-  ...DST_BB_COMBO,
-  range: 30105,
-  ammo: 12654,
-  quiver: 18714
+  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 29381 },
+  shoulder: { id: 27801, gems: [30550, 24028], enchant: 35417 },
+  back: { id: 24259, gems: [24028], enchant: 34004 },
+  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
+  wrist: { id: 29246, enchant: 34002 },
+  mainhand: { id: 27903, enchant: 27977 },
+  hand: { id: 27474, gems: [24028, 24028], enchant: 25080 },
+  waist: { id: 29247 },
+  leg: { id: 30538, gems: [24028, 24028, 24028], enchant: 35490 },
+  feet: { id: 25686, gems: [30582, 24028], enchant: 27951 },
+  ring1: { id: 30860 },
+  ring2: { id: 31077 },
+  trinket1: { id: 29383 },
+  trinket2: { id: 28288 },
+  range: { id: 29351, enchant: 30252 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P1_BM_6HIT_1H_GEAR = {
-  ...P1_BM_GEAR,
-  neck: 29381,
-  back: 24259,
-  mainhand: 27846,
-  offhand: 28572,
-  ring2: 28791,
+  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 29381 },
+  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
+  back: { id: 24259, gems: [24028], enchant: 34004 },
+  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
+  wrist: { id: 29246, enchant: 34002 },
+  mainhand: { id: 27846, gems: [24028, 24028] },
+  offhand: { id: 28572, gems: [24028, 24028, 24028] },
+  hand: { id: 27474, gems: [24028, 24028], enchant: 25080 },
+  waist: { id: 28828, gems: [30574, 30582] },
+  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
+  feet: { id: 28545, gems: [24028, 24028], enchant: 27951 },
+  ring1: { id: 28757 },
+  ring2: { id: 28791 },
+  ...DST_BB_COMBO,
+  range: { id: 28772, enchant: 30260 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P1_BM_9HIT_1H_GEAR = {
-  ...P1_BM_GEAR,
-  neck: 28509,
-  back: 28672,
-  mainhand: 27846,
-  offhand: 28572,
-  ring2: 28649,
+  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 28509 },
+  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
+  back: { id: 28672, enchant: 34004 },
+  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
+  wrist: { id: 29246, enchant: 34002 },
+  mainhand: { id: 27846, gems: [24028, 24028] },
+  offhand: { id: 28572, gems: [24028, 24028, 24028] },
+  hand: { id: 27474, gems: [24028, 24055], enchant: 25080 },
+  waist: { id: 28828, gems: [24028, 30553] },
+  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
+  feet: { id: 28545, gems: [24028, 30556], enchant: 27951 },
+  ring1: { id: 28757 },
+  ring2: { id: 28791 },
+  ...DST_BB_COMBO,
+  range: { id: 28772, enchant: 30260 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P1_BM_6HIT_MW_GEAR = {
-  ...P1_BM_GEAR,
-  neck: 29381,
-  back: 24259,
-  mainhand: 28435,
-  ring2: 28791,
+  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 29381 },
+  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
+  back: { id: 24259, gems: [24028], enchant: 34004 },
+  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
+  wrist: { id: 29246, enchant: 34002 },
+  mainhand: { id: 28435, enchant: 27977 },
+  hand: { id: 27474, gems: [24028, 24028], enchant: 25080 },
+  waist: { id: 28828, gems: [30574, 30582] },
+  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
+  feet: { id: 28545, gems: [24028, 24028], enchant: 27951 },
+  ring1: { id: 28757 },
+  ring2: { id: 28791 },
+  ...DST_BB_COMBO,
+  range: { id: 28772, enchant: 30260 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P1_BM_9HIT_MW_GEAR = {
-  ...P1_BM_GEAR,
-  neck: 28509,
-  back: 28672,
-  mainhand: 28435,
-  ring2: 28649,
-}
-
-const P2_BM_GEAR = {
-  head: 30141,
-  neck: 30017,
-  shoulder: 30143,
-  back: 29994,
-  chest: 30139,
-  wrist: 29966,
-  hand: 30140,
-  waist: 30040,
-  leg: 29995,
-  feet: 30104,
-  ring1: 29997,
+  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 28509 },
+  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
+  back: { id: 28672, enchant: 34004 },
+  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
+  wrist: { id: 29246, enchant: 34002 },
+  mainhand: { id: 28435, enchant: 27977 },
+  hand: { id: 27474, gems: [24028, 24055], enchant: 25080 },
+  waist: { id: 28828, gems: [24028, 30553] },
+  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
+  feet: { id: 28545, gems: [24028, 30556], enchant: 27951 },
+  ring1: { id: 28757 },
+  ring2: { id: 28791 },
   ...DST_BB_COMBO,
-  range: 30105,
-  ammo: 33803,
-  quiver: 18714
+  range: { id: 28772, enchant: 30260 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P2_BM_6HIT_1H_GEAR = {
-  ...P2_BM_GEAR,
-  mainhand: 32944,
-  offhand: 29948,
-  ring2: 28791,
+  head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 30017 },
+  shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
+  back: { id: 29994, enchant: 34004 },
+  chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
+  wrist: { id: 29966, gems: [24028], enchant: 34002 },
+  mainhand: { id: 32944, enchant: 23800 },
+  offhand: { id: 29948, enchant: 32800 },
+  hand: { id: 30140, enchant: 25080 },
+  waist: { id: 30040, gems: [24028, 24028] },
+  leg: { id: 29995, enchant: 35490 },
+  feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
+  ring1: { id: 29997 },
+  ring2: { id: 28791 },
+  ...DST_BB_COMBO,
+  range: { id: 30105, enchant: 30260 },
+  ammo: { id: 33803 },
+  quiver: { id: 18714 },
 }
 
 const P2_BM_6HIT_MW_GEAR = {
-  ...P2_BM_GEAR,
-  mainhand: 29993,
-  ring2: 28791,
+  head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 30017 },
+  shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
+  back: { id: 29994, enchant: 34004 },
+  chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
+  wrist: { id: 29966, gems: [24028], enchant: 34002 },
+  mainhand: { id: 29993, gems: [24028, 24028, 24028], enchant: 27977 },
+  hand: { id: 30140, enchant: 25080 },
+  waist: { id: 30040, gems: [24028, 24028] },
+  leg: { id: 29995, enchant: 35490 },
+  feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
+  ring1: { id: 29997 },
+  ring2: { id: 28791 },
+  ...DST_BB_COMBO,
+  range: { id: 30105, enchant: 30260 },
+  ammo: { id: 33803 },
+  quiver: { id: 18714 },
 }
 
 const P2_BM_9HIT_1H_GEAR = {
-  ...P2_BM_GEAR,
-  mainhand: 32944,
-  offhand: 29948,
-  ring2: 30052,
+  head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
+  neck: { id: 30017 },
+  shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
+  back: { id: 29994, enchant: 34004 },
+  chest: { id: 30139, gems: [30549, 28363, 24061], enchant: 27960 },
+  wrist: { id: 29966, gems: [24028], enchant: 34002 },
+  mainhand: { id: 32944, enchant: 23800 },
+  offhand: { id: 29948, enchant: 32800 },
+  hand: { id: 30140, enchant: 25080 },
+  waist: { id: 30040, gems: [30556, 24028] },
+  leg: { id: 29995, enchant: 35490 },
+  feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
+  ring1: { id: 29997 },
+  ring2: { id: 30052 },
+  ...DST_BB_COMBO,
+  range: { id: 30105, enchant: 30260 },
+  ammo: { id: 33803 },
+  quiver: { id: 18714 },
 }
 
 const P3_BM_6HIT_1H_GEAR = {
-  head: 32235,
-  neck: 32591,
-  shoulder: 31006,
-  back: 29994,
-  chest: 31004,
-  wrist: 32324,
-  mainhand: 30901,
-  offhand: 30881,
-  hand: 31001,
-  waist: 30879,
-  leg: 31005,
-  feet: 32366,
-  ring1: 29301,
-  ring2: 32497,
-  trinket1: 28830,
-  trinket2: 32505,
-  range: 30906,
-  ammo: 31737,
-  quiver: 34105
+  head: { id: 32235, gems: [32409, 32222], enchant: 35452 },
+  neck: { id: 32591 },
+  shoulder: { id: 31006, gems: [32222, 32212], enchant: 29483 },
+  back: { id: 29994, enchant: 34004 },
+  chest: { id: 31004, gems: [32194, 32222, 32226], enchant: 27960 },
+  wrist: { id: 32324, gems: [32222], enchant: 34002 },
+  mainhand: { id: 30901, enchant: 42620 },
+  offhand: { id: 30881, enchant: 42620 },
+  hand: { id: 31001, gems: [32194], enchant: 25080 },
+  waist: { id: 30879, gems: [32194, 32194] },
+  leg: { id: 31005, gems: [32194], enchant: 35490 },
+  feet: { id: 32366, gems: [32194, 32222], enchant: 27951 },
+  ring1: { id: 29301 },
+  ring2: { id: 32497 },
+  trinket1: { id: 28830 },
+  trinket2: { id: 32505 },
+  range: { id: 30906, enchant: 30260 },
+  ammo: { id: 31737 },
+  quiver: { id: 34105 },
 }
 
 // SV GEAR SETS
 const P1_SV_DMG_GEAR = {
-  head: 28275,
-  shoulder: 27801,
-  chest: 28228,
-  wrist: 25697,
-  hand: 27474,
-  waist: 28750,
-  leg: 28741,
-  feet: 28545,
-  ring1: 28791,
-  ring2: 31277,
+  head: { id: 28275 },
+  shoulder: { id: 27801 },
+  chest: { id: 28228 },
+  wrist: { id: 25697 },
+  hand: { id: 27474 },
+  waist: { id: 28750 },
+  leg: { id: 28741 },
+  feet: { id: 28545 },
+  ring1: { id: 28791 },
+  ring2: { id: 31277 },
   ...DST_BB_COMBO,
-  range: 30105,
-  ammo: 12654,
-  quiver: 18714
+  range: { id: 28772 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P1_SV_DMG_3HIT_1H_GEAR = {
   ...P1_SV_DMG_GEAR,
-  neck: 28343,
-  back: 29382,
-  mainhand: 27846,
-  offhand: 28572,
+  neck: { id: 28343 },
+  back: { id: 29382 },
+  mainhand: { id: 27846 },
+  offhand: { id: 28572 },
 }
 
 const P1_SV_DMG_6HIT_1H_GEAR = {
   ...P1_SV_DMG_GEAR,
-  neck: 25562,
-  back: 28672,
-  mainhand: 27846,
-  offhand: 28572,
+  neck: { id: 25562 },
+  back: { id: 28672 },
+  mainhand: { id: 27846 },
+  offhand: { id: 28572 },
 }
 
 const P1_SV_DMG_3HIT_MW_GEAR = {
   ...P1_SV_DMG_GEAR,
-  neck: 28343,
-  back: 29382,
-  mainhand: 28587,
+  neck: { id: 28343 },
+  back: { id: 29382 },
+  mainhand: { id: 28587 },
 }
 
 const P1_SV_DMG_6HIT_MW_GEAR = {
   ...P1_SV_DMG_GEAR,
-  neck: 29381,
-  back: 28672,
-  mainhand: 28587,
-}
-
-const P1_SV_AGI_GEAR = {
-  head: 29081,
-  neck: 28343,
-  shoulder: 27776,
-  back: 29382,
-  chest: 25838,
-  wrist:  25697,
-  hand: 28506,
-  waist: 28750,
-  leg: 28741,
-  feet: 28545,
-  ring1: 28791,
-  ring2: 31277,
-  ...DST_BB_COMBO,
-  range: 28772,
-  ammo: 12654,
+  neck: { id: 29381 },
+  back: { id: 28672 },
+  mainhand: { id: 28587 },
 }
 
 const P1_SV_AGI_1H_GEAR = {
-  ...P1_SV_AGI_GEAR,
-  mainhand: 27846,
-  offhand: 28572,
+  head: { id: 29081 },
+  neck: { id: 28343 },
+  shoulder: { id: 27776 },
+  back: { id: 29382 },
+  chest: { id: 25838 },
+  wrist:  { id: 25697 },
+  mainhand: { id: 27846 },
+  offhand: { id: 28572 },
+  hand: { id: 28506 },
+  waist: { id: 28750 },
+  leg: { id: 28741 },
+  feet: { id: 28545 },
+  ring1: { id: 28791 },
+  ring2: { id: 31277 },
+  ...DST_BB_COMBO,
+  range: { id: 28772 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P1_SV_AGI_MW_GEAR = {
-  ...P1_SV_AGI_GEAR,
-  mainhand: 28587,
-}
-
-const P2_SV_GEAR = {
-  head: 30141,
-  neck: 30017,
-  shoulder: 30143,
-  back: 29994,
-  chest: 30139,
-  wrist: 29966,
-  hand: 28506,
-  waist: 30040,
-  leg: 30142,
-  feet: 30104,
-  ring1: 28791,
-  ring2: 29298,
+  head: { id: 29081 },
+  neck: { id: 28343 },
+  shoulder: { id: 27776 },
+  back: { id: 29382 },
+  chest: { id: 25838 },
+  wrist:  { id: 25697 },
+  mainhand: { id: 28587 },
+  hand: { id: 28506 },
+  waist: { id: 28750 },
+  leg: { id: 28741 },
+  feet: { id: 28545 },
+  ring1: { id: 28791 },
+  ring2: { id: 31277 },
   ...DST_BB_COMBO,
-  range: 30105,
-  ammo: 33803,
-  quiver: 18714
+  range: { id: 28772 },
+  ammo: { id: 12654 },
+  quiver: { id: 18714 },
 }
 
 const P2_SV_1H_GEAR = {
-  ...P2_SV_GEAR,
-  mainhand: 29924,
-  offhand: 29948,
+  head: { id: 30141 },
+  neck: { id: 30017 },
+  shoulder: { id: 30143 },
+  back: { id: 29994 },
+  chest: { id: 30139 },
+  wrist: { id: 29966, gems: [24028], enchant: 34002 },
+  mainhand: { id: 29924 },
+  offhand: { id: 29948 },
+  hand: { id: 28506 },
+  waist: { id: 30040 },
+  leg: { id: 30142 },
+  feet: { id: 30104 },
+  ring1: { id: 28791 },
+  ring2: { id: 29298 },
+  ...DST_BB_COMBO,
+  range: { id: 30105 },
+  ammo: { id: 33803 },
+  quiver: { id: 18714 },
 }
 
 const P2_SV_MW_GEAR = {
-  ...P2_SV_GEAR,
-  mainhand: 29993,
+  head: { id: 30141 },
+  neck: { id: 30017 },
+  shoulder: { id: 30143 },
+  back: { id: 29994 },
+  chest: { id: 30139 },
+  wrist: { id: 29966, gems: [24028], enchant: 34002 },
+  mainhand: { id: 29993 },
+  hand: { id: 28506 },
+  waist: { id: 30040 },
+  leg: { id: 30142 },
+  feet: { id: 30104 },
+  ring1: { id: 28791 },
+  ring2: { id: 29298 },
+  ...DST_BB_COMBO,
+  range: { id: 30105 },
+  ammo: { id: 33803 },
+  quiver: { id: 18714 },
 }
 
 const P3_SV_1H_GEAR = {
-  head: 31003,
-  neck: 30017,
-  shoulder: 31006,
-  back: 29994,
-  chest: 31004,
-  wrist: 32324,
-  mainhand: 30881,
-  offhand: 30881,
-  hand: 31001,
-  waist: 30040,
-  leg: 30900,
-  feet: 32366,
-  ring1: 29301,
-  ring2: 30052,
+  head: { id: 31003, gems: [32194, 32409], enchant: 35452 },
+  neck: { id: 30017 },
+  shoulder: { id: 31006, gems: [32194, 32194], enchant: 35417 },
+  back: { id: 29994, enchant: 34004 },
+  chest: { id: 31004, gems: [32194, 32226, 32226], enchant: 27960 },
+  wrist: { id: 32324, gems: [32194], enchant: 34002 },
+  mainhand: { id: 30881, enchant: 42620 },
+  offhand: { id: 30881, enchant: 42620 },
+  hand: { id: 31001, gems: [32194], enchant: 25080 },
+  waist: { id: 30040, gems: [32194, 32194] },
+  leg: { id: 30900, gems: [32194, 32194, 32194], enchant: 35490 },
+  feet: { id: 32366, gems: [32194, 32194], enchant: 27951 },
+  ring1: { id: 29301 },
+  ring2: { id: 30052 },
   ...DST_BB_COMBO,
-  range: 30906,
-  ammo: 31737,
-  quiver: 34105
+  range: { id: 30906, enchant: 30260 },
+  ammo: { id: 31737 },
+  quiver: { id: 34105 },
 }
 
 const DEFAULT_GEAR_SETS = [
