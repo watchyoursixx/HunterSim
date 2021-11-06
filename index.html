@@ -11,16 +11,27 @@
     <link rel="stylesheet" href="css/Main.css" media="screen">
     <script class="u-script" type="text/javascript" src="nicepage/jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage/nicepage.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="js/data/buffs.js"></script>
-    <script class="u-script" type="text/javascript" src="js/data/consumables.js"></script>
-    <script class="u-script" type="text/javascript" src="js/data/races.js"></script>
-    <script class="u-script" type="text/javascript" src="js/data/talents.js"></script>
-    <script class="u-script" type="text/javascript" src="js/player.js"></script>
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
-    <script>const whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: true};</script>
+    <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true};</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
+    <style> /* width */
+	::-webkit-scrollbar {
+	  width: 10px;
+	}
+	/* Track */
+	::-webkit-scrollbar-track {
+	  background: #f1f1f1; 
+	}
+ 
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+	  background: #888; 
+	}
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+	  background: #555; 
+	} </style>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-    
     
     
     <script type="application/ld+json">{
@@ -33,73 +44,9 @@
     <meta property="og:title" content="Main">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
-    <style>
-	/* width */
-	::-webkit-scrollbar {
-	  width: 10px;
-	}
-
-	/* Track */
-	::-webkit-scrollbar-track {
-	  background: #f1f1f1; 
-	}
- 
-	/* Handle */
-	::-webkit-scrollbar-thumb {
-	  background: #888; 
-	}
-
-	/* Handle on hover */
-	::-webkit-scrollbar-thumb:hover {
-	  background: #555; 
-	}
-    </style>
-	  <style>
-        table.scrolldown {
-            width: 100%;
-              
-            /* border-collapse: collapse; */
-            border-spacing: 0;
-            border: 2px solid black;
-        }
-          
-        /* To display the block as level element */
-        table.scrolldown tbody, table.scrolldown thead {
-            display: block;
-        } 
-          
-        thead tr th {
-            height: 40px; 
-            line-height: 40px;
-        }
-          
-        table.scrolldown tbody {
-              
-            /* Set the height of table body */
-            height: 500px; 
-              
-            /* Set vertical scroll */
-            overflow-y: auto;
-              
-            /* Hide the horizontal scroll */
-            overflow-x: hidden; 
-        }
-          
-        tbody { 
-            border-top: 2px solid black;
-        }
-          
-        tbody td, thead th {
-            width : 200px;
-            border-right: 2px solid black;
-        }
-        td {
-            text-align:center;
-        }
-    </style>
   </head>
   <body data-home-page="Main.html" data-home-page-title="Main" class="u-body"><header class="u-black u-clearfix u-header u-sticky u-sticky-ca90 u-header" id="sec-f767"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="#" class="u-image u-logo u-image-1" data-image-width="256" data-image-height="256">
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="256" data-image-height="256">
           <img src="images/WoW-Classic-Hunter.png" class="u-logo-image u-logo-image-1">
         </a>
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
@@ -133,34 +80,40 @@
       </div></header>
     <section class="u-align-center u-clearfix u-custom-color-1 u-section-1" id="sec-0813">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
-          <div class="u-layout" style="">
-            <div class="u-layout-row" style="">
+        <div class="u-clearfix u-expanded-width-xl u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
               <div class="u-container-style u-layout-cell u-size-15 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
                   <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-1"></div>
                   <h6 class="u-align-center u-text u-text-1">Stats<span style="font-weight: 700;"></span>
                   </h6>
                   <p class="u-align-right u-text u-text-2">Strength<br>Agility<br>Stamina<br>Intellect<br>Spirit<br>
-                    <br>Ranged AP<br>Ranged Hit Chance<br>Ranged Crit Chance<br>Haste<br>Armor Pen<br>Melee Attack Power<br>Melee Hit Chance<br>Melee Crit Chance<br>Expertise
+                    <br>Ranged AP<br>Ranged Hit Chance<br>Ranged Crit Chance<br>Haste<br>Armor Pen<br>Melee Attack Power<br>Melee Hit Chance<br>Melee Crit Chance<br>Expertise<br>Mp5
                   </p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-3" id="str">70</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-4" id="agi">650</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-5" id="stam">500</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-6" id="int">251</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-7" id="spi">89</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-8" id="rap">2431</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-9" id="rangehit">9.01%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-10" id="rangecrit">25.42%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-11" id="haste">0</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-12" id="arp">0</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-13" id="map">2530</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-14" id="meleehit">9.01%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-15" id="meleecrit">20.42%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
-                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Calc dps</a>
-                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Settings</a>
-                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Stat Weights</a>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-3">70</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-4">650</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-5">500</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-6">251</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-7">89</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-8">2431</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-9">9.01%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-10">25.42%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-11">0</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-12">0</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-13">2530</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-14">9.01%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-15">20.42%</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16">0</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17">0</p>
+                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
+                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Stat Weights</a>
+                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Calc dps</a>
+                  <p class="u-align-right u-text u-text-custom-color-7 u-text-18">2000.1</p>
+                  <p class="u-align-left u-text u-text-custom-color-7 u-text-19">DPS ​± 2.3</p>
+                  <p class="u-align-center u-text u-text-white u-text-20">1432.3 min</p>
+                  <p class="u-align-center u-text u-text-white u-text-21">2312.7 max</p>
+                  <p class="u-align-center u-text u-text-white u-text-22">0.192 s</p>
                 </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-45 u-layout-cell-2">
@@ -168,16 +121,23 @@
                   <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-2"></div>
                   <div class="u-absolute-hcenter u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-3"></div>
                   <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-4"></div>
-                  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-5"></div>
-                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-17">Hunter<br>
+                  <div class="u-absolute-hcenter-lg u-absolute-hcenter-md u-absolute-hcenter-sm u-absolute-hcenter-xs u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-5"></div>
+                  <div class="u-container-style u-grey-75 u-group u-shape-rectangle u-group-1">
+                    <div class="u-container-layout u-valign-middle u-container-layout-3">
+                      <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23">Sixx BiS P3 6% BM<br>
+                      </h4>
+                    </div>
+                  </div>
+                  <a href="https://nicepage.com/html-website-builder" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-4">Import<span style="font-size: 1rem;"></span>
+                  </a>
+                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-24">Hunter<br>
                   </h4>
                   <img class="u-border-2 u-border-black u-image u-image-default u-preserve-proportions u-image-1" src="images/Ability_Hunter_BeastTaming.png" alt="" data-image-width="60" data-image-height="60">
-                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-18">Orc<br>
+                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-25">Orc<br>
                   </h4>
-                  <h4 class="u-align-left u-text u-text-custom-color-3 u-text-19">Sixx BiS P3 6% BM<br>
-                  </h4>
-                  <p class="LeftSlots u-text u-text-20"><a href="https://tbc.wowhead.com/item=30141/" onmouseover="this.href='https://tbc.wowhead.com/item=30141/';" class="q3" data-wowhead="domain=tbc&amp;gems=24051:32409&amp;ench=3003&amp;pcs=30141" onclick="this.href='javascript:;';">Head</p></a>
-                  <div class="u-container-style u-group u-group-1">
+                  <a href="https://nicepage.com/html-website-builder" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-5">Export</a>
+                  <p class="LeftSlots u-text u-text-26">Head</p>
+                  <div class="u-container-style u-group u-hidden-lg u-hidden-md u-hidden-sm u-hidden-xs u-group-2">
                     <div class="u-container-layout">
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-2" src="images/Hands.jpg" alt="" data-image-width="56" data-image-height="56">
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-3" src="images/Waist.jpg" alt="" data-image-width="56" data-image-height="56">
@@ -189,11 +149,10 @@
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-9" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56">
                     </div>
                   </div>
-                  <div class="u-container-style u-group u-group-2">
+                  <div class="u-container-style u-group u-hidden-lg u-hidden-md u-hidden-sm u-hidden-xs u-group-3">
                     <div class="u-container-layout">
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-10" src="images/Head.jpg" alt="" data-image-width="56" data-image-height="56">
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-11" src="images/Neck.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <a href="#SlotHead" class="u-border-none u-btn u-button-style u-dialog-link u-none u-btn-4"> .</a>
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-12" src="images/Shoulders.jpg" alt="" data-image-width="56" data-image-height="56">
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-13" src="images/Back.jpg" alt="" data-image-width="56" data-image-height="56">
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-14" src="images/Chest.jpg" alt="" data-image-width="56" data-image-height="56">
@@ -203,202 +162,84 @@
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-18" src="images/Ranged.jpg" alt="" data-image-width="56" data-image-height="56">
                     </div>
                   </div>
-                  <p class="LeftSlots u-text u-text-21">Neck<br>
+                  <p class="LeftSlots u-text u-text-27">Neck<br>
                   </p>
-                  <p class="LeftSlots u-text u-text-22">Shoulder<br>
+                  <p class="LeftSlots u-text u-text-28">Shoulder<br>
                   </p>
-                  <p class="LeftSlots u-text u-text-23">Back<br>
+                  <p class="LeftSlots u-text u-text-29">Back<br>
                   </p>
-                  <p class="LeftSlots u-text u-text-24">Chest<br>
+                  <p class="LeftSlots u-text u-text-30">Chest<br>
                   </p>
-                  <p class="LeftSlots u-text u-text-25">Wrist<br>
+                  <p class="LeftSlots u-text u-text-31">Wrist<br>
                   </p>
-                  <p class="LeftSlots u-text u-text-26">Main Hand<br>
+                  <p class="LeftSlots u-text u-text-32">Main Hand<br>
                   </p>
-                  <p class="LeftSlots u-text u-text-27">Ranged<br>
+                  <p class="LeftSlots u-text u-text-33">Off Hand<br>
                   </p>
-                  <p class="LeftSlots u-text u-text-28">Off Hand<br>
+                  <p class="LeftSlots u-text u-text-34">Ranged<br>
                   </p>
-                  <p class="u-align-right u-text u-text-29">Hand</p>
-                  <p class="u-align-right u-text u-text-30">Waist<br>
+                  <p class="u-align-right u-text u-text-35">Hand</p>
+                  <p class="u-align-right u-text u-text-36">Waist<br>
                   </p>
-                  <p class="u-align-right u-text u-text-31">Leg<br>
+                  <p class="u-align-right u-text u-text-37">Leg<br>
                   </p>
-                  <p class="u-align-right u-text u-text-32">Feet<br>
+                  <p class="u-align-right u-text u-text-38">Feet<br>
                   </p>
-                  <p class="u-align-right u-text u-text-33">Ring 1<br>
+                  <p class="u-align-right u-text u-text-39">Ring 1<br>
                   </p>
-                  <p class="u-align-right u-text u-text-34">Ring 2<br>
+                  <p class="u-align-right u-text u-text-40">Ring 2<br>
                   </p>
-                  <p class="u-align-right u-text u-text-35">Trinket 1</p>
-                  <p class="u-align-right u-text u-text-36">Trinket 2<br>
+                  <p class="u-align-right u-text u-text-41">Trinket 1</p>
+                  <p class="u-align-right u-text u-text-42">Trinket 2<br>
                   </p>
-                  <p class="u-text u-text-37">No Enchant</p>
-                  <p class="u-text u-text-38">No Enchant</p>
-                  <p class="u-text u-text-39">No Enchant</p>
-                  <p class="u-text u-text-40">No Enchant</p>
-                  <p class="u-text u-text-41">No Enchant</p>
-                  <p class="u-text u-text-42">No Enchant</p>
                   <p class="u-text u-text-43">No Enchant</p>
-                  <p class="u-text u-text-44">No Attachment</p>
-                  <p class="u-text u-text-45">No Attachment</p>
+                  <p class="u-text u-text-44">No Enchant</p>
+                  <p class="u-text u-text-45">No Enchant</p>
                   <p class="u-text u-text-46">No Enchant</p>
-                  <p class="u-align-right u-text u-text-47">No Enchant</p>
-                  <p class="u-align-right u-text u-text-48">No Enchant</p>
-                  <p class="u-align-right u-text u-text-49">No Enchant</p>
-                  <p class="u-align-right u-text u-text-50">No Enchant</p>
-                  <p class="u-align-right u-text u-text-51">No Enchant</p>
-                  <h6 class="u-align-center u-text u-text-52">Stat Weights</h6>
+                  <p class="u-text u-text-47">No Enchant</p>
+                  <p class="u-text u-text-48">No Enchant</p>
+                  <p class="u-text u-text-49">No Enchant</p>
+                  <p class="u-text u-text-50">No Attachment</p>
+                  <p class="u-text u-text-51">No Attachment</p>
+                  <p class="u-text u-text-52">No Enchant</p>
+                  <p class="u-align-right u-text u-text-53">No Enchant</p>
+                  <p class="u-align-right u-text u-text-54">No Enchant</p>
+                  <p class="u-align-right u-text u-text-55">No Enchant</p>
+                  <p class="u-align-right u-text u-text-56">No Enchant</p>
+                  <p class="u-align-right u-text u-text-57">No Enchant</p>
+                  <h6 class="u-align-center u-text u-text-58">Stat Weights</h6>
+                  <p class="u-align-right u-text u-text-59">Strength<br>Agility<br>Stamina<br>Intellect<br>Spirit<br>
+                  </p>
+                  <p class="u-align-right u-text u-text-60">Ranged Attack Power<br>Ranged Hit Chance<br>Ranged Crit Chance<br>Haste<br>Armor Pen<br>
+                  </p>
+                  <p class="u-align-right u-text u-text-61">Melee Attack Power<br>Melee Hit Chance<br>Melee Crit Chance<br>Expertise<br>Mp5
+                  </p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-62">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-63">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-64">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-65">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-66">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-67">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-68">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-69">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-70">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-71">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-72">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-73">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-74">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-75">0.42</p>
+                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-76">0.42</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>  
+    </section>
+    
     
     <footer class="u-black u-clearfix u-footer u-footer" id="sec-5c75"><a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="255" data-image-height="198">
         <img src="images/tbc_logo.jfif" class="u-logo-image u-logo-image-1">
-      </a><p class="u-align-right u-text u-text-1">made by WatchYourSixx</p><div class="u-custom-color-6 u-shape u-shape-rectangle u-shape-1"></div></footer>
-  <section class="u-black u-clearfix u-container-style u-dialog-block u-opacity u-opacity-50 u-section-4" id="SlotHead">
-      <div class="u-align-center u-container-style u-custom-color-1 u-dialog u-dialog-1">
-        <div class="u-container-layout u-valign-top u-container-layout-1">
-          <div class="u-expanded-width u-table u-table-responsive u-table-1">
-            <table class="u-table-entity">
-              <colgroup>
-                <col width="47.8%">
-                <col width="11.1%">
-                <col width="11%">
-                <col width="30.1%">
-              </colgroup>
-              <thead class="u-black u-table-header u-table-header-1">
-                <tr style="height: 46px;">
-                  <th class="u-table-cell"></th>
-                  <th class="u-table-cell"></th>
-                  <th class="u-table-cell"></th>
-                  <th class="u-table-cell"></th>
-                </tr>
-              </thead>
-              <tbody class="u-table-alt-custom-color-2 u-table-body">
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-                <tr style="height: 46px;">
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                  <td class="u-table-cell"></td>
-                </tr>
-              </tbody>
-	      </table>
-          </div>
-        </div><button class="u-dialog-close-button u-icon u-text-grey-40 u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 16 16" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-73c0"></use></svg><svg class="u-svg-content" viewBox="0 0 16 16" x="0px" y="0px" id="svg-73c0"><rect x="7" y="0" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.3138 8.0002)" width="2" height="16"></rect><rect x="0" y="7" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.3138 8.0002)" width="16" height="2"></rect></svg></button>
-      </div>
-    <script class="u-script" type="text/javascript" src="js/ui.js"></script>
-    </section><style>.u-section-4 {
-  min-height: 921px;
-  background-image: none;
-}
-
-.u-section-4 .u-dialog-1 {
-  width: 635px;
-  min-height: 599px;
-  margin: 60px auto;
-}
-
-.u-section-4 .u-container-layout-1 {
-  padding: 30px;
-}
-
-.u-section-4 .u-table-1 {
-  margin: 0;
-}
-
-.u-section-4 .u-table-header-1 {
-  background-image: none;
-  font-size: 0.75rem;
-}
-
-.u-block-f300-23 {
-  height: 46px;
-}
-
-.u-section-4 .u-icon-1 {
-  width: 20px;
-  height: 20px;
-}
-
-@media (max-width: 1199px) {
-  .u-section-4 .u-dialog-1 {
-    width: 635px;
-    height: auto;
-  }
-
-  .u-section-4 .u-table-1 {
-    margin-right: initial;
-    margin-left: initial;
-  }
-}
-
-@media (max-width: 767px) {
-  .u-section-4 .u-dialog-1 {
-    width: 540px;
-  }
-
-  .u-section-4 .u-container-layout-1 {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
-@media (max-width: 575px) {
-  .u-section-4 .u-dialog-1 {
-    width: 340px;
-  }
-}</style></body>
+      </a><p class="u-align-right u-text u-text-1">made by WatchYourSixx</p><div class="u-custom-color-6 u-expanded-width u-shape u-shape-rectangle u-shape-1"></div></footer>
+  </body>
 </html>
