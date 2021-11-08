@@ -1,0 +1,326 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+
+ul {
+    list-style-type: none;
+}
+
+.settings {
+    color: white;
+    display: inline-block;
+    vertical-align: top;
+    background-color: #252529;
+    border: 3px solid #000;
+    border-radius: 2px;
+    margin: 10px auto;
+    position: relative;
+    padding: 5px;
+    box-sizing: border-box;
+    width: 380px;
+    height: 530px;
+}
+.settings-small {
+    width: 320px;
+}
+
+.settings-header-1 {
+    position: absolute;
+    left: 12px;
+    top: 3px;
+    font-weight: 700;
+    display: inline-block;
+    background: #272727;
+    width: auto;
+    padding: 0 10px;
+    font-size: 16px;
+}
+.settings-header-2 {
+    position: absolute;
+    left: 12px;
+    top: 340px;
+    font-weight: 700;
+    display: inline-block;
+    background: #272727;
+    width: auto;
+    padding: 0 10px;
+    font-size: 16px;
+}
+.settings-consumes {
+    top: 0px;
+    height: 315px;
+}
+.settings-petconsumes {
+    position:relative;
+    height: 150px;
+}
+.header-1 {
+    color: white;
+    vertical-align: middle;
+}
+.label-1 {
+    position: relative;
+    font-weight: 600;
+    color: white;
+    line-height: 18px;
+    font-size: 12px;
+
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow-y: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
+
+}
+/* Modal Content */
+.modal-content {
+  position:absolute;
+  left: 35%;
+  background-color: #2e2e33;
+  margin: auto;
+  padding: 20px;
+  border: 4px solid #2e2e33;
+  width: 65%;
+  height: 100%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+  
+  .itemTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .itemTable thead th {
+    /* "sticky" positioning is a newer feature to achieve a fixed header, */
+    /* but is likely safe to use these days */
+    position: sticky;
+    top: 0;
+    background: #222;
+  }
+  
+  .itemTable th,
+  .itemTable td {
+    padding: 10px 15px;
+    width: 50%;
+    text-align: left;
+  }
+  
+  .itemTable tbody tr:nth-child(odd) {
+    /* The :nth-child(odd) selector can be used to do alternating row styling */
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .container {
+    padding-left: 0px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 74%;
+    position: relative;
+    top: 15px;
+    left: -10px;
+    display: inline-block;
+    vertical-align: middle;
+
+  }
+  .container-1 {
+      background-color: #2e2e33;
+  }
+  .container-2 {
+      background-color: #252529;
+  }
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 4px;
+    left: 90%;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: #f1c232;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 5px;
+    top: 3px;
+    width: 5px;
+    height: 8px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+/* <select> styles */
+.select {
+    /* Reset */
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    font-size: 14px;
+    /* Personalize */
+    width: 90px;
+    height: 25px;
+    padding: 0px 0px 0px 10px;
+    background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
+        no-repeat right 5px center / 10px,
+      #2e2e33;
+    color: #f1c232;
+    border-radius: 1px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+  
+.select-1 {
+  /* Reset */
+  position: absolute;
+  top: 67px;
+  left: 275px;
+}
+.select-2 {
+    /* Reset */
+    position: absolute;
+    top: 95px;
+    left: 275px;
+  }
+.select-3 {
+    /* Reset */
+    position: absolute;
+    top: 159px;
+    left: 275px;
+    height: 40px;
+
+}
+  
+.select-4 {
+    /* Reset */
+    position: absolute;
+    top: 262px;
+    left: 275px;
+
+}
+.select-5 {
+    /* Reset */
+    position: absolute;
+    top: 291px;
+    left: 275px;
+
+}
+.select-6 {
+    /* Reset */
+    position: absolute;
+    top: 320px;
+    left: 275px;
+
+}
+.select-7 {
+    /* Reset */
+    position: absolute;
+    top: 349px;
+    left: 275px;
+
+}
+.select-8 {
+    /* Reset */
+    position: absolute;
+    top: 404px;
+    left: 275px;
+
+}
+.select-relative {
+    position: relative;
+    left: 0px;
+    width: 250px;
+    font-size: 14px;
+    font-weight: 600;
+}
