@@ -1944,3 +1944,25 @@
     margin-left: 304px;
   }
 }
+
+.targetSelectionDiv {
+  margin-top: 40px;
+}
+
+.targetSelectionDiv label {
+  display: inline-block; 
+  width: 70px;
+}
+.targetSelectionDiv select {
+  width: 200px;
+}
+
+.targetSelectionDiv p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#typeSelect{
+  width: 200px;
+}
+
+

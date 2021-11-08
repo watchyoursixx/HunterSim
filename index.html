@@ -92,9 +92,9 @@
             <div class="u-layout-row">
               <div class="u-container-style u-layout-cell u-size-15 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
-                  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-1"></div>
+                  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-1"></div>                  
                   <h6 class="u-align-center u-text u-text-1">Stats<span style="font-weight: 700;"></span>
-                  </h6>
+                  </h6>          
                   <p class="u-align-right u-text u-text-2">Strength<br>Agility<br>Stamina<br>Intellect<br>Spirit<br>
                     <br>Ranged AP<br>Ranged Hit Chance<br>Ranged Crit Chance<br>Haste<br>Armor Pen<br>Melee Attack Power<br>Melee Hit Chance<br>Melee Crit Chance<br>Expertise<br>Mp5
                   </p>
@@ -113,6 +113,33 @@
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-15" id="meleecrit">20.42%</p>
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17" id="mp5">0</p>
+                  <div class="targetSelectionDiv">
+                    <p>
+                      <label class="u-text">Target:</label>
+                      <select id="targetSelect" onclick="selectTarget(this.value)" class="select">
+                    </select>
+                  </p>
+                    <p>
+                      <label class="u-text">Type:</label> 
+                      <select id="typeSelect" class="select">
+                        <option value="Demon">Demon</option>
+                        <option value="Humanoid">Humanoid</option>
+                        <option value="Elemental">Elemental</option>
+                        <option value="Giant">Giant</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Dragonkin">Dragonkin</option>
+                        <option value="Undead">Undead</option>
+                        <option value="Beast">Beast</option>
+                        <option value="Unknown">Unknown</option>
+                      </select>
+                    </p>
+                      <p>
+                        <label>Armor:</label> <input type="number" step="1" min="0" max="10000" class="u-border-2 u-border-black u-border-hover-black u-grey-70 u-hover-white u-radius-5" id="armor" value="0">
+                      </p>
+                      <P>
+                        <label>Level:</label> <input type="number" step="1" min="0" max="83" class="u-border-2 u-border-black u-border-hover-black u-grey-70 u-hover-white u-radius-5" id="level" value="0">
+                      </p>
+                 </div>
                   <button id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</button>
                   <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Stat Weights</a>
                   <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Calc dps</a>
