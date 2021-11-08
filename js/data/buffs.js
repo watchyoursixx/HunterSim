@@ -1,11 +1,8 @@
-const BOK_ID = 25898
-const WF_ID = 25587
-const IMP_SANC_AURA_ID = 31870
-
 const BUFFS = {
-  [BOK_ID]: {
+  25898: {
     name: 'Greater Blessing of Kings',
     icon: 'spell_magic_greaterblessingofkings',
+    special: { kingsMod: 1.1 }
   },
   27141: {
     name: 'Greater Blessing of Might',
@@ -72,9 +69,10 @@ const BUFFS = {
       MP5: 50
     }
   },
-  [WF_ID] : {
+  25587 : {
     name: 'Windfury Totem',
-    icon: 'spell_nature_windfury'
+    icon: 'spell_nature_windfury',
+    special: { windfury: true }
   },
   27127: {
     name: 'Arcane Brilliance',
@@ -111,9 +109,10 @@ const BUFFS = {
       Stam: 70
     }
   },
-  [IMP_SANC_AURA_ID] : {
+  31870 : {
     name: 'Improved Sanctity Aura',
-    icon: 'spell_holy_mindvision'
+    icon: 'spell_holy_mindvision',
+    special: { impSancAura: 1.02 }
   },
   6562: {
     name: 'Heroic Presence',

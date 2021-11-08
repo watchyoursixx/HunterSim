@@ -1,66 +1,60 @@
-/*
-  -----------------------------------
+/* -----------------------------------
   AUXILIAR FUNCTIONS
-  -----------------------------------
-*/
-function sumStats(src, dst) {
-    Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + amount)
+  ------------------------------------ */
+function sumStats(src, dst, statModifier = st => st) {
+    Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + statModifier(amount))
 }
 
-/*
-  -----------------------------------
+function addSpecial(src, dst) {
+  Object.entries(src).forEach(([k,v])=> dst[k] = v)
+}
+
+/* -----------------------------------
   BUFFS
-  -----------------------------------
-*/
+  ------------------------------------ */
+function buildStatModifier(props, buff) {
+  let bonus = 0
+  let ratio = 1
+  Object.entries(props).forEach(([name, value]) => {
+    if (!value) return;
+    if (buff[name + "_bonus"]) bonus += buff[name + "_bonus"]
+    else if (buff[name + "_ratio"]) ratio *= buff[name + "_ratio"]
+    else throw Error(`Detected invalid property "${name}" for buff "${buff.name}"`)
+  })
+
+  return st => (st + bonus) * ratio
+}
+
 function getStatsFromBuffs(buffs) {
   const usedBuffs = {}
 
   return buffs.reduce(({stats, special}, buffData) => {
     let buffId = buffData
     let props = {}
-
-    if (typeof buffData === 'object')
-      ({ id: buffId, ...props } = buffData)
+    if (typeof buffData === 'object') ({ id: buffId, ...props } = buffData)
 
     if (usedBuffs[buffId]) throw Error(`Buff with ID ${buffId} is being used more than once!`)
     usedBuffs[buffId] = true
 
-    if (buffId === BOK_ID) special.kingsMod += 10/100
-    else if (buffId === WF_ID) special.windfury = true
-    else if (buffId === IMP_SANC_AURA_ID) special.impSancAura += 2/100
-    else {
-      if (!BUFFS[buffId]) throw Error(`Detected invalid buff id ${id}`)
-      const buff = BUFFS[buffId]
+    if (!BUFFS[buffId]) throw Error(`Detected invalid buff id ${id}`)
+    const buff = BUFFS[buffId]
 
-      let bonus = 0
-      let ratio = 1
-      Object.entries(props).forEach(([name, value]) => {
-        if (!value) return;
-        if (buff[name + "_bonus"]) bonus += buff[name + "_bonus"]
-        else if (buff[name + "_ratio"]) ratio *= buff[name + "_ratio"]
-        else throw Error(`Detected invalid property "${name}" for buff "${buff.name}"`)
-      })
-
-      if (buff.stats)
-        Object.entries(buff.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + (amount + bonus)* ratio)
-    }
+    if (buff.stats) sumStats(buff.stats, stats, buildStatModifier(props, buff))
+    if (buff.special) addSpecial(buff.special, special)
 
     return { stats, special }
   }, { stats: {}, special: { impSancAura: 1, kingsMod: 1, windfury: false } })
 }
 
-/*
-  -----------------------------------
+/* -----------------------------------
   CONSUMABLES
-  -----------------------------------
-*/
+  ------------------------------------ */
 function getStatsFromConsumes(consumables, source) {
   return Object.entries(consumables).reduce((stats, [type, id]) => {
     if (!source[type]) throw Error(`Detected invalid consumable of type "${type}"`)
     if (!source[type][id]) throw Error(`Detected invalid consume id ${id}`)
 
-    Object.entries(source[type][id].stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount)
-
+    sumStats(source[type][id].stats, stats)
     return stats
   }, {})
 }
@@ -76,15 +70,12 @@ function getPetStatsFromConsumes(consumables) {
   return getStatsFromConsumes(consumables, PET_CONSUMABLES)
 }
 
+/* -----------------------------------
+  GEAR
+  ------------------------------------ */
 const ALLOWED_IN_MAINHAND = ['Two', 'Main', 'One']
 const ALLOWED_IN_OFFHAND = ['Off', 'One']
 
-
-/*
-  -----------------------------------
-  GEAR
-  -----------------------------------
-*/
 function getStatsFromGear(gear) {
   const setPieces = {}
   let usedMeta
@@ -172,7 +163,7 @@ function getStatsFromGear(gear) {
       })
   })
 
-    // Add bonus sets, based on amount of pieces of each set.
+  // Add bonus sets, based on amount of pieces of each set.
   result.set_bonuses = Object.entries(SETS).reduce((bonuses, [setId, setData]) => {
     const pieces = setPieces[setId] || 0
 
