@@ -415,7 +415,7 @@ var targetData = (function() {
     } 
 
     return nameKeyPair.sort((a,b) => {
-      //Plase custom at top of list
+      //Place custom at top of list
       if(b.name.toLowerCase() === "custom"){
         return 1;
       }
