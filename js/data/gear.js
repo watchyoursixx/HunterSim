@@ -14297,6 +14297,768 @@ const WRISTS = {
   }
 }
 
+const HEAD_ENCHANTS = {
+  22840: {
+    name: 'Arcanum of Rapidity',
+    effectId: 2543,
+    stats: {
+        Haste: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_gem_02'
+  },
+  24162: {
+    name: "Falcon's Call",
+    effectId: 2586,
+    stats: {
+      Stam: 10,
+      Hit: 10,
+      RAP: 24
+    }
+  },
+  35452: {
+    name: 'Glyph of Ferocity',
+    effectId: 3003,
+    stats: {
+        MAP: 34,
+        RAP: 34,
+        Hit: 16
+    },
+    Phase: 1,
+    icon: 'classic_ability_druid_demoralizingroar'
+  },
+  35453: {
+    name: 'Glyph of the Gladiator',
+    effectId: 3004,
+    stats: {
+        Stam: 18,
+        Resil: 20
+    },
+    Phase: 5,
+    icon: 'inv_misc_statue_04'
+  },
+  44968: {
+    name: 'Heavy Knothide Armor Kit',
+    effectId: 2841,
+    stats: {
+      Stam: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  15402: {
+    name: 'Lesser Arcanum of Voracity',
+    effectId: 1508,
+    stats: {
+      Agi: 8
+    },
+    Phase: 1,
+    icon: 'inv_misc_gem_03'
+  },
+}
+
+const SHOULDER_ENCHANTS = {
+  35439: {
+    name: 'Greater Inscription of the Blade',
+    effectId: 2997,
+    stats: {
+      MAP: 20,
+      RAP: 20,
+      Crit: 15
+    },
+    Phase: 1,
+    icon: 'spell_holy_weaponmastery'
+  },
+  35417: {
+    name: 'Greater Inscription of Vengeance',
+    effectId: 2986,
+    stats: {
+      MAP: 30,
+      RAP: 30,
+      Crit: 10
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterblessingofkings'
+  },
+  44968: {
+    name: 'A Armor Kit',
+    effectId: 2841,
+    stats: {
+      Stam: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  35438: {
+    name: 'Inscription of the Blade',
+    effectId: 2996,
+    stats: {
+      Crit: 13
+    },
+    Phase: 1,
+    icon: 'ability_dualwield'
+  },
+  35407: {
+    name: 'Inscription of Vengeance',
+    effectId: 2983,
+    stats: {
+      MAP: 26,
+      RAP: 26,
+    },
+    Phase: 1,
+    icon: 'spell_holy_fistofjustice'
+  },
+  29483: {
+    name: 'Might of the Scourge',
+    effectId: 2717,
+    stats: {
+      MAP: 26,
+      RAP: 26,
+      Crit: 14
+    },
+    Phase: 1,
+    icon: 'spell_shadow_deathpact'
+  },
+  24422: {
+    name: 'Zandalar Signet of Might',
+    effectId: 2606,
+    stats: {
+      MAP: 30,
+      RAP: 30
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_08'
+  },
+}
+
+const BACK_ENCHANTS = {
+  34004: {
+    name: 'Greater Agility',
+    effectId: 368,
+    stats: {
+      Agi: 12
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  13882: {
+    name: 'Lesser Agility',
+    effectId: 849,
+    stats: {
+      Agi: 3
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  13419: {
+    name: 'Minor Agility',
+    effectId: 247,
+    stats: {
+      Agi: 1
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  }
+}
+
+const CHEST_ENCHANTS = {
+  27957: {
+    name: 'Exceptional Health',
+    effectId: 2659,
+    stats: {
+      Health: 150
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27958: {
+    name: 'Exceptional Mana',
+    effectId: 2660,
+    stats: {
+      Mana: 150
+    },
+    Phase: 1,
+    icon: 'inv_misc_note_01'
+  },
+  27960: {
+    name: 'Exceptional Stats',
+    effectId: 2661,
+    stats: {
+      Agi: 6,
+      Str: 6,
+      Stam: 6,
+      Spi: 6,
+      Int: 6
+    },
+    Phase: 1,
+    icon: 'inv_misc_note_01'
+  },
+  20025: {
+    name: 'Greater Stats',
+    effectId: 1891,
+    stats: {
+      Agi: 4,
+      Str: 4,
+      Stam: 4,
+      Spi: 4,
+      Int: 4
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  44968: {
+    name: 'A Armor Kit',
+    effectId: 2841,
+    stats: {
+      Stam: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  33992: {
+    name: 'Major Resilience',
+    effectId: 2933,
+    stats: {
+      Resil: 15
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  33991: {
+    name: 'Restore Mana Prime',
+    effectId: 3150,
+    stats: {
+      MP5: 6
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  13941: {
+    name: 'Stats',
+    effectId: 928,
+    stats: {
+      Agi: 3,
+      Str: 3,
+      Stam: 3,
+      Spi: 3,
+      Int: 3
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+}
+
+const WRIST_ENCHANTS = {
+  34002: {
+    name: 'Assault',
+    effectId: 1593,
+    stats: {
+      MAP: 24,
+      RAP: 24
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27899: {
+    name: 'Brawn',
+    effectId: 2647,
+    stats: {
+      Str: 12
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27914: {
+    name: 'Fortitude',
+    effectId: 2649,
+    stats: {
+      Stam: 12
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  34001: {
+    name: 'Major Intellect',
+    effectId: 369,
+    stats: {
+      Int: 12
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27913: {
+    name: 'Restore Mana Prime',
+    effectId: 2679,
+    stats: {
+      MP5: 6
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27905: {
+    name: 'Stats',
+    effectId: 1891,
+    stats: {
+      Agi: 4,
+      Str: 4,
+      Stam: 4,
+      Spi: 4,
+      Int: 4
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  }
+}
+
+const HAND_ENCHANTS = {
+  13815: {
+    name: 'Agility',
+    effectId: 904,
+    stats: {
+      Agi: 5
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  33996: {
+    name: 'Assault',
+    effectId: 1594,
+    stats: {
+      MAP: 26,
+      RAP: 26
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  20012: {
+    name: 'Greater Agility',
+    effectId: 1887,
+    stats: {
+      Agi: 7
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  44968: {
+    name: 'A Armor Kit',
+    effectId: 2841,
+    stats: {
+      Stam: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  33995: {
+    name: 'Major Strength',
+    effectId: 684,
+    stats: {
+      Str: 15
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  44968: {
+    name: 'A Armor Kit',
+    effectId: 2841,
+    stats: {
+      Stam: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  25080: {
+    name: 'Superior Agility',
+    effectId: 2564,
+    stats: {
+      Agi: 15
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+}
+
+const LEG_ENCHANTS = {
+  22840: {
+    name: 'Arcanum of Rapidity',
+    effectId: 2543,
+    stats: {
+        Haste: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_gem_02'
+  },
+  35489: {
+    name: 'Clefthide Leg Armor',
+    effectId: 3011,
+    stats: {
+      Agi: 10,
+      Stam: 30
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_23'
+  },
+  35488: {
+    name: 'Cobrahide Leg Armor',
+    effectId: 3010,
+    stats: {
+      MAP: 40,
+      RAP: 40,
+      Crit: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_21'
+  },
+  24162: {
+    name: "Falcon's Call",
+    effectId: 2586,
+    stats: {
+      Stam: 10,
+      Hit: 10,
+      RAP: 24
+    }
+  },
+  44968: {
+    name: 'A Armor Kit',
+    effectId: 2841,
+    stats: {
+      Stam: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  15402: {
+    name: 'Lesser Arcanum of Voracity',
+    effectId: 1508,
+    stats: {
+      Agi: 8
+    },
+    Phase: 1,
+    icon: 'inv_misc_gem_03'
+  },
+  35495: {
+    name: 'Nethercleft Leg Armor',
+    effectId: 3013,
+    stats: {
+      Agi: 12,
+      Stam: 40
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  35490: {
+    name: 'Nethercobra Leg Armor',
+    effectId: 3012,
+    stats: {
+      MAP: 50,
+      RAP: 50,
+      Crit: 12
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25',
+  }
+}
+
+const FEET_ENCHANTS = {
+  13935: {
+    name: 'Agility',
+    effectId: 904,
+    stats: {
+      Agi: 5
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  34008: {
+    name: "Boar's Speed",
+    effectId: 2940,
+    special: { moveSpeed: 1.08 },
+    stats: {
+      Stam: 9,
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  34007: {
+    name: "Cat's Switfness",
+    effectId: 2939,
+    special: { moveSpeed: 1.08 },
+    stats: {
+      Agi: 6,
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27951: {
+    name: 'Dexterity',
+    effectId: 2657,
+    stats: {
+      Agi: 12
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27950: {
+    name: 'Fortitude',
+    effectId: 2649,
+    stats: {
+      Stam: 12
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  20023: {
+    name: 'Greater Agility',
+    effectId: 1887,
+    stats: {
+      Agi: 7
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  44968: {
+    name: 'A Armor Kit',
+    effectId: 2841,
+    stats: {
+      Stam: 10
+    },
+    Phase: 1,
+    icon: 'inv_misc_armorkit_25'
+  },
+  27954: {
+    name: 'Surefooted',
+    effectId: 2658,
+    stats: {
+      Hit: 10
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27948: {
+    name: 'Vitality',
+    effectId: 2656,
+    stats: {
+      MP5: 4,
+      HP5: 4
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  }
+}
+
+const RING_ENCHANTS = {
+  27927: {
+    name: 'Stats',
+    effectId: 2931,
+    stats: {
+      Agi: 4,
+      Str: 4,
+      Stam: 4,
+      Spi: 4,
+      Int: 4
+    },
+    Phase: 3,
+    icon: 'inv_misc_note_01'
+  },
+  27920: {
+    name: 'Striking',
+    effectId: 2929,
+    special: { incWeapDmg: 2 },
+    stats: {},
+    Phase: 1,
+    icon: 'inv_misc_note_01'
+  }
+}
+
+const MELEE_ENCHANTS = {
+  23800: {
+    name: 'Agility',
+    effectId: 2564,
+    stats: {
+      Agi: 15,
+    },
+    Phase: 1,
+    icon: 'inv_misc_note_01'
+  },
+  27837: {
+    name: 'Agility (2H)',
+    effectId: 2646,
+    for_two_handed: true,
+    stats: {
+      Agi: 25,
+    },
+    Phase: 1,
+    icon: 'inv_misc_note_01'
+  },
+  42620: {
+    name: 'Greater Agility',
+    effectId: 3222,
+    stats: {
+      Agi: 20
+    },
+    Phase: 3,
+    icon: 'inv_misc_note_01'
+  },
+  27977: {
+    name: 'Major Agility (2H)',
+    effectId: 2670,
+    for_two_handed: true,
+    stats: {
+      Agi: 35
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27968: {
+    name: 'Major Intellect',
+    effectId: 2666,
+    stats: {
+      Int: 30
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  23804: {
+    name: 'Mighty Intellect',
+    effectId: 2568,
+    stats: {
+      Int: 22
+    },
+    Phase: 1,
+    icon: 'inv_misc_note_01'
+  },
+  27972: {
+    name: 'Potency',
+    effectId: 2668,
+    stats: {
+      Str: 20
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  27971: {
+    name: 'Savagery (2H)',
+    effectId: 2667,
+    for_two_handed: true,
+    stats: {
+      MAP: 70,
+      RAP: 70
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  23799: {
+    name: 'Strength',
+    effectId: 2563,
+    stats: {
+      Str: 15
+    },
+    Phase: 1,
+    icon: 'inv_misc_note_01'
+  },
+  27984: {
+    name: 'Mongoose',
+    effectId: 2673,
+    aura: {
+      stats: {
+        Agi: 120,
+        Haste: 30
+      },
+      duration: 15,
+      PPM: 1,
+      proc_type: 4
+    },
+    Phase: 1,
+    icon: 'spell_holy_greaterheal'
+  },
+  42974: {
+    name: 'Executioner',
+    effectId: 3225,
+    aura: {
+      stats: {
+        ArP: 840,
+      },
+      duration: 15,
+      PPM: 1,
+      proc_type: 4
+    },
+    Phase: 4,
+    icon: 'spell_holy_greaterheal'
+  }
+}
+
+const RANGE_ENCHANTS = {
+  3976: {
+    name: 'Accurate Scope',
+    effectId: 33,
+    special: {
+      incWeapDmg: 3
+    },
+    Phase: 1,
+    icon: 'trade_engineering'
+  },
+  12459: {
+    name: 'Deadly Scope',
+    effectId: 663,
+    special: {
+      incWeapDmg: 5
+    },
+    Phase: 1,
+    icon: 'trade_engineering'
+  },
+  22779: {
+    name: 'Biznicks 247x128 Accurascope',
+    effectId: 2523,
+    stats: {
+      Hit: 30
+    },
+    Phase: 1,
+    icon: 'trade_engineering'
+  },
+  30252: {
+    name: 'Khorium Scope',
+    effectId: 2723,
+    special: {
+      incWeapDmg: 12
+    },
+    Phase: 1,
+    icon: 'trade_engineering'
+  },
+  12460: {
+    name: 'Sniper Scope',
+    effectId: 664,
+    special: {
+      incWeapDmg: 7
+    },
+    Phase: 1,
+    icon: 'trade_engineering'
+  },
+  30260: {
+    name: 'Stabilitzed Eternium Scope',
+    effectId: 2724,
+    stats: {
+      Crit: 28
+    },
+    Phase: 1,
+    icon: 'trade_engineering'
+  }
+}
+
+const ENCHANT_MAP = {
+  back: BACK_ENCHANTS,
+  chest: CHEST_ENCHANTS,
+  feet: FEET_ENCHANTS,
+  hand: HAND_ENCHANTS,
+  head: HEAD_ENCHANTS,
+  leg: LEG_ENCHANTS,
+  mainhand: MELEE_ENCHANTS,
+  offhand: MELEE_ENCHANTS,
+  range: RANGE_ENCHANTS,
+  ring1: RING_ENCHANTS,
+  ring2: RING_ENCHANTS,
+  shoulder: SHOULDER_ENCHANTS,
+  wrist: WRIST_ENCHANTS
+}
+
 const GEAR_MAP = {
   ammo: AMMOS,
   back: BACKS,
@@ -14334,7 +15096,7 @@ function getStatsFromGear(gear) {
   const usedUniqueGems = []
 
   const result =  Object.entries(gear).reduce(({ stats, auras, special }, [type, gearData]) => {
-    const { id, gems = [], enchant } = gearData
+    const { id, gems = [], enchant: enchantId } = gearData
 
     if (id === 0) return
     if (!GEAR_MAP[type]) throw Error(`Detected invalid gear type "${type}"`)
@@ -14372,6 +15134,17 @@ function getStatsFromGear(gear) {
 
     if (isBonusFulfilled && gearPiece.socketBonus) sumStats(gearPiece.socketBonus, stats)
 
+    if (enchantId) {
+      if (!ENCHANT_MAP[type]) throw Error(`Detected enchant for piece of type "${type}", which can't be enchanted`)
+      if (!ENCHANT_MAP[type][enchantId]) throw Error(`Detected invalid enchant with id "${enchantId}" for piece of type "${type}"`)
+
+      const enchant = ENCHANT_MAP[type][enchantId]
+      if (enchant.for_two_handed && gearPiece.hand !== 'Two') throw new Error(`Can't use a two-handed weapon enchant on this weapon.`)
+
+      if (enchant.stats) sumStats(enchant.stats, stats)
+      if (enchant.aura) auras[enchantId] = enchant.aura
+      if (enchant.special) special = { ...special, ...enchant.special }
+    }
 
     if (type === 'mainhand') {
       if (!ALLOWED_IN_MAINHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
@@ -14423,368 +15196,3 @@ function getStatsFromGear(gear) {
 
   return result
 }
-
-const DST_BB_COMBO = {
-  trinket1: { id: 29383 },
-  trinket2: { id: 28830 },
-}
-
-// BM GEAR SETS
-const PRERAID_BM_GEAR = {
-  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 29381 },
-  shoulder: { id: 27801, gems: [30550, 24028], enchant: 35417 },
-  back: { id: 24259, gems: [24028], enchant: 34004 },
-  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
-  wrist: { id: 29246, enchant: 34002 },
-  mainhand: { id: 27903, enchant: 27977 },
-  hand: { id: 27474, gems: [24028, 24028], enchant: 25080 },
-  waist: { id: 29247 },
-  leg: { id: 30538, gems: [24028, 24028, 24028], enchant: 35490 },
-  feet: { id: 25686, gems: [30582, 24028], enchant: 27951 },
-  ring1: { id: 30860 },
-  ring2: { id: 31077 },
-  trinket1: { id: 29383 },
-  trinket2: { id: 28288 },
-  range: { id: 29351, enchant: 30252 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P1_BM_6HIT_1H_GEAR = {
-  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 29381 },
-  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
-  back: { id: 24259, gems: [24028], enchant: 34004 },
-  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
-  wrist: { id: 29246, enchant: 34002 },
-  mainhand: { id: 27846, gems: [24028, 24028] },
-  offhand: { id: 28572, gems: [24028, 24028, 24028] },
-  hand: { id: 27474, gems: [24028, 24028], enchant: 25080 },
-  waist: { id: 28828, gems: [30574, 30582] },
-  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
-  feet: { id: 28545, gems: [24028, 24028], enchant: 27951 },
-  ring1: { id: 28757 },
-  ring2: { id: 28791 },
-  ...DST_BB_COMBO,
-  range: { id: 28772, enchant: 30260 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P1_BM_9HIT_1H_GEAR = {
-  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 28509 },
-  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
-  back: { id: 28672, enchant: 34004 },
-  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
-  wrist: { id: 29246, enchant: 34002 },
-  mainhand: { id: 27846, gems: [24028, 24028] },
-  offhand: { id: 28572, gems: [24028, 24028, 24028] },
-  hand: { id: 27474, gems: [24028, 24055], enchant: 25080 },
-  waist: { id: 28828, gems: [24028, 30553] },
-  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
-  feet: { id: 28545, gems: [24028, 30556], enchant: 27951 },
-  ring1: { id: 28757 },
-  ring2: { id: 28791 },
-  ...DST_BB_COMBO,
-  range: { id: 28772, enchant: 30260 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P1_BM_6HIT_MW_GEAR = {
-  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 29381 },
-  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
-  back: { id: 24259, gems: [24028], enchant: 34004 },
-  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
-  wrist: { id: 29246, enchant: 34002 },
-  mainhand: { id: 28435, enchant: 27977 },
-  hand: { id: 27474, gems: [24028, 24028], enchant: 25080 },
-  waist: { id: 28828, gems: [30574, 30582] },
-  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
-  feet: { id: 28545, gems: [24028, 24028], enchant: 27951 },
-  ring1: { id: 28757 },
-  ring2: { id: 28791 },
-  ...DST_BB_COMBO,
-  range: { id: 28772, enchant: 30260 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P1_BM_9HIT_MW_GEAR = {
-  head: { id: 28275, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 28509 },
-  shoulder: { id: 27801, gems: [28363, 24028], enchant: 35417 },
-  back: { id: 28672, enchant: 34004 },
-  chest: { id: 28228, gems: [24028, 24028, 30549], enchant: 27960 },
-  wrist: { id: 29246, enchant: 34002 },
-  mainhand: { id: 28435, enchant: 27977 },
-  hand: { id: 27474, gems: [24028, 24055], enchant: 25080 },
-  waist: { id: 28828, gems: [24028, 30553] },
-  leg: { id: 28741, gems: [24028, 24028, 24028], enchant: 35490 },
-  feet: { id: 28545, gems: [24028, 30556], enchant: 27951 },
-  ring1: { id: 28757 },
-  ring2: { id: 28791 },
-  ...DST_BB_COMBO,
-  range: { id: 28772, enchant: 30260 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P2_BM_6HIT_1H_GEAR = {
-  head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 30017 },
-  shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
-  back: { id: 29994, enchant: 34004 },
-  chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
-  wrist: { id: 29966, gems: [24028], enchant: 34002 },
-  mainhand: { id: 32944, enchant: 23800 },
-  offhand: { id: 29948, enchant: 32800 },
-  hand: { id: 30140, enchant: 25080 },
-  waist: { id: 30040, gems: [24028, 24028] },
-  leg: { id: 29995, enchant: 35490 },
-  feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
-  ring1: { id: 29997 },
-  ring2: { id: 28791 },
-  ...DST_BB_COMBO,
-  range: { id: 30105, enchant: 30260 },
-  ammo: { id: 33803 },
-  quiver: { id: 18714 },
-}
-
-const P2_BM_6HIT_MW_GEAR = {
-  head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 30017 },
-  shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
-  back: { id: 29994, enchant: 34004 },
-  chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
-  wrist: { id: 29966, gems: [24028], enchant: 34002 },
-  mainhand: { id: 29993, gems: [24028, 24028, 24028], enchant: 27977 },
-  hand: { id: 30140, enchant: 25080 },
-  waist: { id: 30040, gems: [24028, 24028] },
-  leg: { id: 29995, enchant: 35490 },
-  feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
-  ring1: { id: 29997 },
-  ring2: { id: 28791 },
-  ...DST_BB_COMBO,
-  range: { id: 30105, enchant: 30260 },
-  ammo: { id: 33803 },
-  quiver: { id: 18714 },
-}
-
-const P2_BM_9HIT_1H_GEAR = {
-  head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
-  neck: { id: 30017 },
-  shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
-  back: { id: 29994, enchant: 34004 },
-  chest: { id: 30139, gems: [30549, 28363, 24061], enchant: 27960 },
-  wrist: { id: 29966, gems: [24028], enchant: 34002 },
-  mainhand: { id: 32944, enchant: 23800 },
-  offhand: { id: 29948, enchant: 32800 },
-  hand: { id: 30140, enchant: 25080 },
-  waist: { id: 30040, gems: [30556, 24028] },
-  leg: { id: 29995, enchant: 35490 },
-  feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
-  ring1: { id: 29997 },
-  ring2: { id: 30052 },
-  ...DST_BB_COMBO,
-  range: { id: 30105, enchant: 30260 },
-  ammo: { id: 33803 },
-  quiver: { id: 18714 },
-}
-
-const P3_BM_6HIT_1H_GEAR = {
-  head: { id: 32235, gems: [32409, 32222], enchant: 35452 },
-  neck: { id: 32591 },
-  shoulder: { id: 31006, gems: [32222, 32212], enchant: 29483 },
-  back: { id: 29994, enchant: 34004 },
-  chest: { id: 31004, gems: [32194, 32222, 32226], enchant: 27960 },
-  wrist: { id: 32324, gems: [32222], enchant: 34002 },
-  mainhand: { id: 30901, enchant: 42620 },
-  offhand: { id: 30881, enchant: 42620 },
-  hand: { id: 31001, gems: [32194], enchant: 25080 },
-  waist: { id: 30879, gems: [32194, 32194] },
-  leg: { id: 31005, gems: [32194], enchant: 35490 },
-  feet: { id: 32366, gems: [32194, 32222], enchant: 27951 },
-  ring1: { id: 29301 },
-  ring2: { id: 32497 },
-  trinket1: { id: 28830 },
-  trinket2: { id: 32505 },
-  range: { id: 30906, enchant: 30260 },
-  ammo: { id: 31737 },
-  quiver: { id: 34105 },
-}
-
-// SV GEAR SETS
-const P1_SV_DMG_GEAR = {
-  head: { id: 28275 },
-  shoulder: { id: 27801 },
-  chest: { id: 28228 },
-  wrist: { id: 25697 },
-  hand: { id: 27474 },
-  waist: { id: 28750 },
-  leg: { id: 28741 },
-  feet: { id: 28545 },
-  ring1: { id: 28791 },
-  ring2: { id: 31277 },
-  ...DST_BB_COMBO,
-  range: { id: 28772 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P1_SV_DMG_3HIT_1H_GEAR = {
-  ...P1_SV_DMG_GEAR,
-  neck: { id: 28343 },
-  back: { id: 29382 },
-  mainhand: { id: 27846 },
-  offhand: { id: 28572 },
-}
-
-const P1_SV_DMG_6HIT_1H_GEAR = {
-  ...P1_SV_DMG_GEAR,
-  neck: { id: 25562 },
-  back: { id: 28672 },
-  mainhand: { id: 27846 },
-  offhand: { id: 28572 },
-}
-
-const P1_SV_DMG_3HIT_MW_GEAR = {
-  ...P1_SV_DMG_GEAR,
-  neck: { id: 28343 },
-  back: { id: 29382 },
-  mainhand: { id: 28587 },
-}
-
-const P1_SV_DMG_6HIT_MW_GEAR = {
-  ...P1_SV_DMG_GEAR,
-  neck: { id: 29381 },
-  back: { id: 28672 },
-  mainhand: { id: 28587 },
-}
-
-const P1_SV_AGI_1H_GEAR = {
-  head: { id: 29081 },
-  neck: { id: 28343 },
-  shoulder: { id: 27776 },
-  back: { id: 29382 },
-  chest: { id: 25838 },
-  wrist:  { id: 25697 },
-  mainhand: { id: 27846 },
-  offhand: { id: 28572 },
-  hand: { id: 28506 },
-  waist: { id: 28750 },
-  leg: { id: 28741 },
-  feet: { id: 28545 },
-  ring1: { id: 28791 },
-  ring2: { id: 31277 },
-  ...DST_BB_COMBO,
-  range: { id: 28772 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P1_SV_AGI_MW_GEAR = {
-  head: { id: 29081 },
-  neck: { id: 28343 },
-  shoulder: { id: 27776 },
-  back: { id: 29382 },
-  chest: { id: 25838 },
-  wrist:  { id: 25697 },
-  mainhand: { id: 28587 },
-  hand: { id: 28506 },
-  waist: { id: 28750 },
-  leg: { id: 28741 },
-  feet: { id: 28545 },
-  ring1: { id: 28791 },
-  ring2: { id: 31277 },
-  ...DST_BB_COMBO,
-  range: { id: 28772 },
-  ammo: { id: 12654 },
-  quiver: { id: 18714 },
-}
-
-const P2_SV_1H_GEAR = {
-  head: { id: 30141 },
-  neck: { id: 30017 },
-  shoulder: { id: 30143 },
-  back: { id: 29994 },
-  chest: { id: 30139 },
-  wrist: { id: 29966, gems: [24028], enchant: 34002 },
-  mainhand: { id: 29924 },
-  offhand: { id: 29948 },
-  hand: { id: 28506 },
-  waist: { id: 30040 },
-  leg: { id: 30142 },
-  feet: { id: 30104 },
-  ring1: { id: 28791 },
-  ring2: { id: 29298 },
-  ...DST_BB_COMBO,
-  range: { id: 30105 },
-  ammo: { id: 33803 },
-  quiver: { id: 18714 },
-}
-
-const P2_SV_MW_GEAR = {
-  head: { id: 30141 },
-  neck: { id: 30017 },
-  shoulder: { id: 30143 },
-  back: { id: 29994 },
-  chest: { id: 30139 },
-  wrist: { id: 29966, gems: [24028], enchant: 34002 },
-  mainhand: { id: 29993 },
-  hand: { id: 28506 },
-  waist: { id: 30040 },
-  leg: { id: 30142 },
-  feet: { id: 30104 },
-  ring1: { id: 28791 },
-  ring2: { id: 29298 },
-  ...DST_BB_COMBO,
-  range: { id: 30105 },
-  ammo: { id: 33803 },
-  quiver: { id: 18714 },
-}
-
-const P3_SV_1H_GEAR = {
-  head: { id: 31003, gems: [32194, 32409], enchant: 35452 },
-  neck: { id: 30017 },
-  shoulder: { id: 31006, gems: [32194, 32194], enchant: 35417 },
-  back: { id: 29994, enchant: 34004 },
-  chest: { id: 31004, gems: [32194, 32226, 32226], enchant: 27960 },
-  wrist: { id: 32324, gems: [32194], enchant: 34002 },
-  mainhand: { id: 30881, enchant: 42620 },
-  offhand: { id: 30881, enchant: 42620 },
-  hand: { id: 31001, gems: [32194], enchant: 25080 },
-  waist: { id: 30040, gems: [32194, 32194] },
-  leg: { id: 30900, gems: [32194, 32194, 32194], enchant: 35490 },
-  feet: { id: 32366, gems: [32194, 32194], enchant: 27951 },
-  ring1: { id: 29301 },
-  ring2: { id: 30052 },
-  ...DST_BB_COMBO,
-  range: { id: 30906, enchant: 30260 },
-  ammo: { id: 31737 },
-  quiver: { id: 34105 },
-}
-
-const DEFAULT_GEAR_SETS = [
-  { description: 'Preraid BM BIS', data: PRERAID_BM_GEAR },
-  { description: 'P1 BM, with 6% hit and no melee weaving', data: P1_BM_6HIT_1H_GEAR },
-  { description: 'P1 BM, with 9% hit and melee weaving', data: P1_BM_6HIT_MW_GEAR },
-  { description: 'P1 BM, with 6% hit and no melee weaving', data: P1_BM_9HIT_1H_GEAR },
-  { description: 'P1 BM, with 9% hit and melee weaving', data: P1_BM_9HIT_MW_GEAR },
-  { description: 'P2 BM, with 6% hit and no melee weaving', data: P2_BM_6HIT_1H_GEAR },
-  { description: 'P2 BM, with 6% hit and melee weaving', data: P2_BM_6HIT_MW_GEAR },
-  { description: 'P2 BM, with 9% hit and no melee weaving', data: P2_BM_9HIT_1H_GEAR },
-  { description: 'P3 BM, with 6% hit and no melee weaving', data: P3_BM_6HIT_1H_GEAR },
-  { description: 'P1 SV damage oriented BIS, with 3% and no melee weaving', data: P1_SV_DMG_3HIT_1H_GEAR },
-  { description: 'P1 SV damage oriented BIS, with 6% and no melee weaving', data: P1_SV_DMG_6HIT_1H_GEAR },
-  { description: 'P1 SV damage oriented BIS, with 3% and melee weaving', data: P1_SV_DMG_3HIT_MW_GEAR },
-  { description: 'P1 SV damage oriented BIS, with 6% and melee weaving', data: P1_SV_DMG_6HIT_MW_GEAR },
-  { description: 'P1 SV agi oriented BIS, with no melee weaving', data: P1_SV_AGI_1H_GEAR },
-  { description: 'P1 SV agi oriented BIS, with melee weaving', data: P1_SV_AGI_MW_GEAR },
-  { description: 'P2 SV damage oriented BIS, with no melee weaving', data: P2_SV_1H_GEAR },
-  { description: 'P2 SV damage oriented BIS, with melee weaving', data: P2_SV_MW_GEAR },
-  { description: 'P3 SV preview, with no melee weaving', data: P3_SV_1H_GEAR },
-]
