@@ -1,11 +1,8 @@
-const BOK_ID = 25898
-const WF_ID = 25587
-const IMP_SANC_AURA_ID = 31870
-
 const BUFFS = {
-  [BOK_ID]: {
+  25898: {
     name: 'Greater Blessing of Kings',
     icon: 'spell_magic_greaterblessingofkings',
+    special: { kingsMod: 1.1 }
   },
   27141: {
     name: 'Greater Blessing of Might',
@@ -72,9 +69,10 @@ const BUFFS = {
       MP5: 50
     }
   },
-  [WF_ID] : {
+  25587 : {
     name: 'Windfury Totem',
-    icon: 'spell_nature_windfury'
+    icon: 'spell_nature_windfury',
+    special: { windfury: true }
   },
   27127: {
     name: 'Arcane Brilliance',
@@ -111,9 +109,10 @@ const BUFFS = {
       Stam: 70
     }
   },
-  [IMP_SANC_AURA_ID] : {
+  31870 : {
     name: 'Improved Sanctity Aura',
-    icon: 'spell_holy_mindvision'
+    icon: 'spell_holy_mindvision',
+    special: { impSancAura: 1.02 }
   },
   6562: {
     name: 'Heroic Presence',
@@ -129,41 +128,4 @@ const BUFFS = {
       Crit: 28
     }
   }
-}
-
-function getStatsFromBuffs(buffs) {
-  const usedBuffs = {}
-
-  return buffs.reduce(({stats, special}, buffData) => {
-    let buffId = buffData
-    let props = {}
-
-    if (typeof buffData === 'object')
-      ({ id: buffId, ...props } = buffData)
-
-    if (usedBuffs[buffId]) throw Error(`Buff with ID ${buffId} is being used more than once!`)
-    usedBuffs[buffId] = true
-
-    if (buffId === BOK_ID) special.kingsMod += 10/100
-    else if (buffId === WF_ID) special.windfury = true
-    else if (buffId === IMP_SANC_AURA_ID) special.impSancAura += 2/100
-    else {
-      if (!BUFFS[buffId]) throw Error(`Detected invalid buff id ${id}`)
-      const buff = BUFFS[buffId]
-
-      let bonus = 0
-      let ratio = 1
-      Object.entries(props).forEach(([name, value]) => {
-        if (!value) return;
-        if (buff[name + "_bonus"]) bonus += buff[name + "_bonus"]
-        else if (buff[name + "_ratio"]) ratio *= buff[name + "_ratio"]
-        else throw Error(`Detected invalid property "${name}" for buff "${buff.name}"`)
-      })
-
-      if (buff.stats)
-        Object.entries(buff.stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + (amount + bonus)* ratio)
-    }
-
-    return { stats, special }
-  }, { stats: {}, special: { impSancAura: 1, kingsMod: 1, windfury: false } })
-}
+};
