@@ -103,9 +103,6 @@ function getPetStatsFromConsumes(consumables) {
   GEAR
   --------------------------------------------------------------------------------- */
 
-const ALLOWED_IN_MAINHAND = ['Two', 'Main', 'One']
-const ALLOWED_IN_OFFHAND = ['Off', 'One']
-
 /* Given the used meta and the amount of gems used per color, calculates bonuses provided by metagem,
    It loops over all the metagems so it can provide default multipliers */
 function getMetagemBonuses(usedMeta, gemsUsed) {
@@ -198,19 +195,40 @@ function getStatsFromEnchants(gear) {
   }, { stats: {}, special: {}, auras: {} })
 }
 
-function getStatsFromGear(gear) {
+/* Given the amount of pieces used for each set, calculates bonuses provided by each set.
+   It loops over all the sets so it can provide default values */
+function getSetBonuses(setPieces) {
+  return Object.entries(SETS).reduce((result, [setId, setData]) => {
+    const pieces = setPieces[setId] || 0
+
+    Object.entries(setData.bonuses).forEach(([requiredPieces, bonus]) => {
+      Object.entries(bonus).forEach(([name, val]) => {
+        if (name === 'stats' && pieces >= requiredPieces) sumStats(val, result.stats)
+        else if (name === 'aura' && pieces >= requiredPieces) result.auras[setId] = val
+        else {
+          const base = name.match(/_ratio$/) ? 1 : 0
+          result.special[`${setData.abrv}_${requiredPieces}p_${name}`] = base + (pieces >= requiredPieces ? val : 0)
+        }
+      })
+    })
+
+    return result
+  }, { stats: {}, auras: {}, special: {} })
+}
+
+const ALLOWED_IN_MAINHAND = ['Two', 'Main', 'One']
+const ALLOWED_IN_OFFHAND = ['Off', 'One']
+
+// Given the gear object, calculates stats, auras and special values obtained from gear pieces
+function getStatsFromGearPieces(gear) {
   const setPieces = {}
 
-  const result =  Object.entries(gear).reduce(({ stats, auras, special }, [type, gearData]) => {
+  const gearResults =  Object.entries(gear).reduce((acc, [type, gearData]) => {
     const { id } = gearData
-
-    if (id === 0) return
+    if (id === 0) return acc
     if (!GEAR_MAP[type]) throw Error(`Detected invalid gear type "${type}"`)
     if (!GEAR_MAP[type][id]) throw Error(`Detected invalid gear piece of type "${type}" with id "${id}"`)
-
     const gearPiece = GEAR_MAP[type][id]
-
-
 
     if (type === 'mainhand') {
       if (!ALLOWED_IN_MAINHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
@@ -221,37 +239,28 @@ function getStatsFromGear(gear) {
       else if (gearPiece.type === 'bullet' && gearPiece.range?.type !== 'Gun') throw new Error(`Tried to use bullets on a bow/x-bow`)
     }
 
-    if (gearPiece.stats) sumStats(gearPiece.stats, stats)
-    if (gearPiece.aura) auras[id] = gearPiece.aura    // If gear piece has an aura, add it to the general auras object
-    if (gearPiece.special) special = { ...special, ...gearPiece.special } // If gear piece has an special, put it in the special object
-    if (gearPiece.set) { // If gear belongs to a set, add to the sum of pieces of that set
+    if (gearPiece.stats) sumStats(gearPiece.stats, acc.stats)
+    if (gearPiece.aura) acc.auras[id] = gearPiece.aura
+    if (gearPiece.special) acc.special = addSpecial(gearPiece.special, acc.special)
+    if (gearPiece.set) {
       if (!SETS[gearPiece.set]) throw Error(`Gear piece "${gearPiece.name}" is linked to set with id ${gearPiece.set}, but no related set could be found.`)
       setPieces[gearPiece.set] = (setPieces[gearPiece.set] || 0) + 1
     }
 
-    return { stats, auras, special }
+    return acc
   }, { stats: {}, auras: {}, special: { multishot_dmg_inc_ratio: 1 } } )
 
+  const result = getSetBonuses(setPieces)
+  mergeResults(gearResults, result)
+
+  return result
+}
+
+// Given the gear object, calculates stats, auras and specials obtained from gear pieces, enchants and gems
+function getStatsFromGear(gear) {
+  const result = getStatsFromGearPieces(gear)
   mergeResults(getStatsFromGems(gear), result)
   mergeResults(getStatsFromEnchants(gear), result)
-
-  // Add bonus sets, based on amount of pieces of each set.
-  result.set_bonuses = Object.entries(SETS).reduce((bonuses, [setId, setData]) => {
-    const pieces = setPieces[setId] || 0
-
-    Object.entries(setData.bonuses).forEach(([requiredPieces, bonus]) => {
-      Object.entries(bonus).forEach(([name, val]) => {
-        if (name === 'stats' && pieces >= requiredPieces) sumStats(val, result.stats)
-        else if (name === 'aura' && pieces >= requiredPieces) result.auras[setId] = val
-        else {
-          const base = name.match(/_ratio$/) ? 1 : 0
-          bonuses[`${setData.abrv}_${requiredPieces}p_${name}`] = base + (pieces >= requiredPieces ? val : 0)
-        }
-      })
-    })
-
-    return bonuses
-  }, {})
 
   return result
 }
