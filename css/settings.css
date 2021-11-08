@@ -16,7 +16,7 @@ ul {
     padding: 5px;
     box-sizing: border-box;
     width: 380px;
-    height: 530px;
+    height: 550px;
 }
 .settings-small {
     width: 320px;
@@ -36,7 +36,7 @@ ul {
 .settings-header-2 {
     position: absolute;
     left: 12px;
-    top: 340px;
+    top: 350px;
     font-weight: 700;
     display: inline-block;
     background: #272727;
@@ -46,7 +46,7 @@ ul {
 }
 .settings-consumes {
     top: 0px;
-    height: 315px;
+    height: 328px;
 }
 .settings-petconsumes {
     position:relative;
@@ -138,7 +138,7 @@ ul {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 74%;
+    width: 100%;
     position: relative;
     top: 15px;
     left: -10px;
@@ -243,6 +243,8 @@ ul {
 /* <select> styles */
 .select {
     /* Reset */
+    position: relative;
+    vertical-align: right;
     appearance: none;
     border: 0;
     outline: 0;
@@ -261,60 +263,44 @@ ul {
     cursor: pointer;
   }
   
-.select-1 {
+.select-wide {
   /* Reset */
-  position: absolute;
-  top: 67px;
-  left: 275px;
+  width: 120px;
+  left: 3px;
+
 }
-.select-2 {
-    /* Reset */
-    position: absolute;
-    top: 95px;
-    left: 275px;
+.select-1 {
+    left: 96px;
   }
-.select-3 {
-    /* Reset */
-    position: absolute;
-    top: 159px;
-    left: 275px;
-    height: 40px;
+.select-2 {
+    left: 80px;
 
 }
-  
-.select-4 {
-    /* Reset */
-    position: absolute;
-    top: 262px;
-    left: 275px;
+.select-3 {
+  position: absolute;
+  top: 29.2%; /*158px*/
+  left: 225px;
+  height: 48px;
 
+}
+.select-4 {
+    left: 110px;
 }
 .select-5 {
-    /* Reset */
-    position: absolute;
-    top: 291px;
-    left: 275px;
-
+  /* Reset */
+  left: 85px;
 }
 .select-6 {
-    /* Reset */
-    position: absolute;
-    top: 320px;
-    left: 275px;
-
+    left: 138px;
 }
 .select-7 {
     /* Reset */
-    position: absolute;
-    top: 349px;
-    left: 275px;
+    left: 102px;
 
 }
 .select-8 {
-    /* Reset */
-    position: absolute;
-    top: 404px;
-    left: 275px;
+  /* Reset */
+  left: 3px;
 
 }
 .select-relative {

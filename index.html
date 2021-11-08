@@ -254,54 +254,60 @@
     <label class="settings-header-1">Party Buffs</label>
     <ul>
       <li><label class="container container-1">Blessing of Kings<input type="checkbox" id="kings" onclick="kingsCheck()"><span class="checkmark"></span></label></li>
-      <li><label class="container container-2">Blessing of Might<input type="checkbox" id="might" onclick="mightCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-2">Blessing of Might<input type="checkbox" id="might" onclick="mightCheck()"><span class="checkmark"></span>
       <select onclick="mightCheck()" class="select select-1">
         <option value="improved" id="mightmod">Improved</option>
         <option selected value="base">Base</option>
-      </select>
-      <li><label class="container container-1">Blessing of Wisdom<input type="checkbox" id="wisdom" onclick="wisdomCheck()"><span class="checkmark"></span></label></li>
+      </select></label></li>
+      <li><label class="container container-2">Blessing of Wisdom<input type="checkbox" id="wisdom" onclick="wisdomCheck()"><span class="checkmark"></span>
       <select onclick="wisdomCheck()" class="select select-2">
         <option value="improved" id="wisdommod">Improved</option>
         <option selected value="base">Base</option>
+      </select></label></li>
+      <li><label class="container container-1">Leader of the Pack<input type="checkbox" id="lotp" onclick="lotpCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-2">Grace of Air Totem<input type="checkbox" id="goa" onclick="totemCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-2">Strength of Earth Totem<input type="checkbox" id="soe" onclick="totemCheck()"><span class="checkmark"></span></label></li>
+      <select onclick="totemCheck()" class="select select-3">
+        <option value="improved" id="imptotem">Improved</option>
+        <option selected value="base">Base</option>
       </select>
-      <li><label class="container container-2">Leader of the Pack<input type="checkbox" id="lotp" onclick="lotpCheck()"><span class="checkmark"></span></label></li>
-      <li><label class="container container-1">Grace of Air Totem<input type="checkbox" id="goa" onclick="totemCheck()"><span class="checkmark"></span></label></li>
-        <select onclick="totemCheck()" class="select select-3">
-          <option value="improved" id="imptotem">Improved</option>
-          <option selected value="base">Base</option>
-        </select>
-        <li><label class="container container-2">Strength of Earth Totem<input type="checkbox" id="soe" onclick="totemCheck()"><span class="checkmark"></span></label></li>
-        <li><label class="container container-1">Mana Spring Totem<input type="checkbox" id="manaspring" onclick="manaspringCheck()"><span class="checkmark"></span></label></li>
-        <li><label class="container container-2">Arcane Brilliance<input type="checkbox" id="ai" onclick="aiCheck()"><span class="checkmark"></span></label></li>
-        <li><label class="container container-1">Gift of the Wild<input type="checkbox" id="gotw" onclick="gotwCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-1">Mana Spring Totem<input type="checkbox" id="manaspring" onclick="manaspringCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-1">Arcane Brilliance<input type="checkbox" id="ai" onclick="aiCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-2">Gift of the Wild<input type="checkbox" id="gotw" onclick="gotwCheck()"><span class="checkmark"></span>
         <select onclick="gotwCheck()" class="select select-4">
           <option value="improved" id="gotwmod">Improved</option>
           <option selected value="base">Base</option>
-        </select>
-        <li><label class="container container-2">Prayer of Fortitude<input type="checkbox" id="fort" onclick="fortCheck()"><span class="checkmark"></span></label></li>
+        </select></label></li>
+      <li><label class="container container-2">Prayer of Fortitude<input type="checkbox" id="fort" onclick="fortCheck()"><span class="checkmark"></span>
         <select onclick="fortCheck()" class="select select-5">
           <option value="improved" id="fortmod">Improved</option>
           <option selected value="base">Base</option>
-        </select>
-        <li><label class="container container-1">Blood Pact<input type="checkbox" id="pact" onclick="pactCheck()"><span class="checkmark"></span></label></li>
+        </select></label></li>
+      <li><label class="container container-2">Blood Pact<input type="checkbox" id="pact" onclick="pactCheck()"><span class="checkmark"></span>
         <select onclick="pactCheck()" class="select select-6">
           <option value="improved" id="pactmod">Improved</option>
           <option selected value="base">Base</option>
-        </select>
-        <li><label class="container container-2">Windfury Totem<input type="checkbox" id="windfury" onclick="windfuryCheck()"><span class="checkmark"></span></label></li>
+        </select></label></li>
+      <li><label class="container container-2">Windfury Totem<input type="checkbox" id="windfury" onclick="windfuryCheck()"><span class="checkmark"></span>
         <select onclick="windfuryCheck()" class="select select-7">
           <option value="improved" id="windfurymod">Improved</option>
           <option selected value="base">Base</option>
-        </select>
-        <li><label class="container container-1">Heroic Presence (not you)<input type="checkbox" id="heroicpres" onclick="heroicpresCheck()"><span class="checkmark"></span></label></li>
-        <li><label class="container container-2">Battle Shout<input type="checkbox" id="shout" onclick="shoutCheck()"><span class="checkmark"></span></label></li>
+        </select></label></li>
+      <li><label class="container container-1">Heroic Presence (not you)<input type="checkbox" id="heroicpres" onclick="heroicpresCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-2">Battle Shout<input type="checkbox" id="shout" onclick="shoutCheck()"><span class="checkmark"></span>
         <select onclick="shoutCheck()" class="select select-8">
           <option value="improved" id="shoutmod">Improved</option>
           <option selected value="base">Base</option>
         </select>
-        <li><label class="container container-1">Trueshot Aura (not you)<input type="checkbox" id="tsa" onclick="tsaCheck()"><span class="checkmark"></span></label></li>
-        <li><label class="container container-2">Braided Eternium Chain (not you)<input type="checkbox" id="braided" onclick="braidedCheck()"><span class="checkmark"></span></label></li>
-        <li><label class="container container-1">Improved Sanctity Aura<input type="checkbox" id="sanct" onclick="sanctCheck()"><span class="checkmark"></span></label></li>
+        <select onclick="shoutCheck()" class="select select-wide">
+          <option value="t2">T2 3pc+Solarian</option>
+          <option value="t2">T2 3pc</option>
+          <option value="solarian">Solarian</option>
+          <option selected value="base">No Bonus</option>
+        </select></label></li>
+      <li><label class="container container-1">Trueshot Aura (not you)<input type="checkbox" id="tsa" onclick="tsaCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-2">Braided Eternium Chain (not you)<input type="checkbox" id="braided" onclick="braidedCheck()"><span class="checkmark"></span></label></li>
+      <li><label class="container container-1">Improved Sanctity Aura<input type="checkbox" id="sanct" onclick="sanctCheck()"><span class="checkmark"></span></label></li>
     </ul>
 
     </div>
