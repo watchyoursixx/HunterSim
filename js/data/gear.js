@@ -9477,6 +9477,16 @@ const RANGED_WEAPONS = {
       mindmg: 139,
       maxdmg: 259,
       speed: 2.7,
+      aura: {
+          is_proc: "Yes",
+          stats: {
+              MAP: 250,
+              RAP: 250
+          },
+          duration: 10,
+          proc_type: 2,
+          proc_chance: 0.05
+      },
       Phase: 1,
       icon: "inv_weapon_rifle_21"
   },
@@ -10104,6 +10114,16 @@ const RINGS = {
           Stam: 43,
           MAP: 60,
           RAP: 60
+      },
+      aura: {
+        stats: {
+          MAP: 160,
+          RAP: 160
+        },
+        is_proc: "Yes",
+        proc_type: 2,
+        PPM: 1,
+        duration: 10
       },
       Location: "Mount Hyjal",
       Phase: 3,
