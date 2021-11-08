@@ -2,11 +2,24 @@
   AUXILIAR FUNCTIONS
   ------------------------------------ */
 function sumStats(src, dst, statModifier = st => st) {
-    Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + statModifier(amount))
+  Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + statModifier(amount))
 }
 
 function addSpecial(src, dst) {
   Object.entries(src).forEach(([k,v])=> dst[k] = v)
+}
+
+function addAuras(src, dst) {
+  Object.entries(src).forEach(([k,v]) => {
+    if (dst[k]) throw new Error(`An aura with id ${k} already exists!`)
+    dst[k] = v
+  })
+}
+
+function mergeResults(src, dst) {
+  if (src.stats) sumStats(src.stats, dst.stats)
+  if (src.special) addSpecial(src.special, dst.special)
+  if (src.auras) addAuras(src.auras, dst.auras)
 }
 
 /* -----------------------------------
@@ -76,31 +89,43 @@ function getPetStatsFromConsumes(consumables) {
 const ALLOWED_IN_MAINHAND = ['Two', 'Main', 'One']
 const ALLOWED_IN_OFFHAND = ['Off', 'One']
 
-function getStatsFromGear(gear) {
-  const setPieces = {}
+function getMetagemBonuses(usedMeta, gemsUsed) {
+  const result = { stats: {}, auras: {}, special: {} }
+
+  Object.entries(GEMS).filter(([, gemData]) => gemData.meta === 'Y').forEach(([gemId, gemData]) => {
+    const metaBonus = gemData.activation(Number(gemId) === usedMeta ? gemsUsed : { yellow: 0, red: 0, blue: 0 })
+    Object.entries(metaBonus).forEach(([bonus, val]) => {
+      if (bonus === 'aura') result.auras[gemId] = val
+      else if (bonus === 'stats') sumStats(val, result.stats)
+      else result.special[bonus] = val
+    })
+  })
+
+  return result
+}
+
+function getStatsFromGems(gear) {
   let usedMeta
   const gemCount = { red: 0, yellow: 0, blue: 0 }
   const usedUniqueGems = []
 
-  const result =  Object.entries(gear).reduce(({ stats, auras, special }, [type, gearData]) => {
-    const { id, gems = [], enchant: enchantId } = gearData
+  const stats = Object.entries(gear).reduce((accStats, [type, gearData]) => {
+    if (!gearData.gems) return accStats
 
-    if (id === 0) return
-    if (!GEAR_MAP[type]) throw Error(`Detected invalid gear type "${type}"`)
-    if (!GEAR_MAP[type][id]) throw Error(`Detected invalid gear piece of type "${type}" with id "${id}"`)
+    const gearPiece = GEAR_MAP[type][gearData.id]
+    const numSockets = gearPiece.sockets?.length || 0
+    const numGems = gearData.gems.length
+    let isBonusFulfilled = numSockets === numGems
+    if (numGems > numSockets)
+      throw new Error(`Tried to put ${numGems} gems in "${gearPiece.name}", which only has ${numSockets} sockets.`)
 
-    const gearPiece = GEAR_MAP[type][id]
-    let isBonusFulfilled = gems.filter(id => id !== 0).length === (gearPiece.sockets?.length || 0)
+    gearData.gems.forEach((gemId, i) => {
+      if (!gemId) {
+        isBonusFulfilled = false
+        return;
+      }
 
-    const sockets = gearPiece.sockets || 0
-    if (gems.length > sockets)
-      throw new Error(`Tried to put ${gems.length} gems in "${gearPiece.name}", which only has ${sockets} sockets.`)
-
-    // Loop over gems and add stats, checking bonuses
-    gems.forEach((gemId, i) => {
-      if (gemId === 0) return;
       if (!GEMS[gemId]) throw new Error(`Detected invalid gem with id ${gemId}`)
-
       const gem = GEMS[gemId]
       const socket = gearPiece.sockets[i]
 
@@ -113,13 +138,33 @@ function getStatsFromGear(gear) {
         if (socket !== 'Meta') throw new Error(`Tried to fit non-meta gem in meta socket`)
         usedMeta = gemId
       } else {
-        sumStats(gem.stats, stats)
+        sumStats(gem.stats, accStats)
         gem.colors.forEach(color => ++gemCount[color])
         if (!gem.colors.includes(socket.toLowerCase())) isBonusFulfilled = false
       }
     })
 
-    if (isBonusFulfilled && gearPiece.socketBonus) sumStats(gearPiece.socketBonus, stats)
+    if (isBonusFulfilled && gearPiece.socketBonus) sumStats(gearPiece.socketBonus, accStats)
+    return accStats
+  }, {})
+
+  const result = getMetagemBonuses(usedMeta, gemCount)
+  sumStats(stats, result.stats)
+
+  return result
+}
+
+function getStatsFromGear(gear) {
+  const setPieces = {}
+
+  const result =  Object.entries(gear).reduce(({ stats, auras, special }, [type, gearData]) => {
+    const { id, enchant: enchantId } = gearData
+
+    if (id === 0) return
+    if (!GEAR_MAP[type]) throw Error(`Detected invalid gear type "${type}"`)
+    if (!GEAR_MAP[type][id]) throw Error(`Detected invalid gear piece of type "${type}" with id "${id}"`)
+
+    const gearPiece = GEAR_MAP[type][id]
 
     if (enchantId) {
       if (!ENCHANT_MAP[type]) throw Error(`Detected enchant for piece of type "${type}", which can't be enchanted`)
@@ -153,15 +198,7 @@ function getStatsFromGear(gear) {
     return { stats, auras, special }
   }, { stats: {}, auras: {}, special: { multishot_dmg_inc_ratio: 1 } } )
 
-  // Loop over metagems, and add active/inactive bonuses
-  Object.entries(GEMS).filter(([, gemData]) => gemData.meta === 'Y').forEach(([gemId, gemData]) => {
-      const metaBonus = gemData.activation(gemId === usedMeta ? gemsUsed : { yellow: 0, red: 0, blue: 0 })
-      Object.entries(metaBonus).forEach(([bonus, val]) => {
-          if (bonus === 'aura') auras[gemId] = val
-          else if (bonus === 'stats') sumStats(val, result.stats)
-          else result.special[bonus] = val
-      })
-  })
+  mergeResults(getStatsFromGems(gear), result)
 
   // Add bonus sets, based on amount of pieces of each set.
   result.set_bonuses = Object.entries(SETS).reduce((bonuses, [setId, setData]) => {
