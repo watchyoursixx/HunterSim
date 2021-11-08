@@ -15,6 +15,7 @@ const ExpertiseRatio = 3.9;
 const GlanceDmgReduction = 0.75;
 const GlanceChance = 0.24;
 const QuiverSpeed = 1.15;
+const BaseRegen = 0.009327;
 
 // initialize stat variables
 var RangeCritRating = 0;
@@ -43,6 +44,7 @@ var ExpertiseRating = 0;
 var Mana = 0;
 var MeleeCritDamage = 2;
 var RangeCritDamage = 2;
+var fiveSecRulemp5 = 0;
 
 // stat modifiers
 var strmod = 1;
@@ -60,6 +62,10 @@ var relentless_crit_mod = 1;
 var selectedRace = 0; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
 var offhandDisabled = false;
 
+var range_wep = {};
+var mainhand_wep = {};
+var consumestats = {};
+
 // initial variables for itemid's (like a profile)
 const gear = {head:0,neck:0,shoulder:0,back:0,chest:0,wrist:0,hand:0,waist:0,leg:0,feet:0,ring1:0,ring2:0,trinket1:0,trinket2:0,mainhand:28587,offhand:0,range:15808,ammo:28506,quiver:0};
 var ammo = {
@@ -71,9 +77,9 @@ var ammo = {
    }
 }
 // initialize variables for use - temp
-const buffs = {
-   stats: { MAP:264, RAP:264 },
-   special: { kingsMod: 1.1 }
+var selectedbuffs = {
+   stats: { MAP:0, RAP:0 },
+   special: { impSancAura: 1, kingsMod: 1, windfury: false }
 };
 var talents = {
    imp_hawk: 1.15,
@@ -214,20 +220,26 @@ var GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0
 function addGear(){
       for(let prop in GearStats) {
 
-        GearStats[prop] += range[gear.range][prop] || 0;
-        GearStats[prop] += mainhand[gear.mainhand][prop] || 0;
+        GearStats[prop] = range[gear.range][prop] || 0;
+        GearStats[prop] = mainhand[gear.mainhand][prop] || 0;
       
       }
 }
 
-var BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:155, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0}; // added 155 for hawk for now
+var BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0};
 function addBuffs(){
-      for(let prop in BuffStats) {
-         let stats = buffs.stats;
-         BuffStats[prop] += stats[prop] || 0;
+   let stats = selectedbuffs.stats;
+   for(let prop in BuffStats) {
+         BuffStats[prop] = (stats[prop] || 0) + (consumestats[prop] || 0);
 
-      }
+   }
 }
+//function addConsumes(){
+//   for(let prop in BuffStats) {
+//         BuffStats[prop] = consumestats[prop] || 0;
+//
+//   }
+//}
 
 // var TalentStats = {CritChance:0, RangeCritChance:0, HitChance:0, agimod:1, mapmod:1, rapmod:1, intmod:1, dmgmod:1, rangedmgmod:1};
 var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, RangeCrit:0, Hit:0, RangeHit:0, MP5:0, Resil:0, ArP:0, Haste:0, dmgbonus:0, rangedmgbonus:0}; 
@@ -235,14 +247,14 @@ var EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Ra
 // initialize base stats - called when talents, gear/enchants, static buffs/consumes, race are changed
 function calcBaseStats() {
    // todo add slaying
-  dmgmod = (1 + talents.focused_fire / 100);
-  rangedmgmod = (1 + talents.focused_fire / 100) * (talents.ranged_weap_spec);
+  dmgmod = (1 + talents.focused_fire / 100) * selectedbuffs.special.impSancAura;
+  rangedmgmod = dmgmod * (talents.ranged_weap_spec);
 
-  strmod = buffs.special.kingsMod;
-  agimod = buffs.special.kingsMod * (1 + talents.combat_exp) * talents.light_reflexes;
-  stammod = buffs.special.kingsMod;
-  intmod = buffs.special.kingsMod * (1 + talents.combat_exp * 3);
-  spimod = buffs.special.kingsMod;
+  strmod = selectedbuffs.special.kingsMod;
+  agimod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp) * talents.light_reflexes;
+  stammod = selectedbuffs.special.kingsMod;
+  intmod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp * 3);
+  spimod = selectedbuffs.special.kingsMod;
 
   // Main Stats
   Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str) * strmod);
@@ -269,20 +281,22 @@ function calcBaseStats() {
    let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
   MeleeHitRating = hitrating;
   RangeHitRating = hitrating + EnchantStats.RangeHit;
-   let hit = BaseHitChance + talents.surefooted;
+   let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
    let penalty = (MeleeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
   MeleeMissChance = 8 - MeleeHitChance - penalty;
   RangeMissChance = 8 - RangeHitChance - penalty;
-   
+
   // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
   Expertise = Math.floor(GearStats.Exp / ExpertiseRatio + races[selectedRace].expertise);
   DodgeChance = 6.5 - Expertise * 0.25;
 
   // to do armorpen, mp5, haste, speed, base damage, mana, hp, spirit mp5
   ArmorPen = GearStats.ArP;
-  ManaPer5 = BuffStats.MP5 + GearStats.MP5 + EnchantStats.MP5;
+  ManaPer5 = Math.floor(BuffStats.MP5 + GearStats.MP5 + EnchantStats.MP5);
+  fiveSecRulemp5 = 5 * (Math.sqrt(Int) * Spi * BaseRegen);
+
   // base of 3253 always then add int
   Mana = 3253 + (Int - 10) * 15;
   
@@ -296,43 +310,29 @@ function initialize(){
    checkWeaponType();
    addGear();
    addBuffs();
+   //addConsumes();
    calcBaseStats();
+   initializeWeps();
 }
 // call above functions
 initialize();
-// initialize range_wep obj
-var range_wep = {};
-range_wep.speed = range[gear.range].speed;
-range_wep.mindmg = range[gear.range].mindmg;
-range_wep.maxdmg = range[gear.range].maxdmg;
-range_wep.ammodps = ammo[gear.ammo].dps;
-range_wep.flatdmg = GearStats.rangedmgbonus + GearStats.dmgbonus + EnchantStats.rangedmgbonus + EnchantStats.dmgbonus;
-range_wep.basedmgmod = rangedmgmod;
-// initialize mainhand_wep obj
-var mainhand_wep = {};
-mainhand_wep.speed = mainhand[gear.mainhand].speed;
-mainhand_wep.mindmg = mainhand[gear.mainhand].mindmg;
-mainhand_wep.maxdmg = mainhand[gear.mainhand].maxdmg;
-mainhand_wep.flatdmg = GearStats.dmgbonus + EnchantStats.dmgbonus;
-mainhand_wep.basedmgmod = dmgmod;
 
-console.log(HasteRating);
-console.log(ArmorPen);
-console.log(mainhand_wep);
-console.log(range_wep);
+function initializeWeps() {
+   // initialize range_wep obj
+   range_wep.speed = range[gear.range].speed;
+   range_wep.mindmg = range[gear.range].mindmg;
+   range_wep.maxdmg = range[gear.range].maxdmg;
+   range_wep.ammodps = ammo[gear.ammo].dps;
+   range_wep.flatdmg = GearStats.rangedmgbonus + GearStats.dmgbonus + EnchantStats.rangedmgbonus + EnchantStats.dmgbonus;
+   range_wep.basedmgmod = rangedmgmod;
+   // initialize mainhand_wep obj
 
-console.log("Str: " + Str);
-console.log("Agi: " + Agi);
-console.log("Stam: " + Stam);
-console.log("Int: " + Int);
-console.log("Spi: " + Spi);
-console.log("Base MAP: " + BaseMAP);
-console.log("Base RAP: " + BaseRAP);
-console.log("Melee Crit Chance: " + MeleeCritChance);
-console.log("Range Crit Chance: " + RangeCritChance);
-console.log("Melee Hit Chance: " + MeleeHitChance);
-console.log("Range Hit Chance: " + RangeHitChance);
-
+   mainhand_wep.speed = mainhand[gear.mainhand].speed;
+   mainhand_wep.mindmg = mainhand[gear.mainhand].mindmg;
+   mainhand_wep.maxdmg = mainhand[gear.mainhand].maxdmg;
+   mainhand_wep.flatdmg = GearStats.dmgbonus + EnchantStats.dmgbonus;
+   mainhand_wep.basedmgmod = dmgmod;
+}
 
 function update() {
 }

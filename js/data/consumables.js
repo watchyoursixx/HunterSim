@@ -70,8 +70,8 @@ const BATTLE_ELIXIRS = {
     name: 'Elixir of Demonslaying',
     icon: 'inv_potion_27',
     stats: {
-      MAP: 265,
-      RAP: 265
+      MAP: 0, // change to target AP data only - returns 0 AP, but will check if selected in AP update data based on target
+      RAP: 0
     }
   },
   22831: {
