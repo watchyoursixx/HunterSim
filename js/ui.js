@@ -256,7 +256,6 @@ function flaskSelection() {
         delete playerconsumes.guardian_elixir;
     }
     selectedOptionsResults();
-    console.log(playerconsumes);
 }
 function battleSelection() {
     let isSelected = document.getElementById("battle").value;
@@ -294,7 +293,6 @@ function battleSelection() {
         delete playerconsumes.flask;
     }
     selectedOptionsResults();
-    console.log(playerconsumes);
 }
 function guardSelection() {
     let isSelected = document.getElementById("guardian").value;
@@ -323,7 +321,6 @@ function guardSelection() {
         delete playerconsumes.flask;
     }
     selectedOptionsResults();
-    console.log(playerconsumes);
 }
 function scrollagiSelection() {
     let isSelected = document.getElementById("scrollagi").value;
@@ -348,7 +345,6 @@ function scrollagiSelection() {
         break;
     }
     selectedOptionsResults();
-    console.log(playerconsumes);
 }
 function scrollstrSelection() {
     let isSelected = document.getElementById("scrollstr").value;
@@ -373,7 +369,6 @@ function scrollstrSelection() {
         break;
     }
     selectedOptionsResults();
-    console.log(playerconsumes);
 }
 function foodSelection() {
     let isSelected = document.getElementById("food").value;
@@ -407,7 +402,6 @@ function foodSelection() {
         break;
     }
     selectedOptionsResults();
-    console.log(playerconsumes);
 }
 function petscrollagiSelection() {
 
