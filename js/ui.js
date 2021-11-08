@@ -412,3 +412,37 @@ function petscrollstrSelection() {
 function petfoodSelection() {
 
 }
+
+function initializeTargetDropdown() {
+    const GruulId = 19044;
+    let targets = targetData.getNameKeyTargetPairs();
+    var targetsOptions = "";
+    for (const target of targets) {
+        targetsOptions += "<option value= "+target.id+" >" + target.name + "</option>";
+      }     
+    document.getElementById("targetSelect").innerHTML = targetsOptions;
+    document.getElementById('targetSelect').value = GruulId;
+    document.getElementById("armor").disabled = true;
+    document.getElementById("typeSelect").disabled = true;
+    document.getElementById("level").disabled = true;
+    selectTarget(GruulId);
+}
+
+function selectTarget(id) {
+    let target = targetData.selectTarget(id);
+    if(id === "0") {
+        document.getElementById("armor").disabled = false;
+        document.getElementById("typeSelect").disabled = false;
+        document.getElementById("level").disabled = false;
+    }
+    else { 
+        document.getElementById("armor").disabled = true;
+        document.getElementById("typeSelect").disabled = true;
+        document.getElementById("level").disabled = true;
+    }
+    document.getElementById("armor").value = target.armor;
+    document.getElementById("typeSelect").value = target.type;
+    document.getElementById("level").value = target.level;
+}
+
+initializeTargetDropdown();
