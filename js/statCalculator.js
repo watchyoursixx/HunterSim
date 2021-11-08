@@ -1,3 +1,4 @@
+
 /* --------------------------------------------------------------------------------
   AUXILIAR FUNCTIONS
   --------------------------------------------------------------------------------- */
@@ -8,9 +9,14 @@ function sumStats(src, dst, statModifier = st => st) {
   Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + statModifier(amount))
 }
 
-// Auxiliar function to add two special objects. Will overwrite dst values if one prop appears in both objects.
+const SPECIAL_ADD = ['incWeapDmg']
+/* Auxiliar function to add two special objects. Will overwrite dst values if one prop appears in both objects,
+   unless they are in the SPECIAL_ADD list */
 function addSpecial(src, dst) {
-  Object.entries(src).forEach(([k,v])=> dst[k] = v)
+  Object.entries(src).forEach(([k,v])=> {
+    if (SPECIAL_ADD.includes(k)) dst[k] = (dst[k] || 0) + v
+    else dst[k] = v
+  })
 }
 
 // Auxiliar function to add two aura objects. Will throw error if an aura appears in both objects.
@@ -192,7 +198,7 @@ function getStatsFromEnchants(gear) {
     }
 
     return result
-  }, { stats: {}, special: {}, auras: {} })
+  }, { stats: {}, special: { incWeapDmg: 0, moveSpeed: 1 }, auras: {} })
 }
 
 /* Given the amount of pieces used for each set, calculates bonuses provided by each set.
