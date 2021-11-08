@@ -3,7 +3,7 @@ var targetData = (function() {
   const CUSTOMER_TARGET_ID = 0;
 
  const Target_Types = Object.freeze({
-      HUMANOID: 'Humaniod',
+      HUMANOID: 'Humanoid',
       DEMON: "Demon",
       BEAST: "Beast",
       DRAGONKIN: "Dragonkin",
@@ -18,11 +18,11 @@ var targetData = (function() {
   const TARGETS = {
       0: {
         name: 'Custom',
-        armor: 0,
+        armor: 7700,
         phase: 1,
         resilience: 0,
-        type: Target_Types.OTHER,
-        level: 0
+        type: Target_Types.HUMANOID,
+        level: 73
       },
       18831: {
         name: 'High King Maulgar',
@@ -415,13 +415,17 @@ var targetData = (function() {
     } 
 
     return nameKeyPair.sort((a,b) => {
-        if(a.name.toLowerCase() < b.name.toLowerCase()) {
-          return -1;
-        }
-        if(a.name.toLowerCase() > b.name.toLowerCase()) {
-          return 1;
-        }
-        return 0;
+      //Place custom at top of list
+      if(b.name.toLowerCase() === "custom"){
+        return 1;
+      }
+      if(a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      }
+      if(a.name.toLowerCase() > b.name.toLowerCase()) {
+        return 1;
+      }
+      return 0;
     });
   }
 
