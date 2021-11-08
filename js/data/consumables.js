@@ -338,26 +338,4 @@ const PET_CONSUMABLES = {
   pet_food: PET_FOODS,
   agi_scroll: SCROLLS_OF_AGILITY,
   str_scroll: SCROLLS_OF_STRENGTH
-}
-
-function getStatsFromConsumes(consumables, source) {
-  return Object.entries(consumables).reduce((stats, [type, id]) => {
-    if (!source[type]) throw Error(`Detected invalid consumable of type "${type}"`)
-    if (!source[type][id]) throw Error(`Detected invalid consume id ${id}`)
-
-    Object.entries(source[type][id].stats).forEach(([stat, amount]) => stats[stat] = (stats[stat] || 0) + amount)
-
-    return stats
-  }, {})
-}
-
-function getPlayerStatsFromConsumes(consumables) {
-  if (consumables.flask && (consumables.battle_elixir || consumables.guardian_elixir))
-    throw Error('Detected flask AND elixir. You must use one OR the other.')
-
-  return getStatsFromConsumes(consumables, PLAYER_CONSUMABLES)
-}
-
-function getPetStatsFromConsumes(consumables) {
-  return getStatsFromConsumes(consumables, PET_CONSUMABLES)
-}
+};
