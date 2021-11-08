@@ -341,34 +341,87 @@ function updateAuras() {
 }
 // handling for mana changes per gain/loss
 function updateMana() {
+   // judgement of wisdom gain
+   // spell cost spent with % reduction from beast within
+   // mp5 tick gain
+   // spirit tick gain (if no casting condition)
+   // mana pot usage
+   // runes usage
+   // thrill of the hunt
 }
-// handling for dynamic armor reduction - BL, badge, armor debuffs 
+// handling for dynamic armor reduction 
 function updateArmorReduction() {
+   // beast lord proc
+   // badge of swarmguard aura
+   // trinket armor pen
+   // armor debuffs
+   // target armor reduction calculation
 }
 
 // handling for RAP changes from auras - remember target specific AP needs to be separate for pet calcs
 function updateRAP() {
+   // AP trinkets
+   // blood fury
+   // battle drums
+   // band of eternal champions
+   // don santo's rifle
+   // AP from combat agi
+   // target AP - expose weakness, mark of the champion, demonslaying, hunters mark
 }
 // handling for MAP changes from auras
 function updateMAP() {
+   // AP trinkets
+   // blood fury
+   // battle drums
+   // band of eternal champions
+   // don santo's rifle
+   // AP from combat agi
+   // target AP - expose weakness, mark of the champion, demonslaying, hunters mark (imp only)
 }
-// handling for Agi changes from mongoose proc, badge of tenacity, and twisting grace of air if selected
+// handling for Agi changes
 function updateAgi() {
+   // check if grace/windfury then grace up every 8.5s~
+   // mongoose proc
+   // badge of tenacity
+   // updating crit and AP from the gained agi
 }
-// handling for updating range speed - remember auto shot CD doesn't change until current CD ends
+// handling for updating range speed
 function updateRangeSpeed() {
+   // drums
+   // haste potion
+   // troll berserking (10-30% in tbc)
+   // rapid fire
+   // lust
+   // quick shots
+   // trinket haste
+   // speed doesn't update for auto shot until cooldown is finished
 }
 // handling for updating mainhand speed
 function updateMainhandSpeed() {
+   // drums
+   // haste potion
+   // troll berserking (10-30% in tbc)
+   // rapid fire
+   // lust
+   // quick shots
+   // trinket haste
+   // speed doesn't update for melee until cooldown is finished
 }
-// handling for dmg mod changes from auras - bestial wrath, ferocious insp, blood frenzy
+// handling for dmg mod changes from auras
 function updateDamageMod() {
+   // bestial wrath
+   // ferocious inspiration
+   // blood frenzy
+   // special mods for non-physical dmg
 }
 // maybe not bother with for TBC, just keep in mind due to ZHC for classic
 function updateBonusDamage() {
 }
-// handling for crit changes from master tactician, agi gains, and imp crusader debuff
+// handling for crit changes
 function updateCritChance() {
+   // master tactician
+   // from agi changes
+   // imp crusader debuff
 }
 // check warrior sim for how it's implemented - looks like simple timer reduction each call
 function steptimer() {
