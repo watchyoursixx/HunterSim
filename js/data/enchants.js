@@ -82,7 +82,7 @@ const SHOULDER_ENCHANTS = {
     icon: 'spell_holy_greaterblessingofkings'
   },
   44968: {
-    name: 'A Armor Kit',
+    name: 'Heavy Knothide Armor Kit',
     effectId: 2841,
     stats: {
       Stam: 10
@@ -208,7 +208,7 @@ const CHEST_ENCHANTS = {
     icon: 'spell_holy_greaterheal'
   },
   44968: {
-    name: 'A Armor Kit',
+    name: 'Heavy Knothide Armor Kit',
     effectId: 2841,
     stats: {
       Stam: 10
@@ -341,7 +341,7 @@ const HAND_ENCHANTS = {
     icon: 'spell_holy_greaterheal'
   },
   44968: {
-    name: 'A Armor Kit',
+    name: 'Heavy Knothide Armor Kit',
     effectId: 2841,
     stats: {
       Stam: 10
@@ -359,7 +359,7 @@ const HAND_ENCHANTS = {
     icon: 'spell_holy_greaterheal'
   },
   44968: {
-    name: 'A Armor Kit',
+    name: 'Heavy Knothide Armor Kit',
     effectId: 2841,
     stats: {
       Stam: 10
@@ -419,7 +419,7 @@ const LEG_ENCHANTS = {
     }
   },
   44968: {
-    name: 'A Armor Kit',
+    name: 'Heavy Knothide Armor Kit',
     effectId: 2841,
     stats: {
       Stam: 10
@@ -517,7 +517,7 @@ const FEET_ENCHANTS = {
     icon: 'spell_holy_greaterheal'
   },
   44968: {
-    name: 'A Armor Kit',
+    name: 'Heavy Knothide Armor Kit',
     effectId: 2841,
     stats: {
       Stam: 10
