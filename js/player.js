@@ -13,7 +13,7 @@ const CritAuraPenalty = -1.8;
 const HitPenalty = -1;
 const ExpertiseRatio = 3.9;
 const GlanceDmgReduction = 0.75;
-const GlanceChance = 0.24;
+const GlanceChance = 24;
 const QuiverSpeed = 1.15;
 const BaseRegen = 0.009327;
 
@@ -45,6 +45,7 @@ var Mana = 0;
 var MeleeCritDamage = 2;
 var RangeCritDamage = 2;
 var fiveSecRulemp5 = 0;
+var BaseSpeed = 3.0;
 
 // stat modifiers
 var strmod = 1;
@@ -59,12 +60,15 @@ var rangedmgmod = 1;
 var relentless_crit_mod = 1;
 
 // temp settings to test with
-var selectedRace = 0; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
+var selectedRace = 3; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf -- temp? 0 for orc now, simplified race for testing
 var offhandDisabled = false;
+var totaldmgdone = 0;
+var quickshotsactive = false;
 
 var range_wep = {};
 var mainhand_wep = {};
 var consumestats = {};
+var target = {};
 
 // initial variables for itemid's (like a profile)
 const gear = {head:0,neck:0,shoulder:0,back:0,chest:0,wrist:0,hand:0,waist:0,leg:0,feet:0,ring1:0,ring2:0,trinket1:0,trinket2:0,mainhand:28587,offhand:0,range:15808,ammo:28506,quiver:0};
@@ -147,22 +151,7 @@ var talents = {
    master_tac: 0,
    readiness: 0
  }
-// included here to test usage from same set of code -- will remove later
-var races = [
-   {
-      name: 'Orc',
-      str: 67,
-      agi: 148,
-      stam: 110,
-      int: 74,
-      spi: 86,
-      mAP: 120,
-      rAP: 130,
-      critchance: 0,
-      hitchance: 0,
-      expertise: 0,
-   },
-];
+
 // adding in test range list
 const range = {
     15808:  {
@@ -198,6 +187,7 @@ function checkWeaponType(){
    
    let equippedRangeType = range[gear.range].type; 
    let equippedMHType = mainhand[gear.mainhand].type;
+   console.log(races[selectedRace]);
    // check for gun and dwarf, or bow and troll
    if ((equippedRangeType === 'gun' && selectedRace === 1) || (equippedRangeType === 'bow' && selectedRace === 4)) {
       races[selectedRace].critchance = 1;
@@ -259,10 +249,10 @@ function calcBaseStats() {
   // Main Stats
   Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str) * strmod);
   Agi  = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi) * agimod);
-  Stam = Math.floor((GearStats.Stam + BuffStats.Stam + EnchantStats.Stam + races[selectedRace].stam) * stammod);
+  Stam = Math.floor((GearStats.Stam + BuffStats.Stam + EnchantStats.Stam + races[selectedRace].sta) * stammod);
   Int  = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int) * intmod);
   Spi  = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
-   
+
   // Attack Power
   BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP) * mapmod;
   BaseRAP = (GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * talents.careful_aim) * rapmod;
@@ -332,7 +322,17 @@ function initializeWeps() {
    mainhand_wep.maxdmg = mainhand[gear.mainhand].maxdmg;
    mainhand_wep.flatdmg = GearStats.dmgbonus + EnchantStats.dmgbonus;
    mainhand_wep.basedmgmod = dmgmod;
+
+   
 }
+var RESULT = {
+   HIT: 0,
+   MISS: 1,
+   DODGE: 2,
+   CRIT: 3,
+   GLANCE: 4
+}
+const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance"];
 
 function update() {
 }
@@ -436,28 +436,86 @@ function stepauras() {
 function endauras() {
 }
 // hit table calc for mainhand
-function rollMainhandWep(mainhand_wep) { 
+function rollMainhandWep() {
+      let tmp = 0;
+      let roll = rng10k();
+      tmp += MeleeMissChance * 100;
+      if (roll < tmp) return RESULT.MISS;
+      tmp += DodgeChance * 100;
+      if (roll < tmp) return RESULT.DODGE;
+      tmp += GlanceChance * 100;
+      if (roll < tmp) return RESULT.GLANCE;
+      tmp += MeleeCritChance * 100;
+      if (roll < tmp) return RESULT.CRIT;
+      return RESULT.HIT;
+
 }
 // hit table calc for ranged
-function rollRangeWep(range_wep) {
+function rollRangeWep() {
+   let tmp = 0;
+   let roll = rng10k();
+   tmp += RangeMissChance * 100;
+   if (roll < tmp) return RESULT.MISS;
+   tmp += RangeCritChance * 100;
+   if (roll < tmp) return RESULT.CRIT;
+   return RESULT.HIT;
+   
 }
-// hit table for spells - need condition for dodge for melee only
+// hit table for spells - need condition for dodge for melee yellow only
 function rollSpell(spell) {
 }
 // attack with mainhand calc
 function attackMainhand(mainhand_wep) {
 }
+// move to a spells.js file
+function autoShotCalc(range_wep) {
+
+   let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
+   autoShotDmg = range_wep.ammodps * BaseSpeed + (BaseRAP * range_wep.speed / 14 + dmg + range_wep.flatdmg) * range_wep.basedmgmod;
+   return autoShotDmg;
+} 
+
 // attack with auto shot calc
-function attackRange(range_wep) {
+function attackRange() {
+
+      let result = rollRangeWep();
+      let dmg = autoShotCalc(range_wep);
+
+      if (result == RESULT.CRIT) {
+         dmg = autoShotCalc(range_wep);
+         dmg *= RangeCritDamage;
+         critcount++;
+         proccrit();
+      }
+
+      done = dealdamage(dmg,result,range_wep);
+   
+      totaldmgdone += done;
+      procauto();
+
+   //console.log("auto shot " + RESULTARRAY[result] + " for " + done);
+   //console.log("total damage: " + totaldmgdone);
 }
 // cast spell (possibly add individual spells)
 function cast(spell) {
 }
 // final damage calculation after rolls
 function dealdamage(dmg, result, weapon, spell) {
+   if (result != RESULT.MISS && result != RESULT.DODGE) {
+       //dmg *= (1 - this.armorReduction);
+       return ~~dmg;
+   }
+   else {
+       return 0;
+   }
 }
 // handling for procs by crits
 function proccrit() {
+}
+// handling for procs by autos (quick shots only)
+function procauto() {
+   let x = rng10k();
+   quickshotsactive = (x <= 1000) ? true : false;
 }
 // handling for procs by normal hits - melee or ranegd
 function procattack(spell, weapon, result) {
@@ -465,7 +523,15 @@ function procattack(spell, weapon, result) {
 // handling for magic dmg procs from trinkets (think rumulo's)
 function magicproc() {
 }
-// handling for physical dmg procs from trinkets
+// handling for physical dmg procs from trinkets (if any?)
 function physproc() {
 }
 
+// weapon rng based on dmg range
+function rng(min, max) {
+   return ~~(Math.random() * (max - min + 1) + min);
+}
+// rng roll 0 to 10000
+function rng10k() {
+   return ~~(Math.random() * 10000);
+}

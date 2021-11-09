@@ -133,7 +133,7 @@ var targetData = (function() {
         armor: 6200,
         phase: 3,
         resilience: 0,
-        type: Target_Types.UDEAD,
+        type: Target_Types.UNDEAD,
         level: 73
       },
       17808: {

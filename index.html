@@ -114,36 +114,9 @@
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-15" id="meleecrit">20.42%</p>
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17" id="mp5">0</p>
-                  <div class="targetSelectionDiv">
-                    <p>
-                      <label class="u-text">Target:</label>
-                      <select id="targetSelect" onclick="selectTarget(this.value)" class="select">
-                    </select>
-                  </p>
-                    <p>
-                      <label class="u-text">Type:</label> 
-                      <select id="typeSelect" class="select">
-                        <option value="Demon">Demon</option>
-                        <option value="Humanoid">Humanoid</option>
-                        <option value="Elemental">Elemental</option>
-                        <option value="Giant">Giant</option>
-                        <option value="Mechanical">Mechanical</option>
-                        <option value="Dragonkin">Dragonkin</option>
-                        <option value="Undead">Undead</option>
-                        <option value="Beast">Beast</option>
-                        <option value="Unknown">Unknown</option>
-                      </select>
-                    </p>
-                      <p>
-                        <label>Armor:</label> <input type="number" step="1" min="0" max="10000" class="u-border-2 u-border-black u-border-hover-black u-grey-70 u-hover-white u-radius-5" id="armor" value="0">
-                      </p>
-                      <P>
-                        <label>Level:</label> <input type="number" step="1" min="0" max="83" class="u-border-2 u-border-black u-border-hover-black u-grey-70 u-hover-white u-radius-5" id="level" value="0">
-                      </p>
-                 </div>
-                  <button id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</button>
-                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Stat Weights</a>
-                  <a href="Main.html" data-page-id="2787719481" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Calc dps</a>
+                  <a href="javascript:;" id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
+                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Stat Weights</a>
+                  <a href="javascript:;" onclick="attackRange()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Calc dps</a>
                   <p class="u-align-right u-text u-text-custom-color-7 u-text-18">2000.1</p>
                   <p class="u-align-left u-text u-text-custom-color-7 u-text-19">DPS ​± 2.3</p>
                   <p class="u-align-center u-text u-text-white u-text-20">1432.3 min</p>
@@ -283,51 +256,51 @@
     <ul>
       <li><label class="container container-1">Blessing of Kings<input type="checkbox" id="kings" onclick="kingsCheck()"><span class="checkmark"></span></label></li>
       <li><label class="container container-2">Blessing of Might<input type="checkbox" id="might" onclick="mightCheck()"><span class="checkmark"></span>
-      <select onclick="mightCheck()" class="select select-1">
+      <select onclick="mightCheck()" class="select hover-grey select-1">
         <option value="improved" id="mightmod">Improved</option>
         <option selected value="base">Base</option>
       </select></label></li>
       <li><label class="container container-2">Blessing of Wisdom<input type="checkbox" id="wisdom" onclick="wisdomCheck()"><span class="checkmark"></span>
-      <select onclick="wisdomCheck()" class="select select-2">
+      <select onclick="wisdomCheck()" class="select hover-grey select-2">
         <option value="improved" id="wisdommod">Improved</option>
         <option selected value="base">Base</option>
       </select></label></li>
       <li><label class="container container-1">Leader of the Pack<input type="checkbox" id="lotp" onclick="lotpCheck()"><span class="checkmark"></span></label></li>
       <li><label class="container container-2">Grace of Air Totem<input type="checkbox" id="goa" onclick="totemCheck()"><span class="checkmark"></span></label></li>
       <li><label class="container container-2">Strength of Earth Totem<input type="checkbox" id="soe" onclick="totemCheck()"><span class="checkmark"></span></label></li>
-      <select onclick="totemCheck()" class="select select-3">
+      <select onclick="totemCheck()" class="select hover-grey select-3">
         <option value="improved" id="imptotem">Improved</option>
         <option selected value="base">Base</option>
       </select>
       <li><label class="container container-1">Mana Spring Totem<input type="checkbox" id="manaspring" onclick="manaspringCheck()"><span class="checkmark"></span></label></li>
       <li><label class="container container-1">Arcane Brilliance<input type="checkbox" id="ai" onclick="aiCheck()"><span class="checkmark"></span></label></li>
       <li><label class="container container-2">Gift of the Wild<input type="checkbox" id="gotw" onclick="gotwCheck()"><span class="checkmark"></span>
-        <select onclick="gotwCheck()" class="select select-4">
+        <select onclick="gotwCheck()" class="select hover-grey select-4">
           <option value="improved" id="gotwmod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
       <li><label class="container container-2">Prayer of Fortitude<input type="checkbox" id="fort" onclick="fortCheck()"><span class="checkmark"></span>
-        <select onclick="fortCheck()" class="select select-5">
+        <select onclick="fortCheck()" class="select hover-grey select-5">
           <option value="improved" id="fortmod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
       <li><label class="container container-2">Blood Pact<input type="checkbox" id="pact" onclick="pactCheck()"><span class="checkmark"></span>
-        <select onclick="pactCheck()" class="select select-6">
+        <select onclick="pactCheck()" class="select hover-grey select-6">
           <option value="improved" id="pactmod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
       <li><label class="container container-2">Windfury Totem<input type="checkbox" id="windfury" onclick="windfuryCheck()"><span class="checkmark"></span>
-        <select onclick="windfuryCheck()" class="select select-7">
+        <select onclick="windfuryCheck()" class="select hover-grey select-7">
           <option value="improved" id="windfurymod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
       <li><label class="container container-1">Heroic Presence (not you)<input type="checkbox" id="heroicpres" onclick="heroicpresCheck()"><span class="checkmark"></span></label></li>
       <li><label class="container container-2">Battle Shout<input type="checkbox" id="shout" onclick="shoutCheck()"><span class="checkmark"></span>
-        <select onclick="shoutCheck()" class="select select-8">
+        <select onclick="shoutCheck()" class="select hover-grey select-8">
           <option value="improved" id="shoutmod">Improved</option>
           <option selected value="base">Base</option>
         </select>
-        <select onclick="shoutCheck()" class="select select-wide">
+        <select onclick="shoutCheck()" class="select hover-grey select-wide">
           <option value="t2solarian">T2 3pc+Solarian</option>
           <option value="t2">T2 3pc</option>
           <option value="solarian">Solarian</option>
@@ -344,7 +317,7 @@
       <label class="settings-header-1">Consumables</label>
       <ul>
         <li><Label class="label-1">Flask</Label></li>
-        <select onclick="flaskSelection()" class="select select-relative" id="flask">
+        <select onclick="flaskSelection()" class="select hover-grey select-relative" id="flask">
           <option value="wisdom">Flask of Distilled Wisdom</option>
           <option value="assault">Flask of Relentless Assault</option>
           <option value="restoration">Flask of Restoration</option>
@@ -354,7 +327,7 @@
           <option selected value="none">No Flask</option>
         </select>
         <li><Label class="label-1">Battle Elixir</Label></li>
-        <select onclick="battleSelection()" class="select select-relative" id="battle">
+        <select onclick="battleSelection()" class="select hover-grey select-relative" id="battle">
           <option value="majoragi">Elixir of Major Agility</option>
           <option value="mongoose">Elixir of the Mongoose</option>
           <option value="demonslaying">Elixir of Demonslaying</option>
@@ -366,7 +339,7 @@
           <option selected value="none">No Battle Elixir</option>
         </select>
         <li><Label class="label-1">Guardian Elixir</Label></li>
-        <select onclick="guardSelection()" class="select select-relative" id="guardian">
+        <select onclick="guardSelection()" class="select hover-grey select-relative" id="guardian">
           <option value="majormageblood">Elixir of Major Mageblood</option>
           <option value="draenicwisdom">Elixir of Draenic Wisdom</option>
           <option value="mageblood">Mageblood Potion</option>
@@ -375,7 +348,7 @@
           <option selected value="none">No Guardian Elixir</option>
         </select>
         <li><Label class="label-1">Scroll of Agility</Label></li>
-        <select onclick="scrollagiSelection()" class="select select-relative" id="scrollagi">
+        <select onclick="scrollagiSelection()" class="select hover-grey select-relative" id="scrollagi">
           <option value="agi5">Scroll of Agility V</option>
           <option value="agi4">Scroll of Agility IV</option>
           <option value="agi3">Scroll of Agility III</option>
@@ -384,7 +357,7 @@
           <option selected value="none">No Agility Scroll</option>
         </select>
         <li><Label class="label-1">Scroll of Strength</Label></li>
-        <select onclick="scrollstrSelection()" class="select select-relative" id="scrollstr">
+        <select onclick="scrollstrSelection()" class="select hover-grey select-relative" id="scrollstr">
           <option value="str5">Scroll of Strength V</option>
           <option value="str4">Scroll of Strength IV</option>
           <option value="str3">Scroll of Strength III</option>
@@ -393,7 +366,7 @@
           <option selected value="none">No Strength Scroll</option>
         </select>
         <li><Label class="label-1">Food</Label></li>
-        <select onclick="foodSelection()" class="select select-relative" id="food">
+        <select onclick="foodSelection()" class="select  select-relative" id="food">
           <option value="sporefish">Blackened Sporefish</option>
           <option value="mudfish">Grilled Mudfish</option>
           <option value="squid">Grilled Squid</option>
@@ -410,7 +383,7 @@
      <div class="settings-petconsumes">
        <ul>
         <li><Label class="label-1">Scroll of Agility</Label></li>
-        <select onclick="petscrollagiSelection()" class="select select-relative">
+        <select onclick="petscrollagiSelection()" class="select hover-grey select-relative">
           <option value="agi5">Scroll of Agility V</option>
           <option value="agi4">Scroll of Agility IV</option>
           <option value="agi3">Scroll of Agility III</option>
@@ -419,7 +392,7 @@
           <option selected value="none">No Agility Scroll</option>
         </select>
         <li><Label class="label-1">Scroll of Strength</Label></li>
-        <select onclick="petscrollstrSelection()" class="select select-relative">
+        <select onclick="petscrollstrSelection()" class="select hover-grey select-relative">
           <option value="str5">Scroll of Strength V</option>
           <option value="str4">Scroll of Strength IV</option>
           <option value="str3">Scroll of Strength III</option>
@@ -428,7 +401,7 @@
           <option selected value="none">No Strength Scroll</option>
         </select>
         <li><Label class="label-1">Food</Label></li>
-        <select onclick="petfoodSelection()" class="select select-relative">
+        <select onclick="petfoodSelection()" class="select hover-grey select-relative">
           <option value="kiblers">Kibler's Bits</option>
           <option value="sporeling">Sporeling Snack</option>
           <option selected value="none">No Pet Food</option>
@@ -436,6 +409,71 @@
        </ul>
 
      </div>
+    </div>
+    <div class="settings">
+      <label class="settings-header-1">Player and Fight Setup</label>
+      <div class="settings-fight">
+      <ul>
+          <li>
+            <label class="label-2">Race</label>
+            <select id="race" onclick="getRace()" class="select hover-grey fight-setting-input-2">
+              <option value="1">Dwarf</option>
+              <option value="0">Night Elf</option>
+              <option value="2">Draenei</option>
+              <option value="6">Blood Elf</option>
+              <option value="5">Tauren</option>
+              <option value="4">Troll</option>
+              <option selected value="3">Orc</option>
+            </select>
+          </li>
+          <li>
+            <label class="label-2">Pet</label>
+            <select id="pet" class="select hover-grey fight-setting-input-1">
+              <option value="ravager">Ravager</option>
+              <option value="cat">Cat</option>
+              <option value="raptor">Raptor</option>
+              <option value="owl">Owl</option>
+              <option value="bat">Bat</option>
+              <option value="windserpent">Wind Serpent</option>
+              <option selected value="wolf">Wolf</option>
+            </select>
+          </li><br>
+          <li><label class="label-2">Simulations</label><input type="number" step="1000" min="0" max="100000" class="number-input hover-grey fight-setting-input-3" id="simulations" value="50000"></li>
+          <li><label class="label-2">Fight Length(min s)</label><input type="number" step="1" min="5" max="1200" class="number-input hover-grey fight-setting-input-3" id="minfight" value="235"></li>
+          <li><label class="label-2">Fight Length(max s)</label><input type="number" step="1" min="5" max="1200" class="number-input hover-grey fight-setting-input-3" id="maxfight" value="240"></li>
+          <li><label class="label-2">Latency (ms)</label><input type="number" step="1" min="10" max="1000" class="number-input hover-grey fight-setting-input-3" id="latency" value="20"></li>
+          <li><label class="label-2">Player Uptime (%)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="playeruptime" value="100"> %</li>
+          <li><label class="label-2">Pet Uptime (%)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="petuptime" value="100"> %</li>
+          <li><label class="label-2">Weave Time (s)</label><input type="number" step="0.1" min="0" max="2" class="number-input hover-grey fight-setting-input-3" id="weavetime" value="0.6"></li>
+          <li><label class="label-2">% of Fight Weaved</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="weavepercent" value="100"> %</li>
+          <li><label class="label-2">Hunters in Raid</label><input type="number" step="1" min="0" max="20" class="number-input hover-grey fight-setting-input-3" id="huntersraid" value="4"></li>
+          <li><label class="label-2">Berserking Start HP</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="berserking" value="100"> %</li>
+          <br>
+          <li>
+            <label class="label-2">Target</label>
+            <select id="targetSelect" onclick="selectTarget(this.value)" class="select hover-grey fight-setting-input-1">
+            </select>
+          </li>
+          <li><label class="label-2">Type</label> 
+            <select id="typeSelect" class="select hover-grey fight-setting-input-1">
+              <option value="Demon">Demon</option>
+              <option value="Humanoid">Humanoid</option>
+              <option value="Elemental">Elemental</option>
+              <option value="Giant">Giant</option>
+              <option value="Mechanical">Mechanical</option>
+              <option value="Dragonkin">Dragonkin</option>
+              <option value="Undead">Undead</option>
+              <option value="Beast">Beast</option>
+              <option value="Unknown">Unknown</option>
+            </select>
+          </li>
+          <li>
+            <label class="label-2">Armor</label> <input type="number" step="1" min="0" max="10000" class="number-input hover-grey fight-setting-input-2" id="armor" value="0">
+          </li>
+          <li>
+            <label class="label-2">Level</label> <input type="number" step="1" min="0" max="73" class="number-input hover-grey fight-setting-input-2" id="level" value="0">
+          </li>
+      </ul></div>
     </div>
   </div>
 </div>

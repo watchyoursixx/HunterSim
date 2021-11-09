@@ -413,6 +413,12 @@ function petfoodSelection() {
 
 }
 
+// 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf
+function getRace() {
+    selectedRace = document.getElementById("race").value;
+    selectedOptionsResults();
+}
+
 function initializeTargetDropdown() {
     const GruulId = 19044;
     let targets = targetData.getNameKeyTargetPairs();
@@ -429,7 +435,7 @@ function initializeTargetDropdown() {
 }
 
 function selectTarget(id) {
-    let target = targetData.selectTarget(id);
+    target = targetData.selectTarget(id);
     if(id === "0") {
         document.getElementById("armor").disabled = false;
         document.getElementById("typeSelect").disabled = false;

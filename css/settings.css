@@ -21,7 +21,10 @@ ul {
 .settings-small {
     width: 320px;
 }
-
+.settings-fight {
+    position:relative;
+    top: 10px;
+}
 .settings-header-1 {
     position: absolute;
     left: 12px;
@@ -62,6 +65,15 @@ ul {
     color: white;
     line-height: 18px;
     font-size: 12px;
+
+}
+.label-2 {
+  display: inline-block; 
+  width: 135px;
+  left: -10px;
+  position: relative;
+  color: white;
+  font-size: 14px;
 
 }
 /* The Modal (background) */
@@ -173,9 +185,8 @@ ul {
   
   /* On mouse-over, add a grey background color */
   .container:hover input ~ .checkmark {
-    background-color: #ccc;
+    background-color: #979797;
   }
-  
   /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
     background-color: #f1c232;
@@ -204,42 +215,29 @@ ul {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-  }
-  .dropbtn {
-    background-color: #04AA6D;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-  }
-  
-  .dropdown {
+  } 
+  .number-input {
     position: relative;
-    display: inline-block;
+    vertical-align: right;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    font-size: 14px;
+    /* Personalize */
+    width: 90px;
+  
+    padding: 0px 0px 0px 10px;
+    background-color: #2e2e33;
+    color: #f1c232;
+    border-radius: 1px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
   }
+  .hover-grey:hover {
+    background-color:#555555;
   
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
   }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  .dropdown:hover .dropbtn {background-color: #3e8e41;}
-
 /* <select> styles */
 .select {
     /* Reset */
@@ -262,7 +260,22 @@ ul {
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
     cursor: pointer;
   }
-  
+.fight-setting-input-1 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 200px;
+}
+.fight-setting-input-2 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 100px;
+}
+.fight-setting-input-3 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 100px;
+  left: 4px;
+}
 .select-wide {
   /* Reset */
   width: 120px;
