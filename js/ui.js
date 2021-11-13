@@ -45,10 +45,12 @@ function displayStats(){
 }
 
 function displayDPSResults(){
-    document.getElementById("dpsresult").innerHTML = Math.round(DPS * 100) / 100;
-    document.getElementById("dpsmin").innerHTML = Math.round(mindps * 100) / 100 + " min";
-    document.getElementById("dpsmax").innerHTML = Math.round(maxdps * 100) / 100 + " max";
-    document.getElementById("dpserr").innerHTML = "DPS ​± " + Math.round(err * 100) / 100;
+    let dpsrounding = (DPS > 1000) ? 1 : 2;
+    let errrounding = (err > 10) ? 1 : 2;
+    document.getElementById("dpsresult").innerHTML = DPS.toFixed(dpsrounding);
+    document.getElementById("dpsmin").innerHTML = mindps.toFixed(2) + " min";
+    document.getElementById("dpsmax").innerHTML = maxdps.toFixed(2) + " max";
+    document.getElementById("dpserr").innerHTML = "DPS ​± " + err.toFixed(errrounding);
     document.getElementById("executetime").innerHTML = Math.round(executecodetime * 10000) / 10000 + " s";
 }
 // initialize stats display
@@ -463,3 +465,18 @@ function selectTarget(id) {
 }
 
 initializeTargetDropdown();
+
+// attempt at loading animation
+function startLoading() {
+    let btns = $('.u-btn-3');
+    btns.addClass('loading');
+    btns.append('<span class="spinner"><span class="bounce1"></span><span class="bounce2"></span><span class="bounce3"></span></span>');
+    $('.u-section-1').addClass('loading');
+}
+
+function endLoading() {
+    let btns = $('.u-btn-3');
+    btns.removeClass('loading');
+    btns.find('.spinner').remove();
+    $('.u-section-1').removeClass('loading');
+}

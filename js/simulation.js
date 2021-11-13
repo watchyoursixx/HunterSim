@@ -1,6 +1,6 @@
 var iterations = 10000;
-var minfighttimer = 24000;
-var maxfighttimer = 24005;
+var minfighttimer = 244;
+var maxfighttimer = 245;
 var DPS = 0;
 var mindps = 99999;
 var maxdps = 0;
@@ -18,18 +18,14 @@ function startSync() {
     spread = [];
     countruns = 0;
     err = 0;
-    totaldmgdone = 0;
-    totalduration = 0;
     mindps = 99999;
     maxdps = 0;
-    for (iteration = 1; iteration < iterations; ++iteration) {
+    for (iteration = 1; iteration <= iterations; ++iteration) {
         runSim();
     }
 
     console.log("total damage: " + totaldmgdone);
     console.log("duration: " + (Math.round(totalduration * 100) / 100));
-
-    displayDPSResults();
 
     const standardDeviation = (arr, usePopulation = false) => {
         const mean = arr.reduce((acc, val) => acc + val, 0) / arr.length;
@@ -42,19 +38,29 @@ function startSync() {
     err = standardDeviation(spread);
     performancecheck2 = performance.now();
     executecodetime = (performancecheck2 - performancecheck1) / 1000; // milliseconds convert to sec
+    displayDPSResults();
+    //console.log("autos: " + autocount);
 }
 
 function runSim() {
     maxsteps = rng(minfighttimer * 1000, maxfighttimer * 1000);
-    duration = maxsteps / 1000;
-    steptime = totalduration - previousduration;
-    auras.trinket1.timer = (auras.trinket1.cooldown === 0) ? auras.trinket1.duration : 0;
-    if(auras.trinket1.timer === auras.trinket1.duration) { auras.trinket1.cooldown = auras.trinket1.basecd}
-    auras.trinket2.timer = (auras.trinket2.cooldown === 0) ? auras.trinket2.duration : 0;
-    if(auras.trinket2.timer === auras.trinket2.duration) { auras.trinket2.cooldown = auras.trinket2.basecd}
+    fightduration = maxsteps / 1000;
+    step = 0;
+    totaldmgdone = 0;
+    totalduration = 0;
+    autocount = 0;
+    previousduration = 0;
+    initializeAuras();
+
+    while (totalduration < fightduration){
+        steptime = totalduration - previousduration;
+        auras.trinket1.timer = (auras.trinket1.cooldown === 0) ? auras.trinket1.duration : 0;
+        auras.trinket1.cooldown = (auras.trinket1.timer === auras.trinket1.duration) ? auras.trinket1.basecd: auras.trinket1.cooldown;
+        auras.trinket2.timer = (auras.trinket2.cooldown === 0) ? auras.trinket2.duration : 0;
+        auras.trinket2.cooldown = (auras.trinket2.timer === auras.trinket2.duration) ? auras.trinket2.basecd: auras.trinket2.cooldown;
     // review timing of CD above
-    attackRange(steptime);
-    
+        attackRange(steptime);
+        
     // choices
     /*
     drums:
@@ -79,13 +85,15 @@ function runSim() {
     stings:
     rune:
     */
-    previousduration = totalduration;
-    totalduration = Math.min(maxfighttimer, totalduration + rangespeed);
-    
+        previousduration = totalduration;
+        totalduration = Math.min(maxfighttimer, totalduration + rangespeed);
+        //console.log(totalduration);
+    }
+    //console.log("fight end");
     DPS = totaldmgdone / totalduration;
     if (DPS < mindps) { mindps = DPS; }
     if (DPS > maxdps) { maxdps = DPS; }
-    spread[countruns] = DPS;
-    countruns++;
+    //spread[countruns] = DPS;
+    //countruns++;
 }
 

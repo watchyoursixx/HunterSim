@@ -6041,7 +6041,6 @@ const MELEE_WEAPONS = {
           MAP: 80,
           RAP: 80,
           MP5: 8,
-          dmgbonus: 7,
       },
       Location: "Karazhan",
       type: "axe",

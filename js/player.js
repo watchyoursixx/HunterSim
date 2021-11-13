@@ -82,24 +82,24 @@ var currentgear = {auras:{0:{}}, stats:{},special:{}};
 
 // initial variables for itemid's (like a profile)
 var gear = {
-   head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
-   neck: { id: 30017 },
-   shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
-   back: { id: 29994, enchant: 34004 },
-   chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
-   wrist: { id: 29966, gems: [24028], enchant: 34002 },
+   //head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
+   //neck: { id: 30017 },
+   //shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
+   //back: { id: 29994, enchant: 34004 },
+   //chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
+   //wrist: { id: 29966, gems: [24028], enchant: 34002 },
    mainhand: { id: 32944, enchant: 23800 },
-   offhand: { id: 29948, enchant: 23800 },
-   hand: { id: 30140, enchant: 25080 },
-   waist: { id: 30040, gems: [24028, 24028] },
-   leg: { id: 29995, enchant: 35490 },
-   feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
-   ring1: { id: 29997 },
-   ring2: { id: 28791 },
+   //offhand: { id: 29948, enchant: 23800 },
+   //hand: { id: 30140, enchant: 25080 },
+   //waist: { id: 30040, gems: [24028, 24028] },
+   //leg: { id: 29995, enchant: 35490 },
+   //feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
+   //ring1: { id: 29997 },
+   //ring2: { id: 28791 },
    ...DST_BB_COMBO,
-   range: { id: 30105, enchant: 30260 },
+   range: { id: 15808, enchant: 30260 },
    ammo: { id: 33803 },
-   quiver: { id: 18714 },
+   //quiver: { id: 18714 },
 };
 //var ammo = {33803: {name: "Adamantite Stinger",dps: 43.0,location: "Crafted",phase: 3,}}
 // initialize variables for use - temp
@@ -248,7 +248,7 @@ function calcBaseStats() {
   // Crit rating and crit chance
    let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
   MeleeCritRating = critrating;
-  RangeCritRating = critrating + EnchantStats.RangeCrit;
+  RangeCritRating = critrating + currentgear.stats.RangeCrit;
    let crit = BaseCritChance + Agi / AgiToCrit + BuffStats.CritChance + talents.killer_instinct;
   MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
   RangeCritChance = crit + RangeCritRating / CritRatingRatio + talents.lethal_shots + races[selectedRace].critchance;
@@ -325,8 +325,8 @@ function initialize(){
    checkWeaponType();
    currentgear = getStatsFromGear(gear);
    addGear();
-   //console.log("current gear: ");
-   //console.log(currentgear);
+   console.log("current gear: ");
+   console.log(currentgear);
    addBuffs();
    calcBaseStats();
    initializeWeps();
@@ -341,14 +341,14 @@ function initializeWeps() {
    range_wep.mindmg = RANGED_WEAPONS[gear.range.id].mindmg;
    range_wep.maxdmg = RANGED_WEAPONS[gear.range.id].maxdmg;
    range_wep.ammodps = AMMOS[gear.ammo.id].ammo_dps;
-   range_wep.flatdmg = currentgear.stats.dmgbonus || 0 + EnchantStats.rangedmgbonus + EnchantStats.dmgbonus;
+   range_wep.flatdmg = currentgear.stats.dmgbonus || 0 + currentgear.stats.rangedmgbonus || 0;
    range_wep.basedmgmod = rangedmgmod;
    // initialize mainhand_wep obj
 
    mainhand_wep.speed = MELEE_WEAPONS[gear.mainhand.id].speed;
    mainhand_wep.mindmg = MELEE_WEAPONS[gear.mainhand.id].mindmg;
    mainhand_wep.maxdmg = MELEE_WEAPONS[gear.mainhand.id].maxdmg;
-   mainhand_wep.flatdmg = currentgear.stats.dmgbonus + EnchantStats.dmgbonus;
+   mainhand_wep.flatdmg = currentgear.stats.dmgbonus || 0;
    //console.log(currentgear.stats.dmgbonus);
    mainhand_wep.basedmgmod = dmgmod;
    
@@ -664,7 +664,7 @@ function attackMainhand(mainhand_wep) {
 }
 
 // attack with auto shot calc
-function attackRange() {
+function attackRange(steptime) {
 
    let attack = "ranged";
    updateAuras(steptime);
@@ -684,22 +684,23 @@ function attackRange() {
          dmg *= RangeCritDamage;
          proccrit();
    }
-   
+
    done = dealdamage(dmg,result,range_wep);
    
    totaldmgdone += done;
    procauto();
    procattack(attack);
-   updateHaste();
-   updateMana(result);
+   updateHaste(); // expensiveish
+   updateMana(result); // expensiveish
    //console.log("auto shot " + RESULTARRAY[result] + " for " + done);
+   autocount++;
 }
 // cast spell (possibly add individual spells)
 function cast(spell) {
    recentcast = true;
 }
 
-//var autocount = 0;
+autocount = 0;
 // final damage calculation after rolls
 function dealdamage(dmg, result, weapon, spell) {
    if (result != RESULT.MISS && result != RESULT.DODGE) {
@@ -707,7 +708,7 @@ function dealdamage(dmg, result, weapon, spell) {
       let mindmg = Math.floor(dmg * (1 - armorReduction));
       let maxdmg = Math.ceil(dmg * (1 - armorReduction));
       dmg = rng(mindmg,maxdmg);
-      //autocount++;
+      
       //console.log("autos: " + autocount);
       return dmg;
    }

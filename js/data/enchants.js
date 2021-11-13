@@ -563,7 +563,7 @@ const RING_ENCHANTS = {
   27920: {
     name: 'Striking',
     effectId: 2929,
-    special: { incWeapDmg: 2 },
+    special: { rangedmgbonus: 2 },
     stats: {},
     Phase: 1,
     icon: 'inv_misc_note_01'
@@ -692,7 +692,7 @@ const RANGE_ENCHANTS = {
     name: 'Accurate Scope',
     effectId: 33,
     special: {
-      incWeapDmg: 3
+      rangedmgbonus: 3
     },
     Phase: 1,
     icon: 'trade_engineering'
@@ -701,7 +701,7 @@ const RANGE_ENCHANTS = {
     name: 'Deadly Scope',
     effectId: 663,
     special: {
-      incWeapDmg: 5
+      rangedmgbonus: 5
     },
     Phase: 1,
     icon: 'trade_engineering'
@@ -710,7 +710,7 @@ const RANGE_ENCHANTS = {
     name: 'Biznicks 247x128 Accurascope',
     effectId: 2523,
     stats: {
-      Hit: 30
+      RangeHit: 30
     },
     Phase: 1,
     icon: 'trade_engineering'
@@ -719,7 +719,7 @@ const RANGE_ENCHANTS = {
     name: 'Khorium Scope',
     effectId: 2723,
     special: {
-      incWeapDmg: 12
+      rangedmgbonus: 12
     },
     Phase: 1,
     icon: 'trade_engineering'
@@ -728,7 +728,7 @@ const RANGE_ENCHANTS = {
     name: 'Sniper Scope',
     effectId: 664,
     special: {
-      incWeapDmg: 7
+      rangedmgbonus: 7
     },
     Phase: 1,
     icon: 'trade_engineering'
@@ -737,7 +737,7 @@ const RANGE_ENCHANTS = {
     name: 'Stabilitzed Eternium Scope',
     effectId: 2724,
     stats: {
-      Crit: 28
+      RangeCrit: 28
     },
     Phase: 1,
     icon: 'trade_engineering'
