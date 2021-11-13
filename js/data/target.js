@@ -18,7 +18,7 @@ var targetData = (function() {
   const TARGETS = {
       0: {
         name: 'Custom',
-        armor: 7700,
+        armor: 0,
         phase: 1,
         resilience: 0,
         type: Target_Types.HUMANOID,

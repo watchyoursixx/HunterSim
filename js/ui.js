@@ -11,7 +11,7 @@ var buffslist = [
     { id: 0, talented: false }, // GotW
     { id: 0, talented: false }, // PW:F
     { id: 0, talented: false }, // BP
-    0, // WF
+    { id: 0, talented: false }, // WF
     0, // heroic presence
     { id: 0, talented: false }, // BS
     0, // tsa
@@ -42,6 +42,14 @@ function displayStats(){
     document.getElementById("meleecrit").innerHTML = meleecrit + " %";
     document.getElementById("exp").innerHTML = Expertise;
     document.getElementById("mp5").innerHTML = ManaPer5;
+}
+
+function displayDPSResults(){
+    document.getElementById("dpsresult").innerHTML = Math.round(DPS * 100) / 100;
+    document.getElementById("dpsmin").innerHTML = Math.round(mindps * 100) / 100 + " min";
+    document.getElementById("dpsmax").innerHTML = Math.round(maxdps * 100) / 100 + " max";
+    document.getElementById("dpserr").innerHTML = "DPS ​± " + Math.round(err * 100) / 100;
+    document.getElementById("executetime").innerHTML = Math.round(executecodetime * 10000) / 10000 + " s";
 }
 // initialize stats display
 displayStats();
@@ -90,6 +98,7 @@ function selectedOptionsResults(){
     consumestats = getPlayerStatsFromConsumes(playerconsumes);
     initialize();
     displayStats();
+    console.log(buffslist);
 }
 // check for kings toggle
 function kingsCheck() {
@@ -223,7 +232,7 @@ function sanctCheck() {
     selectedOptionsResults();
 
 }
-
+// below functions check if selected check the list of items then call the update
 function flaskSelection() {
     let isSelected = document.getElementById("flask").value;
     switch (isSelected) {
@@ -440,15 +449,17 @@ function selectTarget(id) {
         document.getElementById("armor").disabled = false;
         document.getElementById("typeSelect").disabled = false;
         document.getElementById("level").disabled = false;
+        target.armor = parseInt(document.getElementById("armor").value);
     }
     else { 
         document.getElementById("armor").disabled = true;
         document.getElementById("typeSelect").disabled = true;
         document.getElementById("level").disabled = true;
+        document.getElementById("armor").value = target.armor;
     }
-    document.getElementById("armor").value = target.armor;
     document.getElementById("typeSelect").value = target.type;
     document.getElementById("level").value = target.level;
+    update();
 }
 
 initializeTargetDropdown();

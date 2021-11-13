@@ -4988,7 +4988,7 @@ const MELEE_WEAPONS = {
           Hit: 16
       },
       Location: "Naxx",
-      type: 4,
+      type: "polearm",
       speed: 2.3,
       mindmg: 132,
       maxdmg: 199,
@@ -5004,7 +5004,7 @@ const MELEE_WEAPONS = {
           Crit: 30
       },
       Location: "Crafting",
-      type: 2,
+      type: "sword",
       speed: 3.2,
       mindmg: 172,
       maxdmg: 259,
@@ -5021,7 +5021,7 @@ const MELEE_WEAPONS = {
           RAP: 52
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 3.5,
       mindmg: 203,
       maxdmg: 305,
@@ -5036,7 +5036,7 @@ const MELEE_WEAPONS = {
           Hit: 15
       },
       Location: "Crafting",
-      type: 1,
+      type: "dagger",
       speed: 1.9,
       mindmg: 74,
       maxdmg: 138,
@@ -5051,7 +5051,7 @@ const MELEE_WEAPONS = {
           Stam: 14
       },
       Location: "Crafting",
-      type: 2,
+      type: "sword",
       speed: 2.2,
       mindmg: 128,
       maxdmg: 239,
@@ -5072,7 +5072,7 @@ const MELEE_WEAPONS = {
       socketBonus: {
           Stam: 3
       },
-      type: 3,
+      type: "axe",
       speed: 2.2,
       mindmg: 128,
       maxdmg: 239,
@@ -5088,7 +5088,7 @@ const MELEE_WEAPONS = {
           Crit: 30
       },
       Location: "Crafting",
-      type: 2,
+      type: "sword",
       speed: 3.4,
       mindmg: 295,
       maxdmg: 443,
@@ -5104,7 +5104,7 @@ const MELEE_WEAPONS = {
           Crit: 20
       },
       Location: "Crafting",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 81,
       maxdmg: 152,
@@ -5121,7 +5121,7 @@ const MELEE_WEAPONS = {
           Crit: 12
       },
       Location: "Dungeon",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 96,
       maxdmg: 179,
@@ -5138,7 +5138,7 @@ const MELEE_WEAPONS = {
           Hit: 12
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 69,
       maxdmg: 130,
@@ -5154,7 +5154,7 @@ const MELEE_WEAPONS = {
           RAP: 80
       },
       Location: "Dungeon",
-      type: 3,
+      type: "axe",
       speed: 3.1,
       mindmg: 174,
       maxdmg: 262,
@@ -5171,7 +5171,7 @@ const MELEE_WEAPONS = {
           Crit: 15
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 71,
       maxdmg: 133,
@@ -5188,7 +5188,7 @@ const MELEE_WEAPONS = {
           Crit: 10
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 61,
       maxdmg: 115,
@@ -5205,7 +5205,7 @@ const MELEE_WEAPONS = {
           Hit: 12
       },
       Location: "Quest Reward",
-      type: 5,
+      type: "fist",
       speed: 2.5,
       mindmg: 99,
       maxdmg: 184,
@@ -5221,7 +5221,7 @@ const MELEE_WEAPONS = {
           Hit: 11
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 70,
       maxdmg: 131,
@@ -5238,7 +5238,7 @@ const MELEE_WEAPONS = {
           RAP: 26
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.7,
       mindmg: 74,
       maxdmg: 139,
@@ -5257,7 +5257,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 189,
       maxdmg: 285,
@@ -5274,7 +5274,7 @@ const MELEE_WEAPONS = {
           Hit: 11
       },
       Location: "Reputation Reward",
-      type: 2,
+      type: "sword",
       speed: 2.1,
       mindmg: 77,
       maxdmg: 145,
@@ -5291,7 +5291,7 @@ const MELEE_WEAPONS = {
           Crit: 10
       },
       Location: "Quest Reward",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 90,
       maxdmg: 169,
@@ -5306,7 +5306,7 @@ const MELEE_WEAPONS = {
           Hit: 10
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.3,
       mindmg: 45,
       maxdmg: 84,
@@ -5323,7 +5323,7 @@ const MELEE_WEAPONS = {
           Crit: 13
       },
       Location: "Dungeon",
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 106,
       maxdmg: 197,
@@ -5339,7 +5339,7 @@ const MELEE_WEAPONS = {
           Hit: 12
       },
       Location: "Dungeon",
-      type: 2,
+      type: "sword",
       speed: 1.5,
       mindmg: 61,
       maxdmg: 114,
@@ -5356,7 +5356,7 @@ const MELEE_WEAPONS = {
           Crit: 15
       },
       Location: "Dungeon",
-      type: 3,
+      type: "axe",
       speed: 2.3,
       mindmg: 101,
       maxdmg: 188,
@@ -5373,7 +5373,7 @@ const MELEE_WEAPONS = {
           Crit: 11
       },
       Location: "Dungeon",
-      type: 2,
+      type: "sword",
       speed: 2.4,
       mindmg: 120,
       maxdmg: 224,
@@ -5391,7 +5391,7 @@ const MELEE_WEAPONS = {
           RAP: 40
       },
       Location: "Quest Reward",
-      type: 4,
+      type: "polearm",
       speed: 3.2,
       mindmg: 172,
       maxdmg: 259,
@@ -5408,7 +5408,7 @@ const MELEE_WEAPONS = {
           Hit: 16
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 103,
       maxdmg: 155,
@@ -5424,7 +5424,7 @@ const MELEE_WEAPONS = {
           RAP: 24
       },
       Location: "Quest Reward",
-      type: 3,
+      type: "axe",
       speed: 1.5,
       mindmg: 51,
       maxdmg: 96,
@@ -5441,7 +5441,7 @@ const MELEE_WEAPONS = {
           Crit: 18
       },
       Location: "Dungeon",
-      type: 3,
+      type: "axe",
       speed: 1.7,
       mindmg: 85,
       maxdmg: 159,
@@ -5464,7 +5464,7 @@ const MELEE_WEAPONS = {
       socketBonus: {
           Crit: 3
       },
-      type: 5,
+      type: "fist",
       speed: 2.5,
       mindmg: 125,
       maxdmg: 233,
@@ -5482,7 +5482,7 @@ const MELEE_WEAPONS = {
           Hit: 24
       },
       Location: "Dungeon",
-      type: 4,
+      type: "polearm",
       speed: 3.5,
       mindmg: 261,
       maxdmg: 392,
@@ -5498,7 +5498,7 @@ const MELEE_WEAPONS = {
           RAP: 26
       },
       Location: "Dungeon",
-      type: 2,
+      type: "sword",
       speed: 1.4,
       mindmg: 70,
       maxdmg: 131,
@@ -5523,7 +5523,7 @@ const MELEE_WEAPONS = {
       socketBonus: {
           Resil: 4
       },
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 268,
       maxdmg: 403,
@@ -5539,7 +5539,7 @@ const MELEE_WEAPONS = {
           RAP: 30
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 80,
       maxdmg: 121,
@@ -5556,7 +5556,7 @@ const MELEE_WEAPONS = {
           RAP: 22
       },
       Location: "Dungeon",
-      type: 3,
+      type: "axe",
       speed: 1.9,
       mindmg: 95,
       maxdmg: 177,
@@ -5573,7 +5573,7 @@ const MELEE_WEAPONS = {
           Crit: 16
       },
       Location: "Dungeon",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 130,
       maxdmg: 243,
@@ -5592,7 +5592,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 131,
       maxdmg: 197,
@@ -5611,7 +5611,7 @@ const MELEE_WEAPONS = {
           Resil: 28
       },
       Location: "Honor Reward",
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 341,
       maxdmg: 513,
@@ -5629,7 +5629,7 @@ const MELEE_WEAPONS = {
           Resil: 36
       },
       Location: "Honor Reward",
-      type: 3,
+      type: "axe",
       speed: 2.2,
       mindmg: 208,
       maxdmg: 313,
@@ -5648,7 +5648,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 2,
+      type: "sword",
       speed: 1.5,
       mindmg: 95,
       maxdmg: 175,
@@ -5667,7 +5667,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 166,
       maxdmg: 309,
@@ -5686,7 +5686,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 3,
+      type: "axe",
       speed: 1.5,
       mindmg: 95,
       maxdmg: 175,
@@ -5705,7 +5705,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 89,
       maxdmg: 166,
@@ -5724,7 +5724,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 166,
       maxdmg: 309,
@@ -5743,7 +5743,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 166,
       maxdmg: 309,
@@ -5762,7 +5762,7 @@ const MELEE_WEAPONS = {
           Resil: 10
       },
       Location: "Honor Reward",
-      type: 5,
+      type: "fist",
       speed: 1.5,
       mindmg: 95,
       maxdmg: 178,
@@ -5779,7 +5779,7 @@ const MELEE_WEAPONS = {
           Crit: 21
       },
       Location: "Dungeon",
-      type: 5,
+      type: "fist",
       speed: 1.6,
       mindmg: 80,
       maxdmg: 149,
@@ -5795,7 +5795,7 @@ const MELEE_WEAPONS = {
           Hit: 15
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.3,
       mindmg: 74,
       maxdmg: 112,
@@ -5810,7 +5810,7 @@ const MELEE_WEAPONS = {
           RAP: 70
       },
       Location: "World Boss",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 163,
       maxdmg: 304,
@@ -5826,7 +5826,7 @@ const MELEE_WEAPONS = {
           Hit: 16
       },
       Location: "Crafting",
-      type: 2,
+      type: "sword",
       speed: 1.6,
       mindmg: 94,
       maxdmg: 176,
@@ -5842,7 +5842,7 @@ const MELEE_WEAPONS = {
           Hit: 17
       },
       Location: "Crafting",
-      type: 2,
+      type: "sword",
       speed: 1.6,
       mindmg: 102,
       maxdmg: 190,
@@ -5858,7 +5858,7 @@ const MELEE_WEAPONS = {
           Hit: 18
       },
       Location: "Crafting",
-      type: 2,
+      type: "sword",
       speed: 1.6,
       mindmg: 109,
       maxdmg: 203,
@@ -5874,7 +5874,7 @@ const MELEE_WEAPONS = {
           Crit: 20
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 2.7,
       mindmg: 159,
       maxdmg: 296,
@@ -5890,7 +5890,7 @@ const MELEE_WEAPONS = {
           Crit: 21
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 2.7,
       mindmg: 172,
       maxdmg: 320,
@@ -5906,7 +5906,7 @@ const MELEE_WEAPONS = {
           Crit: 23
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 2.7,
       mindmg: 184,
       maxdmg: 343,
@@ -5922,7 +5922,7 @@ const MELEE_WEAPONS = {
           Crit: 47
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 3.7,
       mindmg: 324,
       maxdmg: 487,
@@ -5938,7 +5938,7 @@ const MELEE_WEAPONS = {
           Crit: 52
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 3.7,
       mindmg: 351,
       maxdmg: 527,
@@ -5954,7 +5954,7 @@ const MELEE_WEAPONS = {
           Crit: 56
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 3.7,
       mindmg: 375,
       maxdmg: 564,
@@ -5971,7 +5971,7 @@ const MELEE_WEAPONS = {
           RAP: 36
       },
       Location: "Karazhan",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 126,
       maxdmg: 189,
@@ -5992,7 +5992,7 @@ const MELEE_WEAPONS = {
       "Yellow",
       "Blue"
   ],
-    type: 1,
+    type: "dagger",
     speed: 1.6,
     mindmg: 112,
     maxdmg: 168,
@@ -6009,7 +6009,7 @@ const MELEE_WEAPONS = {
           Crit: 24
       },
       Location: "Badge Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 130,
       maxdmg: 241,
@@ -6025,7 +6025,7 @@ const MELEE_WEAPONS = {
           Crit: 20
       },
       Location: "Karazhan",
-      type: 5,
+      type: "fist",
       speed: 2.5,
       mindmg: 153,
       maxdmg: 285,
@@ -6040,10 +6040,11 @@ const MELEE_WEAPONS = {
           Stam: 46,
           MAP: 80,
           RAP: 80,
-          MP5: 8
+          MP5: 8,
+          dmgbonus: 7,
       },
       Location: "Karazhan",
-      type: 3,
+      type: "axe",
       speed: 3.5,
       mindmg: 319,
       maxdmg: 479,
@@ -6060,7 +6061,7 @@ const MELEE_WEAPONS = {
           RAP: 46
       },
       Location: "Karazhan",
-      type: 2,
+      type: "sword",
       speed: 2.7,
       mindmg: 165,
       maxdmg: 308,
@@ -6077,7 +6078,7 @@ const MELEE_WEAPONS = {
           Hit: 15
       },
       Location: "Karazhan",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 132,
       maxdmg: 199,
@@ -6093,7 +6094,7 @@ const MELEE_WEAPONS = {
           Stam: 51
       },
       Location: "Karazhan",
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 345,
       maxdmg: 518,
@@ -6109,7 +6110,7 @@ const MELEE_WEAPONS = {
           RAP: 124
       },
       Location: "Gruul's Lair",
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 345,
       maxdmg: 518,
@@ -6127,7 +6128,7 @@ const MELEE_WEAPONS = {
           Hit: 7
       },
       Location: "Quest Reward",
-      type: 2,
+      type: "sword",
       speed: 2.4,
       mindmg: 78,
       maxdmg: 146,
@@ -6144,7 +6145,7 @@ const MELEE_WEAPONS = {
           Hit: 11
       },
       Location: "Reputation Reward",
-      type: 3,
+      type: "axe",
       speed: 1.9,
       mindmg: 70,
       maxdmg: 131,
@@ -6160,7 +6161,7 @@ const MELEE_WEAPONS = {
           Hit: 19
       },
       Location: "Reputation Reward",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 147,
       maxdmg: 275,
@@ -6175,7 +6176,7 @@ const MELEE_WEAPONS = {
           Stam: 21
       },
       Location: "Reputation Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.5,
       mindmg: 97,
       maxdmg: 146,
@@ -6191,7 +6192,7 @@ const MELEE_WEAPONS = {
           Hit: 42
       },
       Location: "Reputation Reward",
-      type: 3,
+      type: "axe",
       speed: 3.5,
       mindmg: 261,
       maxdmg: 392,
@@ -6207,7 +6208,7 @@ const MELEE_WEAPONS = {
           RAP: 38
       },
       Location: "Reputation Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.6,
       mindmg: 104,
       maxdmg: 156,
@@ -6224,7 +6225,7 @@ const MELEE_WEAPONS = {
           Hit: 19
       },
       Location: "Reputation Reward",
-      type: 4,
+      type: "polearm",
       speed: 3.5,
       mindmg: 261,
       maxdmg: 392,
@@ -6241,7 +6242,7 @@ const MELEE_WEAPONS = {
           Hit: 19
       },
       Location: "Reputation Reward",
-      type: 4,
+      type: "polearm",
       speed: 3.5,
       mindmg: 261,
       maxdmg: 392,
@@ -6257,7 +6258,7 @@ const MELEE_WEAPONS = {
           RAP: 22
       },
       Location: "Reputation Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 117,
       maxdmg: 176,
@@ -6272,7 +6273,7 @@ const MELEE_WEAPONS = {
           Stam: 22
       },
       Location: "Badge Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.3,
       mindmg: 77,
       maxdmg: 145,
@@ -6287,7 +6288,7 @@ const MELEE_WEAPONS = {
           Stam: 33
       },
       Location: "Quest Reward",
-      type: 4,
+      type: "polearm",
       speed: 3.3,
       mindmg: 246,
       maxdmg: 370,
@@ -6303,7 +6304,7 @@ const MELEE_WEAPONS = {
           Crit: 22
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 83,
       maxdmg: 156,
@@ -6320,7 +6321,7 @@ const MELEE_WEAPONS = {
           Crit: 30
       },
       Location: "Dungeon",
-      type: 2,
+      type: "sword",
       speed: 3.5,
       mindmg: 304,
       maxdmg: 456,
@@ -6335,7 +6336,7 @@ const MELEE_WEAPONS = {
           RAP: 56
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 120,
       maxdmg: 181,
@@ -6351,7 +6352,7 @@ const MELEE_WEAPONS = {
           RAP: 28
       },
       Location: "Vendor",
-      type: 5,
+      type: "fist",
       speed: 2.4,
       mindmg: 78,
       maxdmg: 146,
@@ -6365,7 +6366,7 @@ const MELEE_WEAPONS = {
           Hit: 21
       },
       Location: "Vendor",
-      type: 1,
+      type: "dagger",
       speed: 1.3,
       mindmg: 52,
       maxdmg: 95,
@@ -6382,7 +6383,7 @@ const MELEE_WEAPONS = {
           RAP: 24
       },
       Location: "Reputation Reward",
-      type: 2,
+      type: "sword",
       speed: 2,
       mindmg: 79,
       maxdmg: 147,
@@ -6399,7 +6400,7 @@ const MELEE_WEAPONS = {
           RAP: 38
       },
       Location: "Quest Reward",
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 167,
       maxdmg: 251,
@@ -6416,7 +6417,7 @@ const MELEE_WEAPONS = {
           RAP: 16
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 56,
       maxdmg: 105,
@@ -6434,7 +6435,7 @@ const MELEE_WEAPONS = {
           Hit: 5
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 43,
       maxdmg: 81,
@@ -6450,7 +6451,7 @@ const MELEE_WEAPONS = {
           RAP: 32
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 72,
       maxdmg: 135,
@@ -6467,7 +6468,7 @@ const MELEE_WEAPONS = {
           RAP: 40
       },
       Location: "The Eye",
-      type: 5,
+      type: "fist",
       speed: 1.5,
       mindmg: 101,
       maxdmg: 189,
@@ -6484,7 +6485,7 @@ const MELEE_WEAPONS = {
           Haste: 20
       },
       Location: "Zul'Aman",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 174,
       maxdmg: 323,
@@ -6510,7 +6511,7 @@ const MELEE_WEAPONS = {
           MAP: 8,
           RAP: 8
       },
-      type: 2,
+      type: "sword",
       speed: 3.6,
       mindmg: 375,
       maxdmg: 564,
@@ -6528,7 +6529,7 @@ const MELEE_WEAPONS = {
           Hit: 11
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 84,
       maxdmg: 157,
@@ -6542,7 +6543,7 @@ const MELEE_WEAPONS = {
           Hit: 24
       },
       Location: "Crafting",
-      type: 2,
+      type: "sword",
       speed: 1.7,
       mindmg: 72,
       maxdmg: 134,
@@ -6559,7 +6560,7 @@ const MELEE_WEAPONS = {
           Hit: 20
       },
       Location: "Serpentshrine Cavern",
-      type: 2,
+      type: "sword",
       speed: 2.7,
       mindmg: 182,
       maxdmg: 339,
@@ -6573,7 +6574,7 @@ const MELEE_WEAPONS = {
           Agi: 24
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 110,
       maxdmg: 205,
@@ -6589,7 +6590,7 @@ const MELEE_WEAPONS = {
           Crit: 35
       },
       Location: "Crafting",
-      type: 3,
+      type: "axe",
       speed: 3.4,
       mindmg: 213,
       maxdmg: 321,
@@ -6605,7 +6606,7 @@ const MELEE_WEAPONS = {
           RAP: 56
       },
       Location: "Serpentshrine Cavern",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 144,
       maxdmg: 217,
@@ -6621,7 +6622,7 @@ const MELEE_WEAPONS = {
           Crit: 11
       },
       Location: "Quest Reward",
-      type: 3,
+      type: "axe",
       speed: 2.8,
       mindmg: 113,
       maxdmg: 211,
@@ -6638,7 +6639,7 @@ const MELEE_WEAPONS = {
           RAP: 78
       },
       Location: "Quest Reward",
-      type: 4,
+      type: "polearm",
       speed: 2.7,
       mindmg: 173,
       maxdmg: 260,
@@ -6654,7 +6655,7 @@ const MELEE_WEAPONS = {
           RAP: 14
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 67,
       maxdmg: 126,
@@ -6671,7 +6672,7 @@ const MELEE_WEAPONS = {
           Crit: 7
       },
       Location: "Quest Reward",
-      type: 3,
+      type: "axe",
       speed: 1.8,
       mindmg: 57,
       maxdmg: 107,
@@ -6688,7 +6689,7 @@ const MELEE_WEAPONS = {
           Hit: 20
       },
       Location: "Mount Hyjal",
-      type: 1,
+      type: "dagger",
       speed: 1.5,
       mindmg: 105,
       maxdmg: 196,
@@ -6704,7 +6705,7 @@ const MELEE_WEAPONS = {
           RAP: 56
       },
       Location: "Mount Hyjal",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 182,
       maxdmg: 339,
@@ -6719,7 +6720,7 @@ const MELEE_WEAPONS = {
           ArP: 210
       },
       Location: "Mount Hyjal",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 144,
       maxdmg: 217,
@@ -6735,7 +6736,7 @@ const MELEE_WEAPONS = {
           ArP: 335
       },
       Location: "Hyjal",
-      type: 2,
+      type: "sword",
       speed: 3.5,
       mindmg: 386,
       maxdmg: 580,
@@ -6752,7 +6753,7 @@ const MELEE_WEAPONS = {
           RAP: 40
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 65,
       maxdmg: 122,
@@ -6769,7 +6770,7 @@ const MELEE_WEAPONS = {
           Hit: 7
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 84,
       maxdmg: 157,
@@ -6786,7 +6787,7 @@ const MELEE_WEAPONS = {
           Crit: 27
       },
       Location: "World Drop",
-      type: 3,
+      type: "axe",
       speed: 3.5,
       mindmg: 253,
       maxdmg: 380,
@@ -6803,7 +6804,7 @@ const MELEE_WEAPONS = {
           Crit: 16
       },
       Location: "World Drop",
-      type: 3,
+      type: "axe",
       speed: 1.8,
       mindmg: 103,
       maxdmg: 155,
@@ -6818,7 +6819,7 @@ const MELEE_WEAPONS = {
           Stam: 25
       },
       Location: "The Eye",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 121,
       maxdmg: 226,
@@ -6834,7 +6835,7 @@ const MELEE_WEAPONS = {
           RAP: 14
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 70,
       maxdmg: 131,
@@ -6851,7 +6852,7 @@ const MELEE_WEAPONS = {
           Hit: 15
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 83,
       maxdmg: 156,
@@ -6868,7 +6869,7 @@ const MELEE_WEAPONS = {
           Crit: 11
       },
       Location: "Quest Reward",
-      type: 2,
+      type: "sword",
       speed: 1.6,
       mindmg: 64,
       maxdmg: 120,
@@ -6885,7 +6886,7 @@ const MELEE_WEAPONS = {
           Crit: 26
       },
       Location: "Quest Reward",
-      type: 3,
+      type: "axe",
       speed: 3.2,
       mindmg: 192,
       maxdmg: 289,
@@ -6904,7 +6905,7 @@ const MELEE_WEAPONS = {
           MP5: 7
       },
       Location: "Quest Reward",
-      type: 3,
+      type: "axe",
       speed: 3.3,
       mindmg: 198,
       maxdmg: 298,
@@ -6921,7 +6922,7 @@ const MELEE_WEAPONS = {
           RAP: 40
       },
       Location: "The Eye",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 175,
       maxdmg: 327,
@@ -6937,7 +6938,7 @@ const MELEE_WEAPONS = {
           RAP: 34
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 48,
       maxdmg: 91,
@@ -6954,7 +6955,7 @@ const MELEE_WEAPONS = {
           Hit: 7
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.9,
       mindmg: 69,
       maxdmg: 128,
@@ -6970,7 +6971,7 @@ const MELEE_WEAPONS = {
           Crit: 19
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 55,
       maxdmg: 103,
@@ -6986,7 +6987,7 @@ const MELEE_WEAPONS = {
           RAP: 38
       },
       Location: "Quest Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 71,
       maxdmg: 133,
@@ -7005,7 +7006,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 177,
       maxdmg: 330,
@@ -7024,7 +7025,7 @@ const MELEE_WEAPONS = {
           Resil: 33
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 365,
       maxdmg: 549,
@@ -7043,7 +7044,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 1.5,
       mindmg: 102,
       maxdmg: 191,
@@ -7062,7 +7063,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 5,
+      type: "fist",
       speed: 1.5,
       mindmg: 102,
       maxdmg: 191,
@@ -7080,7 +7081,7 @@ const MELEE_WEAPONS = {
           Resil: 42
       },
       Location: "Arena Reward",
-      type: 4,
+      type: "polearm",
       speed: 2.2,
       mindmg: 223,
       maxdmg: 335,
@@ -7099,7 +7100,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 2,
+      type: "sword",
       speed: 1.5,
       mindmg: 102,
       maxdmg: 191,
@@ -7118,7 +7119,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 177,
       maxdmg: 330,
@@ -7137,7 +7138,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 140,
       maxdmg: 211,
@@ -7156,7 +7157,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 95,
       maxdmg: 175,
@@ -7175,7 +7176,7 @@ const MELEE_WEAPONS = {
           Resil: 12
       },
       Location: "Arena Reward",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 203,
       maxdmg: 305,
@@ -7192,7 +7193,7 @@ const MELEE_WEAPONS = {
           Hit: 21
       },
       Location: "Black Temple",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 208,
       maxdmg: 313,
@@ -7210,7 +7211,7 @@ const MELEE_WEAPONS = {
           Hit: 30
       },
       Location: "Black Temple",
-      type: 4,
+      type: "polearm",
       speed: 3.5,
       mindmg: 365,
       maxdmg: 548,
@@ -7227,7 +7228,7 @@ const MELEE_WEAPONS = {
           RAP: 44
       },
       Location: "Black Temple",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 112,
       maxdmg: 169,
@@ -7243,7 +7244,7 @@ const MELEE_WEAPONS = {
           RAP: 56
       },
       Location: "Mount Hyjal",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 182,
       maxdmg: 339,
@@ -7265,7 +7266,7 @@ const MELEE_WEAPONS = {
       socketBonus: {
           Stam: 3
       },
-      type: 1,
+      type: "dagger",
       speed: 1.5,
       mindmg: 75,
       maxdmg: 140,
@@ -7281,7 +7282,7 @@ const MELEE_WEAPONS = {
           RAP: 80
       },
       Location: "Quest Reward",
-      type: 4,
+      type: "polearm",
       speed: 3.4,
       mindmg: 237,
       maxdmg: 357,
@@ -7298,7 +7299,7 @@ const MELEE_WEAPONS = {
           Hit: 15
       },
       Location: "The Eye",
-      type: 5,
+      type: "fist",
       speed: 2.7,
       mindmg: 182,
       maxdmg: 339,
@@ -7315,7 +7316,7 @@ const MELEE_WEAPONS = {
           RAP: 38
       },
       Location: "Mount Hyjal",
-      type: 5,
+      type: "fist",
       speed: 1.5,
       mindmg: 120,
       maxdmg: 181,
@@ -7332,7 +7333,7 @@ const MELEE_WEAPONS = {
           RAP: 38
       },
       Location: "Mount Hyjal",
-      type: 5,
+      type: "fist",
       speed: 2.7,
       mindmg: 216,
       maxdmg: 325,
@@ -7349,7 +7350,7 @@ const MELEE_WEAPONS = {
           Haste: 18
       },
       Location: "Zul'Aman",
-      type: 2,
+      type: "sword",
       speed: 1.5,
       mindmg: 100,
       maxdmg: 187,
@@ -7366,7 +7367,7 @@ const MELEE_WEAPONS = {
           ArP: 140
       },
       Location: "Zul'Aman",
-      type: 1,
+      type: "dagger",
       speed: 1.5,
       mindmg: 100,
       maxdmg: 187,
@@ -7383,7 +7384,7 @@ const MELEE_WEAPONS = {
           Hit: 12
       },
       Location: "Reputation Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 79,
       maxdmg: 120,
@@ -7400,7 +7401,7 @@ const MELEE_WEAPONS = {
           ArP: 140
       },
       Location: "Zul'Aman",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 137,
       maxdmg: 207,
@@ -7445,7 +7446,7 @@ const MELEE_WEAPONS = {
           MAP: 6,
           RAP: 6
       },
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 358,
       maxdmg: 537,
@@ -7469,7 +7470,7 @@ const MELEE_WEAPONS = {
           MAP: 6,
           RAP: 6
       },
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 137,
       maxdmg: 207,
@@ -7492,7 +7493,7 @@ const MELEE_WEAPONS = {
           MAP: 4,
           RAP: 4
       },
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 174,
       maxdmg: 323,
@@ -7516,7 +7517,7 @@ const MELEE_WEAPONS = {
           MAP: 4,
           RAP: 4
       },
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 174,
       maxdmg: 323,
@@ -7536,7 +7537,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 187,
       maxdmg: 349,
@@ -7554,7 +7555,7 @@ const MELEE_WEAPONS = {
           Resil: 42
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 3.6,
       mindmg: 386,
       maxdmg: 580,
@@ -7572,7 +7573,7 @@ const MELEE_WEAPONS = {
           Resil: 42
       },
       Location: "Arena Reward",
-      type: 2,
+      type: "sword",
       speed: 3.6,
       mindmg: 386,
       maxdmg: 580,
@@ -7592,7 +7593,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 1.5,
       mindmg: 108,
       maxdmg: 201,
@@ -7612,7 +7613,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 5,
+      type: "fist",
       speed: 1.5,
       mindmg: 108,
       maxdmg: 201,
@@ -7630,7 +7631,7 @@ const MELEE_WEAPONS = {
           Resil: 42
       },
       Location: "Arena Reward",
-      type: 4,
+      type: "polearm",
       speed: 2.2,
       mindmg: 236,
       maxdmg: 354,
@@ -7650,7 +7651,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 2,
+      type: "sword",
       speed: 1.5,
       mindmg: 108,
       maxdmg: 201,
@@ -7670,7 +7671,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 187,
       maxdmg: 349,
@@ -7690,7 +7691,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 148,
       maxdmg: 223,
@@ -7710,7 +7711,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.4,
       mindmg: 101,
       maxdmg: 188,
@@ -7730,7 +7731,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 214,
       maxdmg: 322,
@@ -7750,7 +7751,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 130,
       maxdmg: 241,
@@ -7770,7 +7771,7 @@ const MELEE_WEAPONS = {
           ArP: 98
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 3,
       mindmg: 321,
       maxdmg: 483,
@@ -7790,7 +7791,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 187,
       maxdmg: 349,
@@ -7810,7 +7811,7 @@ const MELEE_WEAPONS = {
           ArP: 49
       },
       Location: "Arena Reward",
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 187,
       maxdmg: 349,
@@ -7827,7 +7828,7 @@ const MELEE_WEAPONS = {
           Haste: 25
       },
       Location: "Sunwell",
-      type: 1,
+      type: "dagger",
       speed: 1.5,
       mindmg: 113,
       maxdmg: 211,
@@ -7851,7 +7852,7 @@ const MELEE_WEAPONS = {
           MAP: 4,
           RAP: 4
       },
-      type: 4,
+      type: "polearm",
       speed: 3.5,
       mindmg: 393,
       maxdmg: 590,
@@ -7868,7 +7869,7 @@ const MELEE_WEAPONS = {
           ArP: 196
       },
       Location: "Sunwell",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 136,
       maxdmg: 253,
@@ -7884,7 +7885,7 @@ const MELEE_WEAPONS = {
           Haste: 35
       },
       Location: "Sunwell",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 196,
       maxdmg: 365,
@@ -7909,7 +7910,7 @@ const MELEE_WEAPONS = {
           MAP: 4,
           RAP: 4
       },
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 164,
       maxdmg: 247,
@@ -7934,7 +7935,7 @@ const MELEE_WEAPONS = {
           MAP: 6,
           RAP: 6
       },
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 238,
       maxdmg: 357,
@@ -7958,7 +7959,7 @@ const MELEE_WEAPONS = {
       socketBonus: {
           Str: 3
       },
-      type: 5,
+      type: "fist",
       speed: 2.6,
       mindmg: 196,
       maxdmg: 365,
@@ -7975,7 +7976,7 @@ const MELEE_WEAPONS = {
           Haste: 17
       },
       Location: "Dungeon",
-      type: 1,
+      type: "dagger",
       speed: 1.3,
       mindmg: 79,
       maxdmg: 148,
@@ -7999,7 +8000,7 @@ const MELEE_WEAPONS = {
           MAP: 4,
           RAP: 4
       },
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 167,
       maxdmg: 312,
@@ -8017,7 +8018,7 @@ const MELEE_WEAPONS = {
           Hit: 11
       },
       Location: "Reputation Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 90,
       maxdmg: 168,
@@ -8035,7 +8036,7 @@ const MELEE_WEAPONS = {
           Hit: 11
       },
       Location: "Reputation Reward",
-      type: 2,
+      type: "sword",
       speed: 2.7,
       mindmg: 155,
       maxdmg: 233,
@@ -8052,7 +8053,7 @@ const MELEE_WEAPONS = {
           Haste: 15
       },
       Location: "Dungeon",
-      type: 3,
+      type: "axe",
       speed: 2.6,
       mindmg: 130,
       maxdmg: 243,
@@ -8069,7 +8070,7 @@ const MELEE_WEAPONS = {
           ArP: 98
       },
       Location: "Dungeon",
-      type: 2,
+      type: "sword",
       speed: 2.6,
       mindmg: 130,
       maxdmg: 243,
@@ -8086,7 +8087,7 @@ const MELEE_WEAPONS = {
           Haste: 53
       },
       Location: "Badge Reward",
-      type: 2,
+      type: "sword",
       speed: 3.5,
       mindmg: 375,
       maxdmg: 563,
@@ -8103,7 +8104,7 @@ const MELEE_WEAPONS = {
           Haste: 21
       },
       Location: "Badge Reward",
-      type: 5,
+      type: "fist",
       speed: 2.5,
       mindmg: 180,
       maxdmg: 335,
@@ -8121,7 +8122,7 @@ const MELEE_WEAPONS = {
           Hit: 15
       },
       Location: "Black Temple",
-      type: 2,
+      type: "sword",
       speed: 1.4,
       mindmg: 98,
       maxdmg: 183,
@@ -8138,7 +8139,7 @@ const MELEE_WEAPONS = {
           Hit: 24
       },
       Location: "Badge Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.5,
       mindmg: 108,
       maxdmg: 201,
@@ -8155,7 +8156,7 @@ const MELEE_WEAPONS = {
           Haste: 23
       },
       Location: "Badge Reward",
-      type: 5,
+      type: "fist",
       speed: 1.5,
       mindmg: 108,
       maxdmg: 201,
@@ -8172,7 +8173,7 @@ const MELEE_WEAPONS = {
           Haste: 23
       },
       Location: "Badge Reward",
-      type: 5,
+      type: "fist",
       speed: 2.5,
       mindmg: 180,
       maxdmg: 335,
@@ -8189,7 +8190,7 @@ const MELEE_WEAPONS = {
           Hit: 24
       },
       Location: "Badge Reward",
-      type: 1,
+      type: "dagger",
       speed: 1.8,
       mindmg: 130,
       maxdmg: 241,
@@ -9478,7 +9479,7 @@ const RANGED_WEAPONS = {
       maxdmg: 259,
       speed: 2.7,
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           stats: {
               MAP: 250,
               RAP: 250
@@ -10120,7 +10121,7 @@ const RINGS = {
           MAP: 160,
           RAP: 160
         },
-        is_proc: "Yes",
+        is_proc: true,
         proc_type: 2,
         PPM: 1,
         duration: 10
@@ -11397,7 +11398,7 @@ const TRINKETS = {
       },
       Location: "PvP Reward",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           proc_chance: 0.13,
           proc_type: 2
       },
@@ -11411,7 +11412,7 @@ const TRINKETS = {
       },
       Location: "Dungeon",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           stats: {
               MAP: 300,
               RAP: 300
@@ -11492,7 +11493,7 @@ const TRINKETS = {
       },
       Location: "Karazhan",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           PPM: 1,
           proc_type: 2
       },
@@ -11507,7 +11508,7 @@ const TRINKETS = {
       },
       Location: "Gruul's Lair",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           stats: {
               Haste: 325
           },
@@ -11591,7 +11592,7 @@ const TRINKETS = {
       },
       Location: "Serpentshrine Cavern",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           stats: {
               MAP: 340,
               RAP: 340
@@ -11634,7 +11635,7 @@ const TRINKETS = {
       name: "Darkmoon Card: Crusade",
       Location: "World Drop",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           duration: 10,
           proc_type: 2
       },
@@ -11678,7 +11679,7 @@ const TRINKETS = {
       name: "Ashtongue Talisman of Swiftness",
       Location: "Black Temple",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           stats: {
               MAP: 275,
               RAP: 275
@@ -11699,7 +11700,7 @@ const TRINKETS = {
       },
       Location: "Black Temple",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           duration: 10,
           PPM: 1,
           proc_type: 2
@@ -11718,6 +11719,7 @@ const TRINKETS = {
           duration: 10,
           cd: 60
       },
+      
       Phase: 1,
       icon: "inv_datacrystal01"
   },
@@ -11793,7 +11795,7 @@ const TRINKETS = {
       },
       Location: "Sunwell",
       aura: {
-          is_proc: "Yes",
+          is_proc: true,
           duration: 20,
           cd: 45,
           proc_chance: 0.1,

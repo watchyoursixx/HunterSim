@@ -51,7 +51,7 @@ const BUFFS = {
     icon: 'spell_nature_invisibilitytotem',
     talented_ratio: 1.15,
     stats: {
-      Agi: 77
+      Agi: 0 //changed to 0, handled with combatAgi -- 77 base agi
     }
   },
   25528: {

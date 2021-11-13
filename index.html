@@ -17,7 +17,14 @@
     <script class="u-script" type="text/javascript" src="js/data/races.js"></script>
     <script class="u-script" type="text/javascript" src="js/data/talents.js"></script>
     <script class="u-script" type="text/javascript" src="js/data/target.js"></script>
+    <script class="u-script" type="text/javascript" src="js/data/gems.js"></script>
+    <script class="u-script" type="text/javascript" src="js/data/enchants.js"></script>
+    <script class="u-script" type="text/javascript" src="js/data/presetGear.js"></script>
+    <script class="u-script" type="text/javascript" src="js/data/gear.js"></script>
     <script class="u-script" type="text/javascript" src="js/statCalculator.js"></script>
+    <script class="u-script" type="text/javascript" src="js/spells.js"></script>
+    <script class="u-script" type="text/javascript" src="js/simulation.js"></script>
+    <!--<script class="u-script" type="text/javascript" src="js/scripts/test.js"></script>-->
     <script class="u-script" type="text/javascript" src="js/player.js"></script>
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
     <script>const whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: true};</script>
@@ -116,12 +123,12 @@
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17" id="mp5">0</p>
                   <a href="javascript:;" id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
                   <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Stat Weights</a>
-                  <a href="javascript:;" onclick="attackRange()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Calc dps</a>
-                  <p class="u-align-right u-text u-text-custom-color-7 u-text-18">2000.1</p>
-                  <p class="u-align-left u-text u-text-custom-color-7 u-text-19">DPS ​± 2.3</p>
-                  <p class="u-align-center u-text u-text-white u-text-20">1432.3 min</p>
-                  <p class="u-align-center u-text u-text-white u-text-21">2312.7 max</p>
-                  <p class="u-align-center u-text u-text-white u-text-22">0.192 s</p>
+                  <a href="javascript:;" onclick="startSync()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Calc dps</a>
+                  <p class="u-align-right u-text u-text-custom-color-7 u-text-18" id="dpsresult">2000.1</p>
+                  <p class="u-align-left u-text u-text-custom-color-7 u-text-19" id="dpserr">DPS ​± </p>
+                  <p class="u-align-center u-text u-text-white u-text-20" id="dpsmin"> min</p>
+                  <p class="u-align-center u-text u-text-white u-text-21" id="dpsmax"> max</p>
+                  <p class="u-align-center u-text u-text-white u-text-22" id="executetime">0.000</p>
                 </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-45 u-layout-cell-2">
@@ -132,11 +139,11 @@
                   <div class="u-absolute-hcenter-lg u-absolute-hcenter-md u-absolute-hcenter-sm u-absolute-hcenter-xs u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-5"></div>
                   <div class="u-container-style u-grey-75 u-group u-shape-rectangle u-group-1">
                     <div class="u-container-layout u-valign-middle u-container-layout-3">
-                      <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23">Sixx BiS P3 6% BM<br>
+                      <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23" id="gearprofile">Sixx BiS P3 6% BM<br>
                       </h4>
                     </div>
                   </div>
-                  <a href="#" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-4">Import<span style="font-size: 1rem;"></span>
+                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-4">Import<span style="font-size: 1rem;"></span>
                   </a>
                   <h4 class="u-align-center u-text u-text-custom-color-3 u-text-24">Hunter<br>
                   </h4>
