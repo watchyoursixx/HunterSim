@@ -49,6 +49,7 @@ var fiveSecRulemp5 = 0;
 var currentMana = 0;
 var BerserkStartHP = 100;
 var rangespeed = 3.0;
+var meleespeed = 3.0;
 
 var recentcast = false;
 var BaseRangeSpeed = 3.0;
@@ -56,6 +57,7 @@ var BaseMeleeSpeed = 3.0;
 var PPM = 0;
 var GoAtimer = 0;
 var combatAgi = 0;
+var haste = 1;
 
 // stat modifiers
 var strmod = 1;
@@ -96,7 +98,8 @@ var gear = {
    //feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
    //ring1: { id: 29997 },
    //ring2: { id: 28791 },
-   ...DST_BB_COMBO,
+   trinket1: { id: 28034 },
+   trinket2: { id: 34427 },
    range: { id: 15808, enchant: 30260 },
    ammo: { id: 33803 },
    //quiver: { id: 18714 },
@@ -308,7 +311,7 @@ var auras = {
    imphawk: {enable:true, timer:0, duration:12}, // coded
    beastlord: {enable:true, timer:0, duration:15}, 
    executioner: {enable:false, timer:0, ppm:1, duration:15}, // coded
-   mongoose: {enable:true, timer:0, ppm:1, duration:15}, // coded
+   mongoose: {enable:false, timer:0, ppm:1, duration:15}, // coded
    madness: {enable:false, timer:0, ppm:1,duration: 10}, // coded
    tsunami: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10}, // coded
    hourglass: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10}, // coded
@@ -358,13 +361,26 @@ function initializeAuras() {
    // set up on use AP trinkets diff from the rest of auras
    let trinket1 = currentgear.auras[gear.trinket1.id];
    let trinket2 = currentgear.auras[gear.trinket2.id];
-   auras.trinket1 = {timer:20,cooldown:0, duration:trinket1.duration, basecd:trinket1.cd,AP:trinket1.stats.RAP};
+   trinket1rap = (trinket1.hasOwnProperty('stats.RAP')) ? trinket1.stats.RAP : 0;
+   trinket2rap = (trinket2.hasOwnProperty('stats.RAP')) ? trinket2.stats.RAP : 0;
+   auras.trinket1 = {timer:0,cooldown:0, duration:trinket1.duration, basecd:trinket1.cd,AP:trinket1rap};
    auras.trinket1.onuseAP = (trinket1.is_proc == true) ? false : true;
-   auras.trinket2 = {timer:0,cooldown:0, duration:trinket2.duration, basecd:trinket2.cd,AP:trinket2.stats.RAP};
+   auras.trinket2 = {timer:0,cooldown:0, duration:trinket2.duration, basecd:trinket2.cd,AP:trinket2rap};
    auras.trinket2.onuseAP = (trinket2.is_proc == true) ? false : true;
 
+   // proc trinket enables
    auras.dragonspine.enable = ((gear.trinket1.id === 28830) || (gear.trinket2.id === 28830)) ? true : false; // enable dragonspine
-      
+   auras.naarusliver.enable = ((gear.trinket1.id === 34427) || (gear.trinket2.id === 34427)) ? true : false; 
+   auras.madness.enable = ((gear.trinket1.id === 32505) || (gear.trinket2.id === 32505)) ? true : false; 
+   auras.tsunami.enable = ((gear.trinket1.id === 30627) || (gear.trinket2.id === 30627)) ? true : false; 
+   auras.hourglass.enable = ((gear.trinket1.id === 28034) || (gear.trinket2.id === 28034)) ? true : false; 
+   auras.ashtongue.enable = ((gear.trinket1.id === 32487) || (gear.trinket2.id === 32487)) ? true : false; 
+   auras.tenacity.enable = ((gear.trinket1.id === 32658) || (gear.trinket2.id === 32658)) ? true : false; 
+   auras.swarmguard.enable = ((gear.trinket1.id === 21670) || (gear.trinket2.id === 21670)) ? true : false; 
+   auras.abacus.enable = ((gear.trinket1.id === 28288) || (gear.trinket2.id === 28288)) ? true : false; 
+   auras.unyieldingcourage.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false; 
+   auras.dmccrusade.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false;
+   //console.log(auras);
 }
 
 function update() {
@@ -374,55 +390,67 @@ function update() {
    // updateMAP();
    // updateRAP();
    // updateCritChance();
-   // updateHaste();
+   updateHaste();
    // updateDamageMod();
    updateArmorReduction();
    // updateBonusDamage();
 }
 // handling for auras
 function updateAuras(steptime) {
+   // set timer of on use AP trinkets
+   
+   if(auras.trinket1.onuseAP) {
+      auras.trinket1.timer = (auras.trinket1.cooldown === 0) ? auras.trinket1.duration : auras.trinket1.timer;
+      auras.trinket1.cooldown = (auras.trinket1.timer === auras.trinket1.duration) ? auras.trinket1.basecd: auras.trinket1.cooldown;
+   }
+   if(auras.trinket2.onuseAP) {
+   auras.trinket2.timer = (auras.trinket2.cooldown === 0) ? auras.trinket2.duration : auras.trinket2.timer;
+   auras.trinket2.cooldown = (auras.trinket2.timer === auras.trinket2.duration) ? auras.trinket2.basecd: auras.trinket2.cooldown;
+   }
+   
    stepauras(steptime);
 
    // proc cooldowns
    if(auras.tsunami.cooldown > 0)            { auras.tsunami.cooldown = Math.max(auras.tsunami.cooldown - steptime,0); 
-      /*console.log("tsunami cd: " + (Math.round(auras.tsunami.cooldown * 100) / 100));*/ } 
+      console.log("tsunami cd: " + (Math.round(auras.tsunami.cooldown * 100) / 100)); } 
    if(auras.hourglass.cooldown > 0)          { auras.hourglass.cooldown = Math.max(auras.hourglass.cooldown - steptime,0);
       /*console.log("hourglass cd: " + (Math.round(auras.hourglass.cooldown * 100) / 100));*/ }
    if(auras.dragonspine.cooldown > 0)        { auras.dragonspine.cooldown = Math.max(auras.dragonspine.cooldown - steptime,0);
-      /*console.log("dragonspine cd: " + (Math.round(auras.dragonspine.cooldown * 100) / 100));*/ }
+      console.log("dragonspine cd: " + (Math.round(auras.dragonspine.cooldown * 100) / 100)); }
    if(auras.naarusliver.cooldown > 0)        { auras.naarusliver.cooldown = Math.max(auras.naarusliver.cooldown - steptime,0); 
       /*console.log("naaru sliver cd: " + (Math.round(auras.naarusliver.cooldown * 100) / 100));*/ } 
    if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
-      /*console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));*/ }
+      console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100)); }
    if(auras.dmccrusade.cooldown > 0)         { auras.dmccrusade.cooldown = Math.max(auras.dmccrusade.cooldown - steptime,0);
-      /*console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100));*/ }
+      console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100)); }
    // active cooldowns
    if(auras.drums.cooldown > 0)              { auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0);
-      /*console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100));*/ }
+      console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100)); }
    if(auras.lust.cooldown > 0)               { auras.lust.cooldown = Math.max(auras.lust.cooldown - steptime,0);
-      /*console.log("lust cd: " + (Math.round(auras.lust.cooldown * 100) / 100));*/ }
+      console.log("lust cd: " + (Math.round(auras.lust.cooldown * 100) / 100)); }
    if(auras.potion.cooldown > 0)             { auras.potion.cooldown = Math.max(auras.potion.cooldown - steptime,0);
-      /*console.log("potion cd: " + (Math.round(auras.potion.cooldown * 100) / 100));*/ }
+      console.log("potion cd: " + (Math.round(auras.potion.cooldown * 100) / 100)); }
    if(auras.abacus.cooldown > 0)             { auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0);
-      /*console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100));*/ }
+      console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100)); }
    if(auras.bloodfury.cooldown > 0)          { auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0);
-      /*console.log("bloodfury cd: " + (Math.round(auras.bloodfury.cooldown * 100) / 100));*/ }
+      console.log("bloodfury cd: " + (Math.round(auras.bloodfury.cooldown * 100) / 100)); }
    if(auras.berserk.cooldown > 0)            { auras.berserk.cooldown = Math.max(auras.berserk.cooldown - steptime,0);
-      /*console.log("berserk cd: " + (Math.round(auras.berserk.cooldown * 100) / 100));*/ }
+      console.log("berserk cd: " + (Math.round(auras.berserk.cooldown * 100) / 100)); }
    if(auras.rapid.cooldown > 0)              { auras.rapid.cooldown = Math.max(auras.rapid.cooldown - steptime,0);
-      /*console.log("rapid cd: " + (Math.round(auras.rapid.cooldown * 100) / 100));*/ }
+      console.log("rapid cd: " + (Math.round(auras.rapid.cooldown * 100) / 100)); }
    if(auras.swarmguard.cooldown > 0)         { auras.swarmguard.cooldown = Math.max(auras.swarmguard.cooldown - steptime,0);
-      /*console.log("swarmguard cd: " + (Math.round(auras.swarmguard.cooldown * 100) / 100));*/ }
+      console.log("swarmguard cd: " + (Math.round(auras.swarmguard.cooldown * 100) / 100)); }
    if(auras.unyieldingcourage.cooldown > 0)  { auras.unyieldingcourage.cooldown = Math.max(auras.unyieldingcourage.cooldown - steptime,0);
-      /*console.log("unyielding cd: " + (Math.round(auras.unyieldingcourage.cooldown * 100) / 100));*/ }
+      console.log("unyielding cd: " + (Math.round(auras.unyieldingcourage.cooldown * 100) / 100)); }
    if(auras.beastwithin.cooldown > 0)  { auras.beastwithin.cooldown = Math.max(auras.beastwithin.cooldown - steptime,0);
-      /*console.log("beastwithin cd: " + (Math.round(auras.beastwithin.cooldown * 100) / 100));*/ }
+      console.log("beastwithin cd: " + (Math.round(auras.beastwithin.cooldown * 100) / 100)); }
    if(auras.trinket1.onuseAP && (auras.trinket1.cooldown > 0))  { auras.trinket1.cooldown = Math.max(auras.trinket1.cooldown - steptime,0);
-      /*console.log("trinket1 cd: " + (Math.round(auras.trinket1.cooldown * 100) / 100));*/ }
+      console.log("trinket1 cd: " + (Math.round(auras.trinket1.cooldown * 100) / 100)); }
    if(auras.trinket2.onuseAP && (auras.trinket2.cooldown > 0))  { auras.trinket2.cooldown = Math.max(auras.trinket2.cooldown - steptime,0);
-      /*console.log("trinket2 cd: " + (Math.round(auras.trinket2.cooldown * 100) / 100));*/ }
+      console.log("trinket2 cd: " + (Math.round(auras.trinket2.cooldown * 100) / 100)); }
    if(auras.tenacity.onuseAP && (auras.tenacity.cooldown > 0))  { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0);
-      /*console.log("tenacity cd: " + (Math.round(auras.tenacity.cooldown * 100) / 100));*/ }
+      console.log("tenacity cd: " + (Math.round(auras.tenacity.cooldown * 100) / 100)); }
+   
 }
 var jowproccount = 0;
 // handling for mana changes per gain/loss
@@ -442,14 +470,14 @@ function updateMana(result) {
    // spell cost spent with % reduction from beast within
    // spirit tick gain (if no casting condition)
    let spiregen = 0;
-   if ((totalduration > 5 * Math.ceil(previousduration / 5)) && recentcast === false) {
+   if ((totalduration > 5 * Math.ceil(prevtimeend / 5)) && recentcast === false) {
       spiregen = fiveSecRulemp5; 
    } 
    else { spiregen = 0; 
    }
 
    // mp5 tick gain
-   if (totalduration > 5 * Math.ceil(previousduration / 5)) {
+   if (totalduration > 5 * Math.ceil(prevtimeend / 5)) {
       currentMana += ManaPer5 + spiregen;
    }
    //console.log("mana "+ currentMana);
@@ -482,7 +510,7 @@ function updateRAP() {
    // if(auras.drums.timer > 0) { combatRAP += 60; }// war drums - check decision making for 2 types of drums
    if(auras.eternalchamp.timer > 0) {combatRAP += 160; } // band of eternal champions
    if(auras.donsantos.timer > 0) {combatRAP += 250; } // don santo's rifle
-   if(auras.naarusliver.timer > 0) {combatRAP += 22 * auras.naarusliver.stacks; } // blackened naaru sliver
+   if(auras.naarusliver.timer > 0) {combatRAP += 44 * auras.naarusliver.stacks; } // blackened naaru sliver
    if(auras.ashtongue.timer > 0) {combatRAP += 275; } // ashtongue talisman
 
    if(auras.trinket1.onuseAP && (auras.trinket1.AP > 0) && (auras.trinket1.timer > 0)) { combatRAP += auras.trinket1.AP; }
@@ -509,7 +537,7 @@ function updateAgi(steptime) {
    let graceenabled = (buffslist[4].id > 0) ? true : false;
    let windfuryenabled = (buffslist[11].id > 0) ? true : false;
    combatAgi = 0;
-   steptime = totalduration - previousduration;
+   //steptime = totalduration - previousduration;
 
    // check if grace/windfury then grace up every 8.5s~
    GoAtimer += steptime;
@@ -664,12 +692,12 @@ function attackMainhand(mainhand_wep) {
 }
 
 // attack with auto shot calc
-function attackRange(steptime) {
+function attackRange(steptimeend) {
 
    let attack = "ranged";
-   updateAuras(steptime);
+   //updateAuras(steptime);
    updateArmorReduction();
-   updateAgi(steptime);
+   updateAgi(steptimeend);
    combatRAP = updateRAP();
    combatCritChance = updateCritChance();
    //updateDamageMod();
@@ -690,7 +718,7 @@ function attackRange(steptime) {
    totaldmgdone += done;
    procauto();
    procattack(attack);
-   updateHaste(); // expensiveish
+   updateHaste();
    updateMana(result); // expensiveish
    //console.log("auto shot " + RESULTARRAY[result] + " for " + done);
    autocount++;
@@ -698,8 +726,22 @@ function attackRange(steptime) {
 // cast spell (possibly add individual spells)
 function cast(spell) {
    recentcast = true;
-}
+   let hastemod =  range_wep.speed / rangespeed;
 
+   if(spell === 'autoshot'){
+      SPELLS.autoshot.cast = 0.5 / hastemod;
+      SPELLS.autoshot.cd = rangespeed - SPELLS.autoshot.cast;
+      //console.log("after auto: "+(Math.round(steptimestart * 100) / 100));
+      steptimeend = SPELLS.autoshot.cast + steptimestart;
+      //console.log("cast auto shot");
+      //console.log("hawk " + auras.imphawk.timer);
+      attackRange(steptimeend);
+      //console.log("done");
+      //console.log(auras);
+      //return steptime = autoshot.cd;
+   }
+
+}
 autocount = 0;
 // final damage calculation after rolls
 function dealdamage(dmg, result, weapon, spell) {
@@ -747,7 +789,7 @@ function procauto() {
    if (talents.imp_hawk > 1) {
       let x = rng10k();
       auras.imphawk.timer = (x <= 1000) ? 12 : auras.imphawk.timer; // proc check
-      //if(auras.imphawk.timer === 12) { console.log("quick shots proc"); }
+      if(auras.imphawk.timer === 12) { /*console.log("quick shots proc");*/ }
    }
 }
 // handling for procs by steady only
@@ -804,11 +846,11 @@ function procattack(attack) {
    if (auras.naarusliver.enable && auras.naarusliver.cooldown === 0){
       roll = rng10k(); 
       auras.naarusliver.timer = (roll <= auras.naarusliver.procchance * 100) ? auras.naarusliver.duration : 0;
-      if(auras.naarusliver.timer === auras.naarusliver.duration) { auras.naarusliver.cooldown = 45; auras.naarusliver.stacks = 1;  }
-      // roll for stacks
-   } else if (auras.naarusliver.enable && auras.naarusliver.timer > 0) {
-      roll = rng10k();
-      auras.naarusliver.stacks = (roll <= auras.naarusliver.procchance * 100) ? Math.min(auras.naarusliver.stacks + 1,20) : auras.naarusliver.stacks;
+      if(auras.naarusliver.timer === auras.naarusliver.duration) { auras.naarusliver.cooldown = 45; auras.naarusliver.stacks = 0;  }
+   }
+      // add stacks
+   if (auras.naarusliver.enable && auras.naarusliver.timer > 0) {
+      auras.naarusliver.stacks = Math.min(auras.naarusliver.stacks + 1, 10);
       //console.log("naaru stacks: " + auras.naarusliver.stacks);
    }
    // swarmguard stack handling

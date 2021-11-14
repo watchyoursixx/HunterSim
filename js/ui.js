@@ -45,9 +45,9 @@ function displayStats(){
 }
 
 function displayDPSResults(){
-    let dpsrounding = (DPS > 1000) ? 1 : 2;
+    let dpsrounding = (avgDPS > 1000) ? 1 : 2;
     let errrounding = (err > 10) ? 1 : 2;
-    document.getElementById("dpsresult").innerHTML = DPS.toFixed(dpsrounding);
+    document.getElementById("dpsresult").innerHTML = avgDPS.toFixed(dpsrounding);
     document.getElementById("dpsmin").innerHTML = mindps.toFixed(2) + " min";
     document.getElementById("dpsmax").innerHTML = maxdps.toFixed(2) + " max";
     document.getElementById("dpserr").innerHTML = "DPS ​± " + err.toFixed(errrounding);
