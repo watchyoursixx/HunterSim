@@ -3,7 +3,7 @@ const SETS = {
     name: 'Beast Lord Armor',
     abrv: 'beast_lord',
     bonuses: {
-      2: { trap_cdr: -4 },
+      2: { trap_cdr: 4 },
       4: { kc_arp: 600 }
     }
   },
@@ -11239,6 +11239,7 @@ const TRINKETS = {
       name: "Badge of the Swarmguard",
       Location: "Vanilla",
       aura: {
+        is_proc: false,
           duration: 30,
           cd: 180,
           PPM: 12,
@@ -11264,6 +11265,7 @@ const TRINKETS = {
       },
       Location: "Naxx",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 260,
               RAP: 260
@@ -11316,6 +11318,7 @@ const TRINKETS = {
       },
       Location: "Crafting",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 320,
               RAP: 320
@@ -11334,6 +11337,7 @@ const TRINKETS = {
       },
       Location: "Quest Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 185,
               RAP: 185
@@ -11352,6 +11356,7 @@ const TRINKETS = {
       },
       Location: "Quest Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 185,
               RAP: 185
@@ -11369,6 +11374,7 @@ const TRINKETS = {
       },
       Location: "Quest Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 140,
               RAP: 140
@@ -11431,6 +11437,7 @@ const TRINKETS = {
       },
       Location: "Quest Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 200,
               RAP: 200
@@ -11476,6 +11483,7 @@ const TRINKETS = {
       },
       Location: "Dungeon",
       aura: {
+        is_proc: false,
           stats: {
               Haste: 260
           },
@@ -11537,6 +11545,7 @@ const TRINKETS = {
       },
       Location: "Badge Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 278,
               RAP: 278
@@ -11555,6 +11564,7 @@ const TRINKETS = {
       },
       Location: "Quest Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 200,
               RAP: 200
@@ -11569,7 +11579,7 @@ const TRINKETS = {
       name: "Talon of Al'ar",
       Location: "The Eye",
       aura: {
-          is_proc: "Yes"
+            is_proc: true,
       },
       Phase: 2,
       icon: "spell_fire_soulburn"
@@ -11620,6 +11630,7 @@ const TRINKETS = {
       },
       Location: "Quest Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 200,
               RAP: 200
@@ -11645,7 +11656,7 @@ const TRINKETS = {
       name: "Darkmoon Card: Wrath",
       Location: "World Drop",
       aura: {
-          is_proc: "Yes"
+          is_proc: true,
       },
       Phase: 1,
       icon: "inv_misc_ticket_tarot_wrath"
@@ -11657,7 +11668,7 @@ const TRINKETS = {
       },
       Location: "World Drop",
       aura: {
-          is_proc: "Yes"
+          is_proc: true,
       },
       Phase: 1,
       icon: "inv_misc_ticket_tarot_vengeance"
@@ -11669,7 +11680,7 @@ const TRINKETS = {
       },
       Location: "World Drop",
       aura: {
-          is_proc: "Yes"
+          is_proc: true,
       },
       Phase: 1,
       icon: "inv_misc_ticket_tarot_madness"
@@ -11711,6 +11722,7 @@ const TRINKETS = {
       name: "Crystalforged Trinket",
       Location: "Reputation Reward",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 216,
               RAP: 216
@@ -11718,7 +11730,9 @@ const TRINKETS = {
           duration: 10,
           cd: 60
       },
-      
+      stats: {
+          dmgbonus: 7,
+      },
       Phase: 1,
       icon: "inv_datacrystal01"
   },
@@ -11726,6 +11740,7 @@ const TRINKETS = {
       name: "Badge of Tenacity",
       Location: "World Drop",
       aura: {
+        is_proc: false,
           duration: 20,
           cd: 120
       },
@@ -11758,6 +11773,7 @@ const TRINKETS = {
       },
       Location: "Zul'Aman",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 360,
               RAP: 360
@@ -11821,6 +11837,7 @@ const TRINKETS = {
       },
       Location: "Crafting",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 320,
               RAP: 320
@@ -11849,6 +11866,7 @@ const TRINKETS = {
       },
       Location: "Brewfest",
       aura: {
+        is_proc: false,
           stats: {
               MAP: 278,
               RAP: 278

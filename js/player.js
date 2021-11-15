@@ -84,24 +84,24 @@ var currentgear = {auras:{0:{}}, stats:{},special:{}};
 
 // initial variables for itemid's (like a profile)
 var gear = {
-   //head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
+   head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
    //neck: { id: 30017 },
    //shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
    //back: { id: 29994, enchant: 34004 },
-   //chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
+   chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
    //wrist: { id: 29966, gems: [24028], enchant: 34002 },
-   mainhand: { id: 32944, enchant: 23800 },
+   mainhand: { id: 28587 },
    //offhand: { id: 29948, enchant: 23800 },
    //hand: { id: 30140, enchant: 25080 },
    //waist: { id: 30040, gems: [24028, 24028] },
-   //leg: { id: 29995, enchant: 35490 },
+   leg: { id: 29995, enchant: 35490 },
    //feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
    //ring1: { id: 29997 },
    //ring2: { id: 28791 },
-   trinket1: { id: 28034 },
-   trinket2: { id: 34427 },
+   trinket1: { id: 34427 },
+   trinket2: { id: 32487 },
    range: { id: 15808, enchant: 30260 },
-   ammo: { id: 33803 },
+   ammo: { id: 31949 },
    //quiver: { id: 18714 },
 };
 //var ammo = {33803: {name: "Adamantite Stinger",dps: 43.0,location: "Crafted",phase: 3,}}
@@ -264,10 +264,10 @@ function calcBaseStats() {
   RangeHitRating = hitrating + EnchantStats.RangeHit;
    let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
-  RangeHitChance = hit + RangeHitRating / HitRatingRatio;
+  RangeHitChance = 8+hit + RangeHitRating / HitRatingRatio;
    let penalty = (MeleeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
-  MeleeMissChance = 8 - MeleeHitChance - penalty;
-  RangeMissChance = 8 - RangeHitChance - penalty;
+  MeleeMissChance = Math.max(8 - MeleeHitChance - penalty,0);
+  RangeMissChance = Math.max(8 - RangeHitChance - penalty,0);
 
   // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
   Expertise = Math.floor(GearStats.Exp / ExpertiseRatio + races[selectedRace].expertise);
@@ -281,7 +281,7 @@ function calcBaseStats() {
   // base of 3253 always then add int
   Mana = 3253 + (Int - 10) * 15;
   // initialize current Mana to Max mana
-  currentMana = 2000;
+  currentMana = Mana;
   
   HasteRating = BuffStats.Haste + GearStats.Haste + EnchantStats.Haste;
   
@@ -293,34 +293,34 @@ function calcBaseStats() {
 
 var auras = {
    // actives
-   drums: {enable:true, timer:0, cooldown:0, duration:30}, // coded buff but no activation
-   potion: {enable:true, timer:0, cooldown:0, duration:15}, // coded buff but no activation
-   abacus: {enable:true, timer:0, cooldown:0, duration:10}, // coded buff but no activation
-   lust: {enable:true, timer:0, cooldown:0, duration:40}, // coded buff but no activation
-   rapid: {enable:true, timer:0, cooldown:0, duration:15}, // coded buff but no activation
-   berserk: {enable:true, timer:0, cooldown:0, duration:10}, // coded buff but no activation
-   unyieldingcourage: {enable:true, timer:0, cooldown:0, duration:20}, // coded buff but no activation
-   bloodfury: {enable:true, timer:0, cooldown:0, duration: 15}, // coded buff but no activation
-   swarmguard: {enable:false, timer:0, cooldown:0, ppm:12, duration:30, stacks:0}, // coded
-   beastwithin: {enable:true, timer:0, cooldown:0, duration: 18}, // 
-   tenacity: {enable:false, timer: 0, cooldown:0, duration: 15}, // coded buff but no activation
-   trinket1: {}, // coded
-   trinket2: {}, // coded
+   drums: {enable:true, timer:0, cooldown:0, duration:30, uptime:0},// coded buff but no activation
+   potion: {enable:true, timer:0, cooldown:0, duration:15, uptime:0},// coded buff but no activation
+   abacus: {enable:true, timer:0, cooldown:0, duration:10, uptime:0},// coded buff but no activation
+   lust: {enable:true, timer:0, cooldown:0, duration:40, uptime:0},// coded buff but no activation
+   rapid: {enable:true, timer:0, cooldown:0, duration:15, uptime:0},// coded buff but no activation
+   berserk: {enable:true, timer:0, cooldown:0, duration:10, uptime:0},// coded buff but no activation
+   unyieldingcourage: {enable:true, timer:0, cooldown:0, duration:20, uptime:0},// coded buff but no activation
+   bloodfury: {enable:true, timer:0, cooldown:0, duration: 15, uptime:0},// coded buff but no activation
+   swarmguard: {enable:false, timer:0, cooldown:0, ppm:12, duration:30, stacks:0, uptime:0},// coded
+   beastwithin: {enable:true, timer:0, cooldown:0, duration: 18, uptime:0},// 
+   tenacity: {enable:false, timer: 0, cooldown:0, duration: 15, uptime:0},// coded buff but no activation
+   aptrink1: { uptime:0},// coded
+   aptrink2: { uptime:0},// coded
    // procs
-   dragonspine: {enable:true, timer:0, cooldown:0, ppm:1, duration:10}, // coded
-   imphawk: {enable:true, timer:0, duration:12}, // coded
-   beastlord: {enable:true, timer:0, duration:15}, 
-   executioner: {enable:false, timer:0, ppm:1, duration:15}, // coded
-   mongoose: {enable:false, timer:0, ppm:1, duration:15}, // coded
-   madness: {enable:false, timer:0, ppm:1,duration: 10}, // coded
-   tsunami: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10}, // coded
-   hourglass: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10}, // coded
-   naarusliver: {enable:false, timer:0, cooldown:0, procchance:10, duration: 20, stacks: 0}, // coded
-   eternalchamp: {enable:false, timer:0, cooldown:0, ppm:2, duration: 10}, // coded
-   donsantos: {enable:false, timer:0, ppm:1, duration: 10}, // coded
-   mastertact: {timer:0, procchance:6, duration: 8}, // coded
-   ashtongue: {enable:false, timer:0, procchance:15, duration: 8}, // coded
-   dmccrusade: {enable:true, timer:0, cooldown:0, duration: 10}, 
+   dragonspine: {enable:false, timer:0, cooldown:0, ppm:1, duration:10, uptime:0},// coded
+   imphawk: {timer:0, duration:12, uptime:0},// coded
+   beastlord: {enable:true, timer:0, duration:15, uptime:0},
+   executioner: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
+   mongoose: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
+   madness: {enable:false, timer:0, ppm:1,duration: 10, uptime:0},// coded
+   tsunami: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10, uptime:0},// coded
+   hourglass: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10, uptime:0},// coded
+   naarusliver: {enable:false, timer:0, cooldown:0, procchance:10, duration: 20, stacks: 0, uptime:0},// coded
+   eternalchamp: {enable:false, timer:0, cooldown:0, ppm:2, duration: 10, uptime:0},// coded
+   donsantos: {enable:false, timer:0, ppm:1, duration: 10, uptime:0},// coded
+   mastertact: {timer:0, procchance:6, duration: 8, uptime:0},// coded
+   ashtongue: {enable:false, timer:0, procchance:15, duration: 8, uptime:0},// coded
+   dmccrusade: {enable:true, timer:0, cooldown:0, duration: 10, uptime:0},
 
 }
 
@@ -359,14 +359,16 @@ function initializeWeps() {
 // setup auras
 function initializeAuras() {
    // set up on use AP trinkets diff from the rest of auras
-   let trinket1 = currentgear.auras[gear.trinket1.id];
-   let trinket2 = currentgear.auras[gear.trinket2.id];
-   trinket1rap = (trinket1.hasOwnProperty('stats.RAP')) ? trinket1.stats.RAP : 0;
-   trinket2rap = (trinket2.hasOwnProperty('stats.RAP')) ? trinket2.stats.RAP : 0;
-   auras.trinket1 = {timer:0,cooldown:0, duration:trinket1.duration, basecd:trinket1.cd,AP:trinket1rap};
-   auras.trinket1.onuseAP = (trinket1.is_proc == true) ? false : true;
-   auras.trinket2 = {timer:0,cooldown:0, duration:trinket2.duration, basecd:trinket2.cd,AP:trinket2rap};
-   auras.trinket2.onuseAP = (trinket2.is_proc == true) ? false : true;
+   let aptrink1 = currentgear.auras[gear.trinket1.id];
+   let aptrink2 = currentgear.auras[gear.trinket2.id];
+   aptrink1rap = (aptrink1.hasOwnProperty('stats')) ? aptrink1.stats.RAP : 0;
+   aptrink2rap = (aptrink2.hasOwnProperty('stats')) ? aptrink2.stats.RAP : 0;
+
+
+   auras.aptrink1 = {timer:0,cooldown:0, duration:aptrink1.duration, basecd:aptrink1.cd,AP:aptrink1rap};
+   auras.aptrink1.onuseAP = (aptrink1.is_proc == false && aptrink1.AP > 0) ? true : false;
+   auras.aptrink2 = {timer:0,cooldown:0, duration:aptrink2.duration, basecd:aptrink2.cd,AP:aptrink2rap};
+   auras.aptrink2.onuseAP = (aptrink2.is_proc == false && aptrink2.AP > 0) ? true : false;
 
    // proc trinket enables
    auras.dragonspine.enable = ((gear.trinket1.id === 28830) || (gear.trinket2.id === 28830)) ? true : false; // enable dragonspine
@@ -380,7 +382,16 @@ function initializeAuras() {
    auras.abacus.enable = ((gear.trinket1.id === 28288) || (gear.trinket2.id === 28288)) ? true : false; 
    auras.unyieldingcourage.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false; 
    auras.dmccrusade.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false;
-   //console.log(auras);
+
+   for(let prop in auras){
+      auras[prop].timer = 0;
+      auras[prop].uptime = 0;
+      auras[prop].cooldown = 0;
+      //console.log(auras);
+   }
+
+
+   return;
 }
 
 function update() {
@@ -394,29 +405,31 @@ function update() {
    // updateDamageMod();
    updateArmorReduction();
    // updateBonusDamage();
+   return;
 }
 // handling for auras
 function updateAuras(steptime) {
    // set timer of on use AP trinkets
    
-   if(auras.trinket1.onuseAP) {
-      auras.trinket1.timer = (auras.trinket1.cooldown === 0) ? auras.trinket1.duration : auras.trinket1.timer;
-      auras.trinket1.cooldown = (auras.trinket1.timer === auras.trinket1.duration) ? auras.trinket1.basecd: auras.trinket1.cooldown;
+   if(auras.aptrink1.onuseAP) {
+      auras.aptrink1.timer = (auras.aptrink1.cooldown === 0) ? auras.aptrink1.duration : auras.aptrink1.timer;
+      auras.aptrink1.cooldown = (auras.aptrink1.timer === auras.aptrink1.duration) ? auras.aptrink1.basecd: auras.aptrink1.cooldown;
    }
-   if(auras.trinket2.onuseAP) {
-   auras.trinket2.timer = (auras.trinket2.cooldown === 0) ? auras.trinket2.duration : auras.trinket2.timer;
-   auras.trinket2.cooldown = (auras.trinket2.timer === auras.trinket2.duration) ? auras.trinket2.basecd: auras.trinket2.cooldown;
+   if(auras.aptrink2.onuseAP) {
+      auras.aptrink2.timer = (auras.aptrink2.cooldown === 0) ? auras.aptrink2.duration : auras.aptrink2.timer;
+      auras.aptrink2.cooldown = (auras.aptrink2.timer === auras.aptrink2.duration) ? auras.aptrink2.basecd: auras.aptrink2.cooldown;
    }
-   
+   uptimecalc();
    stepauras(steptime);
+
 
    // proc cooldowns
    if(auras.tsunami.cooldown > 0)            { auras.tsunami.cooldown = Math.max(auras.tsunami.cooldown - steptime,0); 
-      console.log("tsunami cd: " + (Math.round(auras.tsunami.cooldown * 100) / 100)); } 
+      /*console.log("tsunami cd: " + (Math.round(auras.tsunami.cooldown * 100) / 100));*/ } 
    if(auras.hourglass.cooldown > 0)          { auras.hourglass.cooldown = Math.max(auras.hourglass.cooldown - steptime,0);
       /*console.log("hourglass cd: " + (Math.round(auras.hourglass.cooldown * 100) / 100));*/ }
    if(auras.dragonspine.cooldown > 0)        { auras.dragonspine.cooldown = Math.max(auras.dragonspine.cooldown - steptime,0);
-      console.log("dragonspine cd: " + (Math.round(auras.dragonspine.cooldown * 100) / 100)); }
+      /*console.log("dragonspine cd: " + (Math.round(auras.dragonspine.cooldown * 100) / 100));*/ }
    if(auras.naarusliver.cooldown > 0)        { auras.naarusliver.cooldown = Math.max(auras.naarusliver.cooldown - steptime,0); 
       /*console.log("naaru sliver cd: " + (Math.round(auras.naarusliver.cooldown * 100) / 100));*/ } 
    if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
@@ -444,17 +457,19 @@ function updateAuras(steptime) {
       console.log("unyielding cd: " + (Math.round(auras.unyieldingcourage.cooldown * 100) / 100)); }
    if(auras.beastwithin.cooldown > 0)  { auras.beastwithin.cooldown = Math.max(auras.beastwithin.cooldown - steptime,0);
       console.log("beastwithin cd: " + (Math.round(auras.beastwithin.cooldown * 100) / 100)); }
-   if(auras.trinket1.onuseAP && (auras.trinket1.cooldown > 0))  { auras.trinket1.cooldown = Math.max(auras.trinket1.cooldown - steptime,0);
-      console.log("trinket1 cd: " + (Math.round(auras.trinket1.cooldown * 100) / 100)); }
-   if(auras.trinket2.onuseAP && (auras.trinket2.cooldown > 0))  { auras.trinket2.cooldown = Math.max(auras.trinket2.cooldown - steptime,0);
-      console.log("trinket2 cd: " + (Math.round(auras.trinket2.cooldown * 100) / 100)); }
-   if(auras.tenacity.onuseAP && (auras.tenacity.cooldown > 0))  { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0);
+   if(auras.aptrink1.onuseAP && (auras.aptrink1.cooldown > 0))  { auras.aptrink1.cooldown = Math.max(auras.aptrink1.cooldown - steptime,0);
+      console.log("aptrink1 cd: " + (Math.round(auras.aptrink1.cooldown * 100) / 100)); }
+   if(auras.aptrink2.onuseAP && (auras.aptrink2.cooldown > 0))  { auras.aptrink2.cooldown = Math.max(auras.aptrink2.cooldown - steptime,0);
+    /*console.log("aptrink2 cd: " + (Math.round(auras.aptrink2.cooldown * 100) / 100));*/ }
+   if(auras.tenacity.cooldown > 0)  { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0);
       console.log("tenacity cd: " + (Math.round(auras.tenacity.cooldown * 100) / 100)); }
    
+   return;   
 }
-var jowproccount = 0;
+//var jowproccount = 0;
 // handling for mana changes per gain/loss
 function updateMana(result) {
+   
    // judgement of wisdom gain
    if ((result === RESULT.CRIT) || (result === RESULT.HIT) || (result === RESULT.GLANCE)) {
       let tmp = 5000; // 50% chance
@@ -480,10 +495,11 @@ function updateMana(result) {
    if (totalduration > 5 * Math.ceil(prevtimeend / 5)) {
       currentMana += ManaPer5 + spiregen;
    }
-   //console.log("mana "+ currentMana);
+   //console.log("mana => "+ currentMana);
    // mana pot usage
    // runes usage
    // thrill of the hunt
+   return;
 }
 // handling for dynamic armor reduction 
 function updateArmorReduction() {
@@ -497,6 +513,7 @@ function updateArmorReduction() {
    let remainingArmor = Math.max(0,target.armor - arp); // subtract sum of the above
    // target armor reduction calculation
    armorReduction = remainingArmor / (remainingArmor + 400 + 85 * ((5.5 * 70) - 265.5));
+   return;
    //console.log("reduction " + armorReduction);
 }
 
@@ -513,9 +530,8 @@ function updateRAP() {
    if(auras.naarusliver.timer > 0) {combatRAP += 44 * auras.naarusliver.stacks; } // blackened naaru sliver
    if(auras.ashtongue.timer > 0) {combatRAP += 275; } // ashtongue talisman
 
-   if(auras.trinket1.onuseAP && (auras.trinket1.AP > 0) && (auras.trinket1.timer > 0)) { combatRAP += auras.trinket1.AP; }
-   if(auras.trinket2.onuseAP && (auras.trinket2.AP > 0) && (auras.trinket2.timer > 0)) { combatRAP += auras.trinket2.AP; }
-   
+   if(auras.aptrink1.onuseAP && (auras.aptrink1.AP > 0) && (auras.aptrink1.timer > 0)) { combatRAP += auras.aptrink1.AP; }
+   if(auras.aptrink2.onuseAP && (auras.aptrink2.AP > 0) && (auras.aptrink2.timer > 0)) { combatRAP += auras.aptrink2.AP; }
    // AP from combat agi
    combatRAP += combatAgi;
    // target AP - expose weakness, mark of the champion, demonslaying, hunters mark
@@ -555,6 +571,7 @@ function updateAgi(steptime) {
    combatAgi = Math.floor(combatAgi * agimod);
    // console.log("agi bonus: " + combatAgi);
    // updating crit and AP from the gained agi - in AP and crit funct
+   return;
 }
 // handling for updating speed
 function updateHaste() {
@@ -586,6 +603,7 @@ function updateHaste() {
    //console.log("haste rating: " + hasterating);
    //console.log("range spd: " + (Math.round(rangespeed * 100) / 100));
    //console.log("melee spd: " + (Math.round(meleespeed * 100) / 100));
+   return;
 }
 // handling for dmg mod changes from auras
 function updateDamageMod() {
@@ -619,6 +637,11 @@ function stepitemtimer() {
 // related to above - specifically timing of auras
 function stepauras(steptime) {
       // actives
+      //for(let prop in auras) {
+      //   if (auras[prop].timer > 0){
+      //      auras[prop].timer = Math.max(auras[prop].timer - steptime,0);
+      //   }
+      //}
       if(auras.lust.timer > 0)               { auras.lust.timer = Math.max(auras.lust.timer - steptime,0); }
       if(auras.berserk.timer > 0)            { auras.berserk.timer = Math.max(auras.berserk.timer - steptime,0); }
       if(auras.bloodfury.timer > 0)          { auras.bloodfury.timer = Math.max(auras.bloodfury.timer - steptime,0); }
@@ -629,8 +652,8 @@ function stepauras(steptime) {
       if(auras.swarmguard.timer > 0)         { auras.swarmguard.timer = Math.max(auras.swarmguard.timer - steptime,0); }
       if(auras.unyieldingcourage.timer > 0)  { auras.unyieldingcourage.timer = Math.max(auras.unyieldingcourage.timer - steptime,0); }
       if(auras.beastwithin.timer > 0)        { auras.beastwithin.timer = Math.max(auras.beastwithin.timer - steptime,0); }
-      if(auras.trinket1.timer > 0)           { auras.trinket1.timer = Math.max(auras.trinket1.timer - steptime,0); }
-      if(auras.trinket2.timer > 0)           { auras.trinket2.timer = Math.max(auras.trinket2.timer - steptime,0); }
+      if(auras.aptrink1.timer > 0)           { auras.aptrink1.timer = Math.max(auras.aptrink1.timer - steptime,0); }
+      if(auras.aptrink2.timer > 0)           { auras.aptrink2.timer = Math.max(auras.aptrink2.timer - steptime,0); }
       // procs
       if(auras.tsunami.timer > 0)            { auras.tsunami.timer = Math.max(auras.tsunami.timer - steptime,0); }
       if(auras.hourglass.timer > 0)          { auras.hourglass.timer = Math.max(auras.hourglass.timer - steptime,0); }
@@ -649,6 +672,9 @@ function stepauras(steptime) {
    
       // reset swarmguard stacks
       if(auras.swarmguard.timer === 0){ auras.swarmguard.stacks = 0;}
+      if(auras.naarusliver.timer === 0){ auras.naarusliver.stacks = 0;}
+
+      return;
 }
 
 // ending auras for uptime %
@@ -656,7 +682,36 @@ function endauras() {
 
 }
 function uptimecalc() {
-
+   // actives
+   if(auras.lust.timer > 0)               { auras.lust.uptime += Math.min(auras.lust.timer,steptime); }
+   if(auras.berserk.timer > 0)            { auras.berserk.uptime += Math.min(auras.berserk.timer,steptime); }
+   if(auras.bloodfury.timer > 0)          { auras.bloodfury.uptime += Math.min(auras.bloodfury.timer,steptime); }
+   if(auras.abacus.timer > 0)             { auras.abacus.uptime += Math.min(auras.abacus.timer,steptime); }
+   if(auras.drums.timer > 0)              { auras.drums.uptime += Math.min(auras.drums.timer,steptime); }
+   if(auras.potion.timer > 0)             { auras.potion.uptime += Math.min(auras.potion.timer,steptime); }
+   if(auras.rapid.timer > 0)              { auras.rapid.uptime += Math.min(auras.rapid.timer,steptime); }
+   if(auras.swarmguard.timer > 0)         { auras.swarmguard.uptime += Math.min(auras.swarmguard.timer,steptime); }
+   if(auras.unyieldingcourage.timer > 0)  { auras.unyieldingcourage.uptime += Math.min(auras.unyieldingcourage.timer,steptime); }
+   if(auras.beastwithin.timer > 0)        { auras.beastwithin.uptime += Math.min(auras.beastwithin.timer,steptime); }
+   if(auras.aptrink1.timer > 0)           { auras.aptrink1.uptime += Math.min(auras.aptrink1.timer,steptime); }
+   if(auras.aptrink2.timer > 0)           { auras.aptrink2.uptime += Math.min(auras.aptrink2.timer,steptime); }
+   // procs
+   if(auras.tsunami.timer > 0)            { auras.tsunami.uptime += Math.min(auras.tsunami.timer,steptime); }
+   if(auras.hourglass.timer > 0)          { auras.hourglass.uptime += Math.min(auras.hourglass.timer,steptime); }
+   if(auras.imphawk.timer > 0)            { auras.imphawk.uptime += Math.min(auras.imphawk.timer,steptime); }
+   if(auras.beastlord.timer > 0)          { auras.beastlord.uptime += Math.min(auras.beastlord.timer,steptime); }
+   if(auras.madness.timer > 0)            { auras.madness.uptime += Math.min(auras.madness.timer,steptime); }
+   if(auras.executioner.timer > 0)        { auras.executioner.uptime += Math.min(auras.executioner.timer,steptime); }
+   if(auras.mongoose.timer > 0)           { auras.mongoose.uptime += Math.min(auras.mongoose.timer,steptime); }
+   if(auras.dragonspine.timer > 0)        { auras.dragonspine.uptime += Math.min(auras.dragonspine.timer,steptime); }
+   if(auras.naarusliver.timer > 0)        { auras.naarusliver.uptime += Math.min(auras.naarusliver.timer,steptime); }
+   if(auras.eternalchamp.timer > 0)       { auras.eternalchamp.uptime += Math.min(auras.eternalchamp.timer,steptime); }
+   if(auras.donsantos.timer > 0)          { auras.donsantos.uptime += Math.min(auras.donsantos.timer,steptime); }
+   if(auras.mastertact.timer > 0)         { auras.mastertact.uptime += Math.min(auras.mastertact.timer,steptime); }
+   if(auras.ashtongue.timer > 0)          { auras.ashtongue.uptime += Math.min(auras.ashtongue.timer,steptime); }
+   if(auras.dmccrusade.timer > 0)         { auras.dmccrusade.uptime += Math.min(auras.dmccrusade.timer,steptime); }
+   //console.log(auras.naarusliver.uptime);
+   return;
 }
 // hit table calc for mainhand
 function rollMainhandWep() {
@@ -669,7 +724,7 @@ function rollMainhandWep() {
       tmp += GlanceChance * 100;
       if (roll < tmp) return RESULT.GLANCE;
       tmp += MeleeCritChance * 100;
-      if (roll < tmp) return RESULT.CRIT;
+      if (roll < tmp) return RESULT.CRIT; // 1 roll
       return RESULT.HIT;
 
 }
@@ -679,70 +734,147 @@ function rollRangeWep() {
    let roll = rng10k();
    tmp += RangeMissChance * 100;
    if (roll < tmp) return RESULT.MISS;
-   tmp += (100 - RangeMissChance) * combatCritChance; // 2 roll
+   tmp += (100 - RangeMissChance) * combatCritChance; // pseudo 2 roll
    if (roll < tmp) return RESULT.CRIT;
    return RESULT.HIT;
    
 }
 // hit table for spells - need condition for dodge for melee yellow only 2 roll for all
-function rollSpell(spell) {
+function rollSpell(attack,specialcrit) {
+   let tmp = 0;
+   let roll = rng10k();
+   let crit = specialcrit + combatCritChance;
+
+   if (attack === 'melee'){
+      tmp += MeleeMissChance * 100;
+      if (roll < tmp) return RESULT.MISS;
+      tmp += DodgeChance * 100;
+      if (roll < tmp) return RESULT.DODGE;
+      tmp += (100 - MeleeMissChance) * MeleeCritChance; // pseudo 2 roll - need to add raptor crit and adjust by combat
+      if (roll < tmp) return RESULT.CRIT;
+      return RESULT.HIT;
+   }
+   else if (attack === 'ranged'){
+      tmp += RangeMissChance * 100;
+      if (roll < tmp) return RESULT.MISS;
+      tmp += (100 - RangeMissChance) * crit; // pseudo 2 roll
+      if (roll < tmp) return RESULT.CRIT;
+      return RESULT.HIT;
+   }
 }
 // attack with mainhand calc
 function attackMainhand(mainhand_wep) {
 }
 
 // attack with auto shot calc
-function attackRange(steptimeend) {
+function attackRange() {
 
-   let attack = "ranged";
-   //updateAuras(steptime);
-   updateArmorReduction();
+   let attack = 'ranged';
    updateAgi(steptimeend);
    combatRAP = updateRAP();
    combatCritChance = updateCritChance();
    //updateDamageMod();
    let dmg = 0;
-   let result = rollRangeWep(combatCritChance); // check attack table
+   let result = rollRangeWep(); // check attack table
    
-   if (result == RESULT.HIT) {
+   if (result === RESULT.HIT) {
          dmg = autoShotCalc(range_wep,combatRAP); // calc damage
    }
-   else if (result == RESULT.CRIT) {
+   else if (result === RESULT.CRIT) {
          dmg = autoShotCalc(range_wep,combatRAP);
          dmg *= RangeCritDamage;
          proccrit();
    }
 
-   done = dealdamage(dmg,result,range_wep);
+   let done = dealdamage(dmg,result,range_wep);
    
    totaldmgdone += done;
+   autodmg += done;
    procauto();
    procattack(attack);
-   updateHaste();
    updateMana(result); // expensiveish
    //console.log("auto shot " + RESULTARRAY[result] + " for " + done);
    autocount++;
+   return;
+}
+var steadycount = 0;
+function attackSpell(spell,spellcost) {
+
+   updateAgi(steptimeend);
+   combatRAP = updateRAP();
+   combatCritChance = updateCritChance();
+   let dmg = 0;
+   let result = 0;
+   let attack = "";
+   let specialcrit = 0;
+   let beastwithinreduc = (auras.beastwithin.timer > 0) ? 0.8 : 1;
+   let cost = spellcost * talents.efficiency * beastwithinreduc;
+   currentMana -= cost;
+
+   if (spell === 'steadyshot'){
+      attack = 'ranged';
+      specialcrit = currentgear.special.rift_stalker_4p_ss_crit;
+      result = rollSpell(attack,specialcrit); // check attack table
+      if (result === RESULT.HIT) {
+         dmg = steadyShotCalc(range_wep,combatRAP); // calc damage
+      }
+      else if (result === RESULT.CRIT) {
+         dmg = steadyShotCalc(range_wep,combatRAP);
+         dmg *= RangeCritDamage;
+         proccrit();   
+      }
+      procsteady();
+      steadycount++;
+   } 
+   else if (spell === 'multishot') {
+      attack = 'ranged';
+      specialcrit = talents.imp_barrage;
+      result = rollSpell(attack,specialcrit); // check attack table
+      if (result === RESULT.HIT) {
+         dmg = multiShotCalc(range_wep,combatRAP); // calc damage
+      }
+      else if (result === RESULT.CRIT) {
+         dmg = multiShotCalc(range_wep,combatRAP);
+         dmg *= RangeCritDamage;
+         proccrit();
+      }
+   }
+   let done = dealdamage(dmg,result,range_wep,spell);
+   totaldmgdone += done;
+   steadydmg += done;
+   procattack(attack);
+   updateMana(result); // expensiveish
+  // console.log(spell + " " + RESULTARRAY[result] + " for " + done);
+   return;
 }
 // cast spell (possibly add individual spells)
 function cast(spell) {
-   recentcast = true;
-   let hastemod =  range_wep.speed / rangespeed;
+   //recentcast = true;
+   update();
+   let rangehastemod =  range_wep.speed / rangespeed;
+   let spellcost = 0;
 
    if(spell === 'autoshot'){
-      SPELLS.autoshot.cast = 0.5 / hastemod;
-      SPELLS.autoshot.cd = rangespeed - SPELLS.autoshot.cast;
-      //console.log("after auto: "+(Math.round(steptimestart * 100) / 100));
+      SPELLS.autoshot.cast = 0.5 / rangehastemod;
       steptimeend = SPELLS.autoshot.cast + steptimestart;
-      //console.log("cast auto shot");
-      //console.log("hawk " + auras.imphawk.timer);
-      attackRange(steptimeend);
-      //console.log("done");
-      //console.log(auras);
-      //return steptime = autoshot.cd;
+      updateSpellCDs(spell,steptime);
+      attackRange();
+      //console.log("time end => "+(Math.round(steptimeend * 1000) / 1000));
    }
-
+   else if (spell === 'steadyshot'){
+      SPELLS.steadyshot.cast = 1.5 / rangehastemod;
+      SPELLS.steadyshot.cd = 1.5 - SPELLS.steadyshot.cast;
+      currentgcd = steptimestart + 1.5; // gcd - review how to do this for all gcd spells
+      //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
+      spellcost = SPELLS.steadyshot.cost;
+      steptimeend = SPELLS.steadyshot.cast + steptimestart;
+      updateSpellCDs(spell,steptime);
+      attackSpell(spell,spellcost);
+      //console.log("time end => "+(Math.round(steptimeend * 1000) / 1000));
+   }
+return;
 }
-autocount = 0;
+
 // final damage calculation after rolls
 function dealdamage(dmg, result, weapon, spell) {
    if (result != RESULT.MISS && result != RESULT.DODGE) {
@@ -783,6 +915,7 @@ function proccrit() {
          //console.log("hourglass proc");
       }
    } 
+   return;
 }
 // handling for procs by autos (quick shots only)
 function procauto() {
@@ -883,6 +1016,7 @@ function procattack(attack) {
       auras.eternalchamp.timer = (roll <= auras.eternalchamp.procchance * 100) ? auras.eternalchamp.duration : 0;
       if(auras.eternalchamp.timer > 0) { auras.eternalchamp.cooldown = 60; /*console.log("eternalchamp proc");*/}
    }  
+   return;
 }
 // handling for magic dmg procs from trinkets (think rumulo's)
 function magicproc() {

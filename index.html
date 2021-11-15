@@ -122,8 +122,8 @@
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17" id="mp5">0</p>
                   <a href="javascript:;" id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
-                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Stat Weights</a>
-                  <a href="javascript:;" onclick="startSync()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Calc dps</a>
+                  <a href="javascript:;" onclick="startStepOnly()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Step DPS Calc</a>
+                  <a href="javascript:;" onclick="startSync()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">DPS Loop Calc</a>
                   <p class="u-align-right u-text u-text-custom-color-7 u-text-18 u-text-1819" id="dpsresult">2000.1</p>
                   <p class="u-align-left u-text u-text-custom-color-7 u-text-19 u-text-1819" id="dpserr">DPS ​± 0.00</p>
                   <p class="u-align-center u-text u-text-white u-text-20" id="dpsmin"> min</p>
@@ -148,10 +148,10 @@
                   <h4 class="u-align-center u-text u-text-custom-color-3 u-text-24">Hunter<br>
                   </h4>
                   <img class="u-border-2 u-border-black u-image u-image-default u-preserve-proportions u-image-1" src="images/Ability_Hunter_BeastTaming.png" alt="" data-image-width="60" data-image-height="60">
-                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-25">Orc<br>
+                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-25" id="racedisplay">Orc<br>
                   </h4>
                   <a href="#" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-5">Export</a>
-                  <p class="LeftSlots u-text u-text-26">Head</p>
+                  <p class="LeftSlots u-text u-text-26"><a href="#" id="headslot" onclick="this.href='javascript:;';">Head</a></p>
                   <div class="u-container-style u-group u-hidden-lg u-hidden-md u-hidden-sm u-hidden-xs u-group-2">
                     <div class="u-container-layout">
                       <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-2" src="images/Hands.jpg" alt="" data-image-width="56" data-image-height="56">
@@ -207,7 +207,7 @@
                   <p class="u-align-right u-text u-text-41">Trinket 1</p>
                   <p class="u-align-right u-text u-text-42">Trinket 2<br>
                   </p>
-                  <p class="u-text u-text-43">No Enchant</p>
+                  <p class="u-text u-text-43"><a id="headench">No Enchant</a></p>
                   <p class="u-text u-text-44">No Enchant</p>
                   <p class="u-text u-text-45">No Enchant</p>
                   <p class="u-text u-text-46">No Enchant</p>

@@ -100,12 +100,13 @@ function selectedOptionsResults(){
     consumestats = getPlayerStatsFromConsumes(playerconsumes);
     initialize();
     displayStats();
-    console.log(buffslist);
+    gearSlotsDisplay();
+    //console.log(buffslist);
 }
 // check for kings toggle
 function kingsCheck() {
     let isChecked = document.getElementById("kings").checked;
-    
+    gear.head.id = 28414;
     buffslist[0] = isChecked ? 25898 : 0;
     selectedOptionsResults();
 
@@ -427,6 +428,7 @@ function petfoodSelection() {
 // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf
 function getRace() {
     selectedRace = document.getElementById("race").value;
+    document.getElementById("racedisplay").innerHTML = races[selectedRace].name;
     selectedOptionsResults();
 }
 
@@ -465,7 +467,31 @@ function selectTarget(id) {
 }
 
 initializeTargetDropdown();
+var headdata = "";
+function gearSlotsDisplay(){
+    
+    let headitem = gear.head.id;
+    let chestitem = gear.chest.id;
+    let legitem = gear.leg.id;
+    let headgem1 = gear.head.gems[0] || 0;
+    let headgem2 = gear.head.gems[1] || 0;
+    let headgem3 = gear.head.gems[2] || 0;
+    let headench = gear.head.enchant;
+    let headencheffect = HEAD_ENCHANTS[gear.head.enchant].effectId;
+    let headenchstr = "ench="+headencheffect+"&amp;";
+    //console.log(headenchstr);
+    //headdata = "domain=tbc&amp;gems=24051:32409&amp;"+headenchstr+"pcs=30141";
 
+    const headslot = document.querySelector('#headslot');
+    headslot.dataset.wowhead === headdata;
+    headdata = headitem+"&ench="+headencheffect+"&gems="+headgem1+":"+headgem2+":"+headgem3+"&pcs="+headitem+":"+chestitem+":"+legitem;
+    //console.log(headdata);
+    document.getElementById("headslot").href = "https://tbc.wowhead.com/item="+ headdata;
+    document.getElementById("headench").href = "https://tbc.wowhead.com/item="+ 29192;
+    //console.log("test");
+
+}
+gearSlotsDisplay();
 // attempt at loading animation
 function startLoading() {
     let btns = $('.u-btn-3');

@@ -1,6 +1,6 @@
-var iterations = 1000;
-var minfighttimer = 244;
-var maxfighttimer = 245;
+var iterations = 10000;
+var minfighttimer = 70;
+var maxfighttimer = 70;
 var DPS = 0;
 var mindps = 99999;
 var maxdps = 0;
@@ -8,6 +8,10 @@ var totalduration = 0;
 var totaldmgdone = 0;
 var prevtimeend = 0;
 var executecodetime = 0.000;
+var latency = 0.05;
+var currentgcd = 0;
+var autodmg = 0;
+var steadydmg = 0;
 
 var RESULT = {
     HIT: 0,
@@ -15,12 +19,6 @@ var RESULT = {
     DODGE: 2,
     CRIT: 3,
     GLANCE: 4
-};
-
-var SPELLS = {
-    autoshot: {cast:0.5, cd:0, dmg:0, cost:0, duration:0, gcd:false},
-    steadyshot: {cast:1.5, cd:0, dmg:0, cost:110, duration:0, gcd:true},
-
 };
 
 var spread = [];
@@ -32,6 +30,8 @@ var sumduration = 0;
 var steptime = 0;
 var steptimestart = 0;
 var steptimeend = 0;
+var autoarray = [];
+var autocount = 0;
 
 const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance"]; // debugging
 
@@ -44,14 +44,22 @@ function startSync() {
     maxdps = 0;
     sumdmg = 0;
     sumduration = 0;
+    autocount = 0;
+    steadycount = 0;
+    autodmg = 0;
+    steadydmg = 0;
     for (iteration = 1; iteration <= iterations; ++iteration) {
         runSim();
         sumdmg += totaldmgdone;
         sumduration += totalduration;
     }
     avgDPS = sumdmg / sumduration;
-    console.log("total damage: " + totaldmgdone);
-    console.log("duration: " + (Math.round(totalduration * 100) / 100));
+    console.log("steadys => "+ steadycount/iterations);
+    console.log("steady avg => "+steadydmg/(steadycount));
+    console.log("autos => " + autocount/iterations);
+    console.log("auto avg => "+autodmg/(autocount));
+    console.log("total damage: " + sumdmg/iterations);
+    console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
 
     /*const standardDeviation = (arr, usePopulation = false) => {
         const mean = arr.reduce((acc, val) => acc + val, 0) / arr.length;
@@ -66,8 +74,12 @@ function startSync() {
     performancecheck2 = performance.now();
     executecodetime = (performancecheck2 - performancecheck1) / 1000; // milliseconds convert to sec
     displayDPSResults();
-    console.log(spread);
-    console.log("autos: " + autocount);
+    //console.log(autoarray);
+    //console.log(donearray);
+    //console.log(RAParray);
+    //console.log(auras.naarusliver);
+    //console.log(auras.hourglass);
+    //console.log("autos: " + autocount);
     console.log("*****************")
 }
 
@@ -77,29 +89,35 @@ function runSim() {
     step = 0;
     totaldmgdone = 0;
     totalduration = 0;
-    autocount = 0;
     steptime = 0;
     steptimestart = 0;
     steptimeend = 0;
+    prevtimeend = 0;
+    DPS = 0;
+    currentgcd = 0;
+    currentMana = Mana;
     initializeAuras();
 
     while (totalduration < fightduration){
         updateAuras(steptime);
         /******* decide spell selection ******/
-        spell = "autoshot";
-
+        if (SPELLS.autoshot.cd > 0.6) {
+            (SPELLS.steadyshot.cost <= currentMana) ? spell = "steadyshot" : spell = "autoshot";
+            
+        } else { spell = "autoshot"; }
     // choices
     /*
-    drums:
-    potion:
-    lust:
-    rapid:
-    berserk:
-    bloodfury:
-    swarmguard:
-    beastwithin:
-    trinket1:
-    trinket2:
+        if(auras.drums.enable && auras.drums.cooldown === 0) {auras.drums.timer = auras.drums.duration; console.log("drums used");}
+        if(auras.potion.enable && auras.potion.cooldown === 0) {potionHandling(); console.log("potion used");}
+        if(auras.lust.enable && auras.lust.cooldown === 0) {auras.lust.timer = auras.lust.duration; console.log("lust used");}
+        if(auras.rapid.enable && auras.rapid.cooldown === 0) {auras.rapid.timer = auras.rapid.duration; console.log("rapid used");}
+        if(auras.berserk.enable && auras.berserk.cooldown === 0) {auras.berserk.timer = auras.berserk.duration; console.log("berserk used");}
+        if(auras.bloodfury.enable && auras.bloodfury.cooldown === 0) {auras.bloodfury.timer = auras.bloodfury.duration; console.log("bloodfury used");}
+        if(auras.swarmguard.enable && auras.swarmguard.cooldown === 0) {auras.swarmguard.timer = auras.swarmguard.duration; console.log("swarmguard used");}
+        if(auras.beastwithin.enable && auras.beastwithin.cooldown === 0) {auras.beastwithin.timer = auras.beastwithin.duration; console.log("beastwithin used");}
+        if(auras.aptrink1.enable && auras.aptrink1.cooldown === 0) {auras.aptrink1.timer = auras.aptrink1.duration; console.log("aptrink1 used");}
+        if(auras.aptrink2.enable && auras.aptrink2.cooldown === 0) {auras.aptrink2.timer = auras.aptrink2.duration; console.log("aptrink2 used");}
+        if(auras.tenacity.enable && auras.tenacity.cooldown === 0) {auras.tenacity.timer = auras.tenacity.duration; console.log("tenacity used");}
     auto:
     aimed:
     steady:
@@ -117,7 +135,7 @@ function runSim() {
         cast(spell);
         steptime = steptimeend - prevtimeend;
         prevtimeend = steptimeend;
-        totalduration = Math.min(maxsteps, steptimeend);
+        totalduration = Math.min(fightduration, steptimeend);
         //console.log("total damage: " + totaldmgdone);
         //console.log("duration: " + (Math.round(totalduration * 100) / 100));
     }
@@ -135,19 +153,23 @@ function startStepOnly(){
     updateAuras(steptime);
     //steptime = steptimeend - steptimestart;
     /******* decide spell selection ******/
-    spell = "autoshot";
+    if (SPELLS.autoshot.cd > 0.6) {
+        (SPELLS.steadyshot.cost <= currentMana) ? spell = "steadyshot" : spell = "autoshot";
+        
+    } else { spell = "autoshot"; }
     /******* do stuff with spell    ******/
     startTime(spell);
     cast(spell);
-    steptime = steptimeend - prevtimeend;
 
-    console.log("step "+ steptime);
+    steptime = steptimeend - prevtimeend;
+    //console.log("step "+ steptime);
     prevtimeend = steptimeend;
     totalduration = Math.min(maxfighttimer, steptimeend);
     avgDPS = totaldmgdone / totalduration;
-
+    console.log("steadys => "+ steadycount);
+    console.log("autos => " + autocount);
     console.log("total damage: " + totaldmgdone);
-    console.log("duration: " + (Math.round(totalduration * 100) / 100));
+    console.log("duration: " + (Math.round(totalduration * 1000) / 1000));
     performancecheck2 = performance.now();
     executecodetime = (performancecheck2 - performancecheck1) / 1000; // milliseconds convert to sec
     displayDPSResults();
@@ -161,10 +183,6 @@ function startTime(spell){
     steptimestart += (spell === "arcaneshot") ? Math.max(SPELLS.arcaneshot.cd,0) + latency : 0;
     steptimestart += (spell === "raptorstrike") ? Math.max(SPELLS.raptorstrike.cd,0) + latency : 0;
     steptimestart += (spell === "aimedshot") ? Math.max(SPELLS.aimedshot.cd,0) + latency : 0;
-    //console.log("after cd: "+(Math.round(steptimestart * 100) / 100));
+    //console.log("time start => "+(Math.round(steptimestart * 1000) / 1000));
     return steptimestart;
-}
-
-function stopTime(spell){
-
 }
