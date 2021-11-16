@@ -21,7 +21,7 @@ function updateSpellCDs(spell) {
 function autoShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
-    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * range_wep.speed / 14 + dmg + range_wep.flatdmg) * range_wep.basedmgmod;
+    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * range_wep.speed / 14 + dmg + range_wep.flatdmg) * range_wep.basedmgmod * combatdmgmod;
     return shotDmg;
 }
 
@@ -29,7 +29,7 @@ function steadyShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
     let gronnstalkermod = currentgear.special.gronnstalker_4p_steady_shot_dmg_ratio;
-    let shotDmg = (combatRAP * 0.2 + dmg * 2.8 / range_wep.speed + SPELLS.steadyshot.rankdmg) * range_wep.basedmgmod * gronnstalkermod;
+    let shotDmg = (combatRAP * 0.2 + dmg * 2.8 / range_wep.speed + SPELLS.steadyshot.rankdmg) * range_wep.basedmgmod * gronnstalkermod * combatdmgmod;
     return shotDmg;
 }
 
@@ -37,7 +37,7 @@ function multiShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
     let multimod = multishot_dmg_inc_ratio * talents.barrage;
-    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.multishot.rankdmg) * range_wep.basedmgmod * multimod;
+    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.multishot.rankdmg) * range_wep.basedmgmod * multimod * combatdmgmod;
     return shotDmg;
 }
 
@@ -51,6 +51,6 @@ function arcaneShotCalc(range_wep, combatRAP) {
 function aimedShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
-    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.aimedshot.rankdmg) * range_wep.basedmgmod;
+    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.aimedshot.rankdmg) * range_wep.basedmgmod * combatdmgmod;
     return shotDmg;
 }

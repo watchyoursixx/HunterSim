@@ -11453,6 +11453,14 @@ const TRINKETS = {
       stats: {
           Hit: 30
       },
+      aura: {
+          is_proc: false,
+          duration: 20,
+          cd: 120,
+          stats: {
+              ArP: 600,
+          }
+      },
       Location: "Dungeon",
       Phase: 1,
       icon: "inv_brd_banner"

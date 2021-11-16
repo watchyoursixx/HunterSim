@@ -29,17 +29,13 @@ function displayStats(){
     document.getElementById("int").innerHTML = Int;
     document.getElementById("spi").innerHTML = Spi;
     document.getElementById("rap").innerHTML = Math.floor(BaseRAP);
-    let rangehit = Math.round(RangeHitChance * 100) / 100;
-    document.getElementById("rangehit").innerHTML = rangehit + " %";
-    let rangecrit = Math.round(RangeCritChance * 100) / 100;
-    document.getElementById("rangecrit").innerHTML = rangecrit + " %";
+    document.getElementById("rangehit").innerHTML = RangeHitChance.toFixed(2) + " %";
+    document.getElementById("rangecrit").innerHTML = RangeCritChance.toFixed(2) + " %";
     document.getElementById("haste").innerHTML = HasteRating;
     document.getElementById("arp").innerHTML = ArmorPen;
     document.getElementById("map").innerHTML = Math.floor(BaseMAP);
-    let meleehit = Math.round(MeleeHitChance * 100) / 100;
-    document.getElementById("meleehit").innerHTML = meleehit + " %";
-    let meleecrit = Math.round(MeleeCritChance * 100) / 100;
-    document.getElementById("meleecrit").innerHTML = meleecrit + " %";
+    document.getElementById("meleehit").innerHTML = MeleeHitChance.toFixed(2) + " %";
+    document.getElementById("meleecrit").innerHTML = MeleeCritChance.toFixed(2) + " %";
     document.getElementById("exp").innerHTML = Expertise;
     document.getElementById("mp5").innerHTML = ManaPer5;
 }
@@ -106,7 +102,6 @@ function selectedOptionsResults(){
 // check for kings toggle
 function kingsCheck() {
     let isChecked = document.getElementById("kings").checked;
-    gear.head.id = 28414;
     buffslist[0] = isChecked ? 25898 : 0;
     selectedOptionsResults();
 
@@ -432,6 +427,28 @@ function getRace() {
     selectedOptionsResults();
 }
 
+function initializeImportSets(){
+
+    let imports = DEFAULT_GEAR_SETS;
+    var importOptions = "";
+    let i = 0;
+    for (i=0; i <= 7; i++) {
+        importOptions += "<option value= "+i+" >" + imports[i].description + "</option>";
+    }
+    //console.log(importOptions);
+    document.getElementById("gearprofile").innerHTML = importOptions;
+    document.getElementById("gearprofile").value = 4;
+    selectGearlist();
+}
+function selectGearlist() {
+
+    let gearindex = document.getElementById("gearprofile").value;
+    let gearobj = DEFAULT_GEAR_SETS[gearindex];
+    gear = gearobj.data;
+    console.log(gear);
+    selectedOptionsResults();
+}
+initializeImportSets();
 function initializeTargetDropdown() {
     const GruulId = 19044;
     let targets = targetData.getNameKeyTargetPairs();
@@ -467,30 +484,330 @@ function selectTarget(id) {
 }
 
 initializeTargetDropdown();
-var headdata = "";
+
 function gearSlotsDisplay(){
     
     let headitem = gear.head.id;
+    let neckitem = gear.neck.id;
+    let shoulderitem = gear.shoulder.id;
+    let backitem = gear.back.id;
     let chestitem = gear.chest.id;
+    let wristitem = gear.wrist.id;
+    let handitem = gear.hand.id;
+    let waistitem = gear.waist.id;
     let legitem = gear.leg.id;
-    let headgem1 = gear.head.gems[0] || 0;
-    let headgem2 = gear.head.gems[1] || 0;
-    let headgem3 = gear.head.gems[2] || 0;
-    let headench = gear.head.enchant;
-    let headencheffect = HEAD_ENCHANTS[gear.head.enchant].effectId;
-    let headenchstr = "ench="+headencheffect+"&amp;";
-    //console.log(headenchstr);
-    //headdata = "domain=tbc&amp;gems=24051:32409&amp;"+headenchstr+"pcs=30141";
+    let feetitem = gear.feet.id;
+    let ring1item = gear.ring1.id;
+    let ring2item = gear.ring2.id;
+    let trink1item = gear.trinket1.id;
+    let trink2item = gear.trinket2.id;
+    let mainhanditem = gear.mainhand.id;
+    let offhanditem = (offhandDisabled === false) ? gear.offhand.id : 0;
+    let rangeitem = gear.range.id;
+    //let ammoitem = gear.ammo.id;
+    
+    // head
+    let headicon = "https://wow.zamimg.com/images/wow/icons/large/"+HEADS[gear.head.id].icon+".jpg";
+    document.getElementById("headicon").src = headicon;
+    let headgem1 = 0;
+    let headgem2 = 0;
+    let headgem3 = 0;
+    if(gear.head.hasOwnProperty('gems')){
+        headgem1 = gear.head.gems[0] || 0;
+        headgem2 = gear.head.gems[1] || 0;
+        headgem3 = gear.head.gems[2] || 0;
+    }
+    let headench = gear.head.enchant || 0;
+    let headencheffect = (headench > 0) ? "&ench="+HEAD_ENCHANTS[gear.head.enchant].effectId : 0;
+    let headgemlist = "&gems="+headgem1+":"+headgem2+":"+headgem3;
+    let headpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    let headdata = headitem + headencheffect + headgemlist+ headpcslist;
 
-    const headslot = document.querySelector('#headslot');
-    headslot.dataset.wowhead === headdata;
-    headdata = headitem+"&ench="+headencheffect+"&gems="+headgem1+":"+headgem2+":"+headgem3+"&pcs="+headitem+":"+chestitem+":"+legitem;
-    //console.log(headdata);
     document.getElementById("headslot").href = "https://tbc.wowhead.com/item="+ headdata;
-    document.getElementById("headench").href = "https://tbc.wowhead.com/item="+ 29192;
-    //console.log("test");
+    document.getElementById("headslot").innerHTML = HEADS[gear.head.id].name;
+    document.getElementById("headench").href = (headench > 0) ? "https://tbc.wowhead.com/spell="+ headench : "";
+    document.getElementById("headench").innerHTML = (headench > 0) ? HEAD_ENCHANTS[gear.head.enchant].name: "No Enchant";
+    // neck
+    let neckicon = "https://wow.zamimg.com/images/wow/icons/large/"+NECKS[gear.neck.id].icon+".jpg";
+    document.getElementById("neckicon").src = neckicon;
+    let neckgem1 = 0;
+    let neckgem2 = 0;
+    if(gear.neck.hasOwnProperty('gems')){
+        neckgem1 = gear.neck.gems[0] || 0;
+        neckgem2 = gear.neck.gems[1] || 0;
+    }
+    let neckgemlist = "&gems="+neckgem1+":"+neckgem2;
+    neckdata = neckitem + neckgemlist;
+
+    document.getElementById("neckslot").href = "https://tbc.wowhead.com/item="+ neckdata;
+    document.getElementById("neckslot").innerHTML = NECKS[gear.neck.id].name;
+
+    // shoulder
+    let shouldericon = "https://wow.zamimg.com/images/wow/icons/large/"+SHOULDERS[gear.shoulder.id].icon+".jpg";
+    document.getElementById("shouldericon").src = shouldericon;
+    let shouldergem1 = 0;
+    let shouldergem2 = 0;
+    if(gear.shoulder.hasOwnProperty('gems')){
+        shouldergem1 = gear.shoulder.gems[0] || 0;
+        shouldergem2 = gear.shoulder.gems[1] || 0;
+    }
+    let shoulderench = gear.shoulder.enchant || 0;
+    let shoulderencheffect = (shoulderench > 0) ? "&ench="+SHOULDER_ENCHANTS[gear.shoulder.enchant].effectId : 0;
+    let shouldergemlist = "&gems="+shouldergem1+":"+shouldergem2;
+    let shoulderpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    shoulderdata = shoulderitem + shoulderencheffect + shouldergemlist+ shoulderpcslist;
+    
+    document.getElementById("shoulderslot").href = "https://tbc.wowhead.com/item="+ shoulderdata;
+    document.getElementById("shoulderslot").innerHTML = SHOULDERS[gear.shoulder.id].name;
+    document.getElementById("shoulderench").href = (headench > 0) ? "https://tbc.wowhead.com/spell="+ shoulderench : "";
+    document.getElementById("shoulderench").innerHTML = (headench > 0) ? SHOULDER_ENCHANTS[gear.shoulder.enchant].name: "No Enchant";
+    
+    // back
+    let backicon = "https://wow.zamimg.com/images/wow/icons/large/"+BACKS[gear.back.id].icon+".jpg";
+    document.getElementById("backicon").src = backicon;
+    let backgem1 = 0;
+    if(gear.back.hasOwnProperty('gems')){
+        backgem1 = gear.back.gems[0] || 0;
+    }
+    let backench = gear.back.enchant || 0;
+    let backencheffect = (backench > 0) ? "&ench="+BACK_ENCHANTS[gear.back.enchant].effectId : 0;
+    let backgemlist = "&gems="+backgem1;
+    backdata = backitem + backencheffect + backgemlist;
+
+    document.getElementById("backslot").href = "https://tbc.wowhead.com/item="+ backdata;
+    document.getElementById("backslot").innerHTML = BACKS[gear.back.id].name;
+    document.getElementById("backench").href = (backench > 0) ? "https://tbc.wowhead.com/spell="+ backench : "";
+    document.getElementById("backench").innerHTML = (backench > 0) ? BACK_ENCHANTS[gear.back.enchant].name: "No Enchant";
+    
+    // chest
+    let chesticon = "https://wow.zamimg.com/images/wow/icons/large/"+CHESTS[gear.chest.id].icon+".jpg";
+    document.getElementById("chesticon").src = chesticon;
+    let chestgem1 = 0;
+    let chestgem2 = 0;
+    let chestgem3 = 0;
+    if(gear.chest.hasOwnProperty('gems')){
+        chestgem1 = gear.chest.gems[0] || 0;
+        chestgem2 = gear.chest.gems[1] || 0;
+        chestgem3 = gear.chest.gems[2] || 0;
+    }
+    let chestench = gear.chest.enchant || 0;
+    let chestencheffect = (chestench > 0) ? "&ench="+CHEST_ENCHANTS[gear.chest.enchant].effectId : 0;
+    let chestgemlist = "&gems="+chestgem1+":"+chestgem2+":"+chestgem3;
+    let chestpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    chestdata = chestitem + chestencheffect + chestgemlist+ chestpcslist;0
+
+    document.getElementById("chestslot").href = "https://tbc.wowhead.com/item="+ chestdata;
+    document.getElementById("chestslot").innerHTML = CHESTS[gear.chest.id].name;
+    document.getElementById("chestench").href = (chestench > 0) ? "https://tbc.wowhead.com/spell="+ chestench : "";
+    document.getElementById("chestench").innerHTML = (chestench > 0) ? CHEST_ENCHANTS[gear.chest.enchant].name: "No Enchant";
+    
+    // wrist
+    let wristicon = "https://wow.zamimg.com/images/wow/icons/large/"+WRISTS[gear.wrist.id].icon+".jpg";
+    document.getElementById("wristicon").src = wristicon;
+    let wristgem1 = 0;
+    if(gear.wrist.hasOwnProperty('gems')){
+        wristgem1 = gear.wrist.gems[0] || 0;
+    }
+    let wristench = gear.wrist.enchant || 0;
+    let wristencheffect = (wristench > 0) ? "&ench="+WRIST_ENCHANTS[gear.wrist.enchant].effectId : 0;
+    let wristgemlist = "&gems="+wristgem1;
+    let wristpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    wristdata = wristitem + wristencheffect + wristgemlist+ wristpcslist;
+
+    document.getElementById("wristslot").href = "https://tbc.wowhead.com/item="+ wristdata;
+    document.getElementById("wristslot").innerHTML = WRISTS[gear.wrist.id].name;
+    document.getElementById("wristench").href = (wristench > 0) ? "https://tbc.wowhead.com/spell="+ wristench:""; 
+    document.getElementById("wristench").innerHTML = (wristench > 0) ? WRIST_ENCHANTS[gear.wrist.enchant].name: "No Enchant";
+    
+    // mainhand
+    let mainhandicon = "https://wow.zamimg.com/images/wow/icons/large/"+MELEE_WEAPONS[gear.mainhand.id].icon+".jpg";
+    document.getElementById("mainhandicon").src = mainhandicon;
+    let mainhandgem1 = 0;
+    let mainhandgem2 = 0;
+    let mainhandgem3 = 0;
+    if(gear.mainhand.hasOwnProperty('gems')){
+        mainhandgem1 = gear.mainhand.gems[0] || 0;
+        mainhandgem2 = gear.mainhand.gems[1] || 0;
+        mainhandgem3 = gear.mainhand.gems[2] || 0;
+    }
+    let mainhandench = gear.mainhand.enchant || 0;
+    
+    let mainhandencheffect = (mainhandench > 0) ? "&ench="+MELEE_ENCHANTS[gear.mainhand.enchant].effectId : 0;
+    let mainhandgemlist = "&gems="+mainhandgem1+":"+mainhandgem2+":"+mainhandgem3;
+    mainhanddata = mainhanditem + mainhandencheffect + mainhandgemlist;
+
+    document.getElementById("mainhandslot").href = "https://tbc.wowhead.com/item="+ mainhanddata;
+    document.getElementById("mainhandslot").innerHTML = MELEE_WEAPONS[gear.mainhand.id].name;
+    document.getElementById("mainhandench").href = (mainhandench > 0) ? "https://tbc.wowhead.com/spell="+ mainhandench :"";  
+    document.getElementById("mainhandench").innerHTML = (mainhandench > 0) ? MELEE_ENCHANTS[gear.mainhand.enchant].name: "No Enchant";
+    if(offhanditem == 0){
+        document.getElementById("offhandslot").href = "#";
+        document.getElementById("offhandslot").innerHTML = "Off Hand";
+        document.getElementById("offhandench").href = "#"; 
+        document.getElementById("offhandench").innerHTML = "No Enchant";
+        let offhandicon = "images/OffHand.jpg";
+        document.getElementById("offhandicon").src = offhandicon;
+    }
+    // offhand
+    if(offhanditem !== 0){
+        let offhandicon = "https://wow.zamimg.com/images/wow/icons/large/"+MELEE_WEAPONS[gear.offhand.id].icon+".jpg";
+        document.getElementById("offhandicon").src = offhandicon;
+        let offhandgem1 = 0;
+        let offhandgem2 = 0;
+        let offhandgem3 = 0;
+        if(gear.offhand.hasOwnProperty('gems')){
+            offhandgem1 = gear.offhand.gems[0] || 0;
+            offhandgem2 = gear.offhand.gems[1] || 0;
+            offhandgem3 = gear.offhand.gems[2] || 0;
+        }
+        let offhandench = gear.offhand.enchant || 0;
+        let offhandencheffect = (offhandench > 0) ? "&ench="+MELEE_ENCHANTS[gear.offhand.enchant].effectId : 0;
+        let offhandgemlist = "&gems="+offhandgem1+":"+offhandgem2+":"+offhandgem3;
+        offhanddata = offhanditem + offhandencheffect + offhandgemlist;
+        document.getElementById("offhandslot").href = "https://tbc.wowhead.com/item="+ offhanddata;
+        document.getElementById("offhandslot").innerHTML = MELEE_WEAPONS[gear.offhand.id].name;
+        document.getElementById("offhandench").href = (offhandench > 0) ? "https://tbc.wowhead.com/spell="+ offhandench : ""; 
+        document.getElementById("offhandench").innerHTML = (offhandench > 0) ? MELEE_ENCHANTS[gear.offhand.enchant].name: "No Enchant";
+    }
+
+    // ranged
+    let rangeicon = "https://wow.zamimg.com/images/wow/icons/large/"+RANGED_WEAPONS[gear.range.id].icon+".jpg";
+    document.getElementById("rangeicon").src = rangeicon;
+    let rangegem1 = 0;
+    let rangegem2 = 0;
+    if(gear.range.hasOwnProperty('gems')){
+        rangegem1 = gear.range.gems[0] || 0;
+        rangegem2 = gear.range.gems[1] || 0;
+    }
+    let rangeench = gear.range.enchant || 0;
+    let rangeencheffect = (rangeench > 0) ? "&ench="+RANGE_ENCHANTS[gear.range.enchant].effectId : 0;
+    let rangegemlist = "&gems="+rangegem1+":"+rangegem2;
+    rangedata = rangeitem + rangeencheffect + rangegemlist;
+
+    document.getElementById("rangeslot").href = "https://tbc.wowhead.com/item="+ rangedata;
+    document.getElementById("rangeslot").innerHTML = RANGED_WEAPONS[gear.range.id].name;
+    document.getElementById("rangeench").href = (rangeench > 0) ? "https://tbc.wowhead.com/spell="+ rangeench : "";
+    document.getElementById("rangeench").innerHTML = (rangeench > 0) ? RANGE_ENCHANTS[gear.range.enchant].name: "No Enchant";
+    // hand
+    let handicon = "https://wow.zamimg.com/images/wow/icons/large/"+HANDS[gear.hand.id].icon+".jpg";
+    document.getElementById("handicon").src = handicon;
+    let handgem1 = 0;
+    let handgem2 = 0;
+    if(gear.hand.hasOwnProperty('gems')){
+        handgem1 = gear.hand.gems[0] || 0;
+        handgem2 = gear.hand.gems[1] || 0;
+    }
+    let handench = gear.hand.enchant || 0;
+    let handencheffect = (handench > 0) ? "&ench="+HAND_ENCHANTS[gear.hand.enchant].effectId : 0;
+    let handgemlist = "&gems="+handgem1+":"+handgem2;
+    let handpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    handdata = handitem + handencheffect + handgemlist+ handpcslist;
+
+    document.getElementById("handslot").href = "https://tbc.wowhead.com/item="+ handdata;
+    document.getElementById("handslot").innerHTML = HANDS[gear.hand.id].name;
+    document.getElementById("handench").href = (handench > 0) ? "https://tbc.wowhead.com/spell="+ handench : "";
+    document.getElementById("handench").innerHTML = (handench > 0) ? HAND_ENCHANTS[gear.hand.enchant].name: "No Enchant";
+    // waist
+    let waisticon = "https://wow.zamimg.com/images/wow/icons/large/"+WAISTS[gear.waist.id].icon+".jpg";
+    document.getElementById("waisticon").src = waisticon;
+    let waistgem1 = 0;
+    let waistgem2 = 0;
+    if(gear.waist.hasOwnProperty('gems')){
+        waistgem1 = gear.waist.gems[0] || 0;
+        waistgem2 = gear.waist.gems[1] || 0;
+    }
+    let waistgemlist = "&gems="+waistgem1+":"+waistgem2;
+    waistdata = waistitem + waistgemlist;
+
+    document.getElementById("waistslot").href = "https://tbc.wowhead.com/item="+ waistdata;
+    document.getElementById("waistslot").innerHTML = WAISTS[gear.waist.id].name;
+
+    // leg
+    let legicon = "https://wow.zamimg.com/images/wow/icons/large/"+LEGS[gear.leg.id].icon+".jpg";
+    document.getElementById("legicon").src = legicon;
+    let leggem1 = 0;
+    let leggem2 = 0;
+    let leggem3 = 0;
+    if(gear.leg.hasOwnProperty('gems')){
+        leggem1 = gear.leg.gems[0] || 0;
+        leggem2 = gear.leg.gems[1] || 0;
+        leggem3 = gear.leg.gems[2] || 0;
+    }
+    let legench = gear.leg.enchant || 0;
+    let legencheffect = (legench > 0) ? "&ench="+LEG_ENCHANTS[gear.leg.enchant].effectId : 0;
+    let leggemlist = "&gems="+leggem1+":"+leggem2+":"+leggem3;
+    let legpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    legdata = legitem + legencheffect + leggemlist+ legpcslist;
+
+    document.getElementById("legslot").href = "https://tbc.wowhead.com/item="+ legdata;
+    document.getElementById("legslot").innerHTML = LEGS[gear.leg.id].name;
+    document.getElementById("legench").href = (legench > 0) ? "https://tbc.wowhead.com/spell="+ legench : "";
+    document.getElementById("legench").innerHTML = (legench > 0) ? LEG_ENCHANTS[gear.leg.enchant].name: "No Enchant";
+    // feet
+    let feeticon = "https://wow.zamimg.com/images/wow/icons/large/"+FEET[gear.feet.id].icon+".jpg";
+    document.getElementById("feeticon").src = feeticon;
+    let feetgem1 = gear.feet.gems[0] || 0;
+    let feetgem2 = gear.feet.gems[1] || 0;
+    let feetench = gear.feet.enchant || 0;
+    let feetencheffect = (feetench > 0) ? "&ench="+FEET_ENCHANTS[gear.feet.enchant].effectId : 0;
+    let feetgemlist = "&gems="+feetgem1+":"+feetgem2;
+    let feetpcslist = "&pcs="+handitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    feetdata = feetitem + feetencheffect + feetgemlist+ feetpcslist;
+
+    document.getElementById("feetslot").href = "https://tbc.wowhead.com/item="+ feetdata;
+    document.getElementById("feetslot").innerHTML = FEET[gear.feet.id].name;
+    document.getElementById("feetench").href = (feetench > 0) ? "https://tbc.wowhead.com/spell="+ feetench : "";
+    document.getElementById("feetench").innerHTML = (feetench > 0) ? FEET_ENCHANTS[gear.feet.enchant].name: "No Enchant";
+
+    // ring1
+    let ring1icon = "https://wow.zamimg.com/images/wow/icons/large/"+RINGS[gear.ring1.id].icon+".jpg";
+    document.getElementById("ring1icon").src = ring1icon;
+    let ring1gem1 = 0;
+    if(gear.ring1.hasOwnProperty('gems')){
+        ring1gem1 = gear.ring1.gems[0] || 0;
+    }
+    let ring1ench = gear.ring1.enchant || 0;
+    let ring1encheffect = (ring1ench > 0) ? "&ench="+RING_ENCHANTS[gear.ring1.enchant].effectId : 0;
+    let ring1gemlist = "&gems="+ring1gem1;
+    let ring1pcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+waistitem+":"+feetitem+":"+ring1item+":"+ring2item+":"+legitem;
+    ring1data = ring1item + ring1encheffect + ring1gemlist+ ring1pcslist;
+
+    document.getElementById("ring1slot").href = "https://tbc.wowhead.com/item="+ ring1data;
+    document.getElementById("ring1slot").innerHTML = RINGS[gear.ring1.id].name;
+    document.getElementById("ring1ench").href = (ring1ench > 0) ? "https://tbc.wowhead.com/spell="+ ring1ench : "";
+    document.getElementById("ring1ench").innerHTML = (ring1ench > 0) ? RING_ENCHANTS[gear.ring1.enchant].name: "No Enchant";
+    // ring2
+    let ring2icon = "https://wow.zamimg.com/images/wow/icons/large/"+RINGS[gear.ring2.id].icon+".jpg";
+    document.getElementById("ring2icon").src = ring2icon;
+    let ring2gem1 = 0;
+    if(gear.ring2.hasOwnProperty('gems')){
+        ring2gem1 = gear.ring2.gems[0] || 0;
+    }
+    let ring2ench = gear.ring2.enchant || 0;
+    let ring2encheffect = (ring2ench > 0) ? "&ench="+RING_ENCHANTS[gear.ring2.enchant].effectId : 0;
+    let ring2gemlist = "&gems="+ring2gem1;
+    let ring2pcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+waistitem+":"+feetitem+":"+ring1item+":"+ring2item+":"+legitem;
+    ring2data = ring2item + ring2encheffect + ring2gemlist+ ring2pcslist;
+
+    document.getElementById("ring2slot").href = "https://tbc.wowhead.com/item="+ ring2data;
+    document.getElementById("ring2slot").innerHTML = RINGS[gear.ring2.id].name;
+    document.getElementById("ring2ench").href = (ring2ench > 0) ? "https://tbc.wowhead.com/spell="+ ring2ench : "";
+    document.getElementById("ring2ench").innerHTML = (ring2ench > 0) ? RING_ENCHANTS[gear.ring2.enchant].name: "No Enchant";
+
+    // trinket1
+    let trinket1icon = "https://wow.zamimg.com/images/wow/icons/large/"+TRINKETS[gear.trinket1.id].icon+".jpg";
+    document.getElementById("trinket1icon").src = trinket1icon;
+    document.getElementById("trink1slot").href = "https://tbc.wowhead.com/item="+ trink1item;
+    document.getElementById("trink1slot").innerHTML = TRINKETS[gear.trinket1.id].name;
+
+    // trinket2
+    let trinket2icon = "https://wow.zamimg.com/images/wow/icons/large/"+TRINKETS[gear.trinket2.id].icon+".jpg";
+    document.getElementById("trinket2icon").src = trinket2icon;
+    document.getElementById("trink2slot").href = "https://tbc.wowhead.com/item="+ trink2item;
+    document.getElementById("trink2slot").innerHTML = TRINKETS[gear.trinket2.id].name;
 
 }
+
 gearSlotsDisplay();
 // attempt at loading animation
 function startLoading() {

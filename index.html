@@ -139,7 +139,9 @@
                   <div class="u-absolute-hcenter-lg u-absolute-hcenter-md u-absolute-hcenter-sm u-absolute-hcenter-xs u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-5"></div>
                   <div class="u-container-style u-grey-75 u-group u-shape-rectangle u-group-1">
                     <div class="u-container-layout u-valign-middle u-container-layout-3">
-                      <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23" id="gearprofile">Sixx BiS P3 6% BM<br>
+                      <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23">
+                        <select id="gearprofile" onclick="selectGearlist(this.value)" class="select hover-grey import-select-input">Sixx BiS P3 6% BM<br>
+                          </select>
                       </h4>
                     </div>
                   </div>
@@ -151,77 +153,77 @@
                   <h4 class="u-align-center u-text u-text-custom-color-3 u-text-25" id="racedisplay">Orc<br>
                   </h4>
                   <a href="#" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-5">Export</a>
-                  <p class="LeftSlots u-text u-text-26"><a href="#" id="headslot" onclick="this.href='javascript:;';">Head</a></p>
+                  <p class="LeftSlots u-text u-text-26"><a href="#" id="headslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Head</a></p>
                   <div class="u-container-style u-group u-hidden-lg u-hidden-md u-hidden-sm u-hidden-xs u-group-2">
                     <div class="u-container-layout">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-2" src="images/Hands.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-3" src="images/Waist.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-4" src="images/Legs.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-5" src="images/Feet.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-6" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-7" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-8" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-9" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-2" src="images/Hands.jpg" alt="" data-image-width="56" data-image-height="56" id="handicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-3" src="images/Waist.jpg" alt="" data-image-width="56" data-image-height="56" id="waisticon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-4" src="images/Legs.jpg" alt="" data-image-width="56" data-image-height="56" id="legicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-5" src="images/Feet.jpg" alt="" data-image-width="56" data-image-height="56" id="feeticon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-6" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring1icon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-7" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring2icon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-8" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket1icon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-9" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket2icon">
                     </div>
                   </div>
                   <div class="u-container-style u-group u-hidden-lg u-hidden-md u-hidden-sm u-hidden-xs u-group-3">
                     <div class="u-container-layout">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-10" src="images/Head.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-11" src="images/Neck.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-12" src="images/Shoulders.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-13" src="images/Back.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-14" src="images/Chest.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-15" src="images/Wrists.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-16" src="images/MainHand.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-17" src="images/OffHand.jpg" alt="" data-image-width="56" data-image-height="56">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-18" src="images/Ranged.jpg" alt="" data-image-width="56" data-image-height="56">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-10" src="images/Head.jpg" alt="" data-image-width="56" data-image-height="56" id="headicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-11" src="images/Neck.jpg" alt="" data-image-width="56" data-image-height="56" id="neckicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-12" src="images/Shoulders.jpg" alt="" data-image-width="56" data-image-height="56" id="shouldericon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-13" src="images/Back.jpg" alt="" data-image-width="56" data-image-height="56" id="backicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-14" src="images/Chest.jpg" alt="" data-image-width="56" data-image-height="56" id="chesticon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-15" src="images/Wrists.jpg" alt="" data-image-width="56" data-image-height="56" id="wristicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-16" src="images/MainHand.jpg" alt="" data-image-width="56" data-image-height="56" id="mainhandicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-17" src="images/OffHand.jpg" alt="" data-image-width="56" data-image-height="56" id="offhandicon">
+                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-18" src="images/Ranged.jpg" alt="" data-image-width="56" data-image-height="56" id="rangeicon">
                     </div>
                   </div>
-                  <p class="LeftSlots u-text u-text-27">Neck<br>
+                  <p class="LeftSlots u-text u-text-27"><a href="#" id="neckslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Neck</a><br>
                   </p>
-                  <p class="LeftSlots u-text u-text-28">Shoulder<br>
+                  <p class="LeftSlots u-text u-text-28"><a href="#" id="shoulderslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Shoulder</a><br>
                   </p>
-                  <p class="LeftSlots u-text u-text-29">Back<br>
+                  <p class="LeftSlots u-text u-text-29"><a href="#" id="backslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Back</a><br>
                   </p>
-                  <p class="LeftSlots u-text u-text-30">Chest<br>
+                  <p class="LeftSlots u-text u-text-30"><a href="#" id="chestslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Chest</a><br>
                   </p>
-                  <p class="LeftSlots u-text u-text-31">Wrist<br>
+                  <p class="LeftSlots u-text u-text-31"><a href="#" id="wristslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Wrist</a><br>
                   </p>
-                  <p class="LeftSlots u-text u-text-32">Main Hand<br>
+                  <p class="LeftSlots u-text u-text-32"><a href="#" id="mainhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Main Hand</a><br>
                   </p>
-                  <p class="LeftSlots u-text u-text-33">Off Hand<br>
+                  <p class="LeftSlots u-text u-text-33"><a href="#" id="offhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Off Hand</a><br>
                   </p>
-                  <p class="LeftSlots u-text u-text-34">Ranged<br>
+                  <p class="LeftSlots u-text u-text-34"><a href="#" id="rangeslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ranged</a><br>
                   </p>
-                  <p class="u-align-right u-text u-text-35">Hand</p>
-                  <p class="u-align-right u-text u-text-36">Waist<br>
+                  <p class="u-align-right u-text u-text-35"><a href="#" id="handslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Hand</a></p>
+                  <p class="u-align-right u-text u-text-36"><a href="#" id="waistslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Waist</a><br>
                   </p>
-                  <p class="u-align-right u-text u-text-37">Leg<br>
+                  <p class="u-align-right u-text u-text-37"><a href="#" id="legslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Leg</a><br>
                   </p>
-                  <p class="u-align-right u-text u-text-38">Feet<br>
+                  <p class="u-align-right u-text u-text-38"><a href="#" id="feetslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Feet</a><br>
                   </p>
-                  <p class="u-align-right u-text u-text-39">Ring 1<br>
+                  <p class="u-align-right u-text u-text-39"><a href="#" id="ring1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ring 1</a><br>
                   </p>
-                  <p class="u-align-right u-text u-text-40">Ring 2<br>
+                  <p class="u-align-right u-text u-text-40"><a href="#" id="ring2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ring 2</a><br>
                   </p>
-                  <p class="u-align-right u-text u-text-41">Trinket 1</p>
-                  <p class="u-align-right u-text u-text-42">Trinket 2<br>
+                  <p class="u-align-right u-text u-text-41"><a href="#" id="trink1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 1</a></p>
+                  <p class="u-align-right u-text u-text-42"><a href="#" id="trink2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 2</a><br>
                   </p>
-                  <p class="u-text u-text-43"><a id="headench">No Enchant</a></p>
-                  <p class="u-text u-text-44">No Enchant</p>
-                  <p class="u-text u-text-45">No Enchant</p>
-                  <p class="u-text u-text-46">No Enchant</p>
-                  <p class="u-text u-text-47">No Enchant</p>
-                  <p class="u-text u-text-48">No Enchant</p>
-                  <p class="u-text u-text-49">No Enchant</p>
+                  <p class="u-text u-text-43"><a id="headench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-text u-text-44"><a id="shoulderench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-text u-text-45"><a id="backench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-text u-text-46"><a id="chestench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-text u-text-47"><a id="wristench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-text u-text-48"><a id="mainhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-text u-text-49"><a id="offhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
                   <p class="u-text u-text-50">No Attachment</p>
                   <p class="u-text u-text-51">No Attachment</p>
-                  <p class="u-text u-text-52">No Enchant</p>
-                  <p class="u-align-right u-text u-text-53">No Enchant</p>
-                  <p class="u-align-right u-text u-text-54">No Enchant</p>
-                  <p class="u-align-right u-text u-text-55">No Enchant</p>
-                  <p class="u-align-right u-text u-text-56">No Enchant</p>
-                  <p class="u-align-right u-text u-text-57">No Enchant</p>
+                  <p class="u-text u-text-52"><a id="rangeench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-align-right u-text u-text-53"><a id="handench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-align-right u-text u-text-54"><a id="legench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-align-right u-text u-text-55"><a id="feetench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-align-right u-text u-text-56"><a id="ring1ench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                  <p class="u-align-right u-text u-text-57"><a id="ring2ench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
                   <h6 class="u-align-center u-text u-text-58">Stat Weights</h6>
                   <p class="u-align-right u-text u-text-59">Strength<br>Agility<br>Stamina<br>Intellect<br>Spirit<br>
                   </p>
