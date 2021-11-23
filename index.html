@@ -24,7 +24,7 @@
     <script class="u-script" type="text/javascript" src="js/statCalculator.js"></script>
     <script class="u-script" type="text/javascript" src="js/spells.js"></script>
     <script class="u-script" type="text/javascript" src="js/simulation.js"></script>
-    <!--<script class="u-script" type="text/javascript" src="js/scripts/test.js"></script>-->
+    <script class="u-script" type="text/javascript" src="js/pet.js"></script>
     <script class="u-script" type="text/javascript" src="js/player.js"></script>
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
     <script>const whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: true};</script>
@@ -392,7 +392,7 @@
      <div class="settings-petconsumes">
        <ul>
         <li><Label class="label-1">Scroll of Agility</Label></li>
-        <select onclick="petscrollagiSelection()" class="select hover-grey select-relative">
+        <select onclick="petscrollagiSelection()" class="select hover-grey select-relative" id="petscrollagi">
           <option value="agi5">Scroll of Agility V</option>
           <option value="agi4">Scroll of Agility IV</option>
           <option value="agi3">Scroll of Agility III</option>
@@ -401,7 +401,7 @@
           <option selected value="none">No Agility Scroll</option>
         </select>
         <li><Label class="label-1">Scroll of Strength</Label></li>
-        <select onclick="petscrollstrSelection()" class="select hover-grey select-relative">
+        <select onclick="petscrollstrSelection()" class="select hover-grey select-relative" id="petscrollstr">
           <option value="str5">Scroll of Strength V</option>
           <option value="str4">Scroll of Strength IV</option>
           <option value="str3">Scroll of Strength III</option>
@@ -410,7 +410,7 @@
           <option selected value="none">No Strength Scroll</option>
         </select>
         <li><Label class="label-1">Food</Label></li>
-        <select onclick="petfoodSelection()" class="select hover-grey select-relative">
+        <select onclick="petfoodSelection()" class="select hover-grey select-relative" id="petfood">
           <option value="kiblers">Kibler's Bits</option>
           <option value="sporeling">Sporeling Snack</option>
           <option selected value="none">No Pet Food</option>
@@ -447,16 +447,16 @@
               <option selected value="wolf">Wolf</option>
             </select>
           </li><br>
-          <li><label class="label-2">Simulations</label><input type="number" step="1000" min="0" max="100000" class="number-input hover-grey fight-setting-input-3" id="simulations" value="50000"></li>
-          <li><label class="label-2">Fight Length(min s)</label><input type="number" step="1" min="5" max="1200" class="number-input hover-grey fight-setting-input-3" id="minfight" value="235"></li>
-          <li><label class="label-2">Fight Length(max s)</label><input type="number" step="1" min="5" max="1200" class="number-input hover-grey fight-setting-input-3" id="maxfight" value="240"></li>
-          <li><label class="label-2">Latency (ms)</label><input type="number" step="1" min="10" max="1000" class="number-input hover-grey fight-setting-input-3" id="latency" value="20"></li>
-          <li><label class="label-2">Player Uptime (%)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="playeruptime" value="100"> %</li>
-          <li><label class="label-2">Pet Uptime (%)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="petuptime" value="100"> %</li>
-          <li><label class="label-2">Weave Time (s)</label><input type="number" step="0.1" min="0" max="2" class="number-input hover-grey fight-setting-input-3" id="weavetime" value="0.6"></li>
-          <li><label class="label-2">% of Fight Weaved</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="weavepercent" value="100"> %</li>
-          <li><label class="label-2">Hunters in Raid</label><input type="number" step="1" min="0" max="20" class="number-input hover-grey fight-setting-input-3" id="huntersraid" value="4"></li>
-          <li><label class="label-2">Berserking Start HP</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="berserking" value="100"> %</li>
+          <li><label class="label-2">Simulations</label><input type="number" step="1000" min="0" max="100000" class="number-input hover-grey fight-setting-input-3" id="simulations" onchange=fightSettings() value="10000"></li>
+          <li><label class="label-2">Fight Length(min s)</label><input type="number" step="1" min="5" max="1200" class="number-input hover-grey fight-setting-input-3" id="minfight" onchange=fightSettings() value="243"></li>
+          <li><label class="label-2">Fight Length(max s)</label><input type="number" step="1" min="5" max="1200" class="number-input hover-grey fight-setting-input-3" id="maxfight" onchange=fightSettings() value="245"></li>
+          <li><label class="label-2">Latency (ms)</label><input type="number" step="1" min="10" max="1000" class="number-input hover-grey fight-setting-input-3" id="latency" onchange=fightSettings() value="50"></li>
+          <li><label class="label-2">Player Uptime (%)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="playeruptime" onchange=fightSettings() value="100"> %</li>
+          <li><label class="label-2">Pet Uptime (%)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="petuptime" onchange=fightSettings() value="100"> %</li>
+          <li><label class="label-2">Weave Time (s)</label><input type="number" step="0.1" min="0" max="2" class="number-input hover-grey fight-setting-input-3" id="weavetime" onchange=fightSettings() value="0.6"></li>
+          <li><label class="label-2">% of Fight Weaved</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="weavepercent" onchange=fightSettings() value="100"> %</li>
+          <li><label class="label-2">Hunters in Raid</label><input type="number" step="1" min="0" max="20" class="number-input hover-grey fight-setting-input-3" id="huntersraid" onchange=fightSettings() value="4"></li>
+          <li><label class="label-2">Berserking Start HP</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey fight-setting-input-3" id="berserkinghp" onchange=fightSettings() value="100"> %</li>
           <br>
           <li>
             <label class="label-2">Target</label>
@@ -477,7 +477,7 @@
             </select>
           </li>
           <li>
-            <label class="label-2">Armor</label> <input type="number" step="1" min="0" max="10000" class="number-input hover-grey fight-setting-input-2" id="armor" value="0">
+            <label class="label-2">Armor</label> <input type="number" step="1" min="0" max="10000" class="number-input hover-grey fight-setting-input-2" id="armor" onchange="selectTarget('0')" value="0">
           </li>
           <li>
             <label class="label-2">Level</label> <input type="number" step="1" min="0" max="73" class="number-input hover-grey fight-setting-input-2" id="level" value="0">

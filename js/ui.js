@@ -20,6 +20,7 @@ var buffslist = [
 ];
 var filteredbuffs = [];
 var playerconsumes = {};
+var petconsumes = {};
 
 // show the stats on the HTML
 function displayStats(){
@@ -94,10 +95,33 @@ function selectedOptionsResults(){
     removeZeros();
     selectedbuffs = getStatsFromBuffs(filteredbuffs);
     consumestats = getPlayerStatsFromConsumes(playerconsumes);
+    petconsumestats = getPetStatsFromConsumes(petconsumes);
     initialize();
     displayStats();
     gearSlotsDisplay();
     //console.log(buffslist);
+}
+
+function fightSettings(){
+    let simulations = document.getElementById("simulations").value;
+    let minfight = document.getElementById("minfight").value;
+    let maxfight = document.getElementById("maxfight").value;
+    let msdelay = document.getElementById("latency").value;
+    let playerup = document.getElementById("playeruptime").value;
+    let petup = document.getElementById("petuptime").value;
+    let weave = document.getElementById("weavetime").value;
+    let huntinraid = document.getElementById("huntersraid").value;
+    let berserkhp = document.getElementById("berserkinghp").value;
+    iterations = parseInt(simulations);
+    minfighttimer = parseInt(minfight);
+    maxfighttimer = parseInt(maxfight);
+    latency = parseInt(msdelay)/1000;
+    playeruptime = parseInt(playerup);
+    petuptime = parseInt(petup);
+    weavetime = parseInt(weave);
+    huntersraid = parseInt(huntinraid);
+    BerserkStartHP = parseInt(berserkhp);
+
 }
 // check for kings toggle
 function kingsCheck() {
@@ -411,13 +435,67 @@ function foodSelection() {
     selectedOptionsResults();
 }
 function petscrollagiSelection() {
-
+    let isSelected = document.getElementById("petscrollagi").value;
+    switch (isSelected) {
+        case "agi5":
+            petconsumes.agi_scroll = 27498;
+        break;
+        case "agi4":
+            petconsumes.agi_scroll = 10309;
+        break;
+        case "agi3":
+            petconsumes.agi_scroll = 4425;
+        break;
+        case "agi2":
+            petconsumes.agi_scroll = 1477;
+        break;
+        case "agi1":
+            petconsumes.agi_scroll = 3012;
+        break;
+        case "none":
+            delete petconsumes.agi_scroll;
+        break;
+    }
+    selectedOptionsResults();
 }
 function petscrollstrSelection() {
-
+    let isSelected = document.getElementById("petscrollstr").value;
+    switch (isSelected) {
+        case "str5":
+            petconsumes.str_scroll = 27503;
+        break;
+        case "str4":
+            petconsumes.str_scroll = 10310;
+        break;
+        case "str3":
+            petconsumes.str_scroll = 4426;
+        break;
+        case "str2":
+            petconsumes.str_scroll = 2289;
+        break;
+        case "str1":
+            petconsumes.str_scroll = 954;
+        break;
+        case "none":
+            delete petconsumes.str_scroll;
+        break;
+    }
+    selectedOptionsResults();
 }
 function petfoodSelection() {
-
+    let isSelected = document.getElementById("petfood").value;
+    switch (isSelected) {
+        case "kiblers":
+            petconsumes.pet_food = 33874;
+        break;
+        case "sporeling":
+            petconsumes.pet_food = 27656;
+        break;
+        case "none":
+            delete petconsumes.pet_food;
+        break;
+    }
+    selectedOptionsResults();
 }
 
 // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf
