@@ -21,6 +21,8 @@ var buffslist = [
 var filteredbuffs = [];
 var playerconsumes = {};
 var petconsumes = {};
+var talentindex = '6';
+var whtalentlink = '';
 
 // show the stats on the HTML
 function displayStats(){
@@ -99,7 +101,66 @@ function selectedOptionsResults(){
     initialize();
     displayStats();
     gearSlotsDisplay();
+    storeData();
     //console.log(buffslist);
+}
+
+function initializeTargetDropdown() {
+    const GruulId = 19044;
+    let targets = targetData.getNameKeyTargetPairs();
+    var targetsOptions = "";
+    for (const target of targets) {
+        targetsOptions += "<option value= "+target.id+" >" + target.name + "</option>";
+      }   
+    document.getElementById("targetSelect").innerHTML = targetsOptions;
+    document.getElementById('targetSelect').value = GruulId;
+    document.getElementById("armor").disabled = true;
+    document.getElementById("typeSelect").disabled = true;
+    document.getElementById("level").disabled = true;
+    selectTarget(GruulId);
+}
+
+function selectTarget(id) {
+
+    target = targetData.selectTarget(id);
+    if(id === "0") {
+        document.getElementById("armor").disabled = false;
+        document.getElementById("typeSelect").disabled = false;
+        document.getElementById("level").disabled = false;
+        target.armor = parseInt(document.getElementById("armor").value);
+    }
+    else { 
+        document.getElementById("armor").disabled = true;
+        document.getElementById("typeSelect").disabled = true;
+        document.getElementById("level").disabled = true;
+        document.getElementById("armor").value = target.armor;
+    }
+    document.getElementById("typeSelect").value = target.type;
+    document.getElementById("level").value = target.level;
+    update();
+}
+initializeTargetDropdown();
+
+function initializeImportSets(){
+
+    let imports = DEFAULT_GEAR_SETS;
+    var importOptions = "";
+    let i = 0;
+    for (i=0; i <= 7; i++) {
+        importOptions += "<option value= "+i+" >" + imports[i].description + "</option>";
+    }
+    //console.log(importOptions);
+    document.getElementById("gearprofile").innerHTML = importOptions;
+    document.getElementById("gearprofile").value = 4;
+    selectGearlist();
+}
+function selectGearlist() {
+
+    let gearindex = document.getElementById("gearprofile").value;
+    let gearobj = DEFAULT_GEAR_SETS[gearindex];
+    gear = gearobj.data;
+    console.log(gear);
+    selectedOptionsResults();
 }
 
 function fightSettings(){
@@ -118,9 +179,10 @@ function fightSettings(){
     latency = parseInt(msdelay)/1000;
     playeruptime = parseInt(playerup);
     petuptime = parseInt(petup);
-    weavetime = parseInt(weave);
+    weavetime = JSON.parse(weave);
     huntersraid = parseInt(huntinraid);
     BerserkStartHP = parseInt(berserkhp);
+    storeData();
 
 }
 // check for kings toggle
@@ -505,63 +567,54 @@ function getRace() {
     selectedOptionsResults();
 }
 
-function initializeImportSets(){
-
-    let imports = DEFAULT_GEAR_SETS;
-    var importOptions = "";
-    let i = 0;
-    for (i=0; i <= 7; i++) {
-        importOptions += "<option value= "+i+" >" + imports[i].description + "</option>";
-    }
-    //console.log(importOptions);
-    document.getElementById("gearprofile").innerHTML = importOptions;
-    document.getElementById("gearprofile").value = 4;
-    selectGearlist();
-}
-function selectGearlist() {
-
-    let gearindex = document.getElementById("gearprofile").value;
-    let gearobj = DEFAULT_GEAR_SETS[gearindex];
-    gear = gearobj.data;
-    console.log(gear);
+function getPet() {
+    selectedPet = parseInt(document.getElementById("pet").value);
+    //document.getElementById("petdisplay").innerHTML
     selectedOptionsResults();
 }
-initializeImportSets();
-function initializeTargetDropdown() {
-    const GruulId = 19044;
-    let targets = targetData.getNameKeyTargetPairs();
-    var targetsOptions = "";
-    for (const target of targets) {
-        targetsOptions += "<option value= "+target.id+" >" + target.name + "</option>";
-      }     
-    document.getElementById("targetSelect").innerHTML = targetsOptions;
-    document.getElementById('targetSelect').value = GruulId;
-    document.getElementById("armor").disabled = true;
-    document.getElementById("typeSelect").disabled = true;
-    document.getElementById("level").disabled = true;
-    selectTarget(GruulId);
-}
 
-function selectTarget(id) {
-    target = targetData.selectTarget(id);
-    if(id === "0") {
-        document.getElementById("armor").disabled = false;
-        document.getElementById("typeSelect").disabled = false;
-        document.getElementById("level").disabled = false;
-        target.armor = parseInt(document.getElementById("armor").value);
-    }
-    else { 
-        document.getElementById("armor").disabled = true;
-        document.getElementById("typeSelect").disabled = true;
-        document.getElementById("level").disabled = true;
-        document.getElementById("armor").value = target.armor;
-    }
-    document.getElementById("typeSelect").value = target.type;
-    document.getElementById("level").value = target.level;
-    update();
-}
 
-initializeTargetDropdown();
+function selectTalents(talent){
+
+    
+    let customtalentlink = document.getElementById("customtalent").value;
+    let regioncheck = customtalentlink.substr(0,11);
+    let customtalents = "";
+    if(regioncheck !== "https://tbc") {
+        customtalents = customtalentlink.slice(46);
+    }
+    else {
+        customtalents = customtalentlink.slice(43);
+    }
+    switch (talent) {
+        case "6":
+            talents = T_41_20_0;
+        break;
+        case "5":
+            talents = T_0_20_41;
+        break;
+        case "4":
+            talents = T_7_20_34;
+        break;
+        case "3":
+            talents = T_5_20_36;
+        break;
+        case "2":
+            talents = T_0_27_34;
+        break;
+        case "1":
+            talents = T_17_44_0;
+        break;
+        case "0":
+            if (customtalentlink !== "") {
+                talents = parseTalents(customtalents);
+            }
+        break;
+    }
+    whtalentlink = customtalentlink;
+    talentindex = talent;
+    selectedOptionsResults();
+}
 
 function gearSlotsDisplay(){
     
@@ -901,3 +954,8 @@ function endLoading() {
     btns.find('.spinner').remove();
     $('.u-section-1').removeClass('loading');
 }
+// checks if saved before, if so - load saved data
+if(localStorage.getItem('savecheck') == 'true'){
+    fetchData();
+}
+initializeImportSets();

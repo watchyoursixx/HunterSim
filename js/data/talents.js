@@ -261,7 +261,7 @@ const MM_TREE = [
       name: 'Improved Barrage',
       abrv: 'imp_barrage',
       max: 3,
-      per_point: 4 / 100
+      per_point: 4
     }
   ],
   [

@@ -18,6 +18,20 @@ ul {
     width: 380px;
     height: 550px;
 }
+.settings-talents {
+  color: white;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #252529;
+  border: 3px solid #000;
+  border-radius: 2px;
+  margin: 10px auto;
+  position: relative;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 800px;
+  height: 100px;
+}
 .settings-small {
     width: 320px;
 }
@@ -76,6 +90,15 @@ ul {
   font-size: 14px;
 
 }
+.label-3 {
+  display: inline-block; 
+  width: 200px;
+  left: -10px;
+  position: relative;
+  color: white;
+  font-size: 14px;
+
+}
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -99,7 +122,7 @@ ul {
   padding: 20px;
   border: 4px solid #2e2e33;
   width: 65%;
-  height: 100%;
+  height: 2000px;
 }
 
 /* The Close Button */
@@ -150,10 +173,10 @@ ul {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 100%;
+    width: 99%;
     position: relative;
     top: 15px;
-    left: -10px;
+    left: 5px;
     display: inline-block;
     vertical-align: middle;
 
@@ -283,6 +306,12 @@ ul {
   width: 100px;
   left: 4px;
 }
+.setting-input-1 {
+  left: 4px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 550px;
+}
 .select-wide {
   /* Reset */
   width: 120px;
@@ -298,8 +327,8 @@ ul {
 }
 .select-3 {
   position: absolute;
-  top: 29.2%; /*158px*/
-  left: 225px;
+  top: 160px; /*158px*/
+  left: 240px;
   height: 48px;
 
 }
@@ -329,4 +358,131 @@ ul {
     width: 250px;
     font-size: 14px;
     font-weight: 600;
+}
+.select-relative-2 {
+  position: relative;
+  left: 10px;
+  width: 500px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-image-1 {
+  position: absolute;
+  left: 5px;
+  top: 42px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-2 {
+  position: absolute;
+  left: 5px;
+  top: 71px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-3 {
+  position: absolute;
+  left: 5px;
+  top:  100px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-4 {
+  position: absolute;
+  left: 5px;
+  top: 130px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-5 {
+  position: absolute;
+  left: 5px;
+  top: 159px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-6 {
+  position: absolute;
+  left: 5px;
+  top: 187px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-7 {
+  position: absolute;
+  left: 5px;
+  top: 215px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-8 {
+  position: absolute;
+  left: 5px;
+  top: 243px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-9 {
+  position: absolute;
+  left: 5px;
+  top: 274px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-10 {
+  position: absolute;
+  left: 5px;
+  top: 303px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-11 {
+  position: absolute;
+  left: 5px;
+  top: 331px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-12 {
+  position: absolute;
+  left: 5px;
+  top: 360px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-13 {
+  position: absolute;
+  left: 5px;
+  top: 390px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-14 {
+  position: absolute;
+  left: 5px;
+  top: 419px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-15 {
+  position: absolute;
+  left: 5px;
+  top: 449px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-16 {
+  position: absolute;
+  left: 5px;
+  top: 477px;
+  width: 22px;
+  height: auto;
+}
+.settings-image-17 {
+  position: absolute;
+  left: 5px;
+  top: 505px;
+  width: 22px;
+  height: auto;
 }

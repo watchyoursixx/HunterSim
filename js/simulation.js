@@ -92,6 +92,7 @@ function startSync() {
     console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
     console.log(pet);
     console.log(auras);
+    console.log(currentMana);
     function standardError(x, u_x) {
         let n = x.length;
         let a = 0;
@@ -375,6 +376,9 @@ function killCommandCheck(){
         petSpell(petspell);
         killcommand.cooldown = 5;
         killcommand.ready = false;
+        if(auras.beastlord.enable){
+            auras.beastlord.timer = auras.beastlord.duration;
+        }
         //console.log("kill command used");
     }
     return;
@@ -436,10 +440,12 @@ function nextEvent(){
 
 function spell_choice_method_A(){
     // steady
-    if ((SPELLS.autoshot.cd > 1.1) && (SPELLS.steadyshot.cost <= currentMana)) {
+    let steadycost = SPELLS.steadyshot.cost <= currentMana;
+    if ((SPELLS.autoshot.cd > 1.1) && steadycost) {
         return "steadyshot";
-                
-    } else if ((rangespeed < 1.8) && (SPELLS.autoshot.cd > 0.4) && (SPELLS.steadyshot.cd < 0.6) && (SPELLS.steadyshot.cost <= currentMana)) {
+    } else if ((rangespeed > 2.2) && (SPELLS.autoshot.cd > 0.6) && steadycost)  {
+        return "steadyshot";
+    } else if ((rangespeed < 1.8) && (SPELLS.autoshot.cd > 0.4) && (SPELLS.steadyshot.cd < 0.6) && steadycost) {
         return "steadyshot";
     } 
     else { 

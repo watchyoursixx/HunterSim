@@ -231,9 +231,9 @@ function calcBaseStats() {
   rangedmgmod = dmgmod * (talents.ranged_weap_spec);
 
   strmod = selectedbuffs.special.kingsMod;
-  agimod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp) * talents.light_reflexes;
+  agimod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp / 100) * talents.light_reflexes;
   stammod = selectedbuffs.special.kingsMod;
-  intmod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp * 3);
+  intmod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp * 3 / 100);
   spimod = selectedbuffs.special.kingsMod;
 
   mapmod = talents.surv_instincts * 1;
@@ -246,8 +246,9 @@ function calcBaseStats() {
   Spi  = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
 
   // Attack Power
-  BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP + talents.trueshot_aura) * mapmod;
-  BaseRAP = (155 + GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * talents.careful_aim + talents.trueshot_aura) * rapmod;
+  let tsa_ap = (talents.trueshot_aura > 0) ? 125 : 0;
+  BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP + tsa_ap) * mapmod;
+  BaseRAP = (155 + GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * talents.careful_aim + tsa_ap) * rapmod;
    
   // Crit rating and crit chance
    let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
@@ -310,7 +311,7 @@ var auras = {
    // procs
    dragonspine: {enable:false, timer:0, cooldown:0, ppm:1, duration:10, uptime:0},// coded
    imphawk: {enable:true,timer:0, duration:12, uptime:0},// coded
-   beastlord: {enable:true, timer:0, duration:15, uptime:0},
+   beastlord: {enable:true, timer:0, duration:15, uptime:0}, // coded
    executioner: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
    mongoose: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
    madness: {enable:false, timer:0, ppm:1,duration: 10, uptime:0},// coded
@@ -381,6 +382,13 @@ function initializeAuras() {
    auras.abacus.enable = ((gear.trinket1.id === 28288) || (gear.trinket2.id === 28288)) ? true : false; 
    auras.unyieldingcourage.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false; 
    auras.dmccrusade.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false;
+
+   auras.beastlord.enable = (currentgear.special.beast_lord_4p_kc_arp > 0) ? true : false;
+   auras.beastwithin.enable = (talents.beast_within > 0) ? true : false;
+   auras.mastertact.enable = (talents.master_tac > 0) ? true : false;
+   auras.donsantos.enable = (gear.range.id === 31323) ? true : false;
+   auras.eternalchamp.enable = ((gear.ring1.id === 29301) || (gear.ring2.id === 29301)) ? true : false;
+   auras.imphawk.enable = (talents.imp_hawk > 1) ? true : false;
 
    for(let prop in auras){
       auras[prop].timer = 0;
@@ -812,7 +820,7 @@ function attackSpell(spell,spellcost) {
       else if (result === RESULT.CRIT) {
          dmg = steadyShotCalc(range_wep,combatRAP);
          dmg *= RangeCritDamage;
-         proccrit();   
+         proccrit(cost);   
       }
       procsteady();
       steadycount++;
@@ -827,7 +835,7 @@ function attackSpell(spell,spellcost) {
       else if (result === RESULT.CRIT) {
          dmg = multiShotCalc(range_wep,combatRAP);
          dmg *= RangeCritDamage;
-         proccrit();
+         proccrit(cost);
       }
    }
    let done = dealdamage(dmg,result,range_wep,spell);
@@ -882,11 +890,11 @@ function proccrit(cost) {
 
    let roll = 0;
    // thrill of the hunt
-   if (talents.TotH > 0){
+   if (talents.TotH > 0 && cost > 0){
       roll = rng10k();
       let prevmana = currentMana;
       if (roll <= talents.TotH * 3333) { currentMana += Math.floor(cost * 0.4); }
-      console.log("thrill return => " + (currentMana - prevmana));
+      //console.log("thrill return => " + (currentMana - prevmana));
    }
    // tsunami talisman
    if (auras.tsunami.enable && auras.tsunami.cooldown === 0){ 
@@ -913,7 +921,7 @@ function proccrit(cost) {
 }
 // handling for procs by autos (quick shots only)
 function procauto() {
-   if (talents.imp_hawk > 1) {
+   if (auras.imphawk.enable) {
       let x = rng10k();
       auras.imphawk.timer = (x <= 1000) ? 12 : auras.imphawk.timer; // proc check
       //if(auras.imphawk.timer === 12) { console.log("quick shots proc"); }

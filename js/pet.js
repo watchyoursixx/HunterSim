@@ -66,6 +66,12 @@ var PETS = [
         secondary: 'screech',
     },
     { 
+        name: 'Bat',
+        dmgmod: 1.07,
+        primary: 'screech',
+        secondary: 'screech',
+    },
+    { 
         name: 'Wind Serpent',
         dmgmod: 1.07,
         primary: 'lightning breath',
