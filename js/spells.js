@@ -67,6 +67,18 @@ const PET_SPELLS = [
     },
 ];
 
+function initializeSpells(){
+    // set spell CDs to 0
+    SPELLS.autoshot.cd = 0;
+    SPELLS.steadyshot.cd = 0;
+    //SPELLS.multishot.cd = 0;
+    //SPELLS.arcaneshot.cd = 0;
+    //SPELLS.aimedshot.cd = 0;
+    // set pet spell CDs to 0
+    PET_SPELLS[0].cd = 0;
+
+    
+}
 
 function updateSpellCDs(spell,petspell) {
     SPELLS.autoshot.cd = (spell === 'autoshot') ? (rangespeed - SPELLS.autoshot.cast) : Math.max(SPELLS.autoshot.cd - steptime, 0);
@@ -79,10 +91,14 @@ function updateSpellCDs(spell,petspell) {
     //console.log("steady cd: "+SPELLS.steadyshot.cd);
 }
 
+/*************************************************************************/
+/* All formulas below are tested and confirmed in-game as of patch 2.5.2 */
+/*************************************************************************/
+
 function autoShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
-    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * range_wep.speed / 14 + dmg + range_wep.flatdmg) * range_wep.basedmgmod * combatdmgmod;
+    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * range_wep.speed / 14 + dmg + range_wep.flatdmg) * range_wep.basedmgmod * combatdmgmod * physdmgmod;
     return shotDmg;
 }
 
@@ -90,7 +106,7 @@ function steadyShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
     let gronnstalkermod = currentgear.special.gronnstalker_4p_steady_shot_dmg_ratio;
-    let shotDmg = (combatRAP * 0.2 + dmg * 2.8 / range_wep.speed + SPELLS.steadyshot.rankdmg) * range_wep.basedmgmod * gronnstalkermod * combatdmgmod;
+    let shotDmg = (combatRAP * 0.2 + dmg * 2.8 / range_wep.speed + SPELLS.steadyshot.rankdmg) * range_wep.basedmgmod * gronnstalkermod * combatdmgmod * physdmgmod;
     return shotDmg;
 }
 
@@ -98,7 +114,7 @@ function multiShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
     let multimod = multishot_dmg_inc_ratio * talents.barrage;
-    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.multishot.rankdmg) * range_wep.basedmgmod * multimod * combatdmgmod;
+    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.multishot.rankdmg) * range_wep.basedmgmod * multimod * combatdmgmod * physdmgmod;
     return shotDmg;
 }
 
@@ -112,7 +128,7 @@ function arcaneShotCalc(range_wep, combatRAP) {
 function aimedShotCalc(range_wep, combatRAP) {
 
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
-    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.aimedshot.rankdmg) * range_wep.basedmgmod * combatdmgmod;
+    let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.aimedshot.rankdmg) * range_wep.basedmgmod * combatdmgmod * physdmgmod;
     return shotDmg;
 }
 

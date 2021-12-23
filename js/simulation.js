@@ -39,6 +39,7 @@ var steptimeend = 0;
 var playertimeend = 0;
 var autoarray = [];
 var autocount = 0;
+var steadycount = 0;
 var spell = '';
 var nextpetattack = 1;
 var nextpetspell = 1;
@@ -47,7 +48,10 @@ var petautocount = 0;
 var petkccount = 0;
 var petprimarycount = 0;
 var sumpetdmg = 0;
-
+var fightduration = 0;
+var combatlogarray = [];
+var combatlogindex = 0;
+var combatlogRun = false;
 
 const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance"]; // debugging
 
@@ -71,13 +75,27 @@ function startSync() {
     pet.frenzy.uptime = 0;
     pet.ferocious.uptime = 0;
 
+    initializeAuras();
+    // loop through iterations, run example combat log as the last iteration
     for (iteration = 1; iteration <= iterations; ++iteration) {
+        if (iteration === iterations) {
+            combatlogRun = true;
+        } else {combatlogRun = false;}
         runSim();
         sumdmg += totaldmgdone;
         sumpetdmg += petdmgdone;
         sumduration += totalduration;
     }
     avgDPS = (sumdmg+sumpetdmg) / sumduration;
+
+    // sets uptime to a % instead of seconds
+    for (let prop in buff_uptimes) {
+        buff_uptimes[prop] = (auras[prop].uptime / sumduration * 100).toFixed(2);
+    }
+    for (let prop in debuff_uptimes){
+        debuff_uptimes[prop] = (debuffs[prop].uptime / sumduration * 100).toFixed(2);
+    }
+
     console.log("steadys => "+ steadycount/iterations);
     console.log("steady avg => "+steadydmg/(steadycount));
     console.log("autos => " + autocount/iterations);
@@ -86,12 +104,15 @@ function startSync() {
     console.log("pet kc => "+ petkccount / iterations);
     console.log("pet spells => "+ petprimarycount / iterations);
     console.log("pet dmg => "+sumpetdmg / iterations);
-    console.log("pet frenzy uptime "+pet.frenzy.uptime / sumduration);
-    console.log("pet ferocious uptime "+pet.ferocious.uptime / sumduration);
+    let frenzyup = pet.frenzy.uptime / sumduration * 100;
+    console.log("pet frenzy uptime => "+ frenzyup.toFixed(2) + " %");
+    let ferocup = pet.ferocious.uptime / sumduration * 100;
+    console.log("pet ferocious uptime => "+ ferocup.toFixed(2) + " %");
     console.log("total damage: " + sumdmg/iterations);
     console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
-    console.log(pet);
-    console.log(auras);
+    //console.log(pet);
+    console.log(buff_uptimes);
+    console.log(debuff_uptimes);
     console.log(currentMana);
     function standardError(x, u_x) {
         let n = x.length;
@@ -131,6 +152,7 @@ function runSim() {
     steptimeend = 0;
     prevtimeend = 0;
     playertimeend = 0;
+    sunderstart = 0; // start time for sunder check initialized as 0, then steptime + 30 after first apply
     DPS = 0;
     currentgcd = 0;
     currentMana = Mana;
@@ -141,79 +163,17 @@ function runSim() {
     playerattackready = false;
     pet.frenzy.timer = 0;
     pet.ferocious.timer = 0;
+    combatlogarray = [];
+    combatlogindex = 0;
 
-    initializeAuras();
+    initializeSpells();
+    ResetAuras();
+    debuffInitializer();
 
     while (totalduration < fightduration){
 
     // choices
-        if(auras.drums.enable && auras.drums.cooldown === 0){
-            auras.drums.timer = (auras.drums.cooldown === 0) ? auras.drums.duration : auras.drums.timer; // set timer
-            auras.drums.cooldown = (auras.drums.timer === auras.drums.duration) ? auras.drums.basecd: auras.drums.cooldown; // set cd
-            //console.log("drums used");
-        }
-        //else if(auras.potion.enable && auras.potion.cooldown === 0) {potionHandling(); console.log("potion used");}
-        if(auras.lust.enable && auras.lust.cooldown === 0){
-            auras.lust.timer = (auras.lust.cooldown === 0) ? auras.lust.duration : auras.lust.timer; // set timer
-            auras.lust.cooldown = (auras.lust.timer === auras.lust.duration) ? auras.lust.basecd: auras.lust.cooldown; // set cd
-            //console.log("lust used");
-        }
-        if(auras.rapid.enable && auras.rapid.cooldown === 0){
-            auras.rapid.timer = (auras.rapid.cooldown === 0) ? auras.rapid.duration : auras.rapid.timer; // set timer
-            auras.rapid.cooldown = (auras.rapid.timer === auras.rapid.duration) ? auras.rapid.basecd: auras.rapid.cooldown; // set cd
-            //console.log("rapid used");
-        }
-        if(auras.berserk.enable && auras.berserk.cooldown === 0){
-            auras.berserk.timer = (auras.berserk.cooldown === 0) ? auras.berserk.duration : auras.berserk.timer; // set timer
-            auras.berserk.cooldown = (auras.berserk.timer === auras.berserk.duration) ? auras.berserk.basecd: auras.berserk.cooldown; // set cd
-            //console.log("berserk used");
-        }
-        if(auras.bloodfury.enable && auras.bloodfury.cooldown === 0){
-            auras.bloodfury.timer = (auras.bloodfury.cooldown === 0) ? auras.bloodfury.duration : auras.bloodfury.timer; // set timer
-            auras.bloodfury.cooldown = (auras.bloodfury.timer === auras.bloodfury.duration) ? auras.bloodfury.basecd: auras.bloodfury.cooldown; // set cd
-            //console.log("bloodfury used");
-        }
-        if(auras.beastwithin.enable && auras.beastwithin.cooldown === 0){
-            auras.beastwithin.timer = (auras.beastwithin.cooldown === 0) ? auras.beastwithin.duration : auras.beastwithin.timer; // set timer
-            auras.beastwithin.cooldown = (auras.beastwithin.timer === auras.beastwithin.duration) ? auras.beastwithin.basecd: auras.beastwithin.cooldown; // set cd
-            //console.log("beastwithin used");
-        }
-
-        if(auras.swarmguard.enable && auras.swarmguard.cooldown === 0){
-            auras.swarmguard.timer = (auras.swarmguard.cooldown === 0) ? auras.swarmguard.duration : auras.swarmguard.timer; // set timer
-            auras.swarmguard.cooldown = (auras.swarmguard.timer === auras.swarmguard.duration) ? auras.swarmguard.basecd: auras.swarmguard.cooldown; // set cd
-           //console.log("swarmguard used");
-        }
-        if(auras.abacus.enable && (auras.abacus.cooldown === 0) && (sharedtrinketcd === 0)){
-            auras.abacus.timer = (auras.abacus.cooldown === 0) ? auras.abacus.duration : auras.abacus.timer; // set timer
-            auras.abacus.cooldown = (auras.abacus.timer === auras.abacus.duration) ? auras.abacus.basecd: auras.abacus.cooldown; // set cd
-            sharedtrinketcd = auras.abacus.duration;
-            //console.log("abacus used");
-        }
-        else if(auras.unyieldingcourage.enable && (auras.unyieldingcourage.cooldown === 0) && (sharedtrinketcd === 0)){
-            auras.unyieldingcourage.timer = (auras.unyieldingcourage.cooldown === 0) ? auras.unyieldingcourage.duration : auras.unyieldingcourage.timer; // set timer
-            auras.unyieldingcourage.cooldown = (auras.unyieldingcourage.timer === auras.unyieldingcourage.duration) ? auras.unyieldingcourage.basecd: auras.unyieldingcourage.cooldown; // set cd
-            sharedtrinketcd = auras.unyieldingcourage.duration;
-            //console.log("unyieldingcourage used");
-        }
-        else if(auras.aptrink1.enable && (auras.aptrink1.cooldown === 0) && (sharedtrinketcd === 0)) {
-            auras.aptrink1.timer = (auras.aptrink1.cooldown === 0) ? auras.aptrink1.duration : auras.aptrink1.timer; // set timer
-            auras.aptrink1.cooldown = (auras.aptrink1.timer === auras.aptrink1.duration) ? auras.aptrink1.basecd: auras.aptrink1.cooldown; // set cd
-            sharedtrinketcd = auras.aptrink1.duration;
-            //console.log("aptrink1 used");
-        }
-        else if(auras.aptrink2.enable && (auras.aptrink2.cooldown === 0) && (sharedtrinketcd === 0)) {
-            auras.aptrink2.timer = (auras.aptrink2.cooldown === 0) ? auras.aptrink2.duration : auras.aptrink2.timer; // set timer
-            auras.aptrink2.cooldown = (auras.aptrink2.timer === auras.aptrink2.duration) ? auras.aptrink2.basecd: auras.aptrink2.cooldown; // set cd
-            sharedtrinketcd = auras.aptrink2.duration;            
-            //console.log("aptrink2 used");        
-        }
-        else if(auras.tenacity.enable && (auras.tenacity.cooldown === 0) && (sharedtrinketcd === 0)){
-            auras.tenacity.timer = (auras.tenacity.cooldown === 0) ? auras.tenacity.duration : auras.tenacity.timer; // set timer
-            auras.tenacity.cooldown = (auras.tenacity.timer === auras.tenacity.duration) ? auras.tenacity.basecd: auras.tenacity.cooldown; // set cd
-            sharedtrinketcd = auras.tenacity.duration;
-            //console.log("tenacity used");
-        }
+        onUseSpellCheck();
 
         updateAuras(steptime);
         petAuras(steptime);
@@ -247,83 +207,16 @@ function runSim() {
     spread[countruns] = DPS;
     countruns++;
 }
-// for debugging 1 fight
+/** This is used to step through a fight rather than do a while loop. Useful for debugging. */
 function startStepOnly(){
     performancecheck1 = performance.now(); // test debug time check
-   
-    if(auras.drums.enable && auras.drums.cooldown === 0){
-        auras.drums.timer = (auras.drums.cooldown === 0) ? auras.drums.duration : auras.drums.timer; // set timer
-        auras.drums.cooldown = (auras.drums.timer === auras.drums.duration) ? auras.drums.basecd: auras.drums.cooldown; // set cd
-        //console.log("drums used");
+    combatlogRun = true;
+    // choices
+    onUseSpellCheck();
 
-    }
-    //else if(auras.potion.enable && auras.potion.cooldown === 0) {potionHandling(); console.log("potion used");}
-    if(auras.lust.enable && auras.lust.cooldown === 0){
-        auras.lust.timer = (auras.lust.cooldown === 0) ? auras.lust.duration : auras.lust.timer; // set timer
-        auras.lust.cooldown = (auras.lust.timer === auras.lust.duration) ? auras.lust.basecd: auras.lust.cooldown; // set cd
-        //console.log("lust used");
-    }
-    if(auras.rapid.enable && auras.rapid.cooldown === 0){
-        auras.rapid.timer = (auras.rapid.cooldown === 0) ? auras.rapid.duration : auras.rapid.timer; // set timer
-        auras.rapid.cooldown = (auras.rapid.timer === auras.rapid.duration) ? auras.rapid.basecd: auras.rapid.cooldown; // set cd
-        //console.log("rapid used");
-    }
-    if(auras.berserk.enable && auras.berserk.cooldown === 0){
-        auras.berserk.timer = (auras.berserk.cooldown === 0) ? auras.berserk.duration : auras.berserk.timer; // set timer
-        auras.berserk.cooldown = (auras.berserk.timer === auras.berserk.duration) ? auras.berserk.basecd: auras.berserk.cooldown; // set cd
-        //console.log("berserk used");
-    }
-    if(auras.bloodfury.enable && auras.bloodfury.cooldown === 0){
-        auras.bloodfury.timer = (auras.bloodfury.cooldown === 0) ? auras.bloodfury.duration : auras.bloodfury.timer; // set timer
-        auras.bloodfury.cooldown = (auras.bloodfury.timer === auras.bloodfury.duration) ? auras.bloodfury.basecd: auras.bloodfury.cooldown; // set cd
-        //console.log("bloodfury used");
-    }
-    if(auras.beastwithin.enable && auras.beastwithin.cooldown === 0){
-        auras.beastwithin.timer = (auras.beastwithin.cooldown === 0) ? auras.beastwithin.duration : auras.beastwithin.timer; // set timer
-        auras.beastwithin.cooldown = (auras.beastwithin.timer === auras.beastwithin.duration) ? auras.beastwithin.basecd: auras.beastwithin.cooldown; // set cd
-        //console.log("beastwithin used");
-    }
-
-    if(auras.swarmguard.enable && auras.swarmguard.cooldown === 0){
-        auras.swarmguard.timer = (auras.swarmguard.cooldown === 0) ? auras.swarmguard.duration : auras.swarmguard.timer; // set timer
-        auras.swarmguard.cooldown = (auras.swarmguard.timer === auras.swarmguard.duration) ? auras.swarmguard.basecd: auras.swarmguard.cooldown; // set cd
-        //console.log("swarmguard used");
-    }
-    if(auras.abacus.enable && (auras.abacus.cooldown === 0) && (sharedtrinketcd === 0)){
-        auras.abacus.timer = (auras.abacus.cooldown === 0) ? auras.abacus.duration : auras.abacus.timer; // set timer
-        auras.abacus.cooldown = (auras.abacus.timer === auras.abacus.duration) ? auras.abacus.basecd: auras.abacus.cooldown; // set cd
-        sharedtrinketcd = auras.abacus.duration;
-        //console.log("abacus used");
-    }
-    else if(auras.unyieldingcourage.enable && (auras.unyieldingcourage.cooldown === 0) && (sharedtrinketcd === 0)){
-        auras.unyieldingcourage.timer = (auras.unyieldingcourage.cooldown === 0) ? auras.unyieldingcourage.duration : auras.unyieldingcourage.timer; // set timer
-        auras.unyieldingcourage.cooldown = (auras.unyieldingcourage.timer === auras.unyieldingcourage.duration) ? auras.unyieldingcourage.basecd: auras.unyieldingcourage.cooldown; // set cd
-        sharedtrinketcd = auras.unyieldingcourage.duration;
-        //console.log("unyieldingcourage used");
-    }
-    else if(auras.aptrink1.enable && (auras.aptrink1.cooldown === 0) && (sharedtrinketcd === 0)) {
-        auras.aptrink1.timer = (auras.aptrink1.cooldown === 0) ? auras.aptrink1.duration : auras.aptrink1.timer; // set timer
-        auras.aptrink1.cooldown = (auras.aptrink1.timer === auras.aptrink1.duration) ? auras.aptrink1.basecd: auras.aptrink1.cooldown; // set cd
-        sharedtrinketcd = auras.aptrink1.duration;
-        //console.log("aptrink1 used");
-    }
-    else if(auras.aptrink2.enable && (auras.aptrink2.cooldown === 0) && (sharedtrinketcd === 0)) {
-        auras.aptrink2.timer = (auras.aptrink2.cooldown === 0) ? auras.aptrink2.duration : auras.aptrink2.timer; // set timer
-        auras.aptrink2.cooldown = (auras.aptrink2.timer === auras.aptrink2.duration) ? auras.aptrink2.basecd: auras.aptrink2.cooldown; // set cd
-        sharedtrinketcd = auras.aptrink2.duration;            
-        //console.log("aptrink2 used");        
-    }
-    else if(auras.tenacity.enable && (auras.tenacity.cooldown === 0) && (sharedtrinketcd === 0)){
-        auras.tenacity.timer = (auras.tenacity.cooldown === 0) ? auras.tenacity.duration : auras.tenacity.timer; // set timer
-        auras.tenacity.cooldown = (auras.tenacity.timer === auras.tenacity.duration) ? auras.tenacity.basecd: auras.tenacity.cooldown; // set cd
-        sharedtrinketcd = auras.tenacity.duration;
-        //console.log("tenacity used");
-    }
     updateAuras(steptime);
     petAuras(steptime);
 
-    //console.log("Auto cd: " + SPELLS.autoshot.cd);
-    //console.log("spell => "+spell);
     /******* decide spell selection ******/
     if (spell === '') {
 
@@ -333,12 +226,12 @@ function startStepOnly(){
         
     }
     killCommandCheck();
-    //console.log("spell => "+spell);
-    nextEvent();
 
+    nextEvent();
+    //console.log("time end => "+(Math.round(steptimeend * 1000) / 1000));
     petUpdateFocus();
     updateMana();
-    console.log("step "+ steptime);
+    //console.log("step "+ steptime);
     prevtimeend = steptimeend;
     totalduration = Math.min(maxfighttimer, steptimeend);
     avgDPS = totaldmgdone / totalduration;
@@ -355,6 +248,7 @@ function startStepOnly(){
     console.log(pet);
     console.log("*****************");
 }
+/**Sets the start time for the next player event based on remaining cd's and selected spell. */
 function startTime(spell){
 
     playertimestart = playertimeend;
@@ -364,9 +258,10 @@ function startTime(spell){
     playertimestart += (spell === "arcaneshot") ? Math.max(SPELLS.arcaneshot.cd,0) + latency : 0;
     playertimestart += (spell === "raptorstrike") ? Math.max(SPELLS.raptorstrike.cd,0) + latency : 0;
     playertimestart += (spell === "aimedshot") ? Math.max(SPELLS.aimedshot.cd,0) + latency : 0;
-    //console.log("time start => "+(Math.round(playertimestart * 1000) / 1000));
+
     return playertimestart;
 }
+/**Selection for whether to use kill command or not. */
 function killCommandCheck(){
     if((killcommand.cooldown === 0) && killcommand.ready && (currentMana >= 75)) {
         petspell = 'kill command';
@@ -383,6 +278,7 @@ function killCommandCheck(){
     }
     return;
 }
+/**This function decides which event to choose next for player or pet, kind of like an event queue. */
 function nextEvent(){
 
     update();
@@ -437,7 +333,7 @@ function nextEvent(){
         spell = '';
     }
 }
-
+/** attempt at creating spell choices based on known breakpoints */
 function spell_choice_method_A(){
     // steady
     let steadycost = SPELLS.steadyshot.cost <= currentMana;
@@ -454,6 +350,7 @@ function spell_choice_method_A(){
 
 }
 
+/** attempt at creating spell choices based on a ratio of speed and damage */
 function spell_choice_method_B(){
     let h_ = rangespeed / range_wep.speed;
 

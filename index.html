@@ -24,6 +24,7 @@
     <script class="u-script" type="text/javascript" src="js/statCalculator.js"></script>
     <script class="u-script" type="text/javascript" src="js/spells.js"></script>
     <script class="u-script" type="text/javascript" src="js/simulation.js"></script>
+    <script class="u-script" type="text/javascript" src="js/auras.js"></script>
     <script class="u-script" type="text/javascript" src="js/pet.js"></script>
     <script class="u-script" type="text/javascript" src="js/player.js"></script>
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
@@ -122,8 +123,9 @@
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17" id="mp5">0</p>
                   <a href="javascript:;" id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
-                  <a href="javascript:;" onclick="startStepOnly()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Step DPS Calc</a>
-                  <a href="javascript:;" onclick="startSync()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">DPS Loop Calc</a>
+                  <a href="javascript:;" onclick="startStepOnly()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Sim DPS - Step</a>
+                  <a href="javascript:;" onclick="startSync()" id="simdps" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Sim DPS - Loop<div class="loadbar"></div></a>
+                  <a href="javascript:;" onclick="combatLogDisplay()" onmouseover="combatLogDisplay()" id="logbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-6">Combat Log</a>
                   <p class="u-align-right u-text u-text-custom-color-7 u-text-18 u-text-1819" id="dpsresult">2000.1</p>
                   <p class="u-align-left u-text u-text-custom-color-7 u-text-19 u-text-1819" id="dpserr">DPS ​± 0.00</p>
                   <p class="u-align-center u-text u-text-white u-text-20" id="dpsmin"> min</p>
@@ -153,99 +155,286 @@
                   <h4 class="u-align-center u-text u-text-custom-color-3 u-text-25" id="racedisplay">Orc<br>
                   </h4>
                   <a href="#" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-5">Export</a>
-                  <p class="LeftSlots u-text u-text-26"><a href="#" id="headslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Head</a></p>
-                  <div class="u-container-style u-group u-hidden-lg u-hidden-md u-hidden-sm u-hidden-xs u-group-2">
-                    <div class="u-container-layout">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-2" src="images/Hands.jpg" alt="" data-image-width="56" data-image-height="56" id="handicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-3" src="images/Waist.jpg" alt="" data-image-width="56" data-image-height="56" id="waisticon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-4" src="images/Legs.jpg" alt="" data-image-width="56" data-image-height="56" id="legicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-5" src="images/Feet.jpg" alt="" data-image-width="56" data-image-height="56" id="feeticon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-6" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring1icon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-7" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring2icon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-8" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket1icon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-9" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket2icon">
+                  <div class="u-container-style gear-section">
+                    <!-- left gear box -->
+                    <div class="u-left-gear">
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images u-image-10" src="images/Head.jpg" alt="" data-image-width="56" data-image-height="56" id="headicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="headskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/meta_empty.jfif" id="headskt2"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/meta_empty.jfif" id="headskt3"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="headslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Head</a></p>
+                          <p class="u-text enchant-name"><a id="headench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Neck.jpg" alt="" data-image-width="56" data-image-height="56" id="neckicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="neckskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="neckskt2"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="neckslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Neck</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Shoulders.jpg" alt="" data-image-width="56" data-image-height="56" id="shouldericon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="shoulderskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="shoulderskt2"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="shoulderslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Shoulder</a></p>
+                          <p class="u-text enchant-name"><a id="shoulderench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Back.jpg" alt="" data-image-width="56" data-image-height="56" id="backicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="backskt1"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="backslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Back</a></p>
+                          <p class="u-text enchant-name"><a id="backench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Chest.jpg" alt="" data-image-width="56" data-image-height="56" id="chesticon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="chestskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="chestskt2"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/blue_empty.jfif" id="chestskt3"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="chestslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Chest</a></p>
+                          <p class="u-text enchant-name"><a id="chestench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Wrists.jpg" alt="" data-image-width="56" data-image-height="56" id="wristicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="wristskt1"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="wristslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Wrist</a></p>
+                          <p class="u-text enchant-name"><a id="wristench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/MainHand.jpg" alt="" data-image-width="56" data-image-height="56" id="mainhandicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="mainhandskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="mainhandskt2"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/blue_empty.jfif" id="mainhandskt3"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="mainhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Main Hand</a></p>
+                          <p class="u-text enchant-name"><a id="mainhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                          <p class="u-text attach-name">No Attachment</p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/OffHand.jpg" alt="" data-image-width="56" data-image-height="56" id="offhandicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="offhandskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="offhandskt2"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/blue_empty.jfif" id="offhandskt3"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="offhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Off Hand</a></p>
+                          <p class="u-text enchant-name"><a id="offhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                          <p class="u-text attach-name">No Attachment</p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Ranged.jpg" alt="" data-image-width="56" data-image-height="56" id="rangeicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="rangeskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="rangeskt2"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details">
+                          <p class="u-text item-name"><a href="#" id="rangeslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ranged</a></p>
+                          <p class="u-text enchant-name"><a id="rangeench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- right gear box -->
+                    <div class="u-right-gear">
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Hands.jpg" alt="" data-image-width="56" data-image-height="56" id="handicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="handskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="handskt2"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="handslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Hand</a></p>
+                          <p class="u-align-right u-text enchant-name"><a id="handench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Waist.jpg" alt="" data-image-width="56" data-image-height="56" id="waisticon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="waistskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="waistskt2"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="waistslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Waist</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Legs.jpg" alt="" data-image-width="56" data-image-height="56" id="legicon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="legskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="legskt2"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/blue_empty.jfif" id="legskt3"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="legslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Leg</a></p>
+                          <p class="u-align-right u-text enchant-name"><a id="legench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Feet.jpg" alt="" data-image-width="56" data-image-height="56" id="feeticon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="feetskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/red_empty.jfif" id="feetskt2"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="feetslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Feet</a></p>
+                          <p class="u-align-right u-text enchant-name"><a id="feetench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring1icon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="wristskt1"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="ring1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ring 1</a></p>
+                          <p class="u-align-right u-text enchant-name"><a id="ring1ench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring2icon">
+                          <div class="itemsockets">
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/yellow_empty.jfif" id="wristskt1"><img class="gemskt" src=""></div>
+                          </div>
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="ring2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ring 2</a></p>
+                          <p class="u-align-right u-text enchant-name"><a id="ring2ench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket1icon">
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="trink1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 1</a></p>
+                    
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket2icon">
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="trink2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 2</a></p>
+                        </div>
+                      </div>
+                      <div class="gear-slot">
+                        <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Ammo.jpg" alt="" data-image-width="56" data-image-height="56" id="ammoicon">
+                        </div>
+                        <div class="gear-slot-details  detail-right-align">
+                          <p class="u-align-right u-text item-name"><a href="#" id="ammoslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ammo</a></p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="u-container-style u-group u-hidden-lg u-hidden-md u-hidden-sm u-hidden-xs u-group-3">
-                    <div class="u-container-layout">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-10" src="images/Head.jpg" alt="" data-image-width="56" data-image-height="56" id="headicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-11" src="images/Neck.jpg" alt="" data-image-width="56" data-image-height="56" id="neckicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-12" src="images/Shoulders.jpg" alt="" data-image-width="56" data-image-height="56" id="shouldericon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-13" src="images/Back.jpg" alt="" data-image-width="56" data-image-height="56" id="backicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-14" src="images/Chest.jpg" alt="" data-image-width="56" data-image-height="56" id="chesticon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-15" src="images/Wrists.jpg" alt="" data-image-width="56" data-image-height="56" id="wristicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-16" src="images/MainHand.jpg" alt="" data-image-width="56" data-image-height="56" id="mainhandicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-17" src="images/OffHand.jpg" alt="" data-image-width="56" data-image-height="56" id="offhandicon">
-                      <img class="u-expanded-width u-image u-image-default u-preserve-proportions u-image-18" src="images/Ranged.jpg" alt="" data-image-width="56" data-image-height="56" id="rangeicon">
-                    </div>
-                  </div>
-                  <p class="LeftSlots u-text u-text-27"><a href="#" id="neckslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Neck</a><br>
-                  </p>
-                  <p class="LeftSlots u-text u-text-28"><a href="#" id="shoulderslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Shoulder</a><br>
-                  </p>
-                  <p class="LeftSlots u-text u-text-29"><a href="#" id="backslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Back</a><br>
-                  </p>
-                  <p class="LeftSlots u-text u-text-30"><a href="#" id="chestslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Chest</a><br>
-                  </p>
-                  <p class="LeftSlots u-text u-text-31"><a href="#" id="wristslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Wrist</a><br>
-                  </p>
-                  <p class="LeftSlots u-text u-text-32"><a href="#" id="mainhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Main Hand</a><br>
-                  </p>
-                  <p class="LeftSlots u-text u-text-33"><a href="#" id="offhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Off Hand</a><br>
-                  </p>
-                  <p class="LeftSlots u-text u-text-34"><a href="#" id="rangeslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ranged</a><br>
-                  </p>
-                  <p class="u-align-right u-text u-text-35"><a href="#" id="handslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Hand</a></p>
-                  <p class="u-align-right u-text u-text-36"><a href="#" id="waistslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Waist</a><br>
-                  </p>
-                  <p class="u-align-right u-text u-text-37"><a href="#" id="legslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Leg</a><br>
-                  </p>
-                  <p class="u-align-right u-text u-text-38"><a href="#" id="feetslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Feet</a><br>
-                  </p>
-                  <p class="u-align-right u-text u-text-39"><a href="#" id="ring1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ring 1</a><br>
-                  </p>
-                  <p class="u-align-right u-text u-text-40"><a href="#" id="ring2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Ring 2</a><br>
-                  </p>
-                  <p class="u-align-right u-text u-text-41"><a href="#" id="trink1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 1</a></p>
-                  <p class="u-align-right u-text u-text-42"><a href="#" id="trink2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 2</a><br>
-                  </p>
-                  <p class="u-text u-text-43"><a id="headench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-text u-text-44"><a id="shoulderench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-text u-text-45"><a id="backench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-text u-text-46"><a id="chestench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-text u-text-47"><a id="wristench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-text u-text-48"><a id="mainhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-text u-text-49"><a id="offhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-text u-text-50">No Attachment</p>
-                  <p class="u-text u-text-51">No Attachment</p>
-                  <p class="u-text u-text-52"><a id="rangeench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-align-right u-text u-text-53"><a id="handench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-align-right u-text u-text-54"><a id="legench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-align-right u-text u-text-55"><a id="feetench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-align-right u-text u-text-56"><a id="ring1ench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                  <p class="u-align-right u-text u-text-57"><a id="ring2ench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
                   <h6 class="u-align-center u-text u-text-58">Stat Weights</h6>
-                  <p class="u-align-right u-text u-text-59">Strength<br>Agility<br>Stamina<br>Intellect<br>Spirit<br>
-                  </p>
-                  <p class="u-align-right u-text u-text-60">Ranged Attack Power<br>Ranged Hit Chance<br>Ranged Crit Chance<br>Haste<br>Armor Pen<br>
-                  </p>
-                  <p class="u-align-right u-text u-text-61">Melee Attack Power<br>Melee Hit Chance<br>Melee Crit Chance<br>Expertise<br>Mp5
-                  </p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-62">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-63">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-64">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-65">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-66">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-67">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-68">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-69">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-70">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-71">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-72">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-73">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-74">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-75">0.42</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-76">0.42</p>
+                  <div class="stat-weight-section">
+                    <div class="stat-list">
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Strength</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Agility</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Stamina</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Intellect</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Spirit</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                    </div>
+                    <div class="stat-list">
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Ranged Attack Power</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Ranged Hit Chance</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Ranged Crit Chance</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Haste</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Armor Pen</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                    </div>
+                    <div class="stat-list">
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Melee Attack Power</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Melee Hit Chance</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Melee Crit Chance</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Expertise</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                      <div class="stat-item">
+                        <p class="u-align-left u-text stat-name">Mp5</p>
+                        <p class="u-align-right u-text u-text-custom-color-4 weight-name">0.42</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -253,10 +442,8 @@
         </div>
       </div>
     </section>
-<!-- The Modal -->
 <div id="settingsmodal" class="modal">
 
-  <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
     <h3 class="header-1">Settings</h3>
@@ -392,7 +579,7 @@
           <option selected value="none">No Strength Scroll</option>
         </select>
         <li><Label class="label-1">Food</Label></li>
-        <select onclick="foodSelection()" class="select  select-relative" id="food">
+        <select onclick="foodSelection()" class="select hover-grey select-relative" id="food">
           <option value="sporefish">Blackened Sporefish</option>
           <option value="mudfish">Grilled Mudfish</option>
           <option value="squid">Grilled Squid</option>
@@ -480,7 +667,7 @@
             </select>
           </li>
           <li><label class="label-2">Type</label> 
-            <select id="typeSelect" class="select hover-grey fight-setting-input-1">
+            <select id="typeSelect" onchange="selectTarget('0')" class="select hover-grey fight-setting-input-1">
               <option value="Demon">Demon</option>
               <option value="Humanoid">Humanoid</option>
               <option value="Elemental">Elemental</option>
@@ -499,6 +686,47 @@
             <label class="label-2">Level</label> <input type="number" step="1" min="0" max="73" class="number-input hover-grey fight-setting-input-2" id="level" value="0">
           </li>
       </ul></div>
+    </div>
+    <div class="settings settings-small">
+      <label class="settings-header-1">Target Debuff Settings</label>
+      <div class="settings-fight">
+        <ul>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_hunter_snipershot.jpg" alt=""><label class="label-4">Hunter's Mark (Others)</label>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="hmuptime" onchange=debuffSettings() value="100"> %</li>
+            <li><label class="label-5">HM - Bonus</label><select onclick="" class="select hover-grey select-9">
+              <option selected id="hmbonus" value="improved">Improved</option>
+              <option value="base">Base</option>
+            </select>
+            <br>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_rogue_findweakness.jpg" alt=""><label class="label-4">Expose Weakness (Others)</label>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ewuptime" onchange=debuffSettings() value="0"> %</li>
+          <li><label class="label-5">EW - Agility</label><input type="number" step="1" min="500" max="2000" class="number-input hover-grey debuff-setting-input-1" id="ewagil" onchange=debuffSettings() value="1000"></li>
+          <br>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_righteousnessaura.jpg" alt=""><label class="label-4">Judgement of Wisdom</label>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="jowuptime" onchange=debuffSettings() value="90"> %</li>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_holysmite.jpg" alt=""><label class="label-4">Judgement of the Crusader</label>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="jocuptime" onchange=debuffSettings() value="90"> %</li>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_unholystrength.jpg" alt=""><label class="label-4">Curse of Recklessness</label>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coruptime" onchange=debuffSettings() value="95"> %</li>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_faeriefire.jpg" alt=""><label class="label-4">Faerie Fire</label>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ffuptime" onchange=debuffSettings() value="90"> %</li>
+          <li><label class="label-5">FF - Bonus</label><select onclick="" class="select hover-grey select-9">
+            <option selected id="ffbonus" value="improved">Improved</option>
+            <option value="base">Base</option>
+          </select></li>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_sunder.jpg" alt=""><label class="label-6">Sunder Armor</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="sauptime" onchange=debuffSettings() value="0"> %</li>
+          <li><label class="label-8">SA - Stack time</label><input type="number" step="1" min="0" max="20" class="number-input hover-grey debuff-setting-input-1" id="sunderapp" onchange=debuffSettings() value="5">sec</li>
+          <br>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_riposte.jpg" alt=""><label class="label-6">Improved Expose Armor</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ieuptime" onchange=debuffSettings() value="90"> %</li>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_bloodfrenzy.jpg" alt=""><label class="label-6">Blood Frenzy</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="bfuptime" onchange=debuffSettings() value="95"> %</li>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_misery.jpg" alt=""><label class="label-6">Misery</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="misuptime" onchange=debuffSettings() value="0"> %</li>
+          <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_chilltouch.jpg" alt=""><label class="label-6">Curse of Elements</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coeuptime" onchange=debuffSettings() value="0"> %</li>
+          <li><label class="label-5">CoE - Bonus</label><select onclick="" class="select hover-grey select-9">
+            <option id="ffbonus" value="improved">Improved</option>
+            <option selected value="base">Base</option>
+          </select>
+        </ul>
+      </div>
     </div>
     <div class="settings-talents">
       <label class="settings-header-1">Player Talent Selection</label>
@@ -520,12 +748,26 @@
         </li>
       </ul>
     </div>
+    <div>
+      <button onclick="clearSettingsCache()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 cache-button">Clear Settings Cache</button>
+    </div>
+  </div>
+</div>
+<div id="logmodal" class="modal-log">
+
+  <div class="modal-log-content">
+    <span class="close">&times;</span>
+    <h3 class="header-1">Combat Log</h3>
+    <hr><!--generated series of <p></p> for displaying combat log data-->
+    <div id="combatlog" class="label-7">N/A</div>
+  
+
   </div>
 </div>
 
     <script class="u-script" type="text/javascript" src="js/datastorage.js"></script>
     <script class="u-script" type="text/javascript" src="js/ui.js"></script> 
-    
+
     <footer class="u-black u-clearfix u-footer u-footer" id="sec-5c75"><a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="255" data-image-height="198">
         <img src="images/tbc_logo.jfif" class="u-logo-image u-logo-image-1">
       </a><p class="u-align-right u-text u-text-1">made by WatchYourSixx</p><div class="u-custom-color-6 u-expanded-width u-shape u-shape-rectangle u-shape-1"></div></footer>

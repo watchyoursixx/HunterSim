@@ -119,9 +119,9 @@ function petStatsCalc(){
 function petUpdateDmgMod(){
     pet.combatdmgmod = 1;
     if(auras.beastwithin.timer > 0) { pet.combatdmgmod *= 1.5; } // bestial wrath
-    if(pet.ferocious.timer > 0) { pet.combatdmgmod *= 1.03; } // ferocious insp pet buff
+    if(pet.ferocious.timer > 0) { pet.combatdmgmod *= talents.ferocious_insp; } // ferocious insp pet buff
     //if(auras.ferocious.timer > 0) { pet.combatdmgmod *= 1.03 * BMHuntersInGroup; } // ferocious insp from others
-    //if(debuffs.bloodfrenzy.timer > 0) { pet.combatdmgmod *= 1.04;} // blood frenzy debuff
+    if(debuffs.bloodfrenzy.timer > 0 && !debuffs.bloodfrenzy.inactive) { pet.combatdmgmod *= 1.04;} // blood frenzy debuff
     return;
 }
 
@@ -138,12 +138,27 @@ function petUpdateStats(){
     pet.combatmiss = pet.miss;
     // hunter AP
     let bonusAP = updateAP();
-    pet.combatap = bonusAP * 0.22 + pet.ap;
+    let HM_map = 0;
+    if (debuffs.hm.timer > 0 && debuffs.hm.improved && !debuffs.hm.inactive) {
+        if(talents.imp_hunter_mark > 0) {
+           HM_map = 110 * talents.imp_hunter_mark;
+        }
+        else {
+           HM_map = 110 * 1;
+        }
+    }
+    pet.combatap = bonusAP * 0.22 + pet.ap + HM_map;
+    if (talents.exp_weakness > 0) {
+        pet.combatap += (debuffs.exposeweakness.timer > 0) ? (Agi + combatAgi) / 4 : 0;
+    }
+    else if (debuffs.exposeweakness.timer > 0 && !debuffs.exposeweakness.inactive) {
+        pet.combatap += debuffs.exposeweakness.agi / 4;
+    }
     pet.combatcrit += combatAgi / 33;
-    // pet crit (imp crusader)
-    //if(debuffs.crusader.timer > 0) { pet.combatcrit += 3; }
-    // pet miss (imp faerie)
-    //if(debuffs.faerie.timer > 0 && (debuffs.faerie.improved === true)) { pet.combatmiss -= 3; }
+    // pet crit imp crusader
+    if(debuffs.judgecrusader.timer > 0 && !debuffs.judgecrusader.inactive) { pet.combatcrit += debuffs.judgecrusader.crit; } // imp crusader debuff
+    // pet miss imp faerie
+    if(debuffs.faeriefire.timer > 0 && debuffs.faeriefire.improved && !debuffs.faeriefire.inactive) { pet.combatmiss -= 3; }
 }
 
 function petUpdateFocus(playercrit){
@@ -152,10 +167,18 @@ function petUpdateFocus(playercrit){
     // go for the throat
     if(playercrit === true) {
         pet.focus += talents.GftT;
+        if(combatlogRun) {
+            combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Pet gains " + talents.GftT + " Focus from Go for the Throat";
+            combatlogindex++;
+        }
     }
     // focus regen per 5s
     if (steptimeend > 5 * Math.ceil(prevtimeend / 5)) {
         pet.focus += pet.focusregen;    
+        if(combatlogRun) {
+            combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Pet regens " + pet.focusregen + " Focus";
+            combatlogindex++;
+        }
     }
     // cap focus at 100, reset crit flag
     pet.focus = Math.min(100, pet.focus);
@@ -220,7 +243,7 @@ function petAttack(){
 
     petUpdateStats();
     petUpdateDmgMod();
- 
+    
     let dmg = 0;
     let result = petRollAttack(); // check attack table
     if (result === RESULT.HIT) {
@@ -235,17 +258,19 @@ function petAttack(){
           dmg *= 2;
           petCrit();
     }
- 
-    let done = dealdamage(dmg,result);
+    let spelltype = "phys";
+    let done = petdealdamage(dmg,result,spelltype);
     petdmgdone += done;
     petautodmg += done;
     petUpdateHaste();
     petsteptime = nextpetattack;
     nextpetattack += pet.combatspeed;
     petautocount++;
-    //console.log(pet);
     
-    //console.log("pet auto " + RESULTARRAY[result] + " for " + done);
+    if(combatlogRun) {
+        combatlogarray[combatlogindex] = petsteptime.toFixed(3) + " - Pet Auto " + RESULTARRAY[result] + " for " + done;
+        combatlogindex++;
+    }
     return petsteptime;
 }
 
@@ -256,6 +281,7 @@ function petSpell(petspell){
     let dmg = 0;
     result = 0;
     let specialcrit = 0;
+    let spelltype = "";
     // kill command use
     if(petspell === 'kill command'){
         specialcrit = talents.focused_fire * 10;
@@ -269,7 +295,8 @@ function petSpell(petspell){
             petCrit();
         }
         petkccount++;
-
+        spelltype = "phys";
+        
     } // primary spell use determined by which pet selected
     else if(petspell === 'primary') {
 
@@ -286,6 +313,7 @@ function petSpell(petspell){
                 dmg *= 2;
                 petCrit();
             }
+            spelltype = "phys";
         } 
         else if(spellindex <= 5 && spellindex > 3){
 
@@ -298,6 +326,7 @@ function petSpell(petspell){
                 dmg *= 1.5;
                 petCrit();
             }
+            spelltype = "magic";
         }
         
         petsteptime = nextpetspell; // since pet steps don't change time (all instants) set time to current time
@@ -305,12 +334,39 @@ function petSpell(petspell){
         petprimarycount++;
 
     }
-    let done = dealdamage(dmg,result); // need special case for magic spells pet or player
+    let done = petdealdamage(dmg,result,spelltype); // need special case for magic spells pet or player
     petdmgdone += done;
     petUpdateHaste();
     
-    //console.log(petspell + " " + RESULTARRAY[result] + " for " + done);
+    if(combatlogRun && petspell === 'kill command') {
+        combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Pet " + petspell + " " + RESULTARRAY[result] + " for " + done;
+        combatlogindex++;
+    } else if(combatlogRun){
+        combatlogarray[combatlogindex] = petsteptime.toFixed(3) + " - Pet " + PET_SPELLS[spellindex].name + " " + RESULTARRAY[result] + " for " + done;
+        combatlogindex++;
+    }
     return petsteptime;
+}
+/** final damage calculation after rolls */
+function petdealdamage(dmg, result, spelltype) {
+    if (result != RESULT.MISS && result != RESULT.DODGE && spelltype === "phys") {
+       // randomizes the result to be always ±1 damage as in-game results show even with fine light crossbow
+        let mindmg = Math.floor(dmg * (1 - PetArmorReduc));
+        let maxdmg = Math.ceil(dmg * (1 - PetArmorReduc));
+        dmg = rng(mindmg,maxdmg);
+       
+        return dmg;
+    }
+    else if (result != RESULT.MISS && spelltype === "magic"){
+        let mindmg = Math.floor(dmg);
+        let maxdmg = Math.ceil(dmg);
+        dmg = rng(mindmg,maxdmg);
+        
+        return dmg;
+    }
+    else {
+       return 0;
+    }
 }
 
 function petCrit(){
@@ -320,11 +376,25 @@ function petCrit(){
         roll = rng10k();
         let frenzychance = talents.frenzy * 2000;
         pet.frenzy.timer = (roll <= frenzychance) ? 8 : pet.frenzy.timer; // proc check
-        //if(pet.frenzy.timer === 8) { console.log("frenzy proc"); }
+        if(pet.frenzy.timer === 8) { 
+            if(combatlogRun && nextpetspell >= nextpetattack) {
+                combatlogarray[combatlogindex] = nextpetattack.toFixed(3) + " - Pet gains Frenzy";
+                combatlogindex++;
+            } else if (combatlogRun){
+                combatlogarray[combatlogindex] = nextpetspell.toFixed(3) + " - Pet gains Frenzy";
+                combatlogindex++;
+            }
+        }
     }
     //ferocious insp
     if (talents.ferocious_insp > 1) {
         pet.ferocious.timer = 10;
-        //console.log("ferocious insp proc");
+        if(combatlogRun && nextpetspell >= nextpetattack) {
+            combatlogarray[combatlogindex] = nextpetattack.toFixed(3) + " - Pet gains Ferocious Inspiration";
+            combatlogindex++;
+        } else if (combatlogRun){
+            combatlogarray[combatlogindex] = nextpetspell.toFixed(3) + " - Pet gains Ferocious Inspiration";
+            combatlogindex++;
+        }
     }
 }

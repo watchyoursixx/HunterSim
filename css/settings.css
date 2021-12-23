@@ -37,7 +37,7 @@ ul {
 }
 .settings-fight {
     position:relative;
-    top: 10px;
+    top: 5px;
 }
 .settings-header-1 {
     position: absolute;
@@ -86,6 +86,7 @@ ul {
   width: 135px;
   left: -10px;
   position: relative;
+  text-align: right;
   color: white;
   font-size: 14px;
 
@@ -99,21 +100,68 @@ ul {
   font-size: 14px;
 
 }
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow-y: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
+.label-4 {
+  display: inline-block; 
+  width: 180px;
+  left: -15px;
+  position: relative;
+  text-align: left;
+  color: white;
+  font-size: 14px;
 
 }
-/* Modal Content */
+.label-5 {
+  display: inline-block; 
+  width: 80px;
+  left: -15px;
+  position: relative;
+  text-align: left;
+  color: white;
+  font-size: 14px;
+
+}
+.label-6 {
+  display: inline-block; 
+  width: 184px;
+  left: -15px;
+  position: relative;
+  text-align: left;
+  color: white;
+  font-size: 14px;
+
+}
+.label-7 {
+  position: relative;
+  color: white;
+  font-size: 14px;
+  line-height: 12px;
+
+}
+.label-8 {
+  display: inline-block; 
+  width: 100px;
+  left: -15px;
+  position: relative;
+  text-align: left;
+  color: white;
+  font-size: 14px;
+
+}
+/* settings modal */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 100px; 
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow-y: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.2); 
+
+}
+/* settings Modal Content */
 .modal-content {
   position:absolute;
   left: 35%;
@@ -123,6 +171,32 @@ ul {
   border: 4px solid #2e2e33;
   width: 65%;
   height: 2000px;
+}
+
+/* settings modal */
+.modal-log {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 100px; 
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow-y: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.2); 
+
+}
+/* settings Modal Content */
+.modal-log-content {
+  position:absolute;
+  left: 35%;
+  background-color: #2e2e33;
+  margin: auto;
+  padding: 20px;
+  border: 4px solid #2e2e33;
+  width: 65%;
+  height: auto;
 }
 
 /* The Close Button */
@@ -139,32 +213,8 @@ ul {
   text-decoration: none;
   cursor: pointer;
 }
-  
-  .itemTable {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .itemTable thead th {
-    /* "sticky" positioning is a newer feature to achieve a fixed header, */
-    /* but is likely safe to use these days */
-    position: sticky;
-    top: 0;
-    background: #222;
-  }
-  
-  .itemTable th,
-  .itemTable td {
-    padding: 10px 15px;
-    width: 50%;
-    text-align: left;
-  }
-  
-  .itemTable tbody tr:nth-child(odd) {
-    /* The :nth-child(odd) selector can be used to do alternating row styling */
-    background: rgba(255, 255, 255, 0.05);
-  }
-  .container {
+
+.container {
     padding-left: 0px;
     margin-bottom: 5px;
     cursor: pointer;
@@ -306,6 +356,12 @@ ul {
   width: 100px;
   left: 4px;
 }
+.debuff-setting-input-1 {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 60px;
+  left: -5px;
+}
 .setting-input-1 {
   left: 4px;
   margin-top: 2px;
@@ -350,6 +406,11 @@ ul {
 .select-8 {
   /* Reset */
   left: 3px;
+
+}
+.select-9 {
+  /* Reset */
+  left: -7px;
 
 }
 .select-relative {
@@ -485,4 +546,17 @@ ul {
   top: 505px;
   width: 22px;
   height: auto;
+}
+
+.settings-image-18 {
+  position: relative;
+  left: -20px;
+  top: 6px;
+  width: 22px;
+  height: auto;
+}
+
+.cache-button {
+  border-style: solid;
+  border-width: 2px !important;
 }

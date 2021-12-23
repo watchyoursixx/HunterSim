@@ -12,6 +12,8 @@ function storeData(){
     localStorage.setItem('pla_consumes',JSON.stringify(playerconsumes));
     // pet consumes
     localStorage.setItem('pet_consumes',JSON.stringify(petconsumes));
+    // debuffs
+    localStorage.setItem('debuffs',JSON.stringify(debuffs));
     
     localStorage.setItem('flask',document.getElementById("flask").value);
     localStorage.setItem('battle',document.getElementById("battle").value);
@@ -56,6 +58,8 @@ function fetchData(){
     // pet consumes
     let savedpetcons = JSON.parse(localStorage.getItem('pet_consumes'));
     petconsumes = savedpetcons;
+    // debuffs
+    debuffs = JSON.parse(localStorage.getItem('debuffs'));
     // saves each value below as a string - fight settings
     let savediters = parseInt(localStorage.getItem('iterations'));
     iterations = savediters;
@@ -148,4 +152,8 @@ function fetchData(){
 
     // initialize the settings after loading
     selectedOptionsResults();
+}
+
+function clearSettingsCache(){
+    localStorage.clear();
 }
