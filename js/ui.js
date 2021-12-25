@@ -206,13 +206,13 @@ function debuffSettings(){
     let jocuptime = document.getElementById("jocuptime").value;
     let coruptime = document.getElementById("coruptime").value;
     let ffuptime = document.getElementById("ffuptime").value;
-    let ffbonus = document.getElementById("hmbonus").selected;
+    let ffbonus = document.getElementById("ffbonus").selected;
     let sauptime = document.getElementById("sauptime").value;
     let sunderapp = document.getElementById("sunderapp").value;
     let ieuptime = document.getElementById("ieuptime").value;
     let misuptime = document.getElementById("misuptime").value;
     let coeuptime = document.getElementById("coeuptime").value;
-    let coebonus = document.getElementById("hmbonus").selected;
+    let coebonus = document.getElementById("coebonus").selected;
 
     debuffs.hm.uptime_g = parseInt(hmuptime);
     debuffs.hm.improved = hmbonus ? true : false;
@@ -635,7 +635,7 @@ function petfoodSelection() {
 
 // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc, 4 for troll, 5 for tauren, 6 for blood elf
 function getRace() {
-    selectedRace = document.getElementById("race").value;
+    selectedRace = parseInt(document.getElementById("race").value);
     document.getElementById("racedisplay").innerHTML = races[selectedRace].name;
     selectedOptionsResults();
 }

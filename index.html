@@ -27,6 +27,7 @@
     <script class="u-script" type="text/javascript" src="js/auras.js"></script>
     <script class="u-script" type="text/javascript" src="js/pet.js"></script>
     <script class="u-script" type="text/javascript" src="js/player.js"></script>
+    
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
     <script>const whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: true};</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
@@ -142,7 +143,7 @@
                   <div class="u-container-style u-grey-75 u-group u-shape-rectangle u-group-1">
                     <div class="u-container-layout u-valign-middle u-container-layout-3">
                       <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23">
-                        <select id="gearprofile" onclick="selectGearlist(this.value)" class="select hover-grey import-select-input">Sixx BiS P3 6% BM<br>
+                        <select id="gearprofile" onchange="selectGearlist(this.value)" class="select hover-grey import-select-input">Sixx BiS P3 6% BM<br>
                           </select>
                       </h4>
                     </div>
@@ -454,13 +455,13 @@
       <li><label class="container container-1">Blessing of Kings<input type="checkbox" id="kings" onclick="kingsCheck()"><span class="checkmark"></span></label></li>
         <img class="settings-image-2" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_greaterblessingofkings.jpg" alt="">
       <li><label class="container container-2">Blessing of Might<input type="checkbox" id="might" onclick="mightCheck()"><span class="checkmark"></span>
-      <select onclick="mightCheck()" class="select hover-grey select-1">
+      <select onchange="mightCheck()" class="select hover-grey select-1">
         <option value="improved" id="mightmod">Improved</option>
         <option selected value="base">Base</option>
       </select></label></li>
         <img class="settings-image-3" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_greaterblessingofwisdom.jpg" alt="">
       <li><label class="container container-2">Blessing of Wisdom<input type="checkbox" id="wisdom" onclick="wisdomCheck()"><span class="checkmark"></span>
-      <select onclick="wisdomCheck()" class="select hover-grey select-2">
+      <select onchange="wisdomCheck()" class="select hover-grey select-2">
         <option value="improved" id="wisdommod">Improved</option>
         <option selected value="base">Base</option>
       </select></label></li>
@@ -470,7 +471,7 @@
       <li><label class="container container-2">Grace of Air Totem<input type="checkbox" id="goa" onclick="totemCheck()"><span class="checkmark"></span></label></li>
         <img class="settings-image-6" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_earthbindtotem.jpg" alt="">
       <li><label class="container container-2">Strength of Earth Totem<input type="checkbox" id="soe" onclick="totemCheck()"><span class="checkmark"></span></label></li>
-      <select onclick="totemCheck()" class="select hover-grey select-3">
+      <select onchange="totemCheck()" class="select hover-grey select-3">
         <option value="improved" id="imptotem">Improved</option>
         <option selected value="base">Base</option>
       </select>
@@ -480,25 +481,25 @@
       <li><label class="container container-1">Arcane Brilliance<input type="checkbox" id="ai" onclick="aiCheck()"><span class="checkmark"></span></label></li>
         <img class="settings-image-9" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_giftofthewild.jpg" alt="">
       <li><label class="container container-2">Gift of the Wild<input type="checkbox" id="gotw" onclick="gotwCheck()"><span class="checkmark"></span>
-        <select onclick="gotwCheck()" class="select hover-grey select-4">
+        <select onchange="gotwCheck()" class="select hover-grey select-4">
           <option value="improved" id="gotwmod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
         <img class="settings-image-10" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_prayeroffortitude.jpg" alt="">
       <li><label class="container container-2">Prayer of Fortitude<input type="checkbox" id="fort" onclick="fortCheck()"><span class="checkmark"></span>
-        <select onclick="fortCheck()" class="select hover-grey select-5">
+        <select onchange="fortCheck()" class="select hover-grey select-5">
           <option value="improved" id="fortmod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
         <img class="settings-image-11" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_bloodboil.jpg" alt="">
       <li><label class="container container-2">Blood Pact<input type="checkbox" id="pact" onclick="pactCheck()"><span class="checkmark"></span>
-        <select onclick="pactCheck()" class="select hover-grey select-6">
+        <select onchange="pactCheck()" class="select hover-grey select-6">
           <option value="improved" id="pactmod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
         <img class="settings-image-12" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_windfury.jpg" alt="">
       <li><label class="container container-2">Windfury Totem<input type="checkbox" id="windfury" onclick="windfuryCheck()"><span class="checkmark"></span>
-        <select onclick="windfuryCheck()" class="select hover-grey select-7">
+        <select onchange="windfuryCheck()" class="select hover-grey select-7">
           <option value="improved" id="windfurymod">Improved</option>
           <option selected value="base">Base</option>
         </select></label></li>
@@ -506,11 +507,11 @@
       <li><label class="container container-1">Heroic Presence (not you)<input type="checkbox" id="heroicpres" onclick="heroicpresCheck()"><span class="checkmark"></span></label></li>
         <img class="settings-image-14" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_battleshout.jpg" alt="">
       <li><label class="container container-2">Battle Shout<input type="checkbox" id="shout" onclick="shoutCheck()"><span class="checkmark"></span>
-        <select onclick="shoutCheck()" class="select hover-grey select-8">
+        <select onchange="shoutCheck()" class="select hover-grey select-8">
           <option value="improved" id="shoutmod">Improved</option>
           <option selected value="base">Base</option>
         </select>
-        <select onclick="shoutCheck()" class="select hover-grey select-wide">
+        <select onchange="shoutCheck()" class="select hover-grey select-wide">
           <option value="t2solarian">T2 3pc+Solarian</option>
           <option value="t2">T2 3pc</option>
           <option value="solarian">Solarian</option>
@@ -530,7 +531,7 @@
       <label class="settings-header-1">Consumables</label>
       <ul>
         <li><Label class="label-1">Flask</Label></li>
-        <select onclick="flaskSelection()" class="select hover-grey select-relative" id="flask">
+        <select onchange="flaskSelection()" class="select hover-grey select-relative" id="flask">
           <option value="wisdom">Flask of Distilled Wisdom</option>
           <option value="assault">Flask of Relentless Assault</option>
           <option value="restoration">Flask of Restoration</option>
@@ -540,7 +541,7 @@
           <option selected value="none">No Flask</option>
         </select>
         <li><Label class="label-1">Battle Elixir</Label></li>
-        <select onclick="battleSelection()" class="select hover-grey select-relative" id="battle">
+        <select onchange="battleSelection()" class="select hover-grey select-relative" id="battle">
           <option value="majoragi">Elixir of Major Agility</option>
           <option value="mongoose">Elixir of the Mongoose</option>
           <option value="demonslaying">Elixir of Demonslaying</option>
@@ -552,7 +553,7 @@
           <option selected value="none">No Battle Elixir</option>
         </select>
         <li><Label class="label-1">Guardian Elixir</Label></li>
-        <select onclick="guardSelection()" class="select hover-grey select-relative" id="guardian">
+        <select onchange="guardSelection()" class="select hover-grey select-relative" id="guardian">
           <option value="majormageblood">Elixir of Major Mageblood</option>
           <option value="draenicwisdom">Elixir of Draenic Wisdom</option>
           <option value="mageblood">Mageblood Potion</option>
@@ -561,7 +562,7 @@
           <option selected value="none">No Guardian Elixir</option>
         </select>
         <li><Label class="label-1">Scroll of Agility</Label></li>
-        <select onclick="scrollagiSelection()" class="select hover-grey select-relative" id="scrollagi">
+        <select onchange="scrollagiSelection()" class="select hover-grey select-relative" id="scrollagi">
           <option value="agi5">Scroll of Agility V</option>
           <option value="agi4">Scroll of Agility IV</option>
           <option value="agi3">Scroll of Agility III</option>
@@ -570,7 +571,7 @@
           <option selected value="none">No Agility Scroll</option>
         </select>
         <li><Label class="label-1">Scroll of Strength</Label></li>
-        <select onclick="scrollstrSelection()" class="select hover-grey select-relative" id="scrollstr">
+        <select onchange="scrollstrSelection()" class="select hover-grey select-relative" id="scrollstr">
           <option value="str5">Scroll of Strength V</option>
           <option value="str4">Scroll of Strength IV</option>
           <option value="str3">Scroll of Strength III</option>
@@ -579,7 +580,7 @@
           <option selected value="none">No Strength Scroll</option>
         </select>
         <li><Label class="label-1">Food</Label></li>
-        <select onclick="foodSelection()" class="select hover-grey select-relative" id="food">
+        <select onchange="foodSelection()" class="select hover-grey select-relative" id="food">
           <option value="sporefish">Blackened Sporefish</option>
           <option value="mudfish">Grilled Mudfish</option>
           <option value="squid">Grilled Squid</option>
@@ -596,7 +597,7 @@
      <div class="settings-petconsumes">
        <ul>
         <li><Label class="label-1">Scroll of Agility</Label></li>
-        <select onclick="petscrollagiSelection()" class="select hover-grey select-relative" id="petscrollagi">
+        <select onchange="petscrollagiSelection()" class="select hover-grey select-relative" id="petscrollagi">
           <option value="agi5">Scroll of Agility V</option>
           <option value="agi4">Scroll of Agility IV</option>
           <option value="agi3">Scroll of Agility III</option>
@@ -605,7 +606,7 @@
           <option selected value="none">No Agility Scroll</option>
         </select>
         <li><Label class="label-1">Scroll of Strength</Label></li>
-        <select onclick="petscrollstrSelection()" class="select hover-grey select-relative" id="petscrollstr">
+        <select onchange="petscrollstrSelection()" class="select hover-grey select-relative" id="petscrollstr">
           <option value="str5">Scroll of Strength V</option>
           <option value="str4">Scroll of Strength IV</option>
           <option value="str3">Scroll of Strength III</option>
@@ -614,7 +615,7 @@
           <option selected value="none">No Strength Scroll</option>
         </select>
         <li><Label class="label-1">Food</Label></li>
-        <select onclick="petfoodSelection()" class="select hover-grey select-relative" id="petfood">
+        <select onchange="petfoodSelection()" class="select hover-grey select-relative" id="petfood">
           <option value="kiblers">Kibler's Bits</option>
           <option value="sporeling">Sporeling Snack</option>
           <option selected value="none">No Pet Food</option>
@@ -629,7 +630,7 @@
       <ul>
           <li>
             <label class="label-2">Race</label>
-            <select id="race" onclick="getRace()" class="select hover-grey fight-setting-input-2">
+            <select id="race" onchange="getRace()" class="select hover-grey fight-setting-input-2">
               <option value="1">Dwarf</option>
               <option value="0">Night Elf</option>
               <option value="2">Draenei</option>
@@ -641,7 +642,7 @@
           </li>
           <li>
             <label class="label-2">Pet</label>
-            <select id="pet" onclick="getPet()" class="select hover-grey fight-setting-input-1">
+            <select id="pet" onchange="getPet()" class="select hover-grey fight-setting-input-1">
               <option selected value="0">Ravager</option>
               <option value="1">Cat</option>
               <option value="2">Raptor</option>
@@ -663,7 +664,7 @@
           <br>
           <li>
             <label class="label-2">Target</label>
-            <select id="targetSelect" onclick="selectTarget(this.value)" class="select hover-grey fight-setting-input-1">
+            <select id="targetSelect" onchange="selectTarget(this.value)" class="select hover-grey fight-setting-input-1">
             </select>
           </li>
           <li><label class="label-2">Type</label> 
@@ -722,7 +723,7 @@
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_misery.jpg" alt=""><label class="label-6">Misery</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="misuptime" onchange=debuffSettings() value="0"> %</li>
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_chilltouch.jpg" alt=""><label class="label-6">Curse of Elements</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coeuptime" onchange=debuffSettings() value="0"> %</li>
           <li><label class="label-5">CoE - Bonus</label><select onclick="" class="select hover-grey select-9">
-            <option id="ffbonus" value="improved">Improved</option>
+            <option id="coebonus" value="improved">Improved</option>
             <option selected value="base">Base</option>
           </select>
         </ul>
@@ -733,7 +734,7 @@
       <ul>
         <li>
           <label class="label-3">Preset Talent Options</label>
-            <select id="talentselect" onclick="selectTalents(this.value)" class="select hover-grey select-relative">
+            <select id="talentselect" onchange="selectTalents(this.value)" class="select hover-grey select-relative">
               <option selected value="6">BM 41/20/0</option>
               <option value="5">SV 0/20/41</option>
               <option value="4">SV 7/20/34</option>
