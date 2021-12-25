@@ -41,7 +41,7 @@ var auras = {
     judgecrusader: {uptime_g:90, timer:0, duration:30, crit:3, uptime:0},
     sunder: {uptime_g:0, timer:0, duration:30, stacktime:10, stacks:1, arp:520, uptime:0},
     faeriefire: {uptime_g:90, timer:0, duration:45, improved:true, hit:0, arp:610, uptime:0},
-    impexpose: {uptime_g:85, timer:0, duration:30, arp:3075, uptime:0},
+    impexpose: {uptime_g:90, timer:0, duration:30, arp:3075, uptime:0},
     curseofreck: {uptime_g:95, timer:0, duration:120, arp:800, uptime:0},
     bloodfrenzy: {uptime_g:95, timer:0, duration:12, dmgbonus:1.04, uptime:0},
     curseofele: {uptime_g:0},

@@ -150,6 +150,23 @@ function fetchData(){
     document.getElementById("talentselect").value = talentindex;
     document.getElementById("customtalent").value = whtalentlink;
 
+    // initialize saved debuffs visuals
+    document.getElementById("hmuptime").value = debuffs.hm.uptime_g;
+    document.getElementById("hmbonus").selected = debuffs.hm.improved ? true : false;
+    document.getElementById("ewuptime").value = debuffs.exposeweakness.uptime_g;
+    document.getElementById("ewagil").value = debuffs.exposeweakness.agi;
+    document.getElementById("jowuptime").value = debuffs.judgewisdom.uptime_g;
+    document.getElementById("jocuptime").value = debuffs.judgecrusader.uptime_g;
+    document.getElementById("coruptime").value = debuffs.curseofreck.uptime_g;
+    document.getElementById("ffuptime").value = debuffs.faeriefire.uptime_g;
+    document.getElementById("ffbonus").selected = debuffs.faeriefire.improved ? true : false;
+    document.getElementById("sauptime").value = debuffs.sunder.uptime_g;
+    document.getElementById("sunderapp").value = debuffs.sunder.stacktime;
+    document.getElementById("ieuptime").value = debuffs.impexpose.uptime_g;
+    document.getElementById("misuptime").value = debuffs.misery.uptime_g;
+    document.getElementById("coeuptime").value = debuffs.curseofele.uptime_g;
+    document.getElementById("coebonus").selected = debuffs.curseofele.improved ? true : false;
+
     // initialize the settings after loading
     selectedOptionsResults();
 }

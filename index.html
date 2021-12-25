@@ -694,9 +694,9 @@
         <ul>
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_hunter_snipershot.jpg" alt=""><label class="label-4">Hunter's Mark (Others)</label>
             <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="hmuptime" onchange=debuffSettings() value="100"> %</li>
-            <li><label class="label-5">HM - Bonus</label><select onclick="" class="select hover-grey select-9">
-              <option selected id="hmbonus" value="improved">Improved</option>
-              <option value="base">Base</option>
+            <li><label class="label-5">HM - Bonus</label><select onchange=debuffSettings() class="select hover-grey select-9">
+              <option id="hmbonus" value="improved">Improved</option>
+              <option selected value="base">Base</option>
             </select>
             <br>
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_rogue_findweakness.jpg" alt=""><label class="label-4">Expose Weakness (Others)</label>
@@ -711,9 +711,9 @@
             <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coruptime" onchange=debuffSettings() value="95"> %</li>
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_faeriefire.jpg" alt=""><label class="label-4">Faerie Fire</label>
             <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ffuptime" onchange=debuffSettings() value="90"> %</li>
-          <li><label class="label-5">FF - Bonus</label><select onclick="" class="select hover-grey select-9">
-            <option selected id="ffbonus" value="improved">Improved</option>
-            <option value="base">Base</option>
+          <li><label class="label-5">FF - Bonus</label><select onchange=debuffSettings() class="select hover-grey select-9">
+            <option id="ffbonus" value="improved">Improved</option>
+            <option selected value="base">Base</option>
           </select></li>
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_sunder.jpg" alt=""><label class="label-6">Sunder Armor</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="sauptime" onchange=debuffSettings() value="0"> %</li>
           <li><label class="label-8">SA - Stack time</label><input type="number" step="1" min="0" max="20" class="number-input hover-grey debuff-setting-input-1" id="sunderapp" onchange=debuffSettings() value="5">sec</li>
@@ -722,7 +722,7 @@
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_bloodfrenzy.jpg" alt=""><label class="label-6">Blood Frenzy</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="bfuptime" onchange=debuffSettings() value="95"> %</li>
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_misery.jpg" alt=""><label class="label-6">Misery</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="misuptime" onchange=debuffSettings() value="0"> %</li>
           <li><img class="settings-image-18" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_chilltouch.jpg" alt=""><label class="label-6">Curse of Elements</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coeuptime" onchange=debuffSettings() value="0"> %</li>
-          <li><label class="label-5">CoE - Bonus</label><select onclick="" class="select hover-grey select-9">
+          <li><label class="label-5">CoE - Bonus</label><select onchange=debuffSettings() class="select hover-grey select-9">
             <option id="coebonus" value="improved">Improved</option>
             <option selected value="base">Base</option>
           </select>
