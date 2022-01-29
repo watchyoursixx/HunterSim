@@ -140,18 +140,27 @@ function selectedOptionsResults(){
 }
 
 function initializeTargetDropdown() {
-    const GruulId = 19044;
+    let initialId = 0;
     let targets = targetData.getNameKeyTargetPairs();
+
+    if (localStorage.getItem('target') !== null){
+        let savedtarget = JSON.parse(localStorage.getItem('target'));
+        let findtarget = targets.find(key => key.name == savedtarget.name);
+        initialId = findtarget.id;
+    } else {
+        initialId = 19044;
+    }
+    
     var targetsOptions = "";
     for (const target of targets) {
         targetsOptions += "<option value= "+target.id+" >" + target.name + "</option>";
       }   
     document.getElementById("targetSelect").innerHTML = targetsOptions;
-    document.getElementById('targetSelect').value = GruulId;
+    document.getElementById('targetSelect').value = initialId;
     document.getElementById("armor").disabled = true;
     document.getElementById("typeSelect").disabled = true;
     document.getElementById("level").disabled = true;
-    selectTarget(GruulId);
+    selectTarget(initialId);
 }
 
 function selectTarget(id) {
@@ -187,7 +196,7 @@ function initializeImportSets(){
     //console.log(importOptions);
     document.getElementById("gearprofile").innerHTML = importOptions;
     document.getElementById("gearprofile").value = 4;
-    selectGearlist();
+
 }
 function selectGearlist() {
 
@@ -210,6 +219,7 @@ function debuffSettings(){
     let sauptime = document.getElementById("sauptime").value;
     let sunderapp = document.getElementById("sunderapp").value;
     let ieuptime = document.getElementById("ieuptime").value;
+    let bfuptime = document.getElementById("bfuptime").value;
     let misuptime = document.getElementById("misuptime").value;
     let coeuptime = document.getElementById("coeuptime").value;
     let coebonus = document.getElementById("coebonus").selected;
@@ -227,13 +237,10 @@ function debuffSettings(){
     debuffs.sunder.stacktime = parseInt(sunderapp);
     debuffs.impexpose.uptime_g = parseInt(ieuptime);
     debuffs.misery.uptime_g = parseInt(misuptime);
+    debuffs.bloodfrenzy.uptime_g = parseInt(bfuptime);
     debuffs.curseofele.uptime_g = parseInt(coeuptime);
     debuffs.curseofele.improved = coebonus ? true : false;
     storeData();
-}
-
-function spellSettings(){
-
 }
 
 function fightSettings(){
@@ -687,6 +694,99 @@ function selectTalents(talent){
     whtalentlink = customtalentlink;
     talentindex = talent;
     selectedOptionsResults();
+}
+
+function spellEnableCheck(){
+    let rapidcheck = document.getElementById("rapidcheck").checked;
+    let beastcheck = document.getElementById("beastcheck").checked;
+    let racialcheck = document.getElementById("racialcheck").checked;
+    let lustcheck = document.getElementById("lustcheck").checked;
+    let drumcheck = document.getElementById("drumcheck").checked;
+    let hastecheck = document.getElementById("hastecheck").checked;
+    let secpotcheck = document.getElementById("secpotcheck").checked;
+    let runecheck = document.getElementById("runecheck").checked;
+    let multicheck = document.getElementById("multicheck").checked;
+    let arcanecheck = document.getElementById("arcanecheck").checked;
+    //let raptorcheck = document.getElementById("raptorcheck").checked;
+    //let meleecheck = document.getElementById("meleecheck").checked;
+
+    auras.rapid.enable = rapidcheck;
+    beastenable = beastcheck;
+    racialenable = racialcheck;
+    auras.lust.enable = lustcheck;
+    auras.drums.enable = drumcheck;
+    auras.potion.primary = hastecheck;
+    auras.potion.secondary = secpotcheck;
+    auras.rune.enable = runecheck;
+    
+    SPELLS.multishot.enable = multicheck;
+    SPELLS.arcaneshot.enable = arcanecheck;
+    //SPELLS.raptorstrike.enable = raptorcheck;
+    //SPELLS.melee.enable = meleecheck;
+    storeData();
+
+}
+
+function spellOffsets(){
+    let rapidoffset = document.getElementById("rapidoffset").value;
+    let beastoffset = document.getElementById("beastoffset").value;
+    let racialoffset = document.getElementById("racialoffset").value;
+    let lustoffset = document.getElementById("lustoffset").value;
+    let drumoffset = document.getElementById("drumoffset").value;
+    let trink1offset = document.getElementById("trink1offset").value;
+    let trink2offset = document.getElementById("trink2offset").value;
+    let startpotoffset = document.getElementById("startpotoffset").value;
+    let runeoffset = document.getElementById("runeoffset").value;
+
+    auras.rapid.offset = parseInt(rapidoffset);
+    auras.beastwithin.offset = parseInt(beastoffset);
+    auras.berserk.offset = parseInt(racialoffset);
+    auras.bloodfury.offset = parseInt(racialoffset);
+    auras.lust.offset = parseInt(lustoffset);
+    auras.drums.offset = parseInt(drumoffset);
+    auras.aptrink1.offset = (auras.aptrink1.enable) ? parseInt(trink1offset): 0;
+    auras.aptrink2.offset = (auras.aptrink2.enable) ? parseInt(trink2offset): 0;
+    auras.potion.offset = parseInt(startpotoffset);
+    auras.rune.offset = parseInt(runeoffset);
+    storeData();
+}
+
+function spellOptions(){
+    let lustoption = document.getElementById("lustoption").value;
+    switch (lustoption) {
+        case "1":   auras.lust.duration = 40;
+        break;
+        case "2":   auras.lust.duration = 80;
+        break;
+        case "3":   auras.lust.duration = 120;
+        break;
+        case "4":   auras.lust.duration = 160;
+        break;
+    }
+    auras.drums.type = document.getElementById("drumoption").value;
+    
+    let spellcdoption = document.getElementById("spellcdoption").value;
+    switch (spellcdoption) {
+        case "2min":
+            two_min_cds = 180;
+            three_min_cds = 180;
+            setSpellCDs();
+        break;
+        case "3min":
+            two_min_cds = 120;
+            three_min_cds = 240;
+            setSpellCDs();
+        break;
+        case "CD":
+            two_min_cds = 120;
+            three_min_cds = 180;
+            setSpellCDs();
+        break;
+    }
+    secondaryPotion = document.getElementById("secpotoption").value;
+    
+    storeData();
+
 }
 
 function gearSlotsDisplay(){
@@ -1682,7 +1782,7 @@ function gearSlotsDisplay(){
 }
 
 gearSlotsDisplay();
-
+selectedOptionsResults();
 // checks if saved before, if so - load saved data
 if(localStorage.getItem('savecheck') == 'true'){
     fetchData();

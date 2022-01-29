@@ -448,6 +448,28 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h3 class="header-1">Settings</h3>
+    <div class="settings-gearfilter">
+      <label class="label-filter">Gear List Filters</label>
+      <div class="div-filters">
+        <label class="container container-3">Raid<input type="checkbox"><span class="checkmark"></span></label>
+        <label class="container container-3">PvP<input type="checkbox"><span class="checkmark"></span></label>
+        <label class="container container-3">Greens<input type="checkbox"><span class="checkmark"></span></label>
+        <label class="container container-3">BoEs<input type="checkbox"><span class="checkmark"></span></label>
+        <label class="container container-3">Leather<input type="checkbox"><span class="checkmark"></span></label>
+      </div>
+      <div class="div-filters">
+        <label class="container container-3">Rep<input type="checkbox"><span class="checkmark"></span></label>
+        <label class="container container-3">W Boss<input type="checkbox"><span class="checkmark"></span></label>
+        <label class="container container-3">Crafted<input type="checkbox"><span class="checkmark"></span></label>
+      </div>
+      <select onchange="" class="select hover-grey select-filters">
+        <option value="5">Phase 5</option>
+        <option value="4">Phase 4</option>
+        <option selected value="3">Phase 3</option>
+        <option value="2">Phase 2</option>
+        <option value="1">Phase 1</option>
+      </select>
+    </div>
     <div class="settings">
     <label class="settings-header-1">Party Buffs</label>
     <ul>
@@ -726,6 +748,76 @@
             <option id="coebonus" value="improved">Improved</option>
             <option selected value="base">Base</option>
           </select>
+        </ul>
+      </div>
+    </div>
+    <div class="settings">
+      <label class="settings-header-1">Spells/Buffs Options</label>
+      <div class="settings-spells">
+        <ul><label class="spell-option-2">Options</label><label class="spell-option-1">Offsets (s)</label>
+          <img class="spells-image spells-image-1" src="https://wow.zamimg.com/images/wow/icons/large/ability_hunter_runningshot.jpg" alt="">
+          <li><label class="container container-2">Rapid Fire<input id="rapidcheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <input id="rapidoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-1" value="0" onchange="spellOffsets()">
+          
+          <img class="spells-image spells-image-2" src="https://wow.zamimg.com/images/wow/icons/large/ability_druid_ferociousbite.jpg" alt="">
+          <li><label class="container container-2">Bestial Wrath<input id="beastcheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <input id="beastoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-2" value="0" onchange="spellOffsets()">
+          <img class="spells-image spells-image-3" src="https://wow.zamimg.com/images/wow/icons/large/racial_orc_berserkerstrength.jpg" alt="">
+          <li><label class="container container-2">Racial<input id="racialcheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <input id="racialoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-3" value="0" onchange="spellOffsets()">
+          <img class="spells-image spells-image-4" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_bloodlust.jpg" alt="">
+          <li><label class="container container-2">Bloodlust<input id="lustcheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span>
+            <select id="lustoption" onchange="spellOptions()" class="select hover-grey select-spell-option-1">
+              <option value="4">4 Lusts</option>
+              <option value="3">3 Lusts</option>
+              <option value="2">2 Lusts</option>
+              <option selected value="1">1 Lust</option>
+            </select></label>
+          </li>
+          <input id="lustoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-4" value="0" onchange="spellOffsets()">
+          <img class="spells-image spells-image-5" src="https://wow.zamimg.com/images/wow/icons/large/inv_misc_drum_02.jpg" alt="">
+          <li><label class="container container-2">Drums<input id="drumcheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span>
+            <select id="drumoption" onchange="spellOptions()" class="select hover-grey select-spell-option-2">
+              <option selected value="battle">Battle</option>
+              <option value="war">War</option>
+            </select></label>
+          </li>
+          <input id="drumoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-5" value="0" onchange="spellOffsets()">
+          <img class="spells-image spells-image-6" src="https://wow.zamimg.com/images/wow/icons/large/inv_misc_monsterscales_15.jpg" alt="">
+          <li><label class="container container-2">Trinket 1 (On Use)</label></li>
+          <input id="trink1offset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-6" value="0" onchange="spellOffsets()">
+          <img class="spells-image spells-image-7" src="https://wow.zamimg.com/images/wow/icons/large/inv_misc_bone_03.jpg" alt="">
+          <li><label class="container container-2">Trinket 2 (On Use)</label></li>
+          <input id="trink2offset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-7" value="0" onchange="spellOffsets()">
+          <li><label class="label-2 spell-label-1">Spell CD Behavior:</label>
+            <select id="spellcdoption" onchange="spellOptions()" class="select hover-grey select-spell-option-5">
+              <option selected value="CD">On CD</option>
+              <option value="3min">3 min w/ 2 min</option>
+              <option value="2min">2 min w/ 3 min</option>
+            </select>
+          </li>
+          <img class="spells-image spells-image-8" src="https://wow.zamimg.com/images/wow/icons/large/inv_potion_108.jpg" alt="">
+          <li><label class="container container-2">Primary Potion (Haste)<input id="hastecheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <input id="startpotoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-8" value="0" onchange="spellOffsets()">
+          <img class="spells-image spells-image-9" src="https://wow.zamimg.com/images/wow/icons/large/inv_potion_137.jpg" alt="">
+          <li><label class="container container-2">Secondary Potion<input id="secpotcheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span>
+            <select id="secpotoption" onchange="spellOptions()" class="select hover-grey select-spell-option-4">
+              <option value="Fel">Fel</option>
+              <option selected value="Super">Super</option>
+            </select></label>
+          </li>
+          <img class="spells-image spells-image-10" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_sealofkings.jpg" alt="">
+          <li><label class="container container-2">Runes<input id="runecheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <input id="runeoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-9" value="0" onchange="spellOffsets()">
+          <br>
+          <img class="spells-image spells-image-11" src="https://wow.zamimg.com/images/wow/icons/large/ability_upgrademoonglaive.jpg" alt="">
+          <li><label class="container container-1">Multi-Shot<input id="multicheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <img class="spells-image spells-image-12" src="https://wow.zamimg.com/images/wow/icons/large/ability_impalingbolt.jpg" alt="">
+          <li><label class="container container-1">Arcane Shot<input id="arcanecheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <img class="spells-image spells-image-13" src="https://wow.zamimg.com/images/wow/icons/large/ability_meleedamage.jpg" alt="">
+          <li><label class="container container-1">Raptor Strike<input id="raptorcheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
+          <img class="spells-image spells-image-14" src="https://wow.zamimg.com/images/wow/icons/large/inv_sword_04.jpg" alt="">
+          <li><label class="container container-1">Melee Attack<input id="meleecheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
         </ul>
       </div>
     </div>

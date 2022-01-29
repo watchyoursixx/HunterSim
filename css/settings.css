@@ -18,6 +18,26 @@ ul {
     width: 380px;
     height: 550px;
 }
+.settings-gearfilter {
+  color: white;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #252529;
+  border: 3px solid #000;
+  border-radius: 2px;
+  margin: 10px auto;
+  position: absolute;
+  padding: 5px;
+  box-sizing: border-box;
+  width: 500px;
+  height: 90px;
+  top: 0rem;
+  left: 10rem;
+}
+.div-filters {
+  width: 100%;
+  position: relative;
+}
 .settings-talents {
   color: white;
   display: inline-block;
@@ -38,6 +58,10 @@ ul {
 .settings-fight {
     position:relative;
     top: 5px;
+}
+.settings-spells {
+  position:relative;
+  top: 5px;
 }
 .settings-header-1 {
     position: absolute;
@@ -147,6 +171,13 @@ ul {
   font-size: 14px;
 
 }
+.label-filter {
+  position: relative;
+  text-align: middle;
+  font-weight: 600;
+  top: -5px;
+  left: 35%;
+}
 /* settings modal */
 .modal {
   display: none; 
@@ -236,6 +267,16 @@ ul {
   }
   .container-2 {
       background-color: #252529;
+  }
+  .container-3 {
+    padding-left: 0;
+    padding-right: 4.5%;
+    margin-bottom: 0px;
+    position: relative;
+    top: -5px;
+    text-align: right;
+    vertical-align: middle;
+    width: 18%;
   }
   /* Hide the browser's default checkbox */
   .container input {
@@ -559,4 +600,149 @@ ul {
 .cache-button {
   border-style: solid;
   border-width: 2px !important;
+}
+.spells-image {
+  position: absolute;
+  left: -2px;
+  width: 22px;
+  height: auto;
+}
+.spells-image-1 {
+  top: 16px;
+}
+.spells-image-2 {
+  top: 44px;
+}
+.spells-image-3 {
+  top:  72px;
+}
+.spells-image-4 {
+  top: 101px;
+}
+.spells-image-5 {
+  top: 131px;
+}
+.spells-image-6 {
+  top: 160px;
+}
+.spells-image-7 {
+  top: 188px;
+}
+.spells-image-8 {
+  top: 253px;
+}
+.spells-image-9 {
+  top: 282px;
+}
+.spells-image-10 {
+  top: 312px;
+}
+.spells-image-11 {
+  top: 365px;
+}
+.spells-image-12 {
+  top: 393px;
+}
+.spells-image-13 {
+  top: 421px;
+}
+.spells-image-14 {
+  top: 449px;
+}
+
+.spell-option-1 {
+  position: absolute;
+  left: 250px;
+  text-align: center;
+  top: -10px;
+}
+.spell-option-2 {
+  position: absolute;
+  left: 165px;
+  text-align: center;
+  top: -10px;
+}
+
+.spells-input {
+  position: absolute;
+  left: 72%;
+  width: 50px;
+  text-align: center;
+}
+
+.spells-input-1 {
+  top: 1.05rem;
+}
+.spells-input-2 {
+  top: 2.8rem;
+}
+.spells-input-3 {
+  top: 4.6rem;
+}
+.spells-input-4 {
+  top: 6.4rem;
+}
+.spells-input-5 {
+  top: 8.2rem;
+}
+.spells-input-6 {
+  top: 10rem;
+}
+.spells-input-7 {
+  top: 11.8rem;
+}
+.spells-input-8 {
+  top: 15.8rem;
+}
+.spells-input-9 {
+  top: 19.50rem;
+}
+
+.select-spell-option-1 {
+  /* Reset */
+  width: 95px;
+  left: 20%;
+}
+
+.select-spell-option-2 {
+  /* Reset */
+  width: 95px;
+  left: 25.2%;
+}
+
+.select-spell-option-3 {
+  /* Reset */
+  width: 95px;
+  left: 9.4%;
+}
+
+.select-spell-option-4 {
+  /* Reset */
+  width: 95px;
+  left: 4.5%;
+}
+
+.spell-label-1 {
+  display: inline-block; 
+  width: 134px;
+  left: -10px;
+  top: 13px;
+  margin-bottom: 10px;
+  position: relative;
+  text-align: left;
+  color: white;
+  font-size: 14px;
+
+}
+
+.select-spell-option-5 {
+  top: 13px;
+  width: 155px;
+}
+
+.select-filters {
+  position: absolute;
+  top: 55px;
+  left: 67%;
+  width: 120px;
 }

@@ -1,29 +1,32 @@
 var rapidcd = 300;
 var lustcd = 600;
 var sunderstart = 0;
+var racialenable = false;
+var beastenable = false;
 
 var auras = {
     // actives
-    drums: {enable:true, timer:0, cooldown:0,basecd:120, duration:30, uptime:0},// coded
-    potion: {enable:false, timer:0, cooldown:0,basecd:120, duration:15, uptime:0},// coded
+    drums: {enable:true, timer:0, cooldown:0,basecd:120, duration:30, uptime:0, type:'battle', offset:0},// coded
+    potion: {timer:0, cooldown:0,basecd:120, duration:15, uptime:0, primary:false, secondary:false, used:"", ticks: 0, offset:0},// coded
+    rune: {enable:true, cooldown:0,basecd:120, offset:0},
     abacus: {enable:false, timer:0, cooldown:0,basecd:120, duration:10, uptime:0},// coded
-    lust: {enable:true, timer:0, cooldown:0,basecd:lustcd, duration:40, uptime:0},// coded
-    rapid: {enable:true, timer:0, cooldown:0,basecd:rapidcd, duration:15, uptime:0},// coded
-    berserk: {enable:false, timer:0, cooldown:0,basecd:180, duration:10, uptime:0},// coded
+    lust: {enable:true, timer:0, cooldown:0,basecd:lustcd, duration:40, uptime:0, offset:0},// coded
+    rapid: {enable:true, timer:0, cooldown:0,basecd:rapidcd, duration:15, uptime:0, offset:0},// coded
+    berserk: {enable:false, timer:0, cooldown:0,basecd:180, duration:10, uptime:0, offset:0},// coded
     unyieldingcourage: {enable:false, timer:0,basecd:120, cooldown:0, duration:20, uptime:0},// coded
-    bloodfury: {enable:false, timer:0, cooldown:0,basecd:120, duration: 15, uptime:0},// coded
+    bloodfury: {enable:false, timer:0, cooldown:0,basecd:120, duration: 15, uptime:0, offset:0},// coded
     swarmguard: {enable:false, timer:0, cooldown:0,basecd:180, ppm:12, duration:30, stacks:0, uptime:0},// coded
-    beastwithin: {enable:true, timer:0, cooldown:0,basecd:120, duration: 18, uptime:0},// coded
+    beastwithin: {enable:true, timer:0, cooldown:0,basecd:120, duration: 18, uptime:0, offset:0},// coded
     tenacity: {enable:false, timer: 0, cooldown:0,basecd:120, duration: 15, uptime:0},// coded
-    aptrink1: {enable:false, uptime:0},// coded
-    aptrink2: {enable:false, uptime:0},// coded
+    aptrink1: {enable:false, uptime:0, offset:0, basecd:120},// coded
+    aptrink2: {enable:false, uptime:0, offset:0, basecd:120},// coded
     // procs
     dragonspine: {enable:false, timer:0, cooldown:0, ppm:1, duration:10, uptime:0},// coded
     imphawk: {enable:true,timer:0, duration:12, uptime:0},// coded
     beastlord: {enable:true, timer:0, duration:15, uptime:0}, // coded
     executioner: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
     mongoose: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
-    madness: {enable:false, timer:0, ppm:2,duration: 10, uptime:0},// coded
+    madness: {enable:false, timer:0, ppm:1,duration: 10, uptime:0},// coded
     tsunami: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10, uptime:0},// coded
     hourglass: {enable:false, timer:0, cooldown:0, procchance:10, duration: 10, uptime:0},// coded
     naarusliver: {enable:false, timer:0, cooldown:0, procchance:10, duration: 20, stacks: 0, uptime:0},// coded
@@ -119,7 +122,7 @@ function initializeAuras() {
     auras.dmccrusade.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false;
  
     auras.beastlord.enable = (currentgear.special.beast_lord_4p_kc_arp > 0) ? true : false;
-    auras.beastwithin.enable = (talents.beast_within > 0) ? true : false;
+    auras.beastwithin.enable = ((talents.beast_within > 0) && beastenable) ? true : false;
     auras.mastertact.enable = (talents.master_tac > 0) ? true : false;
     auras.donsantos.enable = (gear.range.id === 31323) ? true : false;
     auras.eternalchamp.enable = ((gear.ring1.id === 29301) || (gear.ring2.id === 29301)) ? true : false;
@@ -178,18 +181,19 @@ function initializeAuras() {
     auras.ashtongue.timer = 0;
     auras.dmccrusade.timer = 0;
 
-    auras.lust.cooldown = 0;
-    auras.berserk.cooldown = 0;
-    auras.bloodfury.cooldown = 0;
+    auras.lust.cooldown = auras.lust.offset;
+    auras.berserk.cooldown = auras.berserk.offset;
+    auras.bloodfury.cooldown = auras.bloodfury.offset;
     auras.abacus.cooldown = 0;
-    auras.drums.cooldown = 0;
-    auras.potion.cooldown = 0;
-    auras.rapid.cooldown = 0;
+    auras.drums.cooldown = auras.drums.offset;
+    auras.potion.cooldown = auras.potion.offset;
+    auras.rune.cooldown = auras.rune.offset;
+    auras.rapid.cooldown = auras.rapid.offset;
     auras.swarmguard.cooldown = 0;
     auras.unyieldingcourage.cooldown = 0;
-    auras.beastwithin.cooldown = 0;
-    auras.aptrink1.cooldown = 0;
-    auras.aptrink2.cooldown = 0;
+    auras.beastwithin.cooldown = auras.beastwithin.offset;
+    auras.aptrink1.cooldown = auras.aptrink1.offset;
+    auras.aptrink2.cooldown = auras.aptrink2.offset;
     auras.tenacity.cooldown = 0;
     auras.tsunami.cooldown = 0;
     auras.hourglass.cooldown = 0;
@@ -214,6 +218,24 @@ function initializeAuras() {
     return;
  }
 
+function setSpellCDs(){
+    auras.rapid.basecd = (rapidcd === 180) ? three_min_cds : rapidcd;
+    auras.swarmguard.basecd = three_min_cds;
+    auras.berserk.basecd = three_min_cds;
+
+    auras.bloodfury.basecd = two_min_cds;
+    auras.aptrink1.basecd = two_min_cds;
+    auras.aptrink2.basecd = two_min_cds;
+    auras.tenacity.basecd = two_min_cds;
+    auras.drums.basecd = two_min_cds;
+    auras.potion.basecd = two_min_cds;
+    auras.beastwithin.basecd = two_min_cds;
+    auras.unyieldingcourage.basecd = two_min_cds;
+    auras.abacus.basecd = two_min_cds;
+
+    return;
+}
+
 // handling for auras
 function updateAuras(steptime) {
     // set timer of on use AP trinkets
@@ -232,7 +254,7 @@ function updateAuras(steptime) {
     if(auras.naarusliver.cooldown > 0)        { auras.naarusliver.cooldown = Math.max(auras.naarusliver.cooldown - steptime,0); 
        /*console.log("naaru sliver cd: " + (Math.round(auras.naarusliver.cooldown * 100) / 100));*/ } 
     if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
-       console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100)); }
+       /*console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));*/ }
     if(auras.dmccrusade.cooldown > 0)         { auras.dmccrusade.cooldown = Math.max(auras.dmccrusade.cooldown - steptime,0);
        console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100)); }
     // active cooldowns
@@ -241,7 +263,9 @@ function updateAuras(steptime) {
     if(auras.lust.cooldown > 0)               { auras.lust.cooldown = Math.max(auras.lust.cooldown - steptime,0);
        /*console.log("lust cd: " + (Math.round(auras.lust.cooldown * 100) / 100));*/ }
     if(auras.potion.cooldown > 0)             { auras.potion.cooldown = Math.max(auras.potion.cooldown - steptime,0);
-       console.log("potion cd: " + (Math.round(auras.potion.cooldown * 100) / 100)); }
+       /*console.log("potion cd: " + (Math.round(auras.potion.cooldown * 100) / 100));*/ }
+    if(auras.rune.cooldown > 0)             { auras.rune.cooldown = Math.max(auras.rune.cooldown - steptime,0);
+       /*console.log("rune cd: " + (Math.round(auras.rune.cooldown * 100) / 100)); */}
     if(auras.abacus.cooldown > 0)             { auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0);
        console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100)); }
     if(auras.bloodfury.cooldown > 0)          { auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0);
@@ -596,7 +620,25 @@ function onUseSpellCheck(){
             combatlogindex++;
         }
     }
-    //else if(auras.potion.enable && auras.potion.cooldown === 0) {potionHandling(); console.log("potion used");}
+    if((auras.potion.primary || auras.potion.secondary) && auras.potion.cooldown === 0) {
+        potionHandling();
+        if(combatlogRun) {
+            combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player used " + auras.potion.used + " Potion";
+            combatlogindex++;
+        }
+    }
+    if(auras.rune.enable && auras.rune.cooldown === 0) {
+        let runemana = rng(900,1500);
+        let prev_mana = currentMana;
+        currentMana = Math.min(currentMana + runemana, Mana);
+        let gain = currentMana - prev_mana;
+        let over = runemana - gain;
+        auras.rune.cooldown = 120;
+        if(combatlogRun) {
+            combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player used rune for " + gain + " Mana (O: " + over + ")";
+            combatlogindex++;
+        }
+    }
     if(auras.lust.enable && auras.lust.cooldown === 0){
         auras.lust.timer = (auras.lust.cooldown === 0) ? auras.lust.duration : auras.lust.timer; // set timer
         auras.lust.cooldown = (auras.lust.timer === auras.lust.duration) ? auras.lust.basecd: auras.lust.cooldown; // set cd
@@ -613,20 +655,22 @@ function onUseSpellCheck(){
             combatlogindex++;
         }
     }
-    if(auras.berserk.enable && auras.berserk.cooldown === 0){
-        auras.berserk.timer = (auras.berserk.cooldown === 0) ? auras.berserk.duration : auras.berserk.timer; // set timer
-        auras.berserk.cooldown = (auras.berserk.timer === auras.berserk.duration) ? auras.berserk.basecd: auras.berserk.cooldown; // set cd
-        if(combatlogRun) {
-            combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player gains Berserking";
-            combatlogindex++;
+    if(racialenable) {
+        if(auras.berserk.enable && auras.berserk.cooldown === 0){
+            auras.berserk.timer = (auras.berserk.cooldown === 0) ? auras.berserk.duration : auras.berserk.timer; // set timer
+            auras.berserk.cooldown = (auras.berserk.timer === auras.berserk.duration) ? auras.berserk.basecd: auras.berserk.cooldown; // set cd
+            if(combatlogRun) {
+                combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player gains Berserking";
+                combatlogindex++;
+            }
         }
-    }
-    if(auras.bloodfury.enable && auras.bloodfury.cooldown === 0){
-        auras.bloodfury.timer = (auras.bloodfury.cooldown === 0) ? auras.bloodfury.duration : auras.bloodfury.timer; // set timer
-        auras.bloodfury.cooldown = (auras.bloodfury.timer === auras.bloodfury.duration) ? auras.bloodfury.basecd: auras.bloodfury.cooldown; // set cd
-        if(combatlogRun) {
-            combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player gains Blood Fury";
-            combatlogindex++;
+        else if(auras.bloodfury.enable && auras.bloodfury.cooldown === 0){
+            auras.bloodfury.timer = (auras.bloodfury.cooldown === 0) ? auras.bloodfury.duration : auras.bloodfury.timer; // set timer
+            auras.bloodfury.cooldown = (auras.bloodfury.timer === auras.bloodfury.duration) ? auras.bloodfury.basecd: auras.bloodfury.cooldown; // set cd
+            if(combatlogRun) {
+                combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player gains Blood Fury";
+                combatlogindex++;
+            }
         }
     }
     if(auras.beastwithin.enable && auras.beastwithin.cooldown === 0){

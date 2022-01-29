@@ -13,6 +13,8 @@ var latency = 0.05;
 var currentgcd = 0;
 var autodmg = 0;
 var steadydmg = 0;
+var multidmg = 0;
+var arcanedmg = 0;
 var sharedtrinketcd = 0;
 var playeruptime = 100;
 var petuptime = 100;
@@ -24,8 +26,40 @@ var RESULT = {
     MISS: 1,
     DODGE: 2,
     CRIT: 3,
-    GLANCE: 4
+    GLANCE: 4,
+    PARTIAL: 5
 };
+
+var Result_Auto = {
+    Hit: 0,
+    Miss: 0,
+    Crit: 0
+}
+
+var Result_Steady = {
+    Hit: 0,
+    Miss: 0,
+    Crit: 0
+}
+
+var Result_Multi = {
+    Hit: 0,
+    Miss: 0,
+    Crit: 0
+}
+
+var Result_Arcane = {
+    Hit: 0,
+    Miss: 0,
+    Crit: 0
+}
+
+var Result_Primary = {
+    Hit: 0,
+    Miss: 0,
+    Crit: 0,
+    Partial: 0
+}
 
 var spread = [];
 var countruns = 0;
@@ -40,6 +74,8 @@ var playertimeend = 0;
 var autoarray = [];
 var autocount = 0;
 var steadycount = 0;
+var multicount = 0;
+var arcanecount = 0;
 var spell = '';
 var nextpetattack = 1;
 var nextpetspell = 1;
@@ -51,10 +87,11 @@ var sumpetdmg = 0;
 var fightduration = 0;
 var combatlogarray = [];
 var combatlogindex = 0;
+var filteredcombatlogarray = [];
 var combatlogRun = false;
 
-const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance"]; // debugging
-
+const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance", "Partial Resist"]; // debugging
+/** Begins sim DPS functionality when ran with "Sim DPS - Loop" button. */
 function startSync() {
     performancecheck1 = performance.now(); // test debug time check
     spread = [];
@@ -66,15 +103,23 @@ function startSync() {
     sumduration = 0;
     autocount = 0;
     steadycount = 0;
+    multicount = 0;
+    arcanecount = 0;
     autodmg = 0;
     steadydmg = 0;
+    multidmg = 0;
+    arcanedmg = 0;
     petautocount = 0;
     petkccount = 0;
     petprimarycount = 0;
     sumpetdmg = 0;
     pet.frenzy.uptime = 0;
     pet.ferocious.uptime = 0;
+    petdmg.kcdmg = 0;
+    petdmg.attackdmg = 0;
+    petdmg.primarydmg = 0;
 
+    resultCountInitialize();
     initializeAuras();
     // loop through iterations, run example combat log as the last iteration
     for (iteration = 1; iteration <= iterations; ++iteration) {
@@ -97,12 +142,35 @@ function startSync() {
     }
 
     console.log("steadys => "+ steadycount/iterations);
+    console.log("steady miss %: "+ Result_Steady.Miss / steadycount);
+    console.log("steady hit %: " + Result_Steady.Hit / steadycount);
+    console.log("steady crit %: " + Result_Steady.Crit / steadycount);
     console.log("steady avg => "+steadydmg/(steadycount));
     console.log("autos => " + autocount/iterations);
+    console.log("Auto miss %: "+ Result_Auto.Miss / autocount);
+    console.log("Auto hit %: " + Result_Auto.Hit / autocount);
+    console.log("Auto crit %: " + Result_Auto.Crit / autocount);
     console.log("auto avg => "+autodmg/(autocount));
+    console.log("multis => " + multicount/iterations);
+    console.log("Multi miss %: "+ Result_Multi.Miss / multicount);
+    console.log("Multi hit %: " + Result_Multi.Hit / multicount);
+    console.log("Multi crit %: " + Result_Multi.Crit / multicount);
+    console.log("multi avg => "+multidmg/(multicount));
+    console.log("arcanes => " + arcanecount/iterations);
+    console.log("Arcane miss %: "+ Result_Arcane.Miss / arcanecount);
+    console.log("Arcane hit %: " + Result_Arcane.Hit / arcanecount);
+    console.log("Arcane crit %: " + Result_Arcane.Crit / arcanecount);
+    console.log("Arcane avg => "+arcanedmg/(arcanecount));
     console.log("pet autos => "+petautocount / iterations);
     console.log("pet kc => "+ petkccount / iterations);
     console.log("pet spells => "+ petprimarycount / iterations);
+    console.log("pet kc dmg => " + petdmg.kcdmg / iterations);
+    console.log("pet attack dmg => " + petdmg.attackdmg / iterations);
+    console.log("pet primary dmg => " + petdmg.primarydmg / iterations);
+    //console.log("pet spell miss %: "+ Result_Primary.Miss / petprimarycount);
+    //console.log("pet spell hit %: " + Result_Primary.Hit / petprimarycount);
+    //console.log("pet spell crit %: " + Result_Primary.Crit / petprimarycount);
+    //console.log("pet spell Partial resist %: " + Result_Primary.Partial / petprimarycount);
     console.log("pet dmg => "+sumpetdmg / iterations);
     let frenzyup = pet.frenzy.uptime / sumduration * 100;
     console.log("pet frenzy uptime => "+ frenzyup.toFixed(2) + " %");
@@ -140,7 +208,7 @@ function startSync() {
     //console.log("autos: " + autocount);
     console.log("*****************");
 }
-
+/** Main loop function for simming iterations, ran for each iteration. */
 function runSim() {
     maxsteps = rng(minfighttimer * 1000, maxfighttimer * 1000);
     fightduration = maxsteps / 1000;
@@ -237,15 +305,16 @@ function startStepOnly(){
     avgDPS = totaldmgdone / totalduration;
     //console.log("steadys => "+ steadycount);
     //console.log("autos => " + autocount);
-    console.log("pet damage: " + petdmgdone);
+    //console.log("pet damage: " + petdmgdone);
     console.log("total damage: " + totaldmgdone);
     console.log("duration: " + (Math.round(totalduration * 1000) / 1000));
     performancecheck2 = performance.now();
     executecodetime = (performancecheck2 - performancecheck1) / 1000; // milliseconds convert to sec
     displayDPSResults();
     //console.log("step time => " + (Math.round(steptime * 1000) / 1000));
-    console.log(auras);
-    console.log(pet);
+    //console.log(auras);
+    //console.log(pet);
+    filteredcombatlogarray = combatlogarray.filter(pet => pet.includes("Player"));
     console.log("*****************");
 }
 /**Sets the start time for the next player event based on remaining cd's and selected spell. */
@@ -292,10 +361,20 @@ function nextEvent(){
         }
         else if (spell === 'steadyshot'){
             SPELLS.steadyshot.cast = 1.5 / rangehastemod;
-            SPELLS.steadyshot.cd = 1.5 - SPELLS.steadyshot.cast;
             currentgcd = playertimestart + 1.5; // gcd
             //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
             playertimeend = SPELLS.steadyshot.cast + playertimestart;
+        }
+        else if (spell === 'multishot'){
+            SPELLS.multishot.cast = 0.5 / rangehastemod;
+            currentgcd = playertimestart + 1.5; // gcd
+            //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
+            playertimeend = SPELLS.multishot.cast + playertimestart;
+        }
+        else if (spell === 'arcaneshot'){
+            currentgcd = playertimestart + 1.5; // gcd
+            //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
+            playertimeend = SPELLS.arcaneshot.cast + playertimestart;
         }
         playerattackready = true;
         //console.log(SPELLS);
@@ -323,7 +402,7 @@ function nextEvent(){
             nextpetspell += 5;
             //console.log("not enough focus");
         }
-    }  
+    }
     else { // do player hit
         cast(spell);
         steptimeend = playertimeend;
@@ -336,12 +415,20 @@ function nextEvent(){
 /** attempt at creating spell choices based on known breakpoints */
 function spell_choice_method_A(){
     // steady
-    let steadycost = SPELLS.steadyshot.cost <= currentMana;
-    if ((SPELLS.autoshot.cd > 1.1) && steadycost) {
+    let steadyuse = (SPELLS.steadyshot.cost <= currentMana) && SPELLS.steadyshot.enable; // check if cost is usable or not
+    let multiuse = (SPELLS.multishot.cost <= currentMana) && SPELLS.multishot.enable;
+    let arcaneuse = (SPELLS.arcaneshot.cost <= currentMana) && SPELLS.arcaneshot.enable;
+    if ((SPELLS.multishot.cd < 0.8) && multiuse && (SPELLS.autoshot.cd > 0.2) && (rangespeed < 1.8)){
+        return "multishot";
+    } else if ((SPELLS.autoshot.cd > 1.3) && steadyuse) {
         return "steadyshot";
-    } else if ((rangespeed > 2.2) && (SPELLS.autoshot.cd > 0.6) && steadycost)  {
+    } else if ((SPELLS.multishot.cd < 0.8) && multiuse && (SPELLS.autoshot.cd > 0.2)){
+        return "multishot";
+    } else if ((SPELLS.arcaneshot.cd < 0.8) && arcaneuse && (SPELLS.autoshot.cd > 0.2) && (rangespeed > 1.9)){
+        return "arcaneshot";
+    } else if ((rangespeed > 2.2) && (SPELLS.autoshot.cd > 0.6) && steadyuse)  {
         return "steadyshot";
-    } else if ((rangespeed < 1.8) && (SPELLS.autoshot.cd > 0.4) && (SPELLS.steadyshot.cd < 0.6) && steadycost) {
+    } else if ((rangespeed < 1.8) && (SPELLS.autoshot.cd > 0.4) && (SPELLS.steadyshot.cd < 0.6) && steadyuse) {
         return "steadyshot";
     } 
     else { 
@@ -380,4 +467,24 @@ function spell_choice_method_B(){
     else { 
         return "autoshot"; 
     }
+}
+
+/** Resets counts of spells used for stats */
+function resultCountInitialize() {
+    Result_Auto.Hit = 0;
+    Result_Auto.Crit = 0;
+    Result_Auto.Miss = 0;
+    Result_Steady.Hit = 0;
+    Result_Steady.Crit = 0;
+    Result_Steady.Miss = 0;
+    Result_Multi.Hit = 0;
+    Result_Multi.Crit = 0;
+    Result_Multi.Miss = 0;
+    Result_Arcane.Hit = 0;
+    Result_Arcane.Crit = 0;
+    Result_Arcane.Miss = 0;
+    Result_Primary.Hit = 0;
+    Result_Primary.Crit = 0;
+    Result_Primary.Miss = 0;
+    Result_Primary.Partial = 0;
 }

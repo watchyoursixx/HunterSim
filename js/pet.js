@@ -135,6 +135,7 @@ function petUpdateHaste(){
 function petUpdateStats(){
 
     pet.combatcrit = pet.crit;
+    pet.combatspellcrit = talents.ferocity;
     pet.combatmiss = pet.miss;
     // hunter AP
     let bonusAP = updateAP();
@@ -156,7 +157,10 @@ function petUpdateStats(){
     }
     pet.combatcrit += combatAgi / 33;
     // pet crit imp crusader
-    if(debuffs.judgecrusader.timer > 0 && !debuffs.judgecrusader.inactive) { pet.combatcrit += debuffs.judgecrusader.crit; } // imp crusader debuff
+    if(debuffs.judgecrusader.timer > 0 && !debuffs.judgecrusader.inactive) { 
+        pet.combatcrit += debuffs.judgecrusader.crit;
+        pet.combatspellcrit += debuffs.judgecrusader.crit;
+    } // imp crusader debuff
     // pet miss imp faerie
     if(debuffs.faeriefire.timer > 0 && debuffs.faeriefire.improved && !debuffs.faeriefire.inactive) { pet.combatmiss -= 3; }
 }
@@ -232,13 +236,20 @@ function petRollSpell(specialcrit){
 function petRollMagicSpell(){
     let tmp = 0;
     let roll = rng10k();
-    tmp += (17 - talents.animal_handler) * 100;
+    let hit = (17 - talents.animal_handler);
+    tmp += hit * 100;
     if (roll < tmp) return RESULT.MISS;
-    tmp += (100 - pet.combatmiss) * pet.combatcrit; // pseudo 2 roll
+    tmp += 14.5 * 100; // partial resist rate approx. 14.5% based on log data at 0 resistance
+    if (roll < tmp) return RESULT.PARTIAL;
+    tmp += (100 - hit) * pet.combatspellcrit; // pseudo 2 roll
     if (roll < tmp) return RESULT.CRIT;
     return RESULT.HIT;
 }
-
+petdmg = {
+    kcdmg:0,
+    attackdmg:0,
+    primarydmg:0,
+}
 function petAttack(){
 
     petUpdateStats();
@@ -266,7 +277,7 @@ function petAttack(){
     petsteptime = nextpetattack;
     nextpetattack += pet.combatspeed;
     petautocount++;
-    
+    petdmg.attackdmg += dmg;
     if(combatlogRun) {
         combatlogarray[combatlogindex] = petsteptime.toFixed(3) + " - Pet Auto " + RESULTARRAY[result] + " for " + done;
         combatlogindex++;
@@ -296,6 +307,7 @@ function petSpell(petspell){
         }
         petkccount++;
         spelltype = "phys";
+        petdmg.kcdmg += dmg;
         
     } // primary spell use determined by which pet selected
     else if(petspell === 'primary') {
@@ -307,11 +319,16 @@ function petSpell(petspell){
             result = petRollSpell(specialcrit); // check attack table
             if (result === RESULT.HIT) {
                 dmg = spellPetCalc(spellindex); // calc damage
+                Result_Primary.Hit++;
             }
             else if (result === RESULT.CRIT) {
                 dmg = spellPetCalc(spellindex);
                 dmg *= 2;
                 petCrit();
+                Result_Primary.Crit++;
+            }
+            else if (result === RESULT.MISS) {
+                Result_Primary.Miss++;
             }
             spelltype = "phys";
         } 
@@ -320,11 +337,21 @@ function petSpell(petspell){
             result = petRollMagicSpell(); // check attack table
             if (result === RESULT.HIT) {
                 dmg = spellPetCalc(spellindex); // calc damage
+                Result_Primary.Hit++;
             }
             else if (result === RESULT.CRIT) {
                 dmg = spellPetCalc(spellindex);
-                dmg *= 1.5;
+                dmg *= 1.5; // spell crits are 150%
                 petCrit();
+                Result_Primary.Crit++;
+            }
+            else if (result === RESULT.PARTIAL) {
+                dmg = spellPetCalc(spellindex);
+                dmg *= 0.65; // average reduction of 35% on partial resists
+                Result_Primary.Partial++;
+            }
+            else if (result === RESULT.MISS) {
+                Result_Primary.Miss++;
             }
             spelltype = "magic";
         }
@@ -332,7 +359,7 @@ function petSpell(petspell){
         petsteptime = nextpetspell; // since pet steps don't change time (all instants) set time to current time
         nextpetspell = nextpetspell + 1.5; // set next available spell time by 1.5
         petprimarycount++;
-
+        petdmg.primarydmg += dmg;
     }
     let done = petdealdamage(dmg,result,spelltype); // need special case for magic spells pet or player
     petdmgdone += done;

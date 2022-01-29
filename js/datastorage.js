@@ -41,6 +41,35 @@ function storeData(){
     localStorage.setItem('talentindex',talentindex);
     localStorage.setItem('talents',JSON.stringify(talents));
     localStorage.setItem('whtalentlink',whtalentlink);
+    // spell enables
+    localStorage.setItem("rapidcheck", document.getElementById("rapidcheck").checked);
+    localStorage.setItem("beastcheck", document.getElementById("beastcheck").checked);
+    localStorage.setItem("racialcheck", document.getElementById("racialcheck").checked);
+    localStorage.setItem("lustcheck", document.getElementById("lustcheck").checked);
+    localStorage.setItem("drumcheck", document.getElementById("drumcheck").checked);
+    localStorage.setItem("hastecheck", document.getElementById("hastecheck").checked);
+    localStorage.setItem("secpotcheck", document.getElementById("secpotcheck").checked);
+    localStorage.setItem("runecheck", document.getElementById("runecheck").checked);
+    localStorage.setItem("multicheck", document.getElementById("multicheck").checked);
+    localStorage.setItem("arcanecheck", document.getElementById("arcanecheck").checked);
+    localStorage.setItem("raptorcheck", document.getElementById("raptorcheck").checked);
+    localStorage.setItem("meleecheck", document.getElementById("meleecheck").checked);
+    // spell offsets
+    localStorage.setItem("rapidoffset", document.getElementById("rapidoffset").value);
+    localStorage.setItem("beastoffset", document.getElementById("beastoffset").value);
+    localStorage.setItem("racialoffset", document.getElementById("racialoffset").value);
+    localStorage.setItem("lustoffset", document.getElementById("lustoffset").value);
+    localStorage.setItem("drumoffset", document.getElementById("drumoffset").value);
+    localStorage.setItem("trink1offset", document.getElementById("trink1offset").value);
+    localStorage.setItem("trink2offset", document.getElementById("trink2offset").value);
+    localStorage.setItem("startpotoffset", document.getElementById("startpotoffset").value);
+    localStorage.setItem("runeoffset", document.getElementById("runeoffset").value);
+    // spell options
+    localStorage.setItem("lustoption", document.getElementById("lustoption").value);
+    localStorage.setItem("drumoption", document.getElementById("drumoption").value);
+    localStorage.setItem("spellcdoption", document.getElementById("spellcdoption").value);
+    localStorage.setItem("secpotoption", document.getElementById("secpotoption").value);
+
     localStorage.setItem('savecheck','true');
 }
 
@@ -48,7 +77,7 @@ function fetchData(){
 
     // gear
     let savedgear = JSON.parse(localStorage.getItem('gear'));
-    gear = savedgear;
+    //gear = savedgear;
     // buffs
     let savedbuffs = JSON.parse(localStorage.getItem('buffs'));
     buffslist = savedbuffs;
@@ -92,6 +121,85 @@ function fetchData(){
     whtalentlink = savedwhlink;
     let savedtalents = JSON.parse(localStorage.getItem('talents'));
     talents = savedtalents;
+    // spell enables
+    let rapidcheck = JSON.parse(localStorage.getItem('rapidcheck'));
+    auras.rapid.enable = rapidcheck;
+    let beastcheck = JSON.parse(localStorage.getItem('beastcheck'));
+    beastenable = beastcheck;
+    let racialcheck = JSON.parse(localStorage.getItem('racialcheck'));
+    racialenable = racialcheck;
+    let lustcheck = JSON.parse(localStorage.getItem('lustcheck'));
+    auras.lust.enable = lustcheck;
+    let drumcheck = JSON.parse(localStorage.getItem('drumcheck'));
+    auras.drums.enable = drumcheck;
+    let hastecheck = JSON.parse(localStorage.getItem('hastecheck'));
+    auras.potion.primary = hastecheck;
+    let secpotcheck = JSON.parse(localStorage.getItem('secpotcheck'));
+    auras.potion.secondary = secpotcheck;
+    let runecheck = JSON.parse(localStorage.getItem('runecheck'));
+    auras.rune.enable = runecheck;
+    let multicheck = JSON.parse(localStorage.getItem('multicheck'));
+    SPELLS.multishot.enable = multicheck;
+    let arcanecheck = JSON.parse(localStorage.getItem('arcanecheck'));
+    SPELLS.arcaneshot.enable = arcanecheck;
+    //let raptorcheck = JSON.parse(localStorage.getItem('raptorcheck'));
+    //SPELLS.raptorstrike.enable = raptorcheck;
+    //let meleecheck = JSON.parse(localStorage.getItem('meleecheck'));
+    //SPELLS.melee.enable = meleecheck;
+
+    // spell offsets
+    let rapidoffset = localStorage.getItem('rapidoffset');
+    auras.rapid.offset = parseInt(rapidoffset);
+    let beastoffset = localStorage.getItem('beastoffset');
+    auras.beastwithin.offset = parseInt(beastoffset);
+    let racialoffset = localStorage.getItem('racialoffset');
+    auras.berserk.offset = parseInt(racialoffset);
+    auras.bloodfury.offset = parseInt(racialoffset);
+    let lustoffset = localStorage.getItem('lustoffset');
+    auras.lust.offset = parseInt(lustoffset);
+    let drumoffset = localStorage.getItem('drumoffset');
+    auras.drums.offset = parseInt(drumoffset);
+    let trink1offset = localStorage.getItem('trink1offset');
+    auras.aptrink1.offset = parseInt(trink1offset);
+    let trink2offset = localStorage.getItem('trink2offset');
+    auras.aptrink2.offset = parseInt(trink2offset);
+    let startpotoffset = localStorage.getItem('startpotoffset');
+    auras.potion.offset = parseInt(startpotoffset);
+    let runeoffset = localStorage.getItem('runeoffset');
+    auras.rune.offset = parseInt(runeoffset);
+    // spell option
+    let lustoption = localStorage.getItem('lustoption');
+    switch (lustoption) {
+        case "1":   auras.lust.duration = 40;
+        break;
+        case "2":   auras.lust.duration = 80;
+        break;
+        case "3":   auras.lust.duration = 120;
+        break;
+        case "4":   auras.lust.duration = 160;
+        break;
+    }
+    auras.drums.type = localStorage.getItem('drumoption');
+    let spellcdoption = localStorage.getItem('spellcdoption');
+    switch (spellcdoption) {
+        case "2min":
+            two_min_cds = 180;
+            three_min_cds = 180;
+            setSpellCDs();
+        break;
+        case "3min":
+            two_min_cds = 120;
+            three_min_cds = 240;
+            setSpellCDs();
+        break;
+        case "CD":
+            two_min_cds = 120;
+            three_min_cds = 180;
+            setSpellCDs();
+        break;
+    }
+    secondaryPotion = localStorage.getItem('secpotoption');
+    /* Display initialization for fetched values */
     // fight settings initialization
     document.getElementById("simulations").value = iterations;
     document.getElementById("minfight").value = minfighttimer;
@@ -163,9 +271,39 @@ function fetchData(){
     document.getElementById("sauptime").value = debuffs.sunder.uptime_g;
     document.getElementById("sunderapp").value = debuffs.sunder.stacktime;
     document.getElementById("ieuptime").value = debuffs.impexpose.uptime_g;
+    document.getElementById("bfuptime").value = debuffs.bloodfrenzy.uptime_g;
     document.getElementById("misuptime").value = debuffs.misery.uptime_g;
     document.getElementById("coeuptime").value = debuffs.curseofele.uptime_g;
     document.getElementById("coebonus").selected = debuffs.curseofele.improved ? true : false;
+
+    // spell enables
+    document.getElementById("rapidcheck").checked = auras.rapid.enable;
+    document.getElementById("beastcheck").checked = beastenable;
+    document.getElementById("racialcheck").checked = racialenable;
+    document.getElementById("lustcheck").checked = auras.lust.enable;
+    document.getElementById("drumcheck").checked = auras.drums.enable;
+    document.getElementById("hastecheck").checked = auras.potion.primary;
+    document.getElementById("secpotcheck").checked = auras.potion.secondary;
+    document.getElementById("runecheck").checked = auras.rune.enable;
+    document.getElementById("multicheck").checked = SPELLS.multishot.enable;
+    document.getElementById("arcanecheck").checked = SPELLS.arcaneshot.enable;
+    //document.getElementById("raptorcheck").checked = SPELLS.raptorstrike.enable;
+    //document.getElementById("meleecheck").checked = SPELLS.melee.enable;
+    // spell offsets
+    document.getElementById("rapidoffset").value = auras.rapid.offset;
+    document.getElementById("beastoffset").value = auras.beastwithin.offset;
+    document.getElementById("racialoffset").value = (auras.berserk.enable) ? auras.berserk.offset: auras.bloodfury.offset;
+    document.getElementById("lustoffset").value = auras.lust.offset;
+    document.getElementById("drumoffset").value = auras.drums.offset;
+    document.getElementById("trink1offset").value = auras.aptrink1.offset;
+    document.getElementById("trink2offset").value = auras.aptrink2.offset;
+    document.getElementById("startpotoffset").value = auras.potion.offset;
+    document.getElementById("runeoffset").value = auras.rune.offset;
+    // spell options
+    document.getElementById("lustoption").value = lustoption;
+    document.getElementById("drumoption").value = auras.drums.type;
+    document.getElementById("spellcdoption").value = spellcdoption;
+    document.getElementById("secpotoption").value = secondaryPotion;
 
     // initialize the settings after loading
     selectedOptionsResults();
