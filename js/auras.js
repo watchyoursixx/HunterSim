@@ -101,10 +101,19 @@ function initializeAuras() {
     let aptrink1rap = (aptrink1.hasOwnProperty('stats')) ? aptrink1.stats.RAP : 0;
     let aptrink2rap = (aptrink2.hasOwnProperty('stats')) ? aptrink2.stats.RAP : 0;
  
-    auras.aptrink1 = {timer:0,cooldown:0, duration:aptrink1.duration, basecd:aptrink1.cd,AP:aptrink1rap};
+    auras.aptrink1.timer = 0;
+    auras.aptrink1.cooldown = 0;
+    auras.aptrink1.duration = aptrink1.duration;
+    auras.aptrink1.basecd = aptrink1.cd;
+    auras.aptrink1.AP = aptrink1rap;
     auras.aptrink1.enable = (!aptrink1.is_proc && auras.aptrink1.AP > 0) ? true : false;
     auras.aptrink1.name = TRINKETS[gear.trinket1.id].name;
-    auras.aptrink2 = {timer:0,cooldown:0, duration:aptrink2.duration, basecd:aptrink2.cd,AP:aptrink2rap};
+
+    auras.aptrink2.timer = 0;
+    auras.aptrink2.cooldown = 0;
+    auras.aptrink2.duration = aptrink2.duration;
+    auras.aptrink2.basecd = aptrink2.cd;
+    auras.aptrink2.AP = aptrink2rap;
     auras.aptrink2.enable = (!aptrink2.is_proc && auras.aptrink2.AP > 0) ? true : false;
     auras.aptrink2.name = TRINKETS[gear.trinket2.id].name;
     
@@ -215,6 +224,8 @@ function initializeAuras() {
     debuffs.curseofele.timer = 0;
     debuffs.misery.timer = 0;
 
+    sharedtrinketcd = 0;
+
     return;
  }
 
@@ -256,7 +267,7 @@ function updateAuras(steptime) {
     if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
        /*console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));*/ }
     if(auras.dmccrusade.cooldown > 0)         { auras.dmccrusade.cooldown = Math.max(auras.dmccrusade.cooldown - steptime,0);
-       console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100)); }
+       /*console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100));*/ }
     // active cooldowns
     if(auras.drums.cooldown > 0)              { auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0);
        /*console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100));*/ }
@@ -267,7 +278,7 @@ function updateAuras(steptime) {
     if(auras.rune.cooldown > 0)             { auras.rune.cooldown = Math.max(auras.rune.cooldown - steptime,0);
        /*console.log("rune cd: " + (Math.round(auras.rune.cooldown * 100) / 100)); */}
     if(auras.abacus.cooldown > 0)             { auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0);
-       console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100)); }
+       /*console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100));*/ }
     if(auras.bloodfury.cooldown > 0)          { auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0);
        /*console.log("bloodfury cd: " + (Math.round(auras.bloodfury.cooldown * 100) / 100));*/ }
     if(auras.berserk.cooldown > 0)            { auras.berserk.cooldown = Math.max(auras.berserk.cooldown - steptime,0);

@@ -1956,27 +1956,6 @@ const CHESTS = {
 }
 
 const FEET = {
-    2566: {
-        name: "Fel Leather Boots",
-        stats: {
-            MAP: 36,
-            RAP: 36,
-            Crit: 17,
-            Hit: 25
-        },
-        Location: "Crafting",
-        sockets: [
-            "Yellow",
-            "Red"
-        ],
-        socketBonus: {
-            MAP: 6,
-            RAP: 6
-        },
-        Phase: 1,
-        icon: "inv_boots_cloth_05",
-        quality: "Uncommon"
-    },
     22061: {
         name: "Beastmaster's Boots",
         stats: {
@@ -2018,6 +1997,27 @@ const FEET = {
         Phase: 1,
         icon: "inv_boots_chain_08",
         quality: "Uncommon"
+    },
+    25686: {
+        name: "Fel Leather Boots",
+        stats: {
+            MAP: 36,
+            RAP: 36,
+            Crit: 17,
+            Hit: 25
+        },
+        Location: "Crafting",
+        sockets: [
+            "Yellow",
+            "Red"
+        ],
+        socketBonus: {
+            MAP: 6,
+            RAP: 6
+        },
+        Phase: 1,
+        icon: "inv_boots_cloth_05",
+        quality: "Rare"
     },
     25941: {
         name: "Boots of the Outlander",
@@ -6823,19 +6823,20 @@ const MELEE_WEAPONS = {
         quality: "Uncommon"
     },
     29924: {
-        name: "Nether-Stalker's Blade",
+        name: "Netherbane",
         stats: {
-            Agi: 8,
-            MAP: 32,
-            RAP: 32
+            Agi: 25,
+            Stam: 21,
+            MAP: 40,
+            RAP: 40
         },
-        Location: "Quest Reward",
-        type: "dagger",
-        speed: 1.8,
-        mindmg: 72,
-        maxdmg: 135,
+        Location: "The Eye",
+        type: "axe",
+        speed: 2.6,
+        mindmg: 175,
+        maxdmg: 327,
         hand: "One",
-        Phase: 1,
+        Phase: 2,
         icon: "inv_axe_62",
         quality: "Epic"
     },
@@ -7321,20 +7322,19 @@ const MELEE_WEAPONS = {
         quality: "Uncommon"
     },
     31703: {
-        name: "Netherbane",
+        name: "Nether-Stalker's Blade",
         stats: {
-            Agi: 25,
-            Stam: 21,
-            MAP: 40,
-            RAP: 40
+            Agi: 8,
+            MAP: 32,
+            RAP: 32
         },
-        Location: "The Eye",
-        type: "axe",
-        speed: 2.6,
-        mindmg: 175,
-        maxdmg: 327,
+        Location: "Quest Reward",
+        type: "dagger",
+        speed: 1.8,
+        mindmg: 72,
+        maxdmg: 135,
         hand: "One",
-        Phase: 2,
+        Phase: 1,
         icon: "inv_weapon_shortblade_12",
         quality: "Uncommon"
     },
