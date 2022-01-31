@@ -6823,19 +6823,20 @@ const MELEE_WEAPONS = {
         quality: "Uncommon"
     },
     29924: {
-        name: "Nether-Stalker's Blade",
+        name: "Netherbane",
         stats: {
-            Agi: 8,
-            MAP: 32,
-            RAP: 32
+            Agi: 25,
+            Stam: 21,
+            MAP: 40,
+            RAP: 40
         },
-        Location: "Quest Reward",
-        type: "dagger",
-        speed: 1.8,
-        mindmg: 72,
-        maxdmg: 135,
+        Location: "The Eye",
+        type: "axe",
+        speed: 2.6,
+        mindmg: 175,
+        maxdmg: 327,
         hand: "One",
-        Phase: 1,
+        Phase: 2,
         icon: "inv_axe_62",
         quality: "Epic"
     },
@@ -7321,20 +7322,19 @@ const MELEE_WEAPONS = {
         quality: "Uncommon"
     },
     31703: {
-        name: "Netherbane",
+        name: "Nether-Stalker's Blade",
         stats: {
-            Agi: 25,
-            Stam: 21,
-            MAP: 40,
-            RAP: 40
+            Agi: 8,
+            MAP: 32,
+            RAP: 32
         },
-        Location: "The Eye",
-        type: "axe",
-        speed: 2.6,
-        mindmg: 175,
-        maxdmg: 327,
+        Location: "Quest Reward",
+        type: "dagger",
+        speed: 1.8,
+        mindmg: 72,
+        maxdmg: 135,
         hand: "One",
-        Phase: 2,
+        Phase: 1,
         icon: "inv_weapon_shortblade_12",
         quality: "Uncommon"
     },
