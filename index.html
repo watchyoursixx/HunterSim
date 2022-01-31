@@ -324,7 +324,7 @@
                       <div class="gear-slot">
                         <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring1icon">
                           <div class="itemsockets">
-                            <div class="itemsocket"><img class="itemsockets-img" src="images/Yellow_empty.jfif" id="wristskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/Yellow_empty.jfif" id="ring1skt1"><img class="gemskt" src=""></div>
                           </div>
                         </div>
                         <div class="gear-slot-details  detail-right-align">
@@ -335,7 +335,7 @@
                       <div class="gear-slot">
                         <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Finger.jpg" alt="" data-image-width="56" data-image-height="56" id="ring2icon">
                           <div class="itemsockets">
-                            <div class="itemsocket"><img class="itemsockets-img" src="images/Yellow_empty.jfif" id="wristskt1"><img class="gemskt" src=""></div>
+                            <div class="itemsocket"><img class="itemsockets-img" src="images/Yellow_empty.jfif" id="ring2skt1"><img class="gemskt" src=""></div>
                           </div>
                         </div>
                         <div class="gear-slot-details  detail-right-align">
@@ -347,7 +347,7 @@
                         <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket1icon">
                         </div>
                         <div class="gear-slot-details  detail-right-align">
-                          <p class="u-align-right u-text item-name"><a href="#" id="trink1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 1</a></p>
+                          <p class="u-align-right u-text item-name"><a href="#" id="trinket1slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 1</a></p>
                     
                         </div>
                       </div>
@@ -355,7 +355,7 @@
                         <div class="gear-slot-icon icon-right-align"><img class="u-expanded-width u-image u-image-default u-preserve-proportions gear-images" src="images/Trinket.jpg" alt="" data-image-width="56" data-image-height="56" id="trinket2icon">
                         </div>
                         <div class="gear-slot-details  detail-right-align">
-                          <p class="u-align-right u-text item-name"><a href="#" id="trink2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 2</a></p>
+                          <p class="u-align-right u-text item-name"><a href="#" id="trinket2slot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Trinket 2</a></p>
                         </div>
                       </div>
                       <div class="gear-slot">
@@ -858,7 +858,31 @@
   </div>
 </div>
 
+<div id="gearmodal" class="modal-gear">
+  <div class="modal-gear-content">
+    <span class="close">&times;</span>
+    <div>
+      <div id="itemseldiv"><label class="label-2">Item:</label>
+      <select id="itemselect" onchange="selectItem(this.value)" class="select hover-grey gear-select-input">
+      </select></div>
+      <div id="gem1seldiv"><label id="labelgem1" class="label-2">Gem 1:</label>
+      <select id="gem1select" onchange="selectFirstGem(this.value)" class="select hover-grey gear-select-input">
+      </select></div>
+      <div id="gem2seldiv"><label id="labelgem2" class="label-2">Gem 2:</label>
+      <select id="gem2select" onchange="selectSecondGem(this.value)" class="select hover-grey gear-select-input">
+      </select></div>
+      <div id="gem3seldiv"><label id="labelgem3" class="label-2">Gem 3:</label>
+      <select id="gem3select" onchange="selectThirdGem(this.value)" class="select hover-grey gear-select-input">
+      </select></div>
+      <div id="enchseldiv"><label class="label-2">Enchant:</label>
+      <select id="enchselect" onchange="selectEnchant(this.value)" class="select hover-grey gear-select-input">
+      </select></div>
+    </div>
+  </div>
+</div>
+
     <script class="u-script" type="text/javascript" src="js/datastorage.js"></script>
+    <script class="u-script" type="text/javascript" src="js/gearui.js"></script> 
     <script class="u-script" type="text/javascript" src="js/ui.js"></script> 
 
     <footer class="u-black u-clearfix u-footer u-footer" id="sec-5c75"><a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="255" data-image-height="198">
