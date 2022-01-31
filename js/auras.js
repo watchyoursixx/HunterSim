@@ -161,7 +161,10 @@ function initializeAuras() {
     return;
  }
  function ResetAuras(){
-
+    killcommand.cooldown = 0;
+    pet.ferocious.timer = 0;
+    pet.frenzy.timer = 0;
+    
     auras.lust.timer = 0;
     auras.berserk.timer = 0;
     auras.bloodfury.timer = 0;
