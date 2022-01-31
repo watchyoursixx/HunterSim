@@ -404,10 +404,15 @@ function petCrit(){
         let frenzychance = talents.frenzy * 2000;
         pet.frenzy.timer = (roll <= frenzychance) ? 8 : pet.frenzy.timer; // proc check
         if(pet.frenzy.timer === 8) { 
-            if(combatlogRun && nextpetspell >= nextpetattack) {
-                combatlogarray[combatlogindex] = nextpetattack.toFixed(3) + " - Pet gains Frenzy";
-                combatlogindex++;
-            } else if (combatlogRun){
+            if(combatlogRun && petspell === 'kill command') {
+                combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Pet gains Frenzy";
+                    combatlogindex++;
+            } 
+            else if(combatlogRun && nextpetspell >= nextpetattack) {
+                    combatlogarray[combatlogindex] = nextpetattack.toFixed(3) + " - Pet gains Frenzy";
+                    combatlogindex++;
+            } 
+            else if (combatlogRun){
                 combatlogarray[combatlogindex] = nextpetspell.toFixed(3) + " - Pet gains Frenzy";
                 combatlogindex++;
             }
@@ -416,10 +421,15 @@ function petCrit(){
     //ferocious insp
     if (talents.ferocious_insp > 1) {
         pet.ferocious.timer = 10;
-        if(combatlogRun && nextpetspell >= nextpetattack) {
+        if(combatlogRun && petspell === 'kill command') {
+            combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Pet gains Ferocious Inspiration";
+                combatlogindex++;
+        } 
+        else if(combatlogRun && nextpetspell >= nextpetattack) {
             combatlogarray[combatlogindex] = nextpetattack.toFixed(3) + " - Pet gains Ferocious Inspiration";
             combatlogindex++;
-        } else if (combatlogRun){
+        } 
+        else if (combatlogRun){
             combatlogarray[combatlogindex] = nextpetspell.toFixed(3) + " - Pet gains Ferocious Inspiration";
             combatlogindex++;
         }

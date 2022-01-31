@@ -976,9 +976,7 @@ function procattack(attack,result) {
    // blackened naaru sliver - roll to buff
    if (auras.naarusliver.enable && auras.naarusliver.cooldown === 0){
       roll = rng10k(); 
-      if(rangehit) {PPM = 1/60 * RANGED_WEAPONS[gear.range.id].speed * 100; }
-      if(meleehit) {PPM = BaseMeleeSpeed / 60 * 100; }
-      procchance = auras.naarusliver.ppm * PPM;
+      procchance = auras.naarusliver.procchance;
       auras.naarusliver.timer = (roll <= procchance * 100) ? auras.naarusliver.duration : 0;
       if(auras.naarusliver.timer === auras.naarusliver.duration) { 
          auras.naarusliver.cooldown = 45; 
