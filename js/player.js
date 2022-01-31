@@ -1056,7 +1056,7 @@ function potionHandling() {
    let primary = auras.potion.primary;
    let secondary = auras.potion.secondary;
    // use secondary if no primary or if mana below 4k
-   if ((secondary && (currentMana <= 4000)) || !primary && secondary) {
+   if ((secondary && (currentMana <= 4000)) || (!primary && secondary && (Mana - currentMana >= 3000))) {
          if (secondaryPotion === 'Fel') {
             auras.potion.timer = 24; // add condition for fel mana
             auras.potion.ticks = 7; // 8 total ticks for fel mana, (0-7)
@@ -1079,8 +1079,12 @@ function potionHandling() {
       auras.potion.timer = 15;
       auras.potion.used = 'Haste';
       
+   } else {
+      return false;
    }
    auras.potion.cooldown = 120;
+
+   return true;
 }
 
 /** rng function for randomizing an integer from 2 values such as the damage range on weapons.

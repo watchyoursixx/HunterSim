@@ -631,8 +631,7 @@ function onUseSpellCheck(){
             combatlogindex++;
         }
     }
-    if((auras.potion.primary || auras.potion.secondary) && auras.potion.cooldown === 0) {
-        potionHandling();
+    if((auras.potion.primary || auras.potion.secondary) && auras.potion.cooldown === 0 && potionHandling()) {
         if(combatlogRun) {
             combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player used " + auras.potion.used + " Potion";
             combatlogindex++;
