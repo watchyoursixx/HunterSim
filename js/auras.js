@@ -101,10 +101,19 @@ function initializeAuras() {
     let aptrink1rap = (aptrink1.hasOwnProperty('stats')) ? aptrink1.stats.RAP : 0;
     let aptrink2rap = (aptrink2.hasOwnProperty('stats')) ? aptrink2.stats.RAP : 0;
  
-    auras.aptrink1 = {timer:0,cooldown:0, duration:aptrink1.duration, basecd:aptrink1.cd,AP:aptrink1rap};
+    auras.aptrink1.timer = 0;
+    auras.aptrink1.cooldown = 0;
+    auras.aptrink1.duration = aptrink1.duration;
+    auras.aptrink1.basecd = aptrink1.cd;
+    auras.aptrink1.AP = aptrink1rap;
     auras.aptrink1.enable = (!aptrink1.is_proc && auras.aptrink1.AP > 0) ? true : false;
     auras.aptrink1.name = TRINKETS[gear.trinket1.id].name;
-    auras.aptrink2 = {timer:0,cooldown:0, duration:aptrink2.duration, basecd:aptrink2.cd,AP:aptrink2rap};
+
+    auras.aptrink2.timer = 0;
+    auras.aptrink2.cooldown = 0;
+    auras.aptrink2.duration = aptrink2.duration;
+    auras.aptrink2.basecd = aptrink2.cd;
+    auras.aptrink2.AP = aptrink2rap;
     auras.aptrink2.enable = (!aptrink2.is_proc && auras.aptrink2.AP > 0) ? true : false;
     auras.aptrink2.name = TRINKETS[gear.trinket2.id].name;
     
@@ -214,6 +223,8 @@ function initializeAuras() {
     debuffs.bloodfrenzy.timer = 0;
     debuffs.curseofele.timer = 0;
     debuffs.misery.timer = 0;
+
+    sharedtrinketcd = 0;
 
     return;
  }
