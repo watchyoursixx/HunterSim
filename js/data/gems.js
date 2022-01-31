@@ -6,6 +6,7 @@ const GEMS = {
           "yellow",
           "blue"
       ],
+      stats: {},
       Phase: 1,
       quality: "Rare",
       icon: "inv_enchant_voidsphere"

@@ -255,7 +255,7 @@ function calcBaseStats() {
   // Crit rating and crit chance
    let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
   MeleeCritRating = critrating;
-  RangeCritRating = critrating + currentgear.stats.RangeCrit;
+  RangeCritRating = critrating + (currentgear.stats.RangeCrit || 0);
    let crit = BaseCritChance + Agi / AgiToCrit + BuffStats.CritChance + talents.killer_instinct;
   MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
   RangeCritChance = crit + RangeCritRating / CritRatingRatio + talents.lethal_shots + races[selectedRace].critchance;

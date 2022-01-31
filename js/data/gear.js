@@ -10504,7 +10504,7 @@ const RINGS = {
         icon: "inv_jewelry_ring_ahnqiraj_01",
         quality: "Rare"
     },
-    27833: {
+    27832: {
         name: "Band of the Victor",
         stats: {
             Stam: 25,
