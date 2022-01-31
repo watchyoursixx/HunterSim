@@ -256,7 +256,7 @@ function updateAuras(steptime) {
     if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
        /*console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));*/ }
     if(auras.dmccrusade.cooldown > 0)         { auras.dmccrusade.cooldown = Math.max(auras.dmccrusade.cooldown - steptime,0);
-       console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100)); }
+       /*console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100));*/ }
     // active cooldowns
     if(auras.drums.cooldown > 0)              { auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0);
        /*console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100));*/ }
@@ -267,7 +267,7 @@ function updateAuras(steptime) {
     if(auras.rune.cooldown > 0)             { auras.rune.cooldown = Math.max(auras.rune.cooldown - steptime,0);
        /*console.log("rune cd: " + (Math.round(auras.rune.cooldown * 100) / 100)); */}
     if(auras.abacus.cooldown > 0)             { auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0);
-       console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100)); }
+       /*console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100));*/ }
     if(auras.bloodfury.cooldown > 0)          { auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0);
        /*console.log("bloodfury cd: " + (Math.round(auras.bloodfury.cooldown * 100) / 100));*/ }
     if(auras.berserk.cooldown > 0)            { auras.berserk.cooldown = Math.max(auras.berserk.cooldown - steptime,0);
