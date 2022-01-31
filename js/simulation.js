@@ -327,6 +327,7 @@ function startTime(spell){
     playertimestart += (spell === "arcaneshot") ? Math.max(SPELLS.arcaneshot.cd,0) + latency : 0;
     playertimestart += (spell === "raptorstrike") ? Math.max(SPELLS.raptorstrike.cd,0) + latency : 0;
     playertimestart += (spell === "aimedshot") ? Math.max(SPELLS.aimedshot.cd,0) + latency : 0;
+    playertimestart += (spell === "readiness") ? latency : 0;
 
     return playertimestart;
 }
@@ -375,6 +376,9 @@ function nextEvent(){
             currentgcd = playertimestart + 1.5; // gcd
             //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
             playertimeend = SPELLS.arcaneshot.cast + playertimestart;
+        } else if (spell === 'readiness') {
+            currentgcd = playertimestart + 1.0; // gcd
+            playertimeend = 0.0001 + playertimestart; // Instant cast
         }
         playerattackready = true;
         //console.log(SPELLS);
@@ -418,10 +422,20 @@ function spell_choice_method_A(){
     let steadyuse = (SPELLS.steadyshot.cost <= currentMana) && SPELLS.steadyshot.enable; // check if cost is usable or not
     let multiuse = (SPELLS.multishot.cost <= currentMana) && SPELLS.multishot.enable;
     let arcaneuse = (SPELLS.arcaneshot.cost <= currentMana) && SPELLS.arcaneshot.enable;
+
+    // Readiness logic: Use when rapid fire is on cooldown, but not active. If attacking fast, prioritize multishot before readiness.
+    // Otherwise when attacking slowly, use readiness after a steadyshot like frenching.
+    let rapid_on_cd_not_active = auras.rapid.enable && auras.rapid.cooldown > 0 && auras.rapid.timer === 0;
+    let readinessuse = auras.readiness.enable && auras.readiness.cooldown === 0 && rapid_on_cd_not_active;
+
     if ((SPELLS.multishot.cd < 0.8) && multiuse && (SPELLS.autoshot.cd > 0.2) && (rangespeed < 1.8)){
         return "multishot";
+    } else if (readinessuse && rangespeed < 1.8) {
+        return "readiness";
     } else if ((SPELLS.autoshot.cd > 1.3) && steadyuse) {
         return "steadyshot";
+    } else if (readinessuse) {
+        return "readiness";
     } else if ((SPELLS.multishot.cd < 0.8) && multiuse && (SPELLS.autoshot.cd > 0.2)){
         return "multishot";
     } else if ((SPELLS.arcaneshot.cd < 0.8) && arcaneuse && (SPELLS.autoshot.cd > 0.2) && (rangespeed > 1.9)){

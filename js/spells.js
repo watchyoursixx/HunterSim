@@ -89,6 +89,7 @@ function updateSpellCDs(spell,petspell) {
     SPELLS.multishot.cd = (spell === 'multishot') ? 10 : Math.max(SPELLS.multishot.cd - steptime, 0);
     SPELLS.arcaneshot.cd = (spell === 'arcaneshot') ? (6 - talents.imp_arc_shot) : Math.max(SPELLS.arcaneshot.cd - steptime, 0);
     //SPELLS.aimedshot.cd = Math.max(SPELLS.aimedshot.cd - steptime, 0);
+    auras.readiness.cooldown = (spell === 'readiness') ? auras.readiness.basecd : Math.max(auras.readiness.cooldown - steptime, 0);
 
     if (currentgcd > playertimeend && spell != undefined) {
         let remaininggcd = currentgcd - playertimeend;

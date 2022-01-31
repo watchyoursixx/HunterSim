@@ -811,6 +811,15 @@ function cast(spell) {
       attackSpell(spell,spellcost);
       //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
    }
+   else if (spell === 'readiness') {
+      auras.rapid.cooldown = 0;
+      SPELLS.multishot.cd = 0;
+      SPELLS.arcaneshot.cd = 0;
+      if(combatlogRun) {
+         combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player casts Readyiness";
+         combatlogindex++;
+      }
+   }
 return;
 }
 

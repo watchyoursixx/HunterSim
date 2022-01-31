@@ -9,6 +9,7 @@ var auras = {
     drums: {enable:true, timer:0, cooldown:0,basecd:120, duration:30, uptime:0, type:'battle', offset:0},// coded
     potion: {timer:0, cooldown:0,basecd:120, duration:15, uptime:0, primary:false, secondary:false, used:"", ticks: 0, offset:0},// coded
     rune: {enable:true, cooldown:0,basecd:120, offset:0},
+    readiness: {enable:false, cooldown:0, basecd:300, offset:0},
     abacus: {enable:false, timer:0, cooldown:0,basecd:120, duration:10, uptime:0},// coded
     lust: {enable:true, timer:0, cooldown:0,basecd:lustcd, duration:40, uptime:0, offset:0},// coded
     rapid: {enable:true, timer:0, cooldown:0,basecd:rapidcd, duration:15, uptime:0, offset:0},// coded
@@ -136,6 +137,7 @@ function initializeAuras() {
     auras.donsantos.enable = (gear.range.id === 31323) ? true : false;
     auras.eternalchamp.enable = ((gear.ring1.id === 29301) || (gear.ring2.id === 29301)) ? true : false;
     auras.imphawk.enable = (talents.imp_hawk > 1) ? true : false;
+    auras.readiness.enable = talents.readiness > 0;
  
     for(let prop in auras){
         auras[prop].uptime = 0;
@@ -197,6 +199,7 @@ function initializeAuras() {
     auras.drums.cooldown = auras.drums.offset;
     auras.potion.cooldown = auras.potion.offset;
     auras.rune.cooldown = auras.rune.offset;
+    auras.readiness.cooldown = 0;
     auras.rapid.cooldown = auras.rapid.offset;
     auras.swarmguard.cooldown = 0;
     auras.unyieldingcourage.cooldown = 0;
@@ -252,51 +255,95 @@ function updateAuras(steptime) {
     // set timer of on use AP trinkets
 
     debuffHandler();
-    stepauras(steptime);
     uptimecalc();
+    stepauras(steptime);
 
     // proc cooldowns
-    if(auras.tsunami.cooldown > 0)            { auras.tsunami.cooldown = Math.max(auras.tsunami.cooldown - steptime,0); 
-       /*console.log("tsunami cd: " + (Math.round(auras.tsunami.cooldown * 100) / 100));*/ } 
-    if(auras.hourglass.cooldown > 0)          { auras.hourglass.cooldown = Math.max(auras.hourglass.cooldown - steptime,0);
-       /*console.log("hourglass cd: " + (Math.round(auras.hourglass.cooldown * 100) / 100));*/ }
-    if(auras.dragonspine.cooldown > 0)        { auras.dragonspine.cooldown = Math.max(auras.dragonspine.cooldown - steptime,0);
-       /*console.log("dragonspine cd: " + (Math.round(auras.dragonspine.cooldown * 100) / 100));*/ }
-    if(auras.naarusliver.cooldown > 0)        { auras.naarusliver.cooldown = Math.max(auras.naarusliver.cooldown - steptime,0); 
-       /*console.log("naaru sliver cd: " + (Math.round(auras.naarusliver.cooldown * 100) / 100));*/ } 
-    if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
-       /*console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));*/ }
-    if(auras.dmccrusade.cooldown > 0)         { auras.dmccrusade.cooldown = Math.max(auras.dmccrusade.cooldown - steptime,0);
-       /*console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100));*/ }
+    if(auras.tsunami.cooldown > 0)            {
+        auras.tsunami.cooldown = Math.max(auras.tsunami.cooldown - steptime,0); 
+        //console.log("tsunami cd: " + (Math.round(auras.tsunami.cooldown * 100) / 100));
+    } 
+    if(auras.hourglass.cooldown > 0) {
+        auras.hourglass.cooldown = Math.max(auras.hourglass.cooldown - steptime,0);
+        //console.log("hourglass cd: " + (Math.round(auras.hourglass.cooldown * 100) / 100));
+    }
+    if(auras.dragonspine.cooldown > 0) {
+        auras.dragonspine.cooldown = Math.max(auras.dragonspine.cooldown - steptime,0);
+        //console.log("dragonspine cd: " + (Math.round(auras.dragonspine.cooldown * 100) / 100));
+    }
+    if(auras.naarusliver.cooldown > 0) {
+        auras.naarusliver.cooldown = Math.max(auras.naarusliver.cooldown - steptime,0); 
+        //console.log("naaru sliver cd: " + (Math.round(auras.naarusliver.cooldown * 100) / 100));
+    }
+    if(auras.eternalchamp.cooldown > 0) {
+        auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
+        //console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));
+    }
+    if(auras.dmccrusade.cooldown > 0) {
+        auras.dmccrusade.cooldown = Math.max(auras.dmccrusade.cooldown - steptime,0);
+        //console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100));
+    }
+
     // active cooldowns
-    if(auras.drums.cooldown > 0)              { auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0);
-       /*console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100));*/ }
-    if(auras.lust.cooldown > 0)               { auras.lust.cooldown = Math.max(auras.lust.cooldown - steptime,0);
-       /*console.log("lust cd: " + (Math.round(auras.lust.cooldown * 100) / 100));*/ }
-    if(auras.potion.cooldown > 0)             { auras.potion.cooldown = Math.max(auras.potion.cooldown - steptime,0);
-       /*console.log("potion cd: " + (Math.round(auras.potion.cooldown * 100) / 100));*/ }
-    if(auras.rune.cooldown > 0)             { auras.rune.cooldown = Math.max(auras.rune.cooldown - steptime,0);
-       /*console.log("rune cd: " + (Math.round(auras.rune.cooldown * 100) / 100)); */}
-    if(auras.abacus.cooldown > 0)             { auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0);
-       /*console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100));*/ }
-    if(auras.bloodfury.cooldown > 0)          { auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0);
-       /*console.log("bloodfury cd: " + (Math.round(auras.bloodfury.cooldown * 100) / 100));*/ }
-    if(auras.berserk.cooldown > 0)            { auras.berserk.cooldown = Math.max(auras.berserk.cooldown - steptime,0);
-       /*console.log("berserk cd: " + (Math.round(auras.berserk.cooldown * 100) / 100));*/ }
-    if(auras.rapid.cooldown > 0)              { auras.rapid.cooldown = Math.max(auras.rapid.cooldown - steptime,0);
-       /*console.log("rapid cd: " + (Math.round(auras.rapid.cooldown * 100) / 100));*/ }
-    if(auras.swarmguard.cooldown > 0)         { auras.swarmguard.cooldown = Math.max(auras.swarmguard.cooldown - steptime,0);
-       /*console.log("swarmguard cd: " + (Math.round(auras.swarmguard.cooldown * 100) / 100));*/ }
-    if(auras.unyieldingcourage.cooldown > 0)  { auras.unyieldingcourage.cooldown = Math.max(auras.unyieldingcourage.cooldown - steptime,0);
-       /*console.log("unyielding cd: " + (Math.round(auras.unyieldingcourage.cooldown * 100) / 100));*/ }
-    if(auras.beastwithin.cooldown > 0)  { auras.beastwithin.cooldown = Math.max(auras.beastwithin.cooldown - steptime,0);
-       /*console.log("beastwithin cd: " + (Math.round(auras.beastwithin.cooldown * 100) / 100));*/ }
-    if(auras.aptrink1.enable && (auras.aptrink1.cooldown > 0))  { auras.aptrink1.cooldown = Math.max(auras.aptrink1.cooldown - steptime,0);
-       /*console.log("aptrink1 cd: " + (Math.round(auras.aptrink1.cooldown * 100) / 100));*/ }
-    if(auras.aptrink2.enable && (auras.aptrink2.cooldown > 0))  { auras.aptrink2.cooldown = Math.max(auras.aptrink2.cooldown - steptime,0);
-     /*console.log("aptrink2 cd: " + (Math.round(auras.aptrink2.cooldown * 100) / 100));*/ }
-    if(auras.tenacity.cooldown > 0)  { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0);
-       /*console.log("tenacity cd: " + (Math.round(auras.tenacity.cooldown * 100) / 100));*/ }
+    if(auras.drums.cooldown > 0) {
+        auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0);
+        //console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100));
+    }
+    if(auras.lust.cooldown > 0) {
+        auras.lust.cooldown = Math.max(auras.lust.cooldown - steptime,0);
+        //console.log("lust cd: " + (Math.round(auras.lust.cooldown * 100) / 100));
+    }
+    if(auras.potion.cooldown > 0) {
+        auras.potion.cooldown = Math.max(auras.potion.cooldown - steptime,0);
+        //console.log("potion cd: " + (Math.round(auras.potion.cooldown * 100) / 100));
+    }
+    if(auras.rune.cooldown > 0) {
+        auras.rune.cooldown = Math.max(auras.rune.cooldown - steptime,0);
+        //console.log("rune cd: " + (Math.round(auras.rune.cooldown * 100) / 100));
+    }
+    if(auras.readiness.cooldown > 0) {
+        auras.readiness.cooldown = Math.max(auras.readiness.cooldown - steptime, 0);
+    }
+    if(auras.abacus.cooldown > 0) {
+        auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0);
+        //console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100));
+    }
+    if(auras.bloodfury.cooldown > 0) {
+        auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0);
+        //console.log("bloodfury cd: " + (Math.round(auras.bloodfury.cooldown * 100) / 100));
+    }
+    if(auras.berserk.cooldown > 0) {
+        auras.berserk.cooldown = Math.max(auras.berserk.cooldown - steptime,0);
+        //console.log("berserk cd: " + (Math.round(auras.berserk.cooldown * 100) / 100));
+    }
+    if(auras.rapid.cooldown > 0) {
+        auras.rapid.cooldown = Math.max(auras.rapid.cooldown - steptime,0);
+        //console.log("rapid cd: " + (Math.round(auras.rapid.cooldown * 100) / 100));
+    }
+    if(auras.swarmguard.cooldown > 0) {
+        auras.swarmguard.cooldown = Math.max(auras.swarmguard.cooldown - steptime,0);
+        //console.log("swarmguard cd: " + (Math.round(auras.swarmguard.cooldown * 100) / 100));
+    }
+    if(auras.unyieldingcourage.cooldown > 0) {
+        auras.unyieldingcourage.cooldown = Math.max(auras.unyieldingcourage.cooldown - steptime,0);
+        //console.log("unyielding cd: " + (Math.round(auras.unyieldingcourage.cooldown * 100) / 100));
+    }
+    if(auras.beastwithin.cooldown > 0) {
+        auras.beastwithin.cooldown = Math.max(auras.beastwithin.cooldown - steptime,0);
+        //console.log("beastwithin cd: " + (Math.round(auras.beastwithin.cooldown * 100) / 100));
+    }
+    if(auras.aptrink1.enable && (auras.aptrink1.cooldown > 0)) {
+        auras.aptrink1.cooldown = Math.max(auras.aptrink1.cooldown - steptime,0);
+        //console.log("aptrink1 cd: " + (Math.round(auras.aptrink1.cooldown * 100) / 100));
+    }
+    if(auras.aptrink2.enable && (auras.aptrink2.cooldown > 0)) {
+        auras.aptrink2.cooldown = Math.max(auras.aptrink2.cooldown - steptime,0);
+        //console.log("aptrink2 cd: " + (Math.round(auras.aptrink2.cooldown * 100) / 100));
+    }
+    if(auras.tenacity.cooldown > 0)  {
+        auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0);
+        //console.log("tenacity cd: " + (Math.round(auras.tenacity.cooldown * 100) / 100));
+    }
     
     return;   
  }
