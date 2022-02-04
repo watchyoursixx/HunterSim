@@ -1,4 +1,6 @@
 var iterations = 10000;
+var currentiteration = 0;
+var loopcheck = 0;
 var minfighttimer = 243;
 var maxfighttimer = 245;
 var DPS = 0;
@@ -122,17 +124,44 @@ function startSync() {
     resultCountInitialize();
     initializeAuras();
     // loop through iterations, run example combat log as the last iteration
-    for (iteration = 1; iteration <= iterations; ++iteration) {
-        if (iteration === iterations) {
-            combatlogRun = true;
-        } else {combatlogRun = false;}
-        runSim();
-        sumdmg += totaldmgdone;
-        sumpetdmg += petdmgdone;
-        sumduration += totalduration;
+    currentiteration = 0;
+    loopcheck = 0;
+    loopSim();
+
+}
+function loopSim() {
+    if (currentiteration === iterations) {
+        combatlogRun = true;
+    } else {combatlogRun = false;}
+    runSim();
+    sumdmg += totaldmgdone;
+    sumpetdmg += petdmgdone;
+    sumduration += totalduration;
+    currentiteration++;
+    
+    if (currentiteration < iterations) {
+        let visualcheck = currentiteration / 50;
+
+        if (visualcheck > loopcheck){
+            loopcheck++;
+            setTimeout(loopSim, 0);
+            let loadpercent = (currentiteration / iterations) * 100;
+            document.getElementById("loadbar").style.width =  loadpercent + "%";
+            displayDPSResults();
+        }    
+        else {
+            loopSim();
+        }
+    }
+    else if (currentiteration === iterations){
+        document.getElementById("loadbar").style.width =  100 + "%";
+        finalResults();
     }
     avgDPS = (sumdmg+sumpetdmg) / sumduration;
 
+}
+function finalResults() {
+    avgDPS = (sumdmg+sumpetdmg) / sumduration;
     // sets uptime to a % instead of seconds
     for (let prop in buff_uptimes) {
         buff_uptimes[prop] = (auras[prop].uptime / sumduration * 100).toFixed(2);
@@ -200,12 +229,10 @@ function startSync() {
     performancecheck2 = performance.now();
     executecodetime = (performancecheck2 - performancecheck1) / 1000; // milliseconds convert to sec
     displayDPSResults();
-    //console.log(autoarray);
-    //console.log(donearray);
-    //console.log(RAParray);
-    //console.log(auras.naarusliver);
-    //console.log(auras.hourglass);
-    //console.log("autos: " + autocount);
+    let newspread = spread.map(function(each_element){
+        return Number(Math.floor(each_element / 10) * 10);
+    });
+    //console.log(newspread);
     console.log("*****************");
 }
 /** Main loop function for simming iterations, ran for each iteration. */
@@ -233,6 +260,7 @@ function runSim() {
     pet.ferocious.timer = 0;
     combatlogarray = [];
     combatlogindex = 0;
+    killcommand.ready = false;
 
     initializeSpells();
     ResetAuras();

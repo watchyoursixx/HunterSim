@@ -9,6 +9,22 @@ gearspan.onclick = function() {
     gearmodal.style.display = "none";
 }
 
+// on click listeners for slots and enchants
+
+document.getElementById("headench").addEventListener("click", function(){gearModalDisplay("head")}, false);
+document.getElementById("shoulderench").addEventListener("click", function(){gearModalDisplay("shoulder")}, false);
+document.getElementById("backench").addEventListener("click", function(){gearModalDisplay("back")}, false);
+document.getElementById("chestench").addEventListener("click", function(){gearModalDisplay("chest")}, false);
+document.getElementById("wristench").addEventListener("click", function(){gearModalDisplay("wrist")}, false);
+document.getElementById("mainhandench").addEventListener("click", function(){gearModalDisplay("mainhand")}, false);
+document.getElementById("offhandench").addEventListener("click", function(){gearModalDisplay("offhand")}, false);
+document.getElementById("rangeench").addEventListener("click", function(){gearModalDisplay("range")}, false);
+document.getElementById("handench").addEventListener("click", function(){gearModalDisplay("hand")}, false);
+document.getElementById("legench").addEventListener("click", function(){gearModalDisplay("leg")}, false);
+document.getElementById("feetench").addEventListener("click", function(){gearModalDisplay("feet")}, false);
+document.getElementById("ring1ench").addEventListener("click", function(){gearModalDisplay("ring1")}, false);
+document.getElementById("ring2ench").addEventListener("click", function(){gearModalDisplay("ring2")}, false);
+
 document.getElementById("headslot").addEventListener("click", function(){gearModalDisplay("head")}, false);
 document.getElementById("neckslot").addEventListener("click", function(){gearModalDisplay("neck")}, false);
 document.getElementById("shoulderslot").addEventListener("click", function(){gearModalDisplay("shoulder")}, false);
@@ -57,6 +73,10 @@ function selectItem(itemid) {
         case 'mainhand':
             console.log("you selected "+ itemid);
             gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            checkWeaponType();
+            if(offhandDisabled) {
+                delete gear.offhand;
+            }
         break;
         case 'offhand':
             console.log("you selected "+ itemid);
@@ -148,19 +168,26 @@ function generateGearOptionsList(array){
     return selectOptions;
 }
 function itemSelectorDisplay(slotarray){
-
+    if (activeslot === 'offhand' && offhandDisabled) {
+        return;
+    }
     let itemselectOptions = generateGearOptionsList(slotarray);
     document.getElementById("itemselect").innerHTML = itemselectOptions;
     document.getElementById("itemselect").value = gear[activeslot].id;
 }
 function enchSelectorDisplay(slotarray){
-
+    if (activeslot === 'offhand' && offhandDisabled) {
+        return;
+    }
     let enchselectOptions = generateGearOptionsList(slotarray);
     document.getElementById("enchseldiv").style.display = "block";
     document.getElementById("enchselect").innerHTML = enchselectOptions;
     document.getElementById("enchselect").value = gear[activeslot].enchant;
 }
 function gemSelectorDisplay(slotarray){
+    if (activeslot === 'offhand' && offhandDisabled) {
+        return;
+    }
     let gem1 = 0;
     let gem2 = 0;
     let gem3 = 0;

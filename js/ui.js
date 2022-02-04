@@ -798,4 +798,7 @@ gearSlotsDisplay();
 if(localStorage.getItem('savecheck') == 'true'){
     fetchData();
 }
+if(localStorage.getItem('savecheck') != 'true'){
+    selectedOptionsResults();
+}
 initializeImportSets();
