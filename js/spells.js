@@ -73,7 +73,7 @@ function initializeSpells(){
     // set spell CDs to 0
     SPELLS.autoshot.cd = 0;
     SPELLS.steadyshot.cd = 0;
-    SPELLS.multishot.cd = 1.5;
+    SPELLS.multishot.cd = 0;
     SPELLS.arcaneshot.cd = 0;
     //SPELLS.aimedshot.cd = 0;
     // set pet spell CDs to 0
