@@ -130,6 +130,7 @@ function startSync() {
 
 }
 function loopSim() {
+    currentiteration++;
     if (currentiteration === iterations) {
         combatlogRun = true;
     } else {combatlogRun = false;}
@@ -137,7 +138,6 @@ function loopSim() {
     sumdmg += totaldmgdone;
     sumpetdmg += petdmgdone;
     sumduration += totalduration;
-    currentiteration++;
     
     if (currentiteration < iterations) {
         let visualcheck = currentiteration / 50;
