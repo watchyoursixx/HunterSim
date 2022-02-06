@@ -850,7 +850,42 @@
 
   <div class="modal-log-content">
     <span class="close">&times;</span>
-    <h3 class="header-1">Combat Log</h3>
+    <h3 class="header-1">Log and Results</h3>
+    <div><!--combat table results-->
+      <table class="table-results">
+        <colgroup class="colgroup-results">
+        <col style="width: 15%">
+        <col style="width: 10%">
+        <col style="width: 7%">
+        <col style="width: 10%">
+        <col style="width: 7%">
+        <col style="width: 7%">
+        <col style="width: 7%">
+        <col style="width: 7%">
+        <col style="width: 10%">
+        <col style="width: 10%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="tableheader">Action</th>
+            <th class="tableheader">DPS</th>
+            <th class="tableheader">Casts</th>
+            <th class="tableheader">Avg Cast</th>
+            <th class="tableheader">Hit %</th>
+            <th class="tableheader">Crit %</th>
+            <th class="tableheader">Miss %</th>
+            <th class="tableheader">Dodge %</th>
+            <th class="tableheader">Glance %</th>
+            <th class="tableheader">Partial %</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+      </table>
+    </div>
+    <div class="chartBox">
+      <canvas id="histogram"></canvas>
+    </div>
     <hr><!--generated series of <p></p> for displaying combat log data-->
     <div id="combatlog" class="label-7">N/A</div>
   
@@ -884,6 +919,8 @@
     <script class="u-script" type="text/javascript" src="js/datastorage.js"></script>
     <script class="u-script" type="text/javascript" src="js/gearui.js"></script> 
     <script class="u-script" type="text/javascript" src="js/ui.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script class="u-script" type="text/javascript" src="js/stats.js"></script> 
 
     <footer class="u-black u-clearfix u-footer u-footer" id="sec-5c75"><a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="255" data-image-height="198">
         <img src="images/tbc_logo.jfif" class="u-logo-image u-logo-image-1">

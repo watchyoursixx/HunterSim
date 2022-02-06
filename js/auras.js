@@ -3,6 +3,7 @@ var lustcd = 600;
 var sunderstart = 0;
 var racialenable = false;
 var beastenable = false;
+var temp_oil = false;
 
 var auras = {
     // actives
@@ -34,7 +35,9 @@ var auras = {
     donsantos: {enable:false, timer:0, ppm:1, duration: 10, uptime:0},// coded
     mastertact: {enable:true, timer:0, procchance:6, duration: 8, uptime:0},// coded
     ashtongue: {enable:false, timer:0, procchance:15, duration: 8, uptime:0},// coded
-    dmccrusade: {enable:true, timer:0, cooldown:0, duration: 10, uptime:0},
+    dmccrusade: {enable:false, timer:0, duration: 10, stacks:0, uptime:0}, // coded
+    righteous: {enable:false, timer:0, ppm:1, cooldown:0, duration: 10, uptime:0},
+    shattered: {enable:false, type:'aldor', timer:0, procchance:15, cooldown:0, duration: 10, uptime: 0},
  
  }
  debuffs = {
@@ -79,7 +82,9 @@ var auras = {
     donsantos: 0,
     mastertact: 0,
     ashtongue: 0,
-    dmccrusade: 0
+    dmccrusade: 0,
+    righteous: 0,
+    shattered: 0
 }
 var debuff_uptimes = {
     hm: 0,
@@ -128,7 +133,7 @@ function initializeAuras() {
     auras.swarmguard.enable = ((gear.trinket1.id === 21670) || (gear.trinket2.id === 21670)) ? true : false; 
     auras.abacus.enable = ((gear.trinket1.id === 28288) || (gear.trinket2.id === 28288)) ? true : false; 
     auras.unyieldingcourage.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false; 
-    auras.dmccrusade.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false;
+    auras.dmccrusade.enable = ((gear.trinket1.id === 31856) || (gear.trinket2.id === 31856)) ? true : false;
  
     auras.beastlord.enable = (currentgear.special.beast_lord_4p_kc_arp > 0) ? true : false;
     auras.beastwithin.enable = ((talents.beast_within > 0) && beastenable) ? true : false;
@@ -136,7 +141,8 @@ function initializeAuras() {
     auras.donsantos.enable = (gear.range.id === 31323) ? true : false;
     auras.eternalchamp.enable = ((gear.ring1.id === 29301) || (gear.ring2.id === 29301)) ? true : false;
     auras.imphawk.enable = (talents.imp_hawk > 1) ? true : false;
- 
+    auras.righteous.enable = temp_oil ? true : false;
+
     for(let prop in auras){
         auras[prop].uptime = 0;
     }
@@ -192,6 +198,8 @@ function initializeAuras() {
     auras.mastertact.timer = 0;
     auras.ashtongue.timer = 0;
     auras.dmccrusade.timer = 0;
+    auras.righteous.timer = 0;
+    auras.shattered.timer = 0;
 
     auras.lust.cooldown = auras.lust.offset;
     auras.berserk.cooldown = auras.berserk.offset;
@@ -213,7 +221,8 @@ function initializeAuras() {
     auras.naarusliver.cooldown = 0;
     auras.eternalchamp.cooldown = 0;
     auras.ashtongue.cooldown = 0;
-    auras.dmccrusade.cooldown = 0;
+    auras.righteous.cooldown = 0;
+    auras.shattered.cooldown = 0;
 
     debuffs.hm.timer = 0;
     debuffs.exposeweakness.timer = 0;
@@ -269,8 +278,6 @@ function updateAuras(steptime) {
        /*console.log("naaru sliver cd: " + (Math.round(auras.naarusliver.cooldown * 100) / 100));*/ } 
     if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
        /*console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));*/ }
-    if(auras.dmccrusade.cooldown > 0)         { auras.dmccrusade.cooldown = Math.max(auras.dmccrusade.cooldown - steptime,0);
-       /*console.log("dmccrusade cd: " + (Math.round(auras.dmccrusade.cooldown * 100) / 100));*/ }
     // active cooldowns
     if(auras.drums.cooldown > 0)              { auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0);
        /*console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100));*/ }
@@ -300,7 +307,10 @@ function updateAuras(steptime) {
      /*console.log("aptrink2 cd: " + (Math.round(auras.aptrink2.cooldown * 100) / 100));*/ }
     if(auras.tenacity.cooldown > 0)  { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0);
        /*console.log("tenacity cd: " + (Math.round(auras.tenacity.cooldown * 100) / 100));*/ }
-    
+    if(auras.righteous.cooldown > 0)  { auras.righteous.cooldown = Math.max(auras.righteous.cooldown - steptime,0);
+       /*console.log("righteous cd: " + (Math.round(auras.righteous.cooldown * 100) / 100));*/ }
+    if(auras.shattered.cooldown > 0)  { auras.shattered.cooldown = Math.max(auras.shattered.cooldown - steptime,0);
+       console.log("shattered cd: " + (Math.round(auras.shattered.cooldown * 100) / 100)); }
     return;   
  }
 
@@ -334,8 +344,9 @@ function stepauras(steptime) {
     if(auras.donsantos.timer > 0)          { auras.donsantos.timer = Math.max(auras.donsantos.timer - steptime,0); }
     if(auras.mastertact.timer > 0)         { auras.mastertact.timer = Math.max(auras.mastertact.timer - steptime,0); }
     if(auras.ashtongue.timer > 0)          { auras.ashtongue.timer = Math.max(auras.ashtongue.timer - steptime,0); }
-    if(auras.dmccrusade.timer > 0)         { auras.dmccrusade.timer = Math.max(auras.dmccrusade.timer - steptime,0); }
-    // if talented, treated like a proc
+    if(auras.righteous.timer > 0)         { auras.righteous.timer = Math.max(auras.righteous.timer - steptime,0); }
+    if(auras.shattered.timer > 0)          { auras.shattered.timer = Math.max(auras.shattered.timer - steptime,0); }
+    // if talented, expose treated like a proc
     if(debuffs.exposeweakness.timer > 0 && talents.exp_weakness > 0)   { debuffs.exposeweakness.timer = Math.max(debuffs.exposeweakness.timer - steptime,0); }
     // the following can go negative so that when it switches from active to inactive the time between steps is kept
     if(debuffs.hm.timer > 0)               { debuffs.hm.timer = debuffs.hm.timer - steptime; }
@@ -354,6 +365,7 @@ function stepauras(steptime) {
     // reset stacks
     if(auras.swarmguard.timer === 0){ auras.swarmguard.stacks = 0;}
     if(auras.naarusliver.timer === 0){ auras.naarusliver.stacks = 0;}
+    if(auras.dmccrusade.timer === 0){ auras.dmccrusade.stacks = 0;}
 
     return;
 }
@@ -388,7 +400,9 @@ function uptimecalc() {
     if(auras.mastertact.timer > 0)         { auras.mastertact.uptime += Math.min(auras.mastertact.timer,steptime); }
     if(auras.ashtongue.timer > 0)          { auras.ashtongue.uptime += Math.min(auras.ashtongue.timer,steptime); }
     if(auras.dmccrusade.timer > 0)         { auras.dmccrusade.uptime += Math.min(auras.dmccrusade.timer,steptime); }
-    
+    if(auras.righteous.timer > 0)          { auras.righteous.uptime += Math.min(auras.righteous.timer,steptime); }
+    if(auras.shattered.timer > 0)         { auras.shattered.uptime += Math.min(auras.shattered.timer,steptime); }
+
     if(debuffs.exposeweakness.timer > 0 && talents.exp_weakness > 0) { debuffs.exposeweakness.uptime += Math.min(debuffs.exposeweakness.timer,steptime); }
     // for debugging debuffs - tracking actual uptime
     if(debuffs.hm.timer > 0 && !debuffs.hm.inactive) { debuffs.hm.uptime += steptime; }

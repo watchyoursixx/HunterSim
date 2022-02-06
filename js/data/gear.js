@@ -2858,10 +2858,6 @@ const HANDS = {
             RAP: 44
         },
         Location: "Dungeon",
-        sockets: [],
-        socketBonus: {
-            Str: null
-        },
         Phase: 1,
         icon: "inv_gauntlets_11",
         quality: "Rare"
@@ -7847,23 +7843,20 @@ const MELEE_WEAPONS = {
         quality: "Epic"
     },
     33478: {
-        name: "Jin'rohk",
+        name: "Jin'rohk, the Great Apocalypse",
         stats: {
-            Str: null,
-            Int: 49,
+            Stam: 49,
+            MAP: 120,
             RAP: 120,
-            Crit: 120
+            Haste: 45
         },
-        Location: 45,
-        sockets: [
-            "Zul'Aman"
-        ],
-        socketBonus: {},
-        speed: 2,
-        mindmg: 3.7,
-        maxdmg: 380,
-        hand: 570,
-        Phase: "Two",
+        Location: "Zul'Aman",
+        type: "sword",
+        speed: 3.7,
+        mindmg: 380,
+        maxdmg: 570,
+        hand: "Two",
+        Phase: 2,
         icon: "inv_sword_108",
         quality: "Epic"
     },
@@ -9310,19 +9303,16 @@ const RANGED_WEAPONS = {
         quality: "Epic"
     },
     18713: {
-        name: "Rhok'delar",
+        name: "Rhok'delar, Longbow of the Ancient Keepers",
         stats: {
-            Str: null,
-            Crit: 17,
-            Hit: 14
+            RAP: 17,
+            Crit: 14
         },
-        sockets: [
-            "Bow"
-        ],
-        socketBonus: {},
-        maxdmg: 108,
-        speed: 201,
-        Phase: 2.9,
+        type: "Bow",
+        mindmg: 108,
+        maxdmg: 201,
+        speed: 2.9,
+        Phase: 1,
         icon: "inv_weapon_bow_01",
         quality: "Epic"
     },
@@ -9354,19 +9344,16 @@ const RANGED_WEAPONS = {
         quality: "Epic"
     },
     19361: {
-        name: "Ashjre'thul",
+        name: "Ashjre'thul, Crossbow of Smiting",
         stats: {
-            Str: null,
-            Int: 7,
-            Crit: 36
+            Stam: 7,
+            RAP: 36
         },
-        sockets: [
-            "Xbow"
-        ],
-        socketBonus: {},
-        maxdmg: 149,
-        speed: 225,
-        Phase: 3.4,
+        type: "Xbow",
+        mindmg: 149,
+        maxdmg: 225,
+        speed: 3.4,
+        Phase: 1,
         icon: "inv_weapon_crossbow_09",
         quality: "Epic"
     },
@@ -10003,20 +9990,17 @@ const RANGED_WEAPONS = {
         quality: "Rare"
     },
     31072: {
-        name: "Lohn'goron",
+        name: "Lohn'goron, Bow of the Torn-heart",
         stats: {
-            Str: null,
-            Stam: 12,
+            Agi: 12,
             RAP: 26,
-            Crit: 26
+            MAP: 26
         },
-        sockets: [
-            "Bow"
-        ],
-        socketBonus: {},
-        maxdmg: 114,
-        speed: 213,
-        Phase: 2.6,
+        type: "Bow",
+        mindmg: 114,
+        maxdmg: 213,
+        speed: 2.6,
+        Phase: 1,
         icon: "inv_weapon_bow_16",
         quality: "Rare"
     },
@@ -10240,22 +10224,19 @@ const RANGED_WEAPONS = {
         quality: "Epic"
     },
     34334: {
-        name: "Thori'dal",
+        name: "Thori'dal, the Stars Fury",
         stats: {
-            Str: null,
-            Stam: 17,
+            Agi: 17,
+            MAP: 34,
             RAP: 34,
-            Crit: 34,
-            Hit: 16,
-            Haste: 112
+            Crit: 16,
+            ArP: 112
         },
-        sockets: [
-            "Bow"
-        ],
-        socketBonus: {},
-        maxdmg: 356,
-        speed: 524,
-        Phase: 2.7,
+        type: "Bow",
+        mindmg: 356,
+        maxdmg: 524,
+        speed: 2.7,
+        Phase: 1,
         icon: "inv_weapon_bow_39",
         quality: "Legendary"
     },

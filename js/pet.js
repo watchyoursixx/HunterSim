@@ -93,7 +93,7 @@ function petStatsCalc(){
     let petAPfromplayer = BaseRAP * 0.22;
     pet.ap = (pet.str - 10) * 2 + (selectedbuffs.stats.MAP || 0) + petAPfromplayer;
     //crit
-    pet.crit = PetBaseCrit + pet.agi / 33 + talents.ferocity + (selectedbuffs.stats.CritChance || 0); // need to add special gear items w/ pet crit
+    pet.crit = PetBaseCrit + pet.agi / 33 + talents.ferocity + (selectedbuffs.stats.CritChance || 0) + CritPenalty; // need to add special gear items w/ pet crit
     //hit
     pet.hit = talents.animal_handler ; // need to add heroic presence
     let penalty = (RangeHitChance >= 1) ? HitPenalty : 0; // include penalty here? assumes lvl 73 target
@@ -135,7 +135,7 @@ function petUpdateHaste(){
 function petUpdateStats(){
 
     pet.combatcrit = pet.crit;
-    pet.combatspellcrit = talents.ferocity;
+    pet.combatspellcrit = Math.max(0,talents.ferocity + CritPenalty);
     pet.combatmiss = pet.miss;
     // hunter AP
     let bonusAP = updateAP();
@@ -257,6 +257,7 @@ function petAttack(){
     
     let dmg = 0;
     let result = petRollAttack(); // check attack table
+    spellResultSum(result,'petattack');
     if (result === RESULT.HIT) {
           dmg = petAutoCalc(); // calc damage
     }
@@ -265,9 +266,9 @@ function petAttack(){
         dmg *= GlanceDmgReduction;
     }
     else if (result === RESULT.CRIT) {
-          dmg = petAutoCalc();
-          dmg *= 2;
-          petCrit();
+        dmg = petAutoCalc();
+        dmg *= 2;
+        petCrit();
     }
     let spelltype = "phys";
     let done = petdealdamage(dmg,result,spelltype);
@@ -297,6 +298,7 @@ function petSpell(petspell){
     if(petspell === 'kill command'){
         specialcrit = talents.focused_fire * 10;
         result = petRollSpell(specialcrit); // check attack table
+        spellResultSum(result,'killcommand');
         if (result === RESULT.HIT) {
             dmg = petKillCommCalc(); // calc damage
         }
@@ -317,41 +319,32 @@ function petSpell(petspell){
         if(spellindex <= 3){
 
             result = petRollSpell(specialcrit); // check attack table
+            spellResultSum(result, 'primary');
             if (result === RESULT.HIT) {
                 dmg = spellPetCalc(spellindex); // calc damage
-                Result_Primary.Hit++;
             }
             else if (result === RESULT.CRIT) {
                 dmg = spellPetCalc(spellindex);
                 dmg *= 2;
                 petCrit();
-                Result_Primary.Crit++;
-            }
-            else if (result === RESULT.MISS) {
-                Result_Primary.Miss++;
             }
             spelltype = "phys";
         } 
         else if(spellindex <= 5 && spellindex > 3){
 
             result = petRollMagicSpell(); // check attack table
+            spellResultSum(result, 'primary');
             if (result === RESULT.HIT) {
                 dmg = spellPetCalc(spellindex); // calc damage
-                Result_Primary.Hit++;
             }
             else if (result === RESULT.CRIT) {
                 dmg = spellPetCalc(spellindex);
                 dmg *= 1.5; // spell crits are 150%
                 petCrit();
-                Result_Primary.Crit++;
             }
             else if (result === RESULT.PARTIAL) {
                 dmg = spellPetCalc(spellindex);
                 dmg *= 0.65; // average reduction of 35% on partial resists
-                Result_Primary.Partial++;
-            }
-            else if (result === RESULT.MISS) {
-                Result_Primary.Miss++;
             }
             spelltype = "magic";
         }

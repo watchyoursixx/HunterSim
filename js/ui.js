@@ -184,6 +184,7 @@ function selectTarget(id) {
     }
     document.getElementById("typeSelect").value = target.type;
     document.getElementById("level").value = target.level;
+    calcBaseStats();
     update();
 }
 initializeTargetDropdown();

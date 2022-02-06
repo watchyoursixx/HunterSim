@@ -145,6 +145,33 @@
   left: 21%;
   margin: 50px 5px 5px 0px;
 }
+.table-results {
+  color: #ffff;
+  width: 100%;
+  border: 1px solid #fff;
+}
+.colgroup-results {
+  color: #ffff;
+}
+.tableheader {
+  color: #ffff;
+  text-align: right;
+  border-bottom: 2px solid #fff;
+}
+.tablerow1 {
+  text-align: right;
+  background-color: #2e2e33;
+}
+.tablerow2 {
+  text-align: right;
+  background-color: #252529;
+}
+.chartBox {
+  position:relative;
+  padding-top: 5%;
+  width: 100%;
+  border: 1px solid #fff;
+}
 .spinner {
   width: 70px;
   text-align: center;
