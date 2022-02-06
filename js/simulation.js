@@ -23,6 +23,8 @@ var petuptime = 100;
 var weavetime = 0.6;
 var huntersinraid = 4;
 
+var simresults = {};
+
 var RESULT = {
     HIT: 0,
     MISS: 1,
@@ -32,36 +34,15 @@ var RESULT = {
     PARTIAL: 5
 };
 
-var Result_Auto = {
-    Hit: 0,
-    Miss: 0,
-    Crit: 0
-}
-
-var Result_Steady = {
-    Hit: 0,
-    Miss: 0,
-    Crit: 0
-}
-
-var Result_Multi = {
-    Hit: 0,
-    Miss: 0,
-    Crit: 0
-}
-
-var Result_Arcane = {
-    Hit: 0,
-    Miss: 0,
-    Crit: 0
-}
-
-var Result_Primary = {
-    Hit: 0,
-    Miss: 0,
-    Crit: 0,
-    Partial: 0
-}
+var spellresult = {
+    autoshot: { Hit: 0, Miss: 0, Crit: 0 },
+    steadyshot: { Hit: 0, Miss: 0, Crit: 0 },
+    multishot: { Hit: 0, Miss: 0, Crit: 0 },
+    arcaneshot: { Hit: 0, Miss: 0, Crit: 0 },
+    petattack: { Hit: 0, Miss: 0, Crit: 0, Glance: 0, Dodge: 0 },
+    killcommand: { Hit: 0, Miss: 0, Crit: 0, Dodge: 0 },
+    primary: { Hit: 0, Miss: 0, Crit: 0, Dodge: 0, Partial: 0 }
+};
 
 var spread = [];
 var countruns = 0;
@@ -130,6 +111,7 @@ function startSync() {
 
 }
 function loopSim() {
+    currentiteration++;
     if (currentiteration === iterations) {
         combatlogRun = true;
     } else {combatlogRun = false;}
@@ -137,7 +119,6 @@ function loopSim() {
     sumdmg += totaldmgdone;
     sumpetdmg += petdmgdone;
     sumduration += totalduration;
-    currentiteration++;
     
     if (currentiteration < iterations) {
         let visualcheck = currentiteration / 50;
@@ -170,47 +151,12 @@ function finalResults() {
         debuff_uptimes[prop] = (debuffs[prop].uptime / sumduration * 100).toFixed(2);
     }
 
-    console.log("steadys => "+ steadycount/iterations);
-    console.log("steady miss %: "+ Result_Steady.Miss / steadycount);
-    console.log("steady hit %: " + Result_Steady.Hit / steadycount);
-    console.log("steady crit %: " + Result_Steady.Crit / steadycount);
-    console.log("steady avg => "+steadydmg/(steadycount));
-    console.log("autos => " + autocount/iterations);
-    console.log("Auto miss %: "+ Result_Auto.Miss / autocount);
-    console.log("Auto hit %: " + Result_Auto.Hit / autocount);
-    console.log("Auto crit %: " + Result_Auto.Crit / autocount);
-    console.log("auto avg => "+autodmg/(autocount));
-    console.log("multis => " + multicount/iterations);
-    console.log("Multi miss %: "+ Result_Multi.Miss / multicount);
-    console.log("Multi hit %: " + Result_Multi.Hit / multicount);
-    console.log("Multi crit %: " + Result_Multi.Crit / multicount);
-    console.log("multi avg => "+multidmg/(multicount));
-    console.log("arcanes => " + arcanecount/iterations);
-    console.log("Arcane miss %: "+ Result_Arcane.Miss / arcanecount);
-    console.log("Arcane hit %: " + Result_Arcane.Hit / arcanecount);
-    console.log("Arcane crit %: " + Result_Arcane.Crit / arcanecount);
-    console.log("Arcane avg => "+arcanedmg/(arcanecount));
-    console.log("pet autos => "+petautocount / iterations);
-    console.log("pet kc => "+ petkccount / iterations);
-    console.log("pet spells => "+ petprimarycount / iterations);
-    console.log("pet kc dmg => " + petdmg.kcdmg / iterations);
-    console.log("pet attack dmg => " + petdmg.attackdmg / iterations);
-    console.log("pet primary dmg => " + petdmg.primarydmg / iterations);
-    //console.log("pet spell miss %: "+ Result_Primary.Miss / petprimarycount);
-    //console.log("pet spell hit %: " + Result_Primary.Hit / petprimarycount);
-    //console.log("pet spell crit %: " + Result_Primary.Crit / petprimarycount);
-    //console.log("pet spell Partial resist %: " + Result_Primary.Partial / petprimarycount);
-    console.log("pet dmg => "+sumpetdmg / iterations);
-    let frenzyup = pet.frenzy.uptime / sumduration * 100;
-    console.log("pet frenzy uptime => "+ frenzyup.toFixed(2) + " %");
-    let ferocup = pet.ferocious.uptime / sumduration * 100;
-    console.log("pet ferocious uptime => "+ ferocup.toFixed(2) + " %");
-    console.log("total damage: " + sumdmg/iterations);
-    console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
+    damageResults();
     //console.log(pet);
     console.log(buff_uptimes);
     console.log(debuff_uptimes);
     console.log(currentMana);
+
     function standardError(x, u_x) {
         let n = x.length;
         let a = 0;
@@ -223,16 +169,18 @@ function finalResults() {
         let stddev = Math.sqrt(a/(n-1));
         return stddev / (Math.sqrt(n));
     }
-    //console.time();
+
     err = standardError(spread,avgDPS);
-    //console.timeEnd();
+
     performancecheck2 = performance.now();
     executecodetime = (performancecheck2 - performancecheck1) / 1000; // milliseconds convert to sec
     displayDPSResults();
+
     let newspread = spread.map(function(each_element){
-        return Number(Math.floor(each_element / 10) * 10);
+        return Number(Math.floor(each_element / 5) * 5);
     });
-    //console.log(newspread);
+    buildData(newspread);
+    createHistogram();
     console.log("*****************");
 }
 /** Main loop function for simming iterations, ran for each iteration. */
@@ -497,22 +445,174 @@ function spell_choice_method_B(){
     }
 }
 
+function damageResults(){
+    simresults = {
+        steady: {},
+        auto: {},
+        multi: {},
+        arcane: {},
+        attack: {},
+        kc: {},
+        primary: {}
+    };
+    // steady
+    simresults.steady.casts = (steadycount / iterations);
+    simresults.steady.miss = (spellresult.steadyshot.Miss / steadycount) * 100;
+    simresults.steady.crit = (spellresult.steadyshot.Crit / steadycount) * 100;
+    simresults.steady.hit = (spellresult.steadyshot.Hit / steadycount) * 100;
+    simresults.steady.avg = (steadydmg / steadycount);
+    simresults.steady.dps = (steadydmg / sumduration);
+    // auto
+    simresults.auto.casts = (autocount / iterations);
+    simresults.auto.miss = (spellresult.autoshot.Miss / autocount) * 100;
+    simresults.auto.crit = (spellresult.autoshot.Crit / autocount) * 100;
+    simresults.auto.hit = (spellresult.autoshot.Hit / autocount) * 100;
+    simresults.auto.avg = (autodmg / autocount);
+    simresults.auto.dps = (autodmg / sumduration);
+    // multi
+    if(SPELLS.multishot.enable){
+        simresults.multi.casts = (multicount / iterations);
+        simresults.multi.miss = (spellresult.multishot.Miss / multicount) * 100;
+        simresults.multi.crit = (spellresult.multishot.Crit / multicount) * 100;
+        simresults.multi.hit = (spellresult.multishot.Hit / multicount) * 100;
+        simresults.multi.avg = (multidmg / multicount);
+        simresults.multi.dps = (multidmg / sumduration);
+    }
+    // arcane
+    if(SPELLS.arcaneshot.enable){
+        simresults.arcane.casts = (arcanecount / iterations);
+        simresults.arcane.miss = (spellresult.arcaneshot.Miss / arcanecount) * 100;
+        simresults.arcane.crit = (spellresult.arcaneshot.Crit / arcanecount) * 100;
+        simresults.arcane.hit = (spellresult.arcaneshot.Hit / arcanecount) * 100;
+        simresults.arcane.avg = (arcanedmg / arcanecount);
+        simresults.arcane.dps = (arcanedmg / sumduration);
+    }
+    // pet auto
+    simresults.attack.casts = (petautocount / iterations);
+    simresults.attack.miss = (spellresult.petattack.Miss / petautocount) * 100;
+    simresults.attack.crit = (spellresult.petattack.Crit / petautocount) * 100;
+    simresults.attack.hit = (spellresult.petattack.Hit / petautocount) * 100;
+    simresults.attack.glance = (spellresult.petattack.Glance / petautocount) * 100;
+    simresults.attack.dodge = (spellresult.petattack.Dodge / petautocount) * 100;
+    simresults.attack.avg = (petdmg.attackdmg / petautocount);
+    simresults.attack.dps = (petdmg.attackdmg / sumduration);
+    // pet kill command
+    simresults.kc.casts = (petkccount / iterations);
+    simresults.kc.miss = (spellresult.killcommand.Miss / petkccount) * 100;
+    simresults.kc.crit = (spellresult.killcommand.Crit / petkccount) * 100;
+    simresults.kc.hit = (spellresult.killcommand.Hit / petkccount) * 100;
+    simresults.kc.dodge = (spellresult.killcommand.Dodge / petkccount) * 100;
+    simresults.kc.avg = (petdmg.kcdmg / petkccount);
+    simresults.kc.dps = (petdmg.kcdmg / sumduration);
+    // pet primary
+    simresults.primary.casts = (petprimarycount / iterations);
+    simresults.primary.miss = (spellresult.primary.Miss / petprimarycount) * 100;
+    simresults.primary.crit = (spellresult.primary.Crit / petprimarycount) * 100;
+    simresults.primary.hit = (spellresult.primary.Hit / petprimarycount) * 100;
+    simresults.primary.dodge = (spellresult.primary.Dodge / petprimarycount) * 100;
+    simresults.primary.partial = (spellresult.primary.Partial / petprimarycount) * 100;
+    simresults.primary.avg = (petdmg.primarydmg / petprimarycount);
+    simresults.primary.dps = (petdmg.primarydmg / sumduration);
+    
+    let newsimresults = Object.keys(simresults).map(key => ({action: key, results: simresults[key]}));
+    let sortedsimresults = newsimresults.sort(compare);
+    buildTable(sortedsimresults);
+
+    console.log("pet dmg => "+sumpetdmg / iterations);
+    console.log("total damage: " + sumdmg/iterations);
+    console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
+}
+var actions = {
+	auto: "Auto Shot",
+	arcane: "Arcane Shot",
+	steady: "Steady Shot",
+    multi: "Multi Shot",
+    attack: "Attack (Pet)",
+    kc: "Kill Command (Pet)",
+    primary: "Primary (Pet)",
+};
+function buildTable(results){
+
+    let act = '';
+    let tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    for (var i = 0; i < results.length; i++) {
+        let tr = "<tr>";
+
+        act = results[i].action; 
+        tr += "<td style='text-align:right'>" + actions[act] + "</td>" + 
+        "<td style='text-align:right'>" + (results[i].results.dps || 0).toFixed(2) + "</td>" + 
+        "<td style='text-align:right'>" + (results[i].results.casts || 0).toFixed(2) + "</td>" +
+        "<td style='text-align:right'>" + (results[i].results.avg || 0).toFixed(2) + "</td>" +
+        "<td style='text-align:right'>" + (results[i].results.hit || 0).toFixed(2) + "</td>" +
+        "<td style='text-align:right'>" + (results[i].results.crit || 0).toFixed(2) + "</td>" +
+        "<td style='text-align:right'>" + (results[i].results.miss || 0).toFixed(2) + "</td>" +
+        "<td style='text-align:right'>" + (results[i].results.dodge || 0).toFixed(2) + "</td>" +
+        "<td style='text-align:right'>" + (results[i].results.glance || 0).toFixed(2) + "</td>" +
+        "<td style='text-align:right'>" + (results[i].results.partial || 0).toFixed(2) + "</td>" +
+        "</tr>";
+        tbody.innerHTML += tr;
+    }
+}
+
+function compare(a, b) {
+    // Use toUpperCase() to ignore character casing
+    const dpsA = a.results.dps;
+    const dpsB = b.results.dps;
+  
+    let comparison = 0;
+    if (dpsA > dpsB) {
+      comparison = -1;
+    } else if (dpsA < dpsB) {
+      comparison = 1;
+    }
+    return comparison;
+}
+
 /** Resets counts of spells used for stats */
 function resultCountInitialize() {
-    Result_Auto.Hit = 0;
-    Result_Auto.Crit = 0;
-    Result_Auto.Miss = 0;
-    Result_Steady.Hit = 0;
-    Result_Steady.Crit = 0;
-    Result_Steady.Miss = 0;
-    Result_Multi.Hit = 0;
-    Result_Multi.Crit = 0;
-    Result_Multi.Miss = 0;
-    Result_Arcane.Hit = 0;
-    Result_Arcane.Crit = 0;
-    Result_Arcane.Miss = 0;
-    Result_Primary.Hit = 0;
-    Result_Primary.Crit = 0;
-    Result_Primary.Miss = 0;
-    Result_Primary.Partial = 0;
+    // player
+    for (spellname in spellresult){
+        spellresult[spellname].Hit = 0;
+        spellresult[spellname].Crit = 0;
+        spellresult[spellname].Miss = 0;
+        
+        if (spellname === 'primary') {
+            spellresult[spellname].Partial = 0;
+        }
+        if (spellname === 'primary' || 'petattack' || 'killcommand') {
+            spellresult[spellname].Dodge = 0;
+        }
+        if (spellname === 'petattack') {
+            spellresult[spellname].Glance = 0;
+        }
+
+    }
+    return;
+}
+
+function spellResultSum(result, spellname) {
+
+    if (result === RESULT.HIT) {
+        spellresult[spellname].Hit++;
+    }
+    else if (result === RESULT.GLANCE) {
+        spellresult[spellname].Glance++;
+    }
+    else if (result === RESULT.CRIT) {
+        spellresult[spellname].Crit++;
+    }
+    else if (result === RESULT.MISS) {
+        spellresult[spellname].Miss++;
+    }
+    else if (result === RESULT.DODGE) {
+        spellresult[spellname].Dodge++;
+    }
+    else if (result === RESULT.PARTIAL) {
+        spellresult[spellname].Partial++;
+    }
+    //console.log(result);
+    //console.log(spellname);
+    //console.log(spellresult);
+    return;
 }
