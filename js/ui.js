@@ -16,7 +16,8 @@ var buffslist = [
     { id: 0, talented: false }, // BS
     0, // tsa
     0, // braided eternium
-    0 // imp sanctity
+    0, // imp sanctity
+    0  // feral crit idol
 ];
 var filteredbuffs = [];
 var playerconsumes = {};
@@ -298,6 +299,11 @@ function wisdomCheck() {
 function lotpCheck() {
     let isChecked = document.getElementById("lotp").checked; 
     buffslist[3] = isChecked ? 17007 : 0;
+    let isImproved = document.getElementById("lotpidol").selected;
+    if (isChecked && isImproved) {
+        buffslist[17] = 39926;
+    } 
+    else { buffslist[17] = 0; }
     selectedOptionsResults();
 
 }

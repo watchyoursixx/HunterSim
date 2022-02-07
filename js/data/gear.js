@@ -11357,7 +11357,7 @@ const SHOULDERS = {
         icon: "inv_shoulder_18",
         quality: "Rare"
     },
-    28589: {
+    30892: {
         name: "Beast-tamer's Shoulders",
         stats: {
             Agi: 39,
@@ -11365,9 +11365,13 @@ const SHOULDERS = {
             MAP: 78,
             RAP: 78
         },
+        special: {
+            pet_dmg_bonus: 1.03,
+            pet_crit_bonus: 2,
+        },
         Location: "Mount Hyjal",
         Phase: 3,
-        icon: "inv_shoulder_36",
+        icon: "inv_shoulder_59",
         quality: "Epic"
     },
     28755: {
@@ -11537,7 +11541,7 @@ const SHOULDERS = {
         icon: "inv_shoulder_18",
         quality: "Uncommon"
     },
-    30892: {
+    28589: {
         name: "Beastmaw Pauldrons",
         stats: {
             Agi: 24,
@@ -11549,7 +11553,7 @@ const SHOULDERS = {
         },
         Location: "Karazhan",
         Phase: 1,
-        icon: "inv_shoulder_59",
+        icon: "inv_shoulder_36",
         quality: "Epic"
     },
     30917: {

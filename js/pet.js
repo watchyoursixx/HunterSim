@@ -84,7 +84,13 @@ var selectedPet = 0;
 function petStatsCalc(){
 
     let racialmod = (selectedRace === 3) ? 1.05 : 1; // 5% pet dmg if orc
-    pet.dmgmod = PetHappiness * talents.unleash_fury * PETS[selectedPet].dmgmod * racialmod;
+    let beasttamers_crit = 0;
+    let beasttamers_dmg = 1;
+    if (gear.shoulder.id === 30892) {
+        beasttamers_dmg = 1.02;
+        beasttamers_crit = 2;
+    };
+    pet.dmgmod = PetHappiness * talents.unleash_fury * PETS[selectedPet].dmgmod * racialmod * beasttamers_dmg;
 
     pet.str = Math.floor((PetBaseStr + (selectedbuffs.stats.Str || 0) + (petconsumestats.Str || 0)) * selectedbuffs.special.kingsMod);
     pet.agi = Math.floor((PetBaseAgi + (selectedbuffs.stats.Agi || 0) + (petconsumestats.Agi || 0)) * selectedbuffs.special.kingsMod);
@@ -93,7 +99,7 @@ function petStatsCalc(){
     let petAPfromplayer = BaseRAP * 0.22;
     pet.ap = (pet.str - 10) * 2 + (selectedbuffs.stats.MAP || 0) + petAPfromplayer;
     //crit
-    pet.crit = PetBaseCrit + pet.agi / 33 + talents.ferocity + (selectedbuffs.stats.CritChance || 0) + CritPenalty; // need to add special gear items w/ pet crit
+    pet.crit = PetBaseCrit + pet.agi / 33 + talents.ferocity + (selectedbuffs.stats.CritChance || 0) + beasttamers_crit + CritPenalty; // need to add special gear items w/ pet crit
     //hit
     pet.hit = talents.animal_handler ; // need to add heroic presence
     let penalty = (RangeHitChance >= 1) ? HitPenalty : 0; // include penalty here? assumes lvl 73 target
@@ -108,7 +114,7 @@ function petStatsCalc(){
         case 'claw': spellindex = 2; break;
         case 'gore': spellindex = 3; break;
         case 'lightning breath': spellindex = 4; break;
-        case 'thunerstomp': spellindex = 5; break;
+        case 'thunderstomp': spellindex = 5; break;
         case 'fire breath': spellindex = 6; break;
         case 'poison spit': spellindex = 7; break;
         case 'scorpid poison': spellindex = 8; break;

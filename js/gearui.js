@@ -533,8 +533,8 @@ function gearSlotsDisplay(){
     
     document.getElementById("shoulderslot").href = "https://tbc.wowhead.com/item="+ shoulderdata;
     document.getElementById("shoulderslot").innerHTML = SHOULDERS[gear.shoulder.id].name;
-    document.getElementById("shoulderench").href = (headench > 0) ? "https://tbc.wowhead.com/spell="+ shoulderench : "";
-    document.getElementById("shoulderench").innerHTML = (headench > 0) ? SHOULDER_ENCHANTS[gear.shoulder.enchant].name: "No Enchant";
+    document.getElementById("shoulderench").href = (shoulderench > 0) ? "https://tbc.wowhead.com/spell="+ shoulderench : "";
+    document.getElementById("shoulderench").innerHTML = (shoulderench > 0) ? SHOULDER_ENCHANTS[gear.shoulder.enchant].name: "No Enchant";
     
     // back
     textColorDisplay('back',BACKS);

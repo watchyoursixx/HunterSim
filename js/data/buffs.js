@@ -127,5 +127,12 @@ const BUFFS = {
     stats: {
       Crit: 28
     }
+  },
+  39926: {
+    name: 'Improved Party Auras',
+    icon: 'inv-mount_raven_54',
+    stats: {
+      Crit: 20
+    }
   }
 };

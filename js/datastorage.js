@@ -236,6 +236,7 @@ function fetchData(){
     document.getElementById("wisdom").checked = (buffslist[2].id == 27143) ? true : false;
     document.getElementById("wisdommod").selected = (buffslist[2].talented) ? true : false;
     document.getElementById("lotp").checked = (buffslist[3] == 17007) ? true : false;
+    document.getElementById("lotpidol").selected = (buffslist[17] == 39926) ? true : false;
     document.getElementById("goa").checked = (buffslist[4].id == 25359) ? true : false;
     document.getElementById("soe").checked = (buffslist[5].id == 25528) ? true : false;
     document.getElementById("imptotem").selected = (buffslist[4].talented) ? true : false;

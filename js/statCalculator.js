@@ -3,14 +3,14 @@
   AUXILIAR FUNCTIONS
   --------------------------------------------------------------------------------- */
 
-/* Auxiliar function to sum two stat objects. Accepts a statModifier
+/** Auxiliar function to sum two stat objects. Accepts a statModifier
    function, to apply a modification to each stat */
 function sumStats(src, dst, statModifier = st => st) {
   Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + statModifier(amount))
 }
 
 const SPECIAL_ADD = ['incWeapDmg']
-/* Auxiliar function to add two special objects. Will overwrite dst values if one prop appears in both objects,
+/** Auxiliar function to add two special objects. Will overwrite dst values if one prop appears in both objects,
    unless they are in the SPECIAL_ADD list */
 function addSpecial(src, dst) {
   Object.entries(src).forEach(([k,v])=> {
@@ -19,7 +19,7 @@ function addSpecial(src, dst) {
   })
 }
 
-// Auxiliar function to add two aura objects. Will throw error if an aura appears in both objects.
+/** Auxiliar function to add two aura objects. Will throw error if an aura appears in both objects. */
 function addAuras(src, dst) {
   Object.entries(src).forEach(([k,v]) => {
     if (dst[k]) throw new Error(`An aura with id ${k} already exists!`)
@@ -27,7 +27,7 @@ function addAuras(src, dst) {
   })
 }
 
-// Auxiliar function that adds special, auras and stats of two objects
+/** Auxiliar function that adds special, auras and stats of two objects */
 function mergeResults(src, dst) {
   if (src.stats) sumStats(src.stats, dst.stats)
   if (src.special) addSpecial(src.special, dst.special)
@@ -38,7 +38,7 @@ function mergeResults(src, dst) {
   BUFFS
   --------------------------------------------------------------------------------- */
 
-/* Auxiliar function to generate a function that modifies the value of a buff,
+/** Auxiliar function to generate a function that modifies the value of a buff,
    based on a flat improvement and a ratio */
 function buildStatModifier(props, buff) {
   let bonus = 0
@@ -53,7 +53,7 @@ function buildStatModifier(props, buff) {
   return st => (st + bonus) * ratio
 }
 
-/* Given an array of buff objects, it will return an object with stats and special bonuses,
+/** Given an array of buff objects, it will return an object with stats and special bonuses,
    applying different modifiers to each buff based on the data provided */
 function getStatsFromBuffs(buffs) {
   const usedBuffs = {}
@@ -80,7 +80,7 @@ function getStatsFromBuffs(buffs) {
   CONSUMABLES
   --------------------------------------------------------------------------------- */
 
-/* Given an object of consumables and a consumable map, it will use the map to
+/** Given an object of consumables and a consumable map, it will use the map to
    calculate stats and verify proper consumables are used */
 function getStatsFromConsumes(consumables, source) {
   return Object.entries(consumables).reduce((stats, [type, id]) => {
@@ -92,7 +92,7 @@ function getStatsFromConsumes(consumables, source) {
   }, {})
 }
 
-// Given an object of consumables, returns stat increase for players
+/** Given an object of consumables, returns stat increase for players */
 function getPlayerStatsFromConsumes(consumables) {
   if (consumables.flask && (consumables.battle_elixir || consumables.guardian_elixir))
     throw Error('Detected flask AND elixir. You must use one OR the other.')
@@ -100,7 +100,7 @@ function getPlayerStatsFromConsumes(consumables) {
   return getStatsFromConsumes(consumables, PLAYER_CONSUMABLES)
 }
 
-// Given an object of consumables, returns stat increase for pets
+/** Given an object of consumables, returns stat increase for pets */
 function getPetStatsFromConsumes(consumables) {
   return getStatsFromConsumes(consumables, PET_CONSUMABLES)
 }
@@ -109,7 +109,7 @@ function getPetStatsFromConsumes(consumables) {
   GEAR
   --------------------------------------------------------------------------------- */
 
-/* Given the used meta and the amount of gems used per color, calculates bonuses provided by metagem,
+/** Given the used meta and the amount of gems used per color, calculates bonuses provided by metagem,
    It loops over all the metagems so it can provide default multipliers */
 function getMetagemBonuses(usedMeta, gemsUsed) {
   const noGems = { yellow: 0, red: 0, blue: 0}
@@ -128,7 +128,7 @@ function getMetagemBonuses(usedMeta, gemsUsed) {
   return result
 }
 
-// Given the gear object, calculates stats, auras and special values obtained from gems, socket bonuses and meta gem.
+/** Given the gear object, calculates stats, auras and special values obtained from gems, socket bonuses and meta gem. */
 function getStatsFromGems(gear) {
   let usedMeta
   const gemCount = { red: 0, yellow: 0, blue: 0 }
@@ -179,7 +179,7 @@ function getStatsFromGems(gear) {
   return result
 }
 
-// Given the gear object, calculates stats, auras and special values obtained from enchants
+/** Given the gear object, calculates stats, auras and special values obtained from enchants */
 function getStatsFromEnchants(gear) {
   return Object.entries(gear).reduce((result, [type, gearData]) => {
     const enchantId = gearData.enchant
@@ -225,7 +225,7 @@ function getSetBonuses(setPieces) {
 const ALLOWED_IN_MAINHAND = ['Two', 'Main', 'One']
 const ALLOWED_IN_OFFHAND = ['Off', 'One']
 
-// Given the gear object, calculates stats, auras and special values obtained from gear pieces
+/** Given the gear object, calculates stats, auras and special values obtained from gear pieces */
 function getStatsFromGearPieces(gear) {
   const setPieces = {}
 
@@ -262,7 +262,7 @@ function getStatsFromGearPieces(gear) {
   return result
 }
 
-// Given the gear object, calculates stats, auras and specials obtained from gear pieces, enchants and gems
+/** Given the gear object, calculates stats, auras and specials obtained from gear pieces, enchants and gems */
 function getStatsFromGear(gear) {
   const result = getStatsFromGearPieces(gear)
   mergeResults(getStatsFromGems(gear), result)
