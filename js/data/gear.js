@@ -11365,10 +11365,6 @@ const SHOULDERS = {
             MAP: 78,
             RAP: 78
         },
-        special: {
-            pet_dmg_bonus: 1.03,
-            pet_crit_bonus: 2,
-        },
         Location: "Mount Hyjal",
         Phase: 3,
         icon: "inv_shoulder_59",
