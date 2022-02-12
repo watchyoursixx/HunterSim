@@ -12900,7 +12900,7 @@ const WAISTS = {
             Crit: 3
         },
         Phase: 1,
-        icon: "inv_belt_14",
+        icon: "inv_belt_26",
         quality: "Epic"
     },
     29180: {
@@ -13312,7 +13312,7 @@ const WAISTS = {
             Crit: 2
         },
         Phase: 5,
-        icon: "inv_belt_26",
+        icon: "inv_belt_14",
         quality: "Epic"
     },
     34929: {

@@ -662,7 +662,7 @@ function gearSlotsDisplay(){
     let wristench = gear.wrist.enchant || 0;
     let wristencheffect = (wristench > 0) ? "&ench="+WRIST_ENCHANTS[gear.wrist.enchant].effectId : 0;
     let wristgemlist = "&gems="+wristgem1;
-    let wristpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    let wristpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
     let wristdata = wristitem + wristencheffect + wristgemlist+ wristpcslist;
 
     document.getElementById("wristslot").href = "https://tbc.wowhead.com/item="+ wristdata;
