@@ -364,6 +364,10 @@ function textColorDisplay(slot,array){
     } else { new Error("No color selected")}
 }
 
+function reduceGearArray(){
+    let newbackArray = Object.keys(BACKS).map(key => ({id:key,Name:BACKS[key].name,DPS:'','Δ +/-':'',Location:BACKS[key].Location}));
+}
+
 function gearSlotsDisplay(){
     
     let headitem = gear.head.id;
@@ -438,7 +442,7 @@ function gearSlotsDisplay(){
     let headench = gear.head.enchant || 0;
     let headencheffect = (headench > 0) ? "&ench="+HEAD_ENCHANTS[gear.head.enchant].effectId : 0;
     let headgemlist = "&gems="+headgem1+":"+headgem2+":"+headgem3;
-    let headpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    let headpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
     let headdata = headitem + headencheffect + headgemlist+ headpcslist;
 
     document.getElementById("headslot").href = "https://tbc.wowhead.com/item="+ headdata;
@@ -528,7 +532,7 @@ function gearSlotsDisplay(){
     let shoulderench = gear.shoulder.enchant || 0;
     let shoulderencheffect = (shoulderench > 0) ? "&ench="+SHOULDER_ENCHANTS[gear.shoulder.enchant].effectId : 0;
     let shouldergemlist = "&gems="+shouldergem1+":"+shouldergem2;
-    let shoulderpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    let shoulderpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
     let shoulderdata = shoulderitem + shoulderencheffect + shouldergemlist+ shoulderpcslist;
     
     document.getElementById("shoulderslot").href = "https://tbc.wowhead.com/item="+ shoulderdata;
@@ -623,8 +627,8 @@ function gearSlotsDisplay(){
     let chestench = gear.chest.enchant || 0;
     let chestencheffect = (chestench > 0) ? "&ench="+CHEST_ENCHANTS[gear.chest.enchant].effectId : 0;
     let chestgemlist = "&gems="+chestgem1+":"+chestgem2+":"+chestgem3;
-    let chestpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
-    let chestdata = chestitem + chestencheffect + chestgemlist+ chestpcslist;0
+    let chestpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
+    let chestdata = chestitem + chestencheffect + chestgemlist+ chestpcslist;
 
     document.getElementById("chestslot").href = "https://tbc.wowhead.com/item="+ chestdata;
     document.getElementById("chestslot").innerHTML = CHESTS[gear.chest.id].name;
@@ -887,7 +891,7 @@ function gearSlotsDisplay(){
     let handench = gear.hand.enchant || 0;
     let handencheffect = (handench > 0) ? "&ench="+HAND_ENCHANTS[gear.hand.enchant].effectId : 0;
     let handgemlist = "&gems="+handgem1+":"+handgem2;
-    let handpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    let handpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
     let handdata = handitem + handencheffect + handgemlist+ handpcslist;
 
     document.getElementById("handslot").href = "https://tbc.wowhead.com/item="+ handdata;
@@ -932,7 +936,8 @@ function gearSlotsDisplay(){
         
     }
     let waistgemlist = "&gems="+waistgem1+":"+waistgem2;
-    let waistdata = waistitem + waistgemlist;
+    let waistpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
+    let waistdata = waistitem + waistgemlist + waistpcslist;
 
     document.getElementById("waistslot").href = "https://tbc.wowhead.com/item="+ waistdata;
     document.getElementById("waistslot").innerHTML = WAISTS[gear.waist.id].name;
@@ -990,7 +995,7 @@ function gearSlotsDisplay(){
     let legench = gear.leg.enchant || 0;
     let legencheffect = (legench > 0) ? "&ench="+LEG_ENCHANTS[gear.leg.enchant].effectId : 0;
     let leggemlist = "&gems="+leggem1+":"+leggem2+":"+leggem3;
-    let legpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    let legpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
     let legdata = legitem + legencheffect + leggemlist+ legpcslist;
 
     document.getElementById("legslot").href = "https://tbc.wowhead.com/item="+ legdata;
@@ -1037,7 +1042,7 @@ function gearSlotsDisplay(){
     let feetench = gear.feet.enchant || 0;
     let feetencheffect = (feetench > 0) ? "&ench="+FEET_ENCHANTS[gear.feet.enchant].effectId : 0;
     let feetgemlist = "&gems="+feetgem1+":"+feetgem2;
-    let feetpcslist = "&pcs="+handitem+":"+shoulderitem+":"+chestitem+":"+handitem+":"+legitem;
+    let feetpcslist = "&pcs="+headitem+":"+shoulderitem+":"+chestitem+":"+wristitem+":"+handitem+":"+legitem+":"+waistitem+":"+feetitem;
     let feetdata = feetitem + feetencheffect + feetgemlist+ feetpcslist;
 
     document.getElementById("feetslot").href = "https://tbc.wowhead.com/item="+ feetdata;
