@@ -16,7 +16,8 @@ var buffslist = [
     { id: 0, talented: false }, // BS
     0, // tsa
     0, // braided eternium
-    0 // imp sanctity
+    0, // imp sanctity
+    0  // feral crit idol
 ];
 var filteredbuffs = [];
 var playerconsumes = {};
@@ -51,6 +52,22 @@ function displayDPSResults(){
     document.getElementById("dpsmax").innerHTML = maxdps.toFixed(2) + " max";
     document.getElementById("dpserr").innerHTML = "DPS ​± " + err.toFixed(errrounding);
     document.getElementById("executetime").innerHTML = Math.round(executecodetime * 10000) / 10000 + " s";
+}
+
+function displayStatWeights(){
+    document.getElementsByClassName('weight-name')[0].innerHTML = statweights.str.toFixed(2);
+    document.getElementsByClassName('weight-name')[1].innerHTML = statweights.agi.toFixed(2);
+    document.getElementsByClassName('weight-name')[2].innerHTML = statweights.int.toFixed(2);
+    document.getElementsByClassName('weight-name')[3].innerHTML = statweights.mp5.toFixed(2);
+    document.getElementsByClassName('weight-name')[4].innerHTML = statweights.RAP.toFixed(2);
+    document.getElementsByClassName('weight-name')[5].innerHTML = statweights.rangehit.toFixed(2);
+    document.getElementsByClassName('weight-name')[6].innerHTML = statweights.rangecrit.toFixed(2);
+    document.getElementsByClassName('weight-name')[7].innerHTML = statweights.haste.toFixed(2);
+    document.getElementsByClassName('weight-name')[8].innerHTML = statweights.arp.toFixed(2);
+    document.getElementsByClassName('weight-name')[9].innerHTML = statweights.MAP.toFixed(2);
+    document.getElementsByClassName('weight-name')[10].innerHTML = statweights.meleehit.toFixed(2);
+    document.getElementsByClassName('weight-name')[11].innerHTML = statweights.meleecrit.toFixed(2);
+    document.getElementsByClassName('weight-name')[12].innerHTML = statweights.expertise.toFixed(2);
 }
 // initialize stats display
 displayStats();
@@ -298,6 +315,11 @@ function wisdomCheck() {
 function lotpCheck() {
     let isChecked = document.getElementById("lotp").checked; 
     buffslist[3] = isChecked ? 17007 : 0;
+    let isImproved = document.getElementById("lotpidol").selected;
+    if (isChecked && isImproved) {
+        buffslist[17] = 39926;
+    } 
+    else { buffslist[17] = 0; }
     selectedOptionsResults();
 
 }

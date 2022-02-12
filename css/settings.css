@@ -446,42 +446,57 @@ ul {
 
 }
 .select-1 {
-    left: 96px;
+  float: right;
+  right: 40px;
   }
 .select-2 {
-    left: 80px;
+  float: right;
+  right: 40px;
 
 }
 .select-3 {
   position: absolute;
   top: 160px; /*158px*/
-  left: 240px;
   height: 48px;
+  float: right;
+  right: 44px;
 
 }
 .select-4 {
-    left: 110px;
+  float: right;
+  right: 40px;
 }
 .select-5 {
   /* Reset */
-  left: 85px;
+  float: right;
+  right: 40px;
 }
 .select-6 {
-    left: 138px;
+  float: right;
+  right: 40px;
 }
 .select-7 {
     /* Reset */
-    left: 102px;
+    float: right;
+  right: 40px;
 
 }
 .select-8 {
   /* Reset */
-  left: 3px;
+  float: right;
+  right: 40px;
 
 }
 .select-9 {
   /* Reset */
   left: -7px;
+
+}
+
+.select-10 {
+  /* Reset */
+  float: right;
+  right: 40px;
 
 }
 .select-relative {
