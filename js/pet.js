@@ -233,7 +233,7 @@ function petRollSpell(specialcrit){
     if (roll < tmp) return RESULT.MISS;
     tmp += PetBaseDodge * 100;
     if (roll < tmp) return RESULT.DODGE;
-    tmp += (100 - pet.combatmiss) * crit; // pseudo 2 roll
+    tmp += (100 - pet.combatmiss - PetBaseDodge) * crit; // pseudo 2 roll
     if (roll < tmp) return RESULT.CRIT;
     return RESULT.HIT;
     
@@ -247,7 +247,7 @@ function petRollMagicSpell(){
     if (roll < tmp) return RESULT.MISS;
     tmp += 14.5 * 100; // partial resist rate approx. 14.5% based on log data at 0 resistance
     if (roll < tmp) return RESULT.PARTIAL;
-    tmp += (100 - hit) * pet.combatspellcrit; // pseudo 2 roll
+    tmp += (100 - hit - 14.5) * pet.combatspellcrit; // pseudo 2 roll
     if (roll < tmp) return RESULT.CRIT;
     return RESULT.HIT;
 }
@@ -284,7 +284,7 @@ function petAttack(){
     petsteptime = nextpetattack;
     nextpetattack += pet.combatspeed;
     petautocount++;
-    petdmg.attackdmg += dmg;
+    petdmg.attackdmg += done;
     if(combatlogRun) {
         combatlogarray[combatlogindex] = petsteptime.toFixed(3) + " - Pet Auto " + RESULTARRAY[result] + " for " + done;
         combatlogindex++;
@@ -315,7 +315,6 @@ function petSpell(petspell){
         }
         petkccount++;
         spelltype = "phys";
-        petdmg.kcdmg += dmg;
         
     } // primary spell use determined by which pet selected
     else if(petspell === 'primary') {
@@ -358,10 +357,14 @@ function petSpell(petspell){
         petsteptime = nextpetspell; // since pet steps don't change time (all instants) set time to current time
         nextpetspell = nextpetspell + 1.5; // set next available spell time by 1.5
         petprimarycount++;
-        petdmg.primarydmg += dmg;
     }
     let done = petdealdamage(dmg,result,spelltype); // need special case for magic spells pet or player
     petdmgdone += done;
+    if (petspell === 'kill command'){
+        petdmg.kcdmg += done;
+    } else if (petspell === 'primary'){
+        petdmg.primarydmg += done;
+    }
     petUpdateHaste();
     
     if(combatlogRun && petspell === 'kill command') {

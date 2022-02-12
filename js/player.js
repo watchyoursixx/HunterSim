@@ -88,6 +88,21 @@ var mainhand_wep = {};
 var consumestats = {};
 var target = {};
 var currentgear = {auras:{0:{}}, stats:{},special:{}};
+var custom = {
+   str: 0,
+   agi: 0,
+   int: 0,
+   RAP: 0,
+   rangehit: 0,
+   rangecrit: 0,
+   haste: 0,
+   arp: 0,
+   MAP: 0,
+   meleehit: 0,
+   meleecrit: 0,
+   expertise: 0,
+   mp5: 0
+};
 
 const GearStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, Hit:0, MP5:0, Resil:0, ArP:0, Haste:0,Exp:0,dmgbonus:0, rangedmgbonus:0}; 
 const BuffStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, CritChance:0, Hit:0, HitChance:0, MP5:0, Resil:0, ArP:0, Haste:0};
@@ -238,7 +253,7 @@ function calcBaseStats() {
   } else if(target.type === 'Humanoid') {
       slaying = talents.humanoid_slaying;
   }
-  console.log(racialmod);
+
   dmgmod = (1 + talents.focused_fire / 100) * selectedbuffs.special.impSancAura * slaying * racialmod;
   rangedmgmod = dmgmod * (talents.ranged_weap_spec);
 
@@ -251,32 +266,32 @@ function calcBaseStats() {
   mapmod = talents.surv_instincts * 1;
   rapmod = talents.master_marksman * talents.surv_instincts * 1;
   // Main Stats
-  Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str) * strmod);
-  Agi  = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi) * agimod);
+  Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str + custom.str) * strmod);
+  Agi  = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi + custom.agi) * agimod);
   Stam = Math.floor((GearStats.Stam + BuffStats.Stam + EnchantStats.Stam + races[selectedRace].sta) * stammod);
-  Int  = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int) * intmod);
+  Int  = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int + custom.int) * intmod);
   Spi  = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
 
   // Attack Power
   let tsa_ap = (talents.trueshot_aura > 0) ? 125 : 0;
-  BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP + tsa_ap) * mapmod;
+  BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP + tsa_ap + custom.MAP) * mapmod;
   // flat 155 added for Aspect of the Hawk - need to change later
-  BaseRAP = (155 + GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * talents.careful_aim + tsa_ap) * rapmod;
-   let critsuppression = CritPenalty + CritAuraPenalty;
+  BaseRAP = (155 + GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * talents.careful_aim + tsa_ap + custom.RAP) * rapmod;
+  
   // Crit rating and crit chance
    let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
-  MeleeCritRating = critrating;
-  RangeCritRating = critrating + (currentgear.stats.RangeCrit || 0);
+  MeleeCritRating = critrating + custom.meleecrit;
+  RangeCritRating = critrating + (currentgear.stats.RangeCrit || 0) + custom.rangecrit;
    let crit = BaseCritChance + Agi / AgiToCrit + BuffStats.CritChance + talents.killer_instinct;
-  MeleeCritChance = crit + MeleeCritRating / CritRatingRatio + critsuppression;
-  RangeCritChance = crit + RangeCritRating / CritRatingRatio + talents.lethal_shots + races[selectedRace].critchance + critsuppression;
+  MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
+  RangeCritChance = crit + RangeCritRating / CritRatingRatio + talents.lethal_shots + races[selectedRace].critchance;
   
   MeleeCritDamage = 2 * (currentgear.special.relentless_metagem_crit_dmg_inc * 1);
   RangeCritDamage = 1 + (talents.mortal_shots) * (2 * slaying * currentgear.special.relentless_metagem_crit_dmg_inc - 1);
   // Hit rating and hit chance - split between ranged and melee because of hit scope and crit scope and racial
    let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
-  MeleeHitRating = hitrating;
-  RangeHitRating = hitrating + EnchantStats.RangeHit;
+  MeleeHitRating = hitrating + custom.meleehit;
+  RangeHitRating = hitrating + EnchantStats.RangeHit + custom.rangehit;
    let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
@@ -285,11 +300,11 @@ function calcBaseStats() {
   RangeMissChance = Math.max(8 - RangeHitChance - penalty,0);
 
   // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
-  Expertise = Math.floor(GearStats.Exp / ExpertiseRatio + races[selectedRace].expertise);
+  Expertise = Math.floor(GearStats.Exp / ExpertiseRatio + races[selectedRace].expertise + custom.expertise);
   DodgeChance = 6.5 - Expertise * 0.25;
 
-  ArmorPen = GearStats.ArP;
-  ManaPer5 = Math.floor(BuffStats.MP5 + GearStats.MP5 + EnchantStats.MP5);
+  ArmorPen = GearStats.ArP + custom.arp;
+  ManaPer5 = Math.floor(BuffStats.MP5 + GearStats.MP5 + EnchantStats.MP5 + custom.mp5);
   // formula for spirit regen -> (5 * sqrt(intellect) * spirit * 0.009327) for hunters
   fiveSecRulemp5 = Math.floor(5 * (Math.sqrt(Int) * Spi * BaseRegen));
 
@@ -298,7 +313,7 @@ function calcBaseStats() {
   // initialize current Mana to Max mana
   currentMana = Mana;
   
-  HasteRating = BuffStats.Haste + GearStats.Haste + EnchantStats.Haste;
+  HasteRating = BuffStats.Haste + GearStats.Haste + EnchantStats.Haste + custom.haste;
   
   BaseRangeSpeed = RANGED_WEAPONS[gear.range.id].speed / QuiverSpeed / talents.serp_swift;
   BaseMeleeSpeed = MELEE_WEAPONS[gear.mainhand.id].speed;
@@ -585,7 +600,8 @@ function updateDamageMod() {
 
 // handling for crit changes
 function updateCritChance() {
-   let combatCritChance = RangeCritChance;
+   let critsuppression = CritPenalty + CritAuraPenalty;
+   let combatCritChance = RangeCritChance + critsuppression;
    if(auras.mastertact.timer > 0) { combatCritChance += talents.master_tac; } // master tactician
    
    // from agi changes

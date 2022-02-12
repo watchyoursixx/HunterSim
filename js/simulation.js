@@ -22,9 +22,10 @@ var playeruptime = 100;
 var petuptime = 100;
 var weavetime = 0.6;
 var huntersinraid = 4;
-
 var simresults = {};
-
+var isStatWeights = false;
+var performancecheck1 = 0;
+var performancecheck2 = 0;
 var RESULT = {
     HIT: 0,
     MISS: 1,
@@ -76,41 +77,50 @@ var combatlogRun = false;
 const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance", "Partial Resist"]; // debugging
 /** Begins sim DPS functionality when ran with "Sim DPS - Loop" button. */
 function startSync() {
-    performancecheck1 = performance.now(); // test debug time check
-    spread = [];
-    countruns = 0;
-    err = 0;
-    mindps = 99999;
-    maxdps = 0;
-    sumdmg = 0;
-    sumduration = 0;
-    autocount = 0;
-    steadycount = 0;
-    multicount = 0;
-    arcanecount = 0;
-    autodmg = 0;
-    steadydmg = 0;
-    multidmg = 0;
-    arcanedmg = 0;
-    petautocount = 0;
-    petkccount = 0;
-    petprimarycount = 0;
-    sumpetdmg = 0;
-    pet.frenzy.uptime = 0;
-    pet.ferocious.uptime = 0;
-    petdmg.kcdmg = 0;
-    petdmg.attackdmg = 0;
-    petdmg.primarydmg = 0;
-
-    resultCountInitialize();
-    initializeAuras();
-    // loop through iterations, run example combat log as the last iteration
-    currentiteration = 0;
-    loopcheck = 0;
+    
     loopSim();
 
 }
+
 function loopSim() {
+    return new Promise((resolve, reject) => {
+        performancecheck1 = performance.now(); // test debug time check
+        spread = [];
+        countruns = 0;
+        err = 0;
+        mindps = 99999;
+        maxdps = 0;
+        sumdmg = 0;
+        sumduration = 0;
+        autocount = 0;
+        steadycount = 0;
+        multicount = 0;
+        arcanecount = 0;
+        autodmg = 0;
+        steadydmg = 0;
+        multidmg = 0;
+        arcanedmg = 0;
+        petautocount = 0;
+        petkccount = 0;
+        petprimarycount = 0;
+        sumpetdmg = 0;
+        pet.frenzy.uptime = 0;
+        pet.ferocious.uptime = 0;
+        petdmg.kcdmg = 0;
+        petdmg.attackdmg = 0;
+        petdmg.primarydmg = 0;
+
+        resultCountInitialize();
+        initializeAuras();
+        // loop through iterations, run example combat log as the last iteration
+        currentiteration = 0;
+        loopcheck = 0;
+        
+        loopSimHelper(resolve, isStatWeights);
+    });
+}
+
+function loopSimHelper(callback, isStatWeights) {
     currentiteration++;
     if (currentiteration === iterations) {
         combatlogRun = true;
@@ -125,18 +135,23 @@ function loopSim() {
 
         if (visualcheck > loopcheck){
             loopcheck++;
-            setTimeout(loopSim, 0);
+            setTimeout(() => loopSimHelper(callback, isStatWeights), 0);
             let loadpercent = (currentiteration / iterations) * 100;
             document.getElementById("loadbar").style.width =  loadpercent + "%";
             displayDPSResults();
         }    
         else {
-            loopSim();
+            loopSimHelper(callback, isStatWeights);
         }
     }
     else if (currentiteration === iterations){
+        
         document.getElementById("loadbar").style.width =  100 + "%";
-        finalResults();
+        
+        if (!isStatWeights) {
+            finalResults();
+          }
+          callback();
     }
     avgDPS = (sumdmg+sumpetdmg) / sumduration;
 
@@ -402,7 +417,7 @@ function spell_choice_method_A(){
         return "multishot";
     } else if ((SPELLS.arcaneshot.cd < 0.8) && arcaneuse && (SPELLS.autoshot.cd > 0.2) && (rangespeed > 1.9)){
         return "arcaneshot";
-    } else if ((rangespeed > 2.2) && (SPELLS.autoshot.cd > 0.6) && steadyuse)  {
+    } else if ((rangespeed > 2.0) && (SPELLS.autoshot.cd > 0.3) && steadyuse)  {
         return "steadyshot";
     } else if ((rangespeed < 1.8) && (SPELLS.autoshot.cd > 0.4) && (SPELLS.steadyshot.cd < 0.6) && steadyuse) {
         return "steadyshot";
@@ -444,175 +459,54 @@ function spell_choice_method_B(){
         return "autoshot"; 
     }
 }
-
-function damageResults(){
-    simresults = {
-        steady: {},
-        auto: {},
-        multi: {},
-        arcane: {},
-        attack: {},
-        kc: {},
-        primary: {}
-    };
-    // steady
-    simresults.steady.casts = (steadycount / iterations);
-    simresults.steady.miss = (spellresult.steadyshot.Miss / steadycount) * 100;
-    simresults.steady.crit = (spellresult.steadyshot.Crit / steadycount) * 100;
-    simresults.steady.hit = (spellresult.steadyshot.Hit / steadycount) * 100;
-    simresults.steady.avg = (steadydmg / steadycount);
-    simresults.steady.dps = (steadydmg / sumduration);
-    // auto
-    simresults.auto.casts = (autocount / iterations);
-    simresults.auto.miss = (spellresult.autoshot.Miss / autocount) * 100;
-    simresults.auto.crit = (spellresult.autoshot.Crit / autocount) * 100;
-    simresults.auto.hit = (spellresult.autoshot.Hit / autocount) * 100;
-    simresults.auto.avg = (autodmg / autocount);
-    simresults.auto.dps = (autodmg / sumduration);
-    // multi
-    if(SPELLS.multishot.enable){
-        simresults.multi.casts = (multicount / iterations);
-        simresults.multi.miss = (spellresult.multishot.Miss / multicount) * 100;
-        simresults.multi.crit = (spellresult.multishot.Crit / multicount) * 100;
-        simresults.multi.hit = (spellresult.multishot.Hit / multicount) * 100;
-        simresults.multi.avg = (multidmg / multicount);
-        simresults.multi.dps = (multidmg / sumduration);
+var statweights = { str: 0, agi: 0, int: 0, RAP: 0, rangehit: 0, rangecrit: 0, 
+    haste: 0, arp: 0, MAP: 0, meleehit: 0, meleecrit: 0, expertise: 0, mp5: 0
+}
+function statWeightLoop(){
+    isStatWeights = true;
+    statweights = { str: 0, agi: 0, int: 0, RAP: 0, rangehit: 0, rangecrit: 0, 
+        haste: 0, arp: 0, MAP: 0, meleehit: 0, meleecrit: 0, expertise: 0, mp5: 0
     }
-    // arcane
-    if(SPELLS.arcaneshot.enable){
-        simresults.arcane.casts = (arcanecount / iterations);
-        simresults.arcane.miss = (spellresult.arcaneshot.Miss / arcanecount) * 100;
-        simresults.arcane.crit = (spellresult.arcaneshot.Crit / arcanecount) * 100;
-        simresults.arcane.hit = (spellresult.arcaneshot.Hit / arcanecount) * 100;
-        simresults.arcane.avg = (arcanedmg / arcanecount);
-        simresults.arcane.dps = (arcanedmg / sumduration);
-    }
-    // pet auto
-    simresults.attack.casts = (petautocount / iterations);
-    simresults.attack.miss = (spellresult.petattack.Miss / petautocount) * 100;
-    simresults.attack.crit = (spellresult.petattack.Crit / petautocount) * 100;
-    simresults.attack.hit = (spellresult.petattack.Hit / petautocount) * 100;
-    simresults.attack.glance = (spellresult.petattack.Glance / petautocount) * 100;
-    simresults.attack.dodge = (spellresult.petattack.Dodge / petautocount) * 100;
-    simresults.attack.avg = (petdmg.attackdmg / petautocount);
-    simresults.attack.dps = (petdmg.attackdmg / sumduration);
-    // pet kill command
-    simresults.kc.casts = (petkccount / iterations);
-    simresults.kc.miss = (spellresult.killcommand.Miss / petkccount) * 100;
-    simresults.kc.crit = (spellresult.killcommand.Crit / petkccount) * 100;
-    simresults.kc.hit = (spellresult.killcommand.Hit / petkccount) * 100;
-    simresults.kc.dodge = (spellresult.killcommand.Dodge / petkccount) * 100;
-    simresults.kc.avg = (petdmg.kcdmg / petkccount);
-    simresults.kc.dps = (petdmg.kcdmg / sumduration);
-    // pet primary
-    simresults.primary.casts = (petprimarycount / iterations);
-    simresults.primary.miss = (spellresult.primary.Miss / petprimarycount) * 100;
-    simresults.primary.crit = (spellresult.primary.Crit / petprimarycount) * 100;
-    simresults.primary.hit = (spellresult.primary.Hit / petprimarycount) * 100;
-    simresults.primary.dodge = (spellresult.primary.Dodge / petprimarycount) * 100;
-    simresults.primary.partial = (spellresult.primary.Partial / petprimarycount) * 100;
-    simresults.primary.avg = (petdmg.primarydmg / petprimarycount);
-    simresults.primary.dps = (petdmg.primarydmg / sumduration);
+    let basedps = 0;
+    let performance1 = performance.now(); // test debug time check
     
-    let newsimresults = Object.keys(simresults).map(key => ({action: key, results: simresults[key]}));
-    let sortedsimresults = newsimresults.sort(compare);
-    buildTable(sortedsimresults);
-
-    console.log("pet dmg => "+sumpetdmg / iterations);
-    console.log("total damage: " + sumdmg/iterations);
-    console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
-}
-var actions = {
-	auto: "Auto Shot",
-	arcane: "Arcane Shot",
-	steady: "Steady Shot",
-    multi: "Multi Shot",
-    attack: "Attack (Pet)",
-    kc: "Kill Command (Pet)",
-    primary: "Primary (Pet)",
-};
-function buildTable(results){
-
-    let act = '';
-    let tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
-    for (var i = 0; i < results.length; i++) {
-        let tr = "<tr>";
-
-        act = results[i].action; 
-        tr += "<td style='text-align:right'>" + actions[act] + "</td>" + 
-        "<td style='text-align:right'>" + (results[i].results.dps || 0).toFixed(2) + "</td>" + 
-        "<td style='text-align:right'>" + (results[i].results.casts || 0).toFixed(2) + "</td>" +
-        "<td style='text-align:right'>" + (results[i].results.avg || 0).toFixed(2) + "</td>" +
-        "<td style='text-align:right'>" + (results[i].results.hit || 0).toFixed(2) + "</td>" +
-        "<td style='text-align:right'>" + (results[i].results.crit || 0).toFixed(2) + "</td>" +
-        "<td style='text-align:right'>" + (results[i].results.miss || 0).toFixed(2) + "</td>" +
-        "<td style='text-align:right'>" + (results[i].results.dodge || 0).toFixed(2) + "</td>" +
-        "<td style='text-align:right'>" + (results[i].results.glance || 0).toFixed(2) + "</td>" +
-        "<td style='text-align:right'>" + (results[i].results.partial || 0).toFixed(2) + "</td>" +
-        "</tr>";
-        tbody.innerHTML += tr;
-    }
-}
-
-function compare(a, b) {
-    // Use toUpperCase() to ignore character casing
-    const dpsA = a.results.dps;
-    const dpsB = b.results.dps;
-  
-    let comparison = 0;
-    if (dpsA > dpsB) {
-      comparison = -1;
-    } else if (dpsA < dpsB) {
-      comparison = 1;
-    }
-    return comparison;
-}
-
-/** Resets counts of spells used for stats */
-function resultCountInitialize() {
-    // player
-    for (spellname in spellresult){
-        spellresult[spellname].Hit = 0;
-        spellresult[spellname].Crit = 0;
-        spellresult[spellname].Miss = 0;
+    loopSim().then(() => {
+        basedps = avgDPS;
+        custom = {str: 0,agi: 10,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         
-        if (spellname === 'primary') {
-            spellresult[spellname].Partial = 0;
-        }
-        if (spellname === 'primary' || 'petattack' || 'killcommand') {
-            spellresult[spellname].Dodge = 0;
-        }
-        if (spellname === 'petattack') {
-            spellresult[spellname].Glance = 0;
-        }
+        console.log("Old Agi => " + Agi);
+        calcBaseStats();
+        console.log("New Agi => " + Agi);
+        console.log(basedps);
+        return loopSim();
+      }).then(() => {
+        // more followup work
+        statweights.agi = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 10,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+      }).then(() => {
+        // more followup work
+        statweights.RAP = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 10,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+      }).then(() => {
+        // more followup work
+        statweights.rangecrit = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        console.log(statweights);
+        calcBaseStats();
+        let performance2 = performance.now(); // test debug time check
+        executecodetime = (performance2 - performance1) / 1000; // milliseconds convert to sec
+        displayDPSResults();
+        displayStatWeights();
+        console.log("*****************");
+      })
 
-    }
-    return;
-}
-
-function spellResultSum(result, spellname) {
-
-    if (result === RESULT.HIT) {
-        spellresult[spellname].Hit++;
-    }
-    else if (result === RESULT.GLANCE) {
-        spellresult[spellname].Glance++;
-    }
-    else if (result === RESULT.CRIT) {
-        spellresult[spellname].Crit++;
-    }
-    else if (result === RESULT.MISS) {
-        spellresult[spellname].Miss++;
-    }
-    else if (result === RESULT.DODGE) {
-        spellresult[spellname].Dodge++;
-    }
-    else if (result === RESULT.PARTIAL) {
-        spellresult[spellname].Partial++;
-    }
-    //console.log(result);
-    //console.log(spellname);
-    //console.log(spellresult);
-    return;
+      
 }
