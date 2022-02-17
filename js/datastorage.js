@@ -63,7 +63,7 @@ function storeData(){
     localStorage.setItem("trink1offset", document.getElementById("trink1offset").value);
     localStorage.setItem("trink2offset", document.getElementById("trink2offset").value);
     localStorage.setItem("startpotoffset", document.getElementById("startpotoffset").value);
-    localStorage.setItem("runeoffset", document.getElementById("runeoffset").value);
+    //localStorage.setItem("runeoffset", document.getElementById("runeoffset").value);
     // spell options
     localStorage.setItem("lustoption", document.getElementById("lustoption").value);
     localStorage.setItem("drumoption", document.getElementById("drumoption").value);
@@ -165,8 +165,8 @@ function fetchData(){
     auras.aptrink2.offset = parseInt(trink2offset);
     let startpotoffset = localStorage.getItem('startpotoffset');
     auras.potion.offset = parseInt(startpotoffset);
-    let runeoffset = localStorage.getItem('runeoffset');
-    auras.rune.offset = parseInt(runeoffset);
+    //let runeoffset = localStorage.getItem('runeoffset');
+    //auras.rune.offset = parseInt(runeoffset);
     // spell option
     let lustoption = localStorage.getItem('lustoption');
     switch (lustoption) {
