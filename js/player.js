@@ -39,6 +39,7 @@ var RangeMissChance = 0;
 var MeleeHitRating = 0;
 var MeleeHitChance = 0;
 var MeleeMissChance = 0;
+var RaptorMissChance = 0;
 var Expertise = 0;
 var ExpertiseRating = 0;
 var Mana = 0;
@@ -296,8 +297,14 @@ function calcBaseStats() {
    let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
+
    let penalty = (RangeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
-  MeleeMissChance = Math.max(8 - MeleeHitChance - penalty,0);
+   let dw_penalty = 0;
+   if (!offhandDisabled) {
+      dw_penalty = (gear.offhand.id > 0) ? -19:0; // offhand penalty for dual wielding 
+   } else { dw_penalty = 0; }
+  MeleeMissChance = Math.max(8 - MeleeHitChance - penalty - dw_penalty,0);
+  RaptorMissChance = Math.max(8 - MeleeHitChance - penalty,0);
   RangeMissChance = Math.max(8 - RangeHitChance - penalty,0);
 
   // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
@@ -648,7 +655,7 @@ function rollSpell(attack,specialcrit) {
    let tmp = 0;
    let roll = rng10k();
    let ff_hit = (debuffs.faeriefire.timer > 0 && debuffs.faeriefire.improved && !debuffs.faeriefire.inactive) ? 3 : 0;
-   let meleemiss = Math.max(MeleeMissChance - ff_hit,0);
+   let meleemiss = Math.max(RaptorMissChance - ff_hit,0);
    let rangemiss = Math.max(RangeMissChance - ff_hit,0);
    let crit = specialcrit + combatCritChance;
 
@@ -683,8 +690,9 @@ function rollMagicSpell(){
    return RESULT.HIT;
 }
 /** attack with mainhand */
-function attackMainhand(mainhand_wep) {
-   // TODO melee swings
+function attackMainhand() {
+
+
 }
 
 /** attack with auto shot */
@@ -706,7 +714,7 @@ function attackRange() {
    else if (result === RESULT.CRIT) {
          dmg = autoShotCalc(range_wep,combatRAP);
          dmg *= RangeCritDamage;
-         proccrit();
+         proccrit(0, attack);
          debuffs.hm.stacks = (debuffs.hm.stacks < 30) ? Math.min(huntersinraid + debuffs.hm.stacks,30) : debuffs.hm.stacks;
    }
 
@@ -753,7 +761,7 @@ function attackSpell(spell,spellcost) {
       else if (result === RESULT.CRIT) {
          dmg = steadyShotCalc(range_wep,combatRAP);
          dmg *= RangeCritDamage;
-         proccrit(cost);   
+         proccrit(cost, attack);   
          debuffs.hm.stacks = (debuffs.hm.stacks < 30) ? Math.min(huntersinraid + debuffs.hm.stacks,30) : debuffs.hm.stacks;
       }
       procsteady();
@@ -771,7 +779,7 @@ function attackSpell(spell,spellcost) {
       else if (result === RESULT.CRIT) {
          dmg = multiShotCalc(range_wep,combatRAP);
          dmg *= RangeCritDamage;
-         proccrit(cost);
+         proccrit(cost, attack);
          debuffs.hm.stacks = (debuffs.hm.stacks < 30) ? Math.min(huntersinraid + debuffs.hm.stacks,30) : debuffs.hm.stacks;
       }
 
@@ -788,11 +796,46 @@ function attackSpell(spell,spellcost) {
       else if (result === RESULT.CRIT) {
          dmg = arcaneShotCalc(range_wep,combatRAP);
          dmg *= RangeCritDamage;
-         proccrit(cost);
+         proccrit(cost, attack);
          debuffs.hm.stacks = (debuffs.hm.stacks < 30) ? Math.min(huntersinraid + debuffs.hm.stacks,30) : debuffs.hm.stacks;
       }
 
       arcanecount++;
+   }
+   else if (spell === 'raptorstrike') {
+      attack = 'melee';
+	   specialcrit = talents.savage_strikes * 10;
+      result = rollSpell(attack,specialcrit); // check attack table
+      spellResultSum(result, spell);
+      if (result === RESULT.HIT) {
+         dmg = raptorStrikeCalc(mainhand_wep,combatMAP); // calc damage
+      }
+      else if (result === RESULT.CRIT) {
+         dmg = raptorStrikeCalc(mainhand_wep,combatMAP); // calc damage
+         dmg *= MeleeCritDamage;
+         proccrit(cost, attack);
+      }
+
+      raptorcount++;
+   }
+   else if (spell === 'melee') {
+      attack = 'melee';
+      result = rollMainhandWep(); // check attack table
+      spellResultSum(result, spell);
+      if (result === RESULT.HIT) {
+         dmg = meleeStrikeCalc(mainhand_wep, combatMAP); // calc damage
+      }
+      else if (result === RESULT.CRIT) {
+         dmg = meleeStrikeCalc(mainhand_wep, combatMAP); // calc damage
+         dmg *= MeleeCritDamage;
+         proccrit(cost, attack);
+      }
+      else if (result === RESULT.GLANCE) {
+         dmg = meleeStrikeCalc(mainhand_wep, combatMAP); // calc damage
+         dmg *= GlanceDmgReduction;
+      }
+
+      meleecount++;
    }
 
    let done = dealdamage(dmg,result,spell);
@@ -803,13 +846,17 @@ function attackSpell(spell,spellcost) {
       multidmg += done;
    } else if (spell === 'arcaneshot'){
       arcanedmg += done;
+   } else if (spell === 'raptorstrike'){
+      raptordmg += done;
+   } else if (spell === 'melee'){
+      meleedmg += done;
    }
    procattack(attack,result);
    procMana(attack,result); // expensiveish
    magicproc(attack);
 
    if(combatlogRun) {
-      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player " + spell + " " + RESULTARRAY[result] + " for " + done;
+      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player " + SPELL_MAPPER[spell] + " " + RESULTARRAY[result] + " for " + done;
       combatlogindex++;
    }
    return;
@@ -837,6 +884,13 @@ function cast(spell) {
       attackSpell(spell,spellcost);
       //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
    }
+   else if (spell === 'raptorstrike'){
+      spellcost = SPELLS.raptorstrike.cost;
+      attackSpell(spell,spellcost);
+   }
+   else if (spell === 'melee'){
+      attackSpell(spell,spellcost);
+   }
 return;
 }
 
@@ -862,14 +916,14 @@ function dealdamage(dmg, result, spell) {
    }
 }
 /** handling for procs by crits */
-function proccrit(cost) {
+function proccrit(cost, attack) {
    // kill command
    killcommand.ready = true;
    killcommand.timeremaining = 5;
 
    let roll = 0;
    // thrill of the hunt
-   if (talents.TotH > 0 && cost > 0){
+   if (talents.TotH > 0 && cost > 0 && attack === 'ranged'){
       roll = rng10k();
       let prevmana = currentMana;
       if (roll <= talents.TotH * 3333) { currentMana += Math.floor(cost * 0.4); 
@@ -879,7 +933,7 @@ function proccrit(cost) {
          }
       }
    }
-   if (talents.exp_weakness > 0) {
+   if (talents.exp_weakness > 0 && attack === 'ranged') {
       roll = rng10k();
       debuffs.exposeweakness.timer = (roll <= talents.exp_weakness * 3333) ? debuffs.exposeweakness.duration : debuffs.exposeweakness.timer;
       if(debuffs.exposeweakness.timer > 0 && combatlogRun) {
@@ -910,7 +964,7 @@ function proccrit(cost) {
       }
    } 
    // go for the throat proc
-   if(talents.GftT > 0){
+   if(talents.GftT > 0 && attack === 'ranged'){
       let playercrit = true;
       petUpdateFocus(playercrit);
    }
@@ -1174,7 +1228,29 @@ function magicproc(attack) {
 // handling for physical dmg procs from items (if any?)
 function physproc() {
 }
+function runeHandling() {
+   let runemana = 0;
+   let prev_mana = 0;
+   let gain = 0;
+   let over = 0;
+   if (Mana - currentMana >= 1500) {
 
+      runemana = rng(900,1500);
+      prev_mana = currentMana;
+      currentMana = Math.min(currentMana + runemana, Mana);
+      gain = currentMana - prev_mana;
+      over = runemana - gain;
+      auras.rune.cooldown = 120;
+      if(combatlogRun) {
+         combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player used rune for " + gain + " Mana (O: " + over + ")";
+         combatlogindex++;
+      }
+
+   } else {
+      return false;
+   }
+   return true;
+}
 function potionHandling() {
 
    let primary = auras.potion.primary;

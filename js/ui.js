@@ -158,6 +158,15 @@ function combatLogDisplay(){
     
 }
 
+function filterCombatLog(){
+    filteredcombatlogarray = combatlogarray.filter(key => key.includes("Player") && !key.includes("Mana"));
+    let combatlog = "";
+            for (i=0; i < filteredcombatlogarray.length; i++) {
+                combatlog += "<p>" + filteredcombatlogarray[i] + "</p>";
+            }   
+            document.getElementById("combatlog").innerHTML = combatlog;
+}
+
 combatLogDisplay();
 // filters out ids with 0s for the getStatsFromBuffs formula
 function removeZeros(){
@@ -783,8 +792,8 @@ function spellEnableCheck(){
     let runecheck = document.getElementById("runecheck").checked;
     let multicheck = document.getElementById("multicheck").checked;
     let arcanecheck = document.getElementById("arcanecheck").checked;
-    //let raptorcheck = document.getElementById("raptorcheck").checked;
-    //let meleecheck = document.getElementById("meleecheck").checked;
+    let raptorcheck = document.getElementById("raptorcheck").checked;
+    let meleecheck = document.getElementById("meleecheck").checked;
 
     auras.rapid.enable = rapidcheck;
     beastenable = beastcheck;
@@ -797,8 +806,8 @@ function spellEnableCheck(){
     
     SPELLS.multishot.enable = multicheck;
     SPELLS.arcaneshot.enable = arcanecheck;
-    //SPELLS.raptorstrike.enable = raptorcheck;
-    //SPELLS.melee.enable = meleecheck;
+    SPELLS.raptorstrike.enable = raptorcheck;
+    SPELLS.melee.enable = meleecheck;
     storeData();
 
 }

@@ -576,7 +576,7 @@ const RING_ENCHANTS = {
   27920: {
     name: 'Striking',
     effectId: 2929,
-    special: { rangedmgbonus: 2 },
+    special: { dmgbonus: 2 },
     stats: {},
     Phase: 1,
     icon: 'inv_misc_note_01'

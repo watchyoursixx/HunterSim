@@ -368,7 +368,7 @@ function petSpell(petspell){
     petUpdateHaste();
     
     if(combatlogRun && petspell === 'kill command') {
-        combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Pet " + petspell + " " + RESULTARRAY[result] + " for " + done;
+        combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Pet Kill Command " + RESULTARRAY[result] + " for " + done;
         combatlogindex++;
     } else if(combatlogRun){
         combatlogarray[combatlogindex] = petsteptime.toFixed(3) + " - Pet " + PET_SPELLS[spellindex].name + " " + RESULTARRAY[result] + " for " + done;

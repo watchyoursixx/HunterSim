@@ -142,10 +142,10 @@ function fetchData(){
     SPELLS.multishot.enable = multicheck;
     let arcanecheck = JSON.parse(localStorage.getItem('arcanecheck'));
     SPELLS.arcaneshot.enable = arcanecheck;
-    //let raptorcheck = JSON.parse(localStorage.getItem('raptorcheck'));
-    //SPELLS.raptorstrike.enable = raptorcheck;
-    //let meleecheck = JSON.parse(localStorage.getItem('meleecheck'));
-    //SPELLS.melee.enable = meleecheck;
+    let raptorcheck = JSON.parse(localStorage.getItem('raptorcheck'));
+    SPELLS.raptorstrike.enable = raptorcheck;
+    let meleecheck = JSON.parse(localStorage.getItem('meleecheck'));
+    SPELLS.melee.enable = meleecheck;
 
     // spell offsets
     let rapidoffset = localStorage.getItem('rapidoffset');
@@ -288,8 +288,8 @@ function fetchData(){
     document.getElementById("runecheck").checked = auras.rune.enable;
     document.getElementById("multicheck").checked = SPELLS.multishot.enable;
     document.getElementById("arcanecheck").checked = SPELLS.arcaneshot.enable;
-    //document.getElementById("raptorcheck").checked = SPELLS.raptorstrike.enable;
-    //document.getElementById("meleecheck").checked = SPELLS.melee.enable;
+    document.getElementById("raptorcheck").checked = SPELLS.raptorstrike.enable;
+    document.getElementById("meleecheck").checked = SPELLS.melee.enable;
     // spell offsets
     document.getElementById("rapidoffset").value = auras.rapid.offset;
     document.getElementById("beastoffset").value = auras.beastwithin.offset;
