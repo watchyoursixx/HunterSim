@@ -299,7 +299,7 @@ function fetchData(){
     document.getElementById("trink1offset").value = auras.aptrink1.offset;
     document.getElementById("trink2offset").value = auras.aptrink2.offset;
     document.getElementById("startpotoffset").value = auras.potion.offset;
-    document.getElementById("runeoffset").value = auras.rune.offset;
+    //document.getElementById("runeoffset").value = auras.rune.offset;
     // spell options
     document.getElementById("lustoption").value = lustoption;
     document.getElementById("drumoption").value = auras.drums.type;
