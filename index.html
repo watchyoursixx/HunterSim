@@ -148,7 +148,7 @@
                       </h4>
                     </div>
                   </div>
-                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-4">Import<span style="font-size: 1rem;"></span>
+                  <a href="javascript:;" id="importbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-4">Import<span style="font-size: 1rem;"></span>
                   </a>
                   <h4 class="u-align-center u-text u-text-custom-color-3 u-text-24">Hunter<br>
                   </h4>
@@ -912,9 +912,25 @@
   </div>
 </div>
 
+<div id="importmodal" class="modal-import">
+  <div class="modal-import-content">
+    <span class="close">&times;</span>
+    <div>
+      <label for="import" class="header-1">Import Data:</label>
+
+      <textarea id="importdata" name="import" rows="4" cols="50"></textarea>
+      <br>
+      <button onclick="submitImportData()">Submit!</button>
+
+      <p id="confirmimport" class="label-2"></p>
+    </div>
+  </div>
+</div>
+
     <script class="u-script" type="text/javascript" src="js/datastorage.js"></script>
     <script class="u-script" type="text/javascript" src="js/gearui.js"></script> 
     <script class="u-script" type="text/javascript" src="js/importdata.js"></script> 
+    <script class="u-script" type="text/javascript" src="js/importer.js"></script>
     <script class="u-script" type="text/javascript" src="js/ui.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script class="u-script" type="text/javascript" src="js/stats.js"></script> 

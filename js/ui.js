@@ -71,45 +71,71 @@ function displayStatWeights(){
 }
 // initialize stats display
 displayStats();
+displayStatWeights();
 
-// Get the modal
-var settingmodal = document.getElementById("settingsmodal");
-// Get the button that opens the modal
-var settingbtn = document.getElementById("settingsbtn");
-// Get the <span> element that closes the modal
-var settingspan = document.getElementsByClassName("close")[0];
-// When the user clicks the button, open the modal 
-settingbtn.onclick = function() {
-    settingmodal.style.display = "block";
-}
-// When the user clicks on <span> (x), close the modal
-settingspan.onclick = function() {
-    settingmodal.style.display = "none";
-}
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == settingmodal) {
-    settingmodal.style.display = "none";
-  }
-  if (event.target == logmodal) {
-    logmodal.style.display = "none";
-  }
-  if (event.target == gearmodal) {
-      gearmodal.style.display = "none";
-  }
+function initializeModals(){
+    // Get the modal
+    let settingmodal = document.getElementById("settingsmodal");
+    // Get the button that opens the modal
+    let settingbtn = document.getElementById("settingsbtn");
+    // Get the <span> element that closes the modal
+    let settingspan = document.getElementsByClassName("close")[0];
+    // When the user clicks the button, open the modal 
+    settingbtn.onclick = function() {
+        settingmodal.style.display = "block";
+    }
+    // When the user clicks on <span> (x), close the modal
+    settingspan.onclick = function() {
+        settingmodal.style.display = "none";
+    }
+
+    // Get the modal
+    let importmodal = document.getElementById("importmodal");
+    // Get the button that opens the modal
+    let importbtn = document.getElementById("importbtn");
+    // Get the <span> element that closes the modal
+    let importspan = document.getElementsByClassName("close")[3];
+    // When the user clicks the button, open the modal 
+    importbtn.onclick = function() {
+        importmodal.style.display = "block";
+    }
+    // When the user clicks on <span> (x), close the modal
+    importspan.onclick = function() {
+        importmodal.style.display = "none";
+    }
+
+    let logmodal = document.getElementById("logmodal");
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == settingmodal) {
+            settingmodal.style.display = "none";
+        }
+        if (event.target == logmodal) {
+            logmodal.style.display = "none";
+        }
+        if (event.target == gearmodal) {
+            gearmodal.style.display = "none";
+        }
+        if (event.target == importmodal) {
+            importmodal.style.display = "none";
+        }
+    }
 }
 
-var logmodal = document.getElementById("logmodal");
-// Get the button that opens the modal
-var logbtn = document.getElementById("logbtn");
-// Get the <span> element that closes the modal
-var logspan = document.getElementsByClassName("close")[1];
-// When the user clicks on <span> (x), close the modal
-logspan.onclick = function() {
-    logmodal.style.display = "none";
-}
+
+
+initializeModals();
 
 function combatLogDisplay(){
+    let logmodal = document.getElementById("logmodal");
+    // Get the <span> element that closes the modal
+    let logspan = document.getElementsByClassName("close")[1];
+    // When the user clicks on <span> (x), close the modal
+
+    logspan.onclick = function() {
+        logmodal.style.display = "none";
+    }
+
     let logbtn = document.getElementById("logbtn");
     if(combatlogarray.length === 0){
         
@@ -146,6 +172,30 @@ function removeZeros(){
     
     filteredbuffs = buffslist.filter(filterById);
 }
+
+function submitImportData() {
+
+    let importedgear = document.getElementById("importdata").value;
+    
+    try {
+        let importdata = JSON.parse(importedgear);
+        let newgear = importFrom70U(importdata);
+        console.log(newgear);
+        // initialize ammo before re-writing
+        newgear.gear.ammo.id = gear.ammo.id;
+        gear = newgear.gear;
+
+        document.getElementById("importdata").value = '';
+        document.getElementById("confirmimport").innerHTML = "Successfully Imported!";
+        selectedOptionsResults();
+    }
+    catch(err){
+        document.getElementById("confirmimport").innerHTML = "Failed to import.. Check copied data and try again.";
+        console.log(err);
+    }
+    
+}
+
 // called each time buffs change to filter zeros, get, recalc, and display them
 function selectedOptionsResults(){
     removeZeros();

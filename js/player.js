@@ -116,8 +116,8 @@ var gear = {
    back: { id: 29994, enchant: 34004 },
    chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
    wrist: { id: 29966, gems: [24028], enchant: 34002 },
-   mainhand: { id: 32944, enchant: 23800 },
-   offhand: { id: 29948, enchant: 23800 },
+   mainhand: { id: 32944, enchant: 42620 },
+   offhand: { id: 29948, enchant: 42620 },
    hand: { id: 30140, enchant: 25080 },
    waist: { id: 30040, gems: [24028, 24028] },
    leg: { id: 29995, enchant: 35490 },
@@ -291,7 +291,8 @@ function calcBaseStats() {
   // Hit rating and hit chance - split between ranged and melee because of hit scope and crit scope and racial
    let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
   MeleeHitRating = hitrating + custom.meleehit;
-  RangeHitRating = hitrating + EnchantStats.RangeHit + custom.rangehit;
+  let hitscope = currentgear.stats.RangeHit || 0;
+  RangeHitRating = hitrating + hitscope + custom.rangehit;
    let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
@@ -656,7 +657,7 @@ function rollSpell(attack,specialcrit) {
       if (roll < tmp) return RESULT.MISS;
       tmp += DodgeChance * 100;
       if (roll < tmp) return RESULT.DODGE;
-      tmp += (100 - meleemiss) * crit; // pseudo 2 roll
+      tmp += (100 - meleemiss - DodgeChance) * crit; // pseudo 2 roll
       if (roll < tmp) return RESULT.CRIT;
       return RESULT.HIT;
    }
@@ -1179,7 +1180,7 @@ function potionHandling() {
    let primary = auras.potion.primary;
    let secondary = auras.potion.secondary;
    // use secondary if no primary or if mana below 4k
-   if ((secondary && (currentMana <= 4000)) || !primary && secondary) {
+   if ((secondary && (Mana - currentMana >= 3000))) {
          if (secondaryPotion === 'Fel') {
             auras.potion.timer = 24; // add condition for fel mana
             auras.potion.ticks = 7; // 8 total ticks for fel mana, (0-7)
@@ -1201,9 +1202,12 @@ function potionHandling() {
    else if (primary) {
       auras.potion.timer = 15;
       auras.potion.used = 'Haste';
-      
+   } 
+   else {
+      return false;
    }
    auras.potion.cooldown = 120;
+   return true;
 }
 
 /** rng function for randomizing an integer from 2 values such as the damage range on weapons.

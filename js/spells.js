@@ -12,57 +12,57 @@ var SPELLS = {
 
 const PET_SPELLS = [
     {
-        name:'bite',
+        name:'Bite',
         mindmg: 108,
         maxdmg: 132,
         cd:0,
         cost:35,
     },
     {
-        name:'screech',
+        name:'Screech',
         mindmg: 33,
         maxdmg: 61,
         cost: 20,
     },
     {
-        name:'claw',
+        name:'Claw',
         mindmg: 54,
         maxdmg: 76,
         cost: 25,
     },
     {
-        name:'gore',
+        name:'Gore',
         mindmg: 37,
         maxdmg: 61,
         cost: 25,
     },
     {
-        name:'lightning breath',
+        name:'Lightning Breath',
         mindmg: 99,
         maxdmg: 113,
         sp_coeff: 0.05,
         cost: 50,
     },
     {
-        name:'thunderstomp',
+        name:'Thunderstomp',
         mindmg: 115,
         maxdmg: 133,
         sp_coeff: 0.05,
         cost: 60,
     },
     {
-        name:'fire breath',
+        name:'Fire Breath',
         tick: 37,
         sp_coeff: 0.05,
         cost: 50,
     },
     {
-        name:'poison spit',
+        name:'Poison Spit',
         tick: 24,
         cost: 35,
     },
     {
-        name:'scorpid poison',
+        name:'Scorpid Poison',
         tick: 11,
         sp_coeff: 0.026,
         cost: 30,
@@ -106,7 +106,7 @@ function updateSpellCDs(spell,petspell) {
 }
 
 /*************************************************************************/
-/* All formulas below are tested and confirmed in-game as of patch 2.5.2 */
+/* All formulas below are tested and confirmed in-game as of patch 2.5.3 */
 /*************************************************************************/
 
 function autoShotCalc(range_wep, combatRAP) {

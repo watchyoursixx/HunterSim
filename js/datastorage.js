@@ -77,7 +77,7 @@ function fetchData(){
 
     // gear
     let savedgear = JSON.parse(localStorage.getItem('gear'));
-    //gear = savedgear;
+    gear = savedgear;
     // buffs
     let savedbuffs = JSON.parse(localStorage.getItem('buffs'));
     buffslist = savedbuffs;

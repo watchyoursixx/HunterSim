@@ -424,7 +424,7 @@ function spell_choice_method_A(){
     } 
     else { 
         return "autoshot"; 
-}
+    }
 
 }
 
@@ -459,8 +459,8 @@ function spell_choice_method_B(){
         return "autoshot"; 
     }
 }
-var statweights = { str: 0, agi: 0, int: 0, RAP: 0, rangehit: 0, rangecrit: 0, 
-    haste: 0, arp: 0, MAP: 0, meleehit: 0, meleecrit: 0, expertise: 0, mp5: 0
+var statweights = { str: 0, agi: 0.947, int: 0, RAP: 0.428, rangehit: 1.255, rangecrit: 0.782, 
+    haste: 0.779, arp: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, expertise: 0, mp5: 0
 }
 function statWeightLoop(){
     isStatWeights = true;
