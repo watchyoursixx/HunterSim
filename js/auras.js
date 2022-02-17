@@ -206,7 +206,7 @@ function initializeAuras() {
     auras.bloodfury.cooldown = auras.bloodfury.offset;
     auras.abacus.cooldown = 0;
     auras.drums.cooldown = auras.drums.offset;
-    auras.potion.cooldown = auras.potion.offset;
+    auras.potion.cooldown = (auras.potion.primary) ? auras.potion.offset : 0;
     auras.rune.cooldown = auras.rune.offset;
     auras.rapid.cooldown = auras.rapid.offset;
     auras.swarmguard.cooldown = 0;
@@ -648,8 +648,7 @@ function onUseSpellCheck(){
             combatlogindex++;
         }
     }
-    if((auras.potion.primary || auras.potion.secondary) && auras.potion.cooldown === 0) {
-        potionHandling();
+    if((auras.potion.primary || auras.potion.secondary) && auras.potion.cooldown === 0 && potionHandling()) {
         if(combatlogRun) {
             combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player used " + auras.potion.used + " Potion";
             combatlogindex++;

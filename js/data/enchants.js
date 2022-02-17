@@ -6,7 +6,8 @@ const HEAD_ENCHANTS = {
         Haste: 10
     },
     Phase: 1,
-    icon: 'inv_misc_gem_02'
+    icon: 'inv_misc_gem_02',
+    desc: '+10 Haste'
   },
   24162: {
     name: "Falcon's Call",
@@ -15,7 +16,8 @@ const HEAD_ENCHANTS = {
       Stam: 10,
       Hit: 10,
       RAP: 24
-    }
+    },
+    desc: '+10 Stam, +10 Hit, +24 RAP'
   },
   35452: {
     name: 'Glyph of Ferocity',
@@ -26,7 +28,8 @@ const HEAD_ENCHANTS = {
         Hit: 16
     },
     Phase: 1,
-    icon: 'classic_ability_druid_demoralizingroar'
+    icon: 'classic_ability_druid_demoralizingroar',
+    desc: '+34 AP, +16 Hit'
   },
   35453: {
     name: 'Glyph of the Gladiator',
@@ -36,7 +39,8 @@ const HEAD_ENCHANTS = {
         Resil: 20
     },
     Phase: 5,
-    icon: 'inv_misc_statue_04'
+    icon: 'inv_misc_statue_04',
+    desc: '+18 Stam, +20 Resil'
   },
   44968: {
     name: 'Heavy Knothide Armor Kit',
@@ -45,7 +49,8 @@ const HEAD_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    icon: 'inv_misc_armorkit_25',
+    desc: '+10 Stam'
   },
   15402: {
     name: 'Lesser Arcanum of Voracity',
@@ -54,7 +59,8 @@ const HEAD_ENCHANTS = {
       Agi: 8
     },
     Phase: 1,
-    icon: 'inv_misc_gem_03'
+    icon: 'inv_misc_gem_03',
+    desc: '+8 Agi'
   },
 }
 
@@ -68,7 +74,8 @@ const SHOULDER_ENCHANTS = {
       Crit: 15
     },
     Phase: 1,
-    icon: 'spell_holy_weaponmastery'
+    icon: 'spell_holy_weaponmastery',
+    desc: '+20 AP, +15 Crit'
   },
   35417: {
     name: 'Greater Inscription of Vengeance',
@@ -79,7 +86,8 @@ const SHOULDER_ENCHANTS = {
       Crit: 10
     },
     Phase: 1,
-    icon: 'spell_holy_greaterblessingofkings'
+    icon: 'spell_holy_greaterblessingofkings',
+    desc: '+30 AP, +10 Crit'
   },
   44968: {
     name: 'Heavy Knothide Armor Kit',
@@ -88,7 +96,8 @@ const SHOULDER_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    icon: 'inv_misc_armorkit_25',
+    desc: '+10 Stam'
   },
   35438: {
     name: 'Inscription of the Blade',
@@ -97,7 +106,8 @@ const SHOULDER_ENCHANTS = {
       Crit: 13
     },
     Phase: 1,
-    icon: 'ability_dualwield'
+    icon: 'ability_dualwield',
+    desc: '+13 Crit'
   },
   35407: {
     name: 'Inscription of Vengeance',
@@ -107,7 +117,8 @@ const SHOULDER_ENCHANTS = {
       RAP: 26,
     },
     Phase: 1,
-    icon: 'spell_holy_fistofjustice'
+    icon: 'spell_holy_fistofjustice',
+    desc: '+26 AP'
   },
   29483: {
     name: 'Might of the Scourge',
@@ -118,7 +129,8 @@ const SHOULDER_ENCHANTS = {
       Crit: 14
     },
     Phase: 1,
-    icon: 'spell_shadow_deathpact'
+    icon: 'spell_shadow_deathpact',
+    desc: '+26 AP, +14 Crit'
   },
   24422: {
     name: 'Zandalar Signet of Might',
@@ -128,7 +140,8 @@ const SHOULDER_ENCHANTS = {
       RAP: 30
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_08'
+    icon: 'inv_misc_armorkit_08',
+    desc: '+30 AP'
   },
 }
 

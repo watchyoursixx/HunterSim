@@ -44,38 +44,38 @@ var PETS = [
     { 
         name: 'Ravager',
         dmgmod: 1.1,
-        primary: 'gore',
-        secondary: 'gore',
+        primary: 'Gore',
+        secondary: 'Gore',
     },
     { 
         name: 'Cat',
         dmgmod: 1.1,
-        primary: 'claw',
-        secondary: 'claw',
+        primary: 'Claw',
+        secondary: 'Claw',
     },
     { 
         name: 'Raptor',
         dmgmod: 1.1,
-        primary: 'claw',
-        secondary: 'claw',
+        primary: 'Claw',
+        secondary: 'Claw',
     },
     { 
         name: 'Owl',
         dmgmod: 1.07,
-        primary: 'screech',
-        secondary: 'screech',
+        primary: 'Screech',
+        secondary: 'Screech',
     },
     { 
         name: 'Bat',
         dmgmod: 1.07,
-        primary: 'screech',
-        secondary: 'screech',
+        primary: 'Screech',
+        secondary: 'Screech',
     },
     { 
         name: 'Wind Serpent',
         dmgmod: 1.07,
-        primary: 'lightning breath',
-        secondary: 'lightning breath',
+        primary: 'Lightning Breath',
+        secondary: 'Lightning Breath',
     },
 ];
 var killcommand = {ready:false, timeremaining:0, basecd:5, cooldown:0};
@@ -109,15 +109,15 @@ function petStatsCalc(){
     // spell selection by pet
     let primary = PETS[selectedPet].primary;
     switch (primary){
-        case 'bite': spellindex = 0; break;
-        case 'screech': spellindex = 1; break;
-        case 'claw': spellindex = 2; break;
-        case 'gore': spellindex = 3; break;
-        case 'lightning breath': spellindex = 4; break;
-        case 'thunderstomp': spellindex = 5; break;
-        case 'fire breath': spellindex = 6; break;
-        case 'poison spit': spellindex = 7; break;
-        case 'scorpid poison': spellindex = 8; break;
+        case 'Bite': spellindex = 0; break;
+        case 'Screech': spellindex = 1; break;
+        case 'Claw': spellindex = 2; break;
+        case 'Gore': spellindex = 3; break;
+        case 'Lightning Breath': spellindex = 4; break;
+        case 'Thunderstomp': spellindex = 5; break;
+        case 'Fire Breath': spellindex = 6; break;
+        case 'Poison Spit': spellindex = 7; break;
+        case 'Scorpid Poison': spellindex = 8; break;
     }
     pet.primarycost = PET_SPELLS[spellindex].cost;
 }

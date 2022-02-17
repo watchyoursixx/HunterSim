@@ -1,25 +1,12 @@
-var spreaddata = {
-  labels: [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4"
-  ],
-  datasets: [{
-      data: [
-        2820,
-        2830,
-        2840,
-        2850,
-        2870
-      ],
-      backgroundColor: 'rgba(170,	211, 114, 0.6)',
-      borderColor: 'rgb(170,	211, 114)',
-      borderWidth: 1,
-      barPercentage: 1,
-      categoryPercentage: 1,
-  }]
+var spreaddata = {};
+var actions = {
+  auto: "Auto Shot",
+  arcane: "Arcane Shot",
+  steady: "Steady Shot",
+    multi: "Multi Shot",
+    attack: "Attack (Pet)",
+    kc: "Kill Command (Pet)",
+    primary: "Primary (Pet)"
 };
 
 function buildData(spread){
@@ -109,7 +96,7 @@ var histogram = new Chart(ctx, {
             offset: false
           },
           ticks: {
-            stepSize: 50
+            stepSize: 10
           },
           title: {
             display:true,
@@ -216,20 +203,14 @@ function damageResults(){
   console.log("total damage: " + sumdmg/iterations);
   console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
 }
-var actions = {
-auto: "Auto Shot",
-arcane: "Arcane Shot",
-steady: "Steady Shot",
-  multi: "Multi Shot",
-  attack: "Attack (Pet)",
-  kc: "Kill Command (Pet)",
-  primary: "Primary (Pet)",
-};
+
 function buildTable(results){
+  actions.primary = PETS[selectedPet].primary + " (Pet)";
 
   let act = '';
   let tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
+  
   for (var i = 0; i < results.length; i++) {
     let tr = "<tr>";
     if (results[i].results.dps > 0) {
@@ -249,7 +230,7 @@ function buildTable(results){
     }
   }
 }
-
+/** Compares the values of 2 numbers for sorting */
 function compare(a, b) {
   // Use toUpperCase() to ignore character casing
   const dpsA = a.results.dps;
