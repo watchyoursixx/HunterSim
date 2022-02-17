@@ -649,23 +649,13 @@ function onUseSpellCheck(){
         }
     }
     if((auras.potion.primary || auras.potion.secondary) && auras.potion.cooldown === 0 && potionHandling()) {
-        if(combatlogRun) {
+        if(combatlogRun && (secondaryPotion === 'Fel' || auras.potion.used === 'Haste')) {
             combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player used " + auras.potion.used + " Potion";
             combatlogindex++;
         }
     }
-    if(auras.rune.enable && auras.rune.cooldown === 0) {
-        let runemana = rng(900,1500);
-        let prev_mana = currentMana;
-        currentMana = Math.min(currentMana + runemana, Mana);
-        let gain = currentMana - prev_mana;
-        let over = runemana - gain;
-        auras.rune.cooldown = 120;
-        if(combatlogRun) {
-            combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player used rune for " + gain + " Mana (O: " + over + ")";
-            combatlogindex++;
-        }
-    }
+    if(auras.rune.enable && auras.rune.cooldown === 0 && runeHandling()) {}
+    
     if(auras.lust.enable && auras.lust.cooldown === 0){
         auras.lust.timer = (auras.lust.cooldown === 0) ? auras.lust.duration : auras.lust.timer; // set timer
         auras.lust.cooldown = (auras.lust.timer === auras.lust.duration) ? auras.lust.basecd: auras.lust.cooldown; // set cd

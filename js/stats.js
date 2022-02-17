@@ -3,10 +3,12 @@ var actions = {
   auto: "Auto Shot",
   arcane: "Arcane Shot",
   steady: "Steady Shot",
-    multi: "Multi Shot",
-    attack: "Attack (Pet)",
-    kc: "Kill Command (Pet)",
-    primary: "Primary (Pet)"
+  multi: "Multi Shot",
+  raptor: "Raptor Strike",
+  melee: "Melee",
+  attack: "Attack (Pet)",
+  kc: "Kill Command (Pet)",
+  primary: "Primary (Pet)"
 };
 
 function buildData(spread){
@@ -132,6 +134,8 @@ function damageResults(){
       auto: {},
       multi: {},
       arcane: {},
+      raptor: {},
+      melee: {},
       attack: {},
       kc: {},
       primary: {}
@@ -167,6 +171,27 @@ function damageResults(){
       simresults.arcane.hit = (spellresult.arcaneshot.Hit / arcanecount) * 100;
       simresults.arcane.avg = (arcanedmg / arcanecount);
       simresults.arcane.dps = (arcanedmg / sumduration);
+  }
+  //raptor
+  if(SPELLS.raptorstrike.enable){
+      simresults.raptor.casts = (raptorcount / iterations);
+      simresults.raptor.miss = (spellresult.raptorstrike.Miss / raptorcount) * 100;
+      simresults.raptor.dodge = (spellresult.raptorstrike.Dodge / raptorcount) * 100;
+      simresults.raptor.crit = (spellresult.raptorstrike.Crit / raptorcount) * 100;
+      simresults.raptor.hit = (spellresult.raptorstrike.Hit / raptorcount) * 100;
+      simresults.raptor.avg = (raptordmg / raptorcount);
+      simresults.raptor.dps = (raptordmg / sumduration);
+  }
+  //melee swings
+  if(SPELLS.melee.enable){
+      simresults.melee.casts = (meleecount / iterations);
+      simresults.melee.miss = (spellresult.melee.Miss / meleecount) * 100;
+      simresults.melee.dodge = (spellresult.melee.Dodge / meleecount) * 100;
+      simresults.melee.crit = (spellresult.melee.Crit / meleecount) * 100;
+      simresults.melee.hit = (spellresult.melee.Hit / meleecount) * 100;
+      simresults.melee.glance = (spellresult.melee.Glance / meleecount) * 100;
+      simresults.melee.avg = (meleedmg / meleecount);
+      simresults.melee.dps = (meleedmg / sumduration);
   }
   // pet auto
   simresults.attack.casts = (petautocount / iterations);

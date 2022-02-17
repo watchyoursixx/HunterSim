@@ -27,6 +27,7 @@
     <script class="u-script" type="text/javascript" src="js/auras.js"></script>
     <script class="u-script" type="text/javascript" src="js/pet.js"></script>
     <script class="u-script" type="text/javascript" src="js/player.js"></script>
+    <script class="u-script" type="text/javascript" src="js/expected_dmg.js"></script>
     
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
     <script>const whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: true};</script>
@@ -124,7 +125,7 @@
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
                   <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17" id="mp5">0</p>
                   <a href="javascript:;" id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
-                  <a href="javascript:;" onclick="startStepOnly()" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Sim DPS - Step</a>
+                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Sim Soon</a>
                   <a href="javascript:;" onclick="startSync()" id="simdps" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Sim DPS - Loop<div class="loadbar" id="loadbar"></div></a>
                   <a href="javascript:;" onclick="combatLogDisplay()" onmouseover="combatLogDisplay()" id="logbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-6">Combat Log</a>
                   <p class="u-align-right u-text u-text-custom-color-7 u-text-18 u-text-1819" id="dpsresult">2000.1</p>
@@ -804,7 +805,7 @@
           </li>
           <img class="spells-image spells-image-10" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_sealofkings.jpg" alt="">
           <li><label class="container container-2">Runes<input id="runecheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>
-          <input id="runeoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-9" value="0" onchange="spellOffsets()">
+          <!--<input id="runeoffset" type="number" step="1" min="0" max="500" class="number-input hover-grey spells-input spells-input-9" value="0" onchange="spellOffsets()">-->
           <br>
           <img class="spells-image spells-image-11" src="https://wow.zamimg.com/images/wow/icons/large/ability_upgrademoonglaive.jpg" alt="">
           <li><label class="container container-1">Multi-Shot<input id="multicheck" type="checkbox" onclick="spellEnableCheck()"><span class="checkmark"></span></label></li>

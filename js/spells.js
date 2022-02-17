@@ -2,13 +2,23 @@ var SPELLS = {
 
     autoshot: {cast:0.5, cd:0, dmg:0, cost:0, duration:0, gcd:false},
     steadyshot: {enable:true, cast:1.5, cd:0, dmg:0, cost:110, duration:0, rankdmg:150, gcd:true},
-    multishot: {enable:true, cast:0.5, cd:0, dmg:0, cost:275, duration:0, rankdmg:205, gcd:true},
-    arcaneshot: {enable:true, cast:0.0001, cd:0, dmg:0, cost:230, duration:0, rankdmg:273, gcd:true},
+    multishot: {enable:false, cast:0.5, cd:0, dmg:0, cost:275, duration:0, rankdmg:205, gcd:true},
+    arcaneshot: {enable:false, cast:0.0001, cd:0, dmg:0, cost:230, duration:0, rankdmg:273, gcd:true},
     aimedshot: {enable:false, cast:3, cd: 0, dmg:0, cost:370, duration:0, rankdmg:870, gcd:true},
-    //raptorstrike: {enable:false, cast:0.5, cd: 0, dmg:0, cost:120, rankdmg:170,gcd:false},
-    //melee: {enable:false, cast:0.5, cd:0, dmg:0, gcd:false},
+    raptorstrike: {enable:false, cast:0.0, cd: 0, dmg:0, cost:120, rankdmg:170,gcd:false},
+    melee: {enable:false, cast:0.0, cd:0, dmg:0, gcd:false},
 
 };
+
+SPELL_MAPPER = {
+    autoshot: "Auto Shot",
+    steadyshot: 'Steady Shot',
+    multishot: 'Multi Shot',
+    arcaneshot: 'Arcane Shot',
+    aimedshot: 'Aimed Shot',
+    raptorstrike: 'Raptor Strike',
+    melee: 'Melee'
+}
 
 const PET_SPELLS = [
     {
@@ -73,8 +83,10 @@ function initializeSpells(){
     // set spell CDs to 0
     SPELLS.autoshot.cd = 0;
     SPELLS.steadyshot.cd = 0;
-    SPELLS.multishot.cd = 0;
-    SPELLS.arcaneshot.cd = 0;
+    SPELLS.multishot.cd = 0.5;
+    SPELLS.arcaneshot.cd = 0.5;
+    SPELLS.raptorstrike.cd = 4; // set to 4 for initial delay for melee
+    SPELLS.melee.cd = 4; // set to 4 for initial delay for melee
     //SPELLS.aimedshot.cd = 0;
     // set pet spell CDs to 0
     PET_SPELLS[0].cd = 0;
@@ -89,6 +101,19 @@ function updateSpellCDs(spell,petspell) {
     SPELLS.multishot.cd = (spell === 'multishot') ? 10 : Math.max(SPELLS.multishot.cd - steptime, 0);
     SPELLS.arcaneshot.cd = (spell === 'arcaneshot') ? (6 - talents.imp_arc_shot) : Math.max(SPELLS.arcaneshot.cd - steptime, 0);
     //SPELLS.aimedshot.cd = Math.max(SPELLS.aimedshot.cd - steptime, 0);
+
+	if(spell === 'raptorstrike'){
+		SPELLS.melee.cd = meleespeed;
+		SPELLS.raptorstrike.cd = 6;
+	}
+	else if(spell === 'melee'){
+		SPELLS.melee.cd = meleespeed;
+		SPELLS.raptorstrike.cd = Math.max(SPELLS.melee.cd, SPELLS.raptorstrike.cd);
+	}
+	else{
+		SPELLS.melee.cd = Math.max(SPELLS.melee.cd - steptime, 0);
+		SPELLS.raptorstrike.cd = Math.max(SPELLS.raptorstrike.cd - steptime, 0);
+	}
 
     if (currentgcd > playertimeend && spell != undefined) {
         let remaininggcd = currentgcd - playertimeend;
@@ -144,6 +169,20 @@ function aimedShotCalc(range_wep, combatRAP) {
     let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
     let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.aimedshot.rankdmg) * range_wep.basedmgmod * combatdmgmod * physdmgmod;
     return shotDmg;
+}
+
+function raptorStrikeCalc(mainhand_wep, combatMAP) {
+
+    let dmg = rng(mainhand_wep.mindmg, mainhand_wep.maxdmg);
+    let outDmg = (dmg + mainhand_wep.flatdmg + SPELLS.raptorstrike.rankdmg + combatMAP/14*mainhand_wep.speed) * mainhand_wep.basedmgmod * combatdmgmod * physdmgmod;
+    return outDmg;
+}
+
+function meleeStrikeCalc(mainhand_wep, combatMAP) {
+
+    let dmg = rng(mainhand_wep.mindmg, mainhand_wep.maxdmg);
+    let outDmg = (dmg + mainhand_wep.flatdmg + combatMAP/14*mainhand_wep.speed) * mainhand_wep.basedmgmod * combatdmgmod * physdmgmod;
+    return outDmg;
 }
 
 function petAutoCalc(){
