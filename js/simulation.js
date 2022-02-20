@@ -547,8 +547,8 @@ problematic cases: raptor + arcane, multi + arcane + raptor
 	return "autoshot";
 }
 
-var statweights = { Str: 0, Agi: 0.947, Int: 0, RAP: 0.428, rangehit: 1.255, rangecrit: 0.782, 
-    Haste: 0.779, ArP: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, Expertise: 0, MP5: 0, Hit:1.255, Crit:0.782
+var statweights = { Str: 0, Agi: 0.947, Int: 0, RAP: 0.428, rangehit: 0.91, rangecrit: 0.782, 
+    Haste: 0.779, ArP: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, Expertise: 0, MP5: 0, Hit:0.91, Crit:0.782
 }
 
 function statWeightLoop(){

@@ -515,7 +515,6 @@ function estimateDps(item, weights) {
 
 function estimateDpsForObj(obj, weights) {
     
-    const currentDps = 0;
     currentDps = estimateDps(obj[gear[activeslot].id], weights)
   
     return Object.entries(obj)
