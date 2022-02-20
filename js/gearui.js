@@ -242,6 +242,7 @@ function filterPhasesOptions(array){
     }
     return filteredarray;
 }
+
 function generateGearOptionsList(array,type){
 
     if (activeslot === 'mainhand' || activeslot === 'offhand'){
@@ -500,37 +501,6 @@ function textColorDisplay(slot,array){
     } else if(color === "Legendary") {
         document.getElementById(slotname).classList.add("legendary-text");
     } else { new Error("No color selected")}
-}
-
-function reduceGearArray(){
-    let BACK_STATS = Object.fromEntries(Object.entries(BACKS));
-    for (key in BACK_STATS) { BACK_STATS[key].DPS = 0; BACK_STATS[key].delta = 0;}
-    
-    for (key in BACKS) {
-        BACK_STATS[key].DPS += (BACKS[key].stats.RAP || 0) * statweights.RAP;
-        BACK_STATS[key].DPS += (BACKS[key].stats.MAP || 0) * statweights.MAP;
-        BACK_STATS[key].DPS += (BACKS[key].stats.Crit || 0) * statweights.rangecrit;
-        BACK_STATS[key].DPS += (BACKS[key].stats.Agi || 0) * statweights.agi;
-        BACK_STATS[key].DPS += (BACKS[key].stats.ArP || 0) * statweights.arp;
-        BACK_STATS[key].DPS += (BACKS[key].stats.Hit || 0) * statweights.rangehit;
-        BACK_STATS[key].DPS += (BACKS[key].stats.Haste || 0) * statweights.haste;
-        
-    }
-    let backitem = '' + gear.back.id;
-    let currdpsback = BACK_STATS[backitem].DPS;
-
-    for (key in BACK_STATS) {
-        BACK_STATS[key].delta = BACK_STATS[key].DPS - currdpsback;
-    }
-
-    let newbackArray = Object.keys(BACKS).map(key => ({id:key,Name:BACKS[key].name,
-        DPS:BACK_STATS[key].DPS,
-        'Δ +/-':BACK_STATS[key].delta,
-        Location:BACKS[key].Location
-    }));
-
-    console.log(newbackArray);
-
 }
 
 function estimateDps(item, weights) {
