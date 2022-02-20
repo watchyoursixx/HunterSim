@@ -142,6 +142,8 @@ function initializeAuras() {
     auras.eternalchamp.enable = ((gear.ring1.id === 29301) || (gear.ring2.id === 29301)) ? true : false;
     auras.imphawk.enable = (talents.imp_hawk > 1) ? true : false;
     auras.righteous.enable = temp_oil ? true : false;
+    auras.mongoose.enable = (gear.mainhand.enchant === 27984) ? true : false;
+    auras.executioner.enable = (gear.mainhand.enchant === 42974) ? true : false;
 
     for(let prop in auras){
         auras[prop].uptime = 0;
@@ -405,6 +407,10 @@ function uptimecalc() {
 
     if(debuffs.exposeweakness.timer > 0 && talents.exp_weakness > 0) { debuffs.exposeweakness.uptime += Math.min(debuffs.exposeweakness.timer,steptime); }
     // for debugging debuffs - tracking actual uptime
+    if(debuffs.exposeweakness.timer > 0 && !debuffs.exposeweakness.inactive && talents.exp_weakness === 0) { debuffs.exposeweakness.uptime += steptime; }
+    else if(debuffs.exposeweakness.timer < 0) {
+       debuffs.exposeweakness.uptime += steptime;
+    }
     if(debuffs.hm.timer > 0 && !debuffs.hm.inactive) { debuffs.hm.uptime += steptime; }
     else if(debuffs.hm.timer < 0) {
        debuffs.hm.uptime += steptime;
@@ -570,7 +576,7 @@ function debuffHandler(){
     if(debuffs.hm.timer <= 0 || debuffs.hm.inactive) {debuffs.hm.stacks = 0;} // sets stacks to 0 when inactive
     if((debuffs.hm.timer <= 0) && (debuffs.hm.uptime_g > 0)) { debuffs.hm.timer += debuffSetTime("hm"); } // sets the timer to inactive or active
     
-    if((debuffs.exposeweakness.timer === 0) && (talents.exp_weakness === 0 && debuffs.exposeweakness.uptime_g > 0)) { 
+    if((debuffs.exposeweakness.timer <= 0) && (talents.exp_weakness === 0 && debuffs.exposeweakness.uptime_g > 0)) { 
         debuffs.exposeweakness.timer = debuffSetTime("exposeweakness"); } // sets the timer to inactive or active
 
     if((debuffs.judgewisdom.timer <= 0) && (debuffs.judgewisdom.uptime_g > 0)) { 
@@ -639,6 +645,7 @@ function debuffSetTime(name){
 
 /**Check for on use spells ready and usable, if ready and usable, set the duration and cooldown timers. */
 function onUseSpellCheck(){
+    let beastwithinreduc = (auras.beastwithin.timer > 0) ? 0.8 : 1;
 
     if(auras.drums.enable && auras.drums.cooldown === 0){
         auras.drums.timer = (auras.drums.cooldown === 0) ? auras.drums.duration : auras.drums.timer; // set timer
@@ -664,7 +671,8 @@ function onUseSpellCheck(){
             combatlogindex++;
         }
     }
-    if(auras.rapid.enable && auras.rapid.cooldown === 0){
+    let rapidcost = Math.floor(100 * beastwithinreduc);
+    if(auras.rapid.enable && auras.rapid.cooldown === 0 && currentMana >= rapidcost){
         auras.rapid.timer = (auras.rapid.cooldown === 0) ? auras.rapid.duration : auras.rapid.timer; // set timer
         auras.rapid.cooldown = (auras.rapid.timer === auras.rapid.duration) ? auras.rapid.basecd: auras.rapid.cooldown; // set cd
         if(combatlogRun) {
@@ -673,7 +681,8 @@ function onUseSpellCheck(){
         }
     }
     if(racialenable) {
-        if(auras.berserk.enable && auras.berserk.cooldown === 0){
+        let berserkcost = (auras.berserk.enable) ? Math.floor(0.06 * BaseMana * beastwithinreduc) : 0;
+        if(auras.berserk.enable && auras.berserk.cooldown === 0 && currentMana >= berserkcost){
             auras.berserk.timer = (auras.berserk.cooldown === 0) ? auras.berserk.duration : auras.berserk.timer; // set timer
             auras.berserk.cooldown = (auras.berserk.timer === auras.berserk.duration) ? auras.berserk.basecd: auras.berserk.cooldown; // set cd
             if(combatlogRun) {

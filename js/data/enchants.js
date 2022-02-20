@@ -757,6 +757,53 @@ const RANGE_ENCHANTS = {
   }
 }
 
+const ATTACHMENTS = {
+  34340: {
+    name: 'Adamantite Weightstone',
+    effectId: 2955,
+    stats: {
+      RangeCrit: 14,
+      MeleeCrit: 14
+    },
+    special: {
+      rangedmgbonus: 12,
+      dmgbonus: 12,
+    },
+    type: 'blunt',
+    Phase: 1,
+    icon: 'inv_stone_weightstone_07'
+  },
+  29453: {
+    name: 'Adamantite Sharpening Stone',
+    effectId: 2713,
+    stats: {
+      MeleeCrit: 14
+    },
+    special: {
+      rangedmgbonus: 12,
+      dmgbonus: 12,
+    },
+    type: 'sharp',
+    Phase: 1,
+    icon: 'inv_stone_sharpeningstone_07'
+  },
+  28013: {
+    name: 'Superior Mana Oil',
+    effectId: 2677,
+    stats: {
+      MP5: 14
+    },
+    Phase: 1,
+    icon: 'inv_potion_101'
+  },
+  45397: {
+    name: 'Righteous Weapon Coating',
+    effectId: 3266,
+    Phase: 1,
+    icon: 'inv_potion_101'
+  },
+}
+
 const ENCHANT_MAP = {
   back: BACK_ENCHANTS,
   chest: CHEST_ENCHANTS,
@@ -770,5 +817,6 @@ const ENCHANT_MAP = {
   ring1: RING_ENCHANTS,
   ring2: RING_ENCHANTS,
   shoulder: SHOULDER_ENCHANTS,
-  wrist: WRIST_ENCHANTS
+  wrist: WRIST_ENCHANTS,
+  attachment: ATTACHMENTS
 };
