@@ -57,7 +57,6 @@ var avgDPS = 0;
 var sumdmg = 0;
 var sumduration = 0;
 var steptime = 0;
-var playertimestart = 0;
 var steptimeend = 0;
 var playertimeend = 0;
 var autoarray = [];
@@ -144,7 +143,7 @@ function loopSimHelper(callback, isStatWeights) {
     sumduration += totalduration;
     
     if (currentiteration < iterations) {
-        let visualcheck = currentiteration / 50;
+        let visualcheck = currentiteration / 100;
 
         if (visualcheck > loopcheck){
             loopcheck++;
@@ -215,15 +214,14 @@ function finalResults() {
 function runSim() {
     maxsteps = rng(minfighttimer * 1000, maxfighttimer * 1000);
     fightduration = maxsteps / 1000;
-    step = 0;
-    totaldmgdone = 0;
-    totalduration = 0;
     steptime = 0;
-    playertimestart = 0;
+    let playertimestart = 0;
     steptimeend = 0;
     prevtimeend = 0;
     playertimeend = 0;
+    totalduration = 0;
     sunderstart = 0; // start time for sunder check initialized as 0, then steptime + 30 after first apply
+    totaldmgdone = 0;
     DPS = 0;
     currentgcd = 0;
     currentMana = Mana;
@@ -232,8 +230,6 @@ function runSim() {
     nextpetattack = 1;
     nextpetspell = 1;
     playerattackready = false;
-    pet.frenzy.timer = 0;
-    pet.ferocious.timer = 0;
     combatlogarray = [];
     combatlogindex = 0;
     killcommand.ready = false;
@@ -258,12 +254,12 @@ function runSim() {
 			//spell = spell_choice_method_A();
 			spell = spell_choice_method_B();
 			
-            startTime(spell);
+            playertimestart = startTime(spell);
             
         }
         //console.log("spell => "+spell);
         killCommandCheck();
-        nextEvent();
+        nextEvent(playertimestart);
     
         //console.log("step "+ steptime);
         petUpdateFocus();
@@ -280,10 +276,12 @@ function runSim() {
     spread[countruns] = DPS;
     countruns++;
 }
+
 /** This is used to step through a fight rather than do a while loop. Useful for debugging. */
 function startStepOnly(){
     performancecheck1 = performance.now(); // test debug time check
     combatlogRun = true;
+    let playertimestart = 0;
     // choices
     onUseSpellCheck();
 
@@ -293,14 +291,13 @@ function startStepOnly(){
     /******* decide spell selection ******/
     if (spell === '') {
 
-        spell = spell_choice_method_A();
-        //spell = spell_choice_method_B();
-        startTime(spell);
+        spell = spell_choice_method_B();
+        playertimestart = startTime(spell);
         
     }
     killCommandCheck();
 
-    nextEvent();
+    nextEvent(playertimestart);
     //console.log("time end => "+(Math.round(steptimeend * 1000) / 1000));
     petUpdateFocus();
     updateMana();
@@ -341,8 +338,8 @@ function killCommandCheck(){
     if((killcommand.cooldown === 0) && killcommand.ready && (currentMana >= 75)) {
         petspell = 'kill command';
         currentMana = (auras.beastwithin.timer > 0) ? currentMana - 0.8 * 75 : currentMana - 75;
-        let result = 1;
-        updateMana(result);
+        let result = 0;
+        procMana('',result);
         petSpell(petspell);
         killcommand.cooldown = 5;
         killcommand.ready = false;
@@ -354,7 +351,7 @@ function killCommandCheck(){
     return;
 }
 /**This function decides which event to choose next for player or pet, kind of like an event queue. */
-function nextEvent(){
+function nextEvent(playertimestart){
 
     update();
     let rangehastemod =  range_wep.speed / rangespeed;
@@ -445,30 +442,6 @@ function nextEvent(){
         playerattackready = false;
         spell = '';
     }
-}
-/** attempt at creating spell choices based on known breakpoints */
-function spell_choice_method_A(){
-    // steady
-    let steadyuse = (SPELLS.steadyshot.cost <= currentMana) && SPELLS.steadyshot.enable; // check if cost is usable or not
-    let multiuse = (SPELLS.multishot.cost <= currentMana) && SPELLS.multishot.enable;
-    let arcaneuse = (SPELLS.arcaneshot.cost <= currentMana) && SPELLS.arcaneshot.enable;
-    if ((SPELLS.multishot.cd < 0.8) && multiuse && (SPELLS.autoshot.cd > 0.2) && (rangespeed < 1.8)){
-        return "multishot";
-    } else if ((SPELLS.autoshot.cd > 1.3) && steadyuse) {
-        return "steadyshot";
-    } else if ((SPELLS.multishot.cd < 0.8) && multiuse && (SPELLS.autoshot.cd > 0.2)){
-        return "multishot";
-    } else if ((SPELLS.arcaneshot.cd < 0.8) && arcaneuse && (SPELLS.autoshot.cd > 0.2) && (rangespeed > 1.9)){
-        return "arcaneshot";
-    } else if ((rangespeed > 2.0) && (SPELLS.autoshot.cd > 0.3) && steadyuse)  {
-        return "steadyshot";
-    } else if ((rangespeed < 1.8) && (SPELLS.autoshot.cd > 0.4) && (SPELLS.steadyshot.cd < 0.6) && steadyuse) {
-        return "steadyshot";
-    } 
-    else { 
-        return "autoshot"; 
-    }
-
 }
 
 /** attempt at creating spell choices based on a ratio of speed and damage */
@@ -582,34 +555,67 @@ function statWeightLoop(){
     }
     let basedps = 0;
     let performance1 = performance.now(); // test debug time check
-    
+    let olditerations = iterations;
+    iterations = 20000;
+
     loopSim().then(() => {
         basedps = avgDPS;
         custom = {str: 0,agi: 10,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
-        
-        console.log("Old Agi => " + Agi);
         calcBaseStats();
-        console.log("New Agi => " + Agi);
-        console.log(basedps);
         return loopSim();
-      }).then(() => {
+    }).then(() => { // save agi
         // more followup work
         statweights.agi = (avgDPS - basedps) / 10;
         custom = {str: 0,agi: 0,int: 0,RAP: 10,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-      }).then(() => {
+    }).then(() => { // save RAP
         // more followup work
         statweights.RAP = (avgDPS - basedps) / 10;
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 10,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-      }).then(() => {
+    }).then(() => { // save range crit
         // more followup work
         statweights.rangecrit = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 10,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => { // save range hit
+        // more followup work
+        statweights.rangehit = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 100,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => { // save haste
+        // more followup work
+        statweights.haste = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 100,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => { // save arp
+        // more followup work
+        statweights.arp = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 10,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => { // save MAP
+        // more followup work
+        statweights.MAP = (avgDPS - basedps) / 10;
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 10,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => { // save hit
+        // more followup work
+        statweights.meleehit = (avgDPS - basedps) / 10;
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         console.log(statweights);
@@ -618,8 +624,9 @@ function statWeightLoop(){
         executecodetime = (performance2 - performance1) / 1000; // milliseconds convert to sec
         displayDPSResults();
         displayStatWeights();
+        iterations = olditerations;
         console.log("*****************");
-      })
+    })
 
       
 }

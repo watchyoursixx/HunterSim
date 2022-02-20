@@ -16,6 +16,7 @@ const GlanceDmgReduction = 0.75;
 const GlanceChance = 24;
 const QuiverSpeed = 1.15;
 const BaseRegen = 0.009327;
+const BaseMana = 3383;
 
 // initialize stat variables
 var RangeCritRating = 0;
@@ -83,6 +84,7 @@ var totaldmgdone = 0;
 var secondaryPotion = 'Super';
 var two_min_cds = 120;
 var three_min_cds = 180;
+var useAverages = false;
 
 var range_wep = {};
 var mainhand_wep = {};
@@ -132,7 +134,7 @@ var gear = {
    quiver: { id: 18714 },
 };
 
-// initialize variables for use - temp
+// initialize variables for use
 var selectedbuffs = {
    stats: { MAP:0, RAP:0, Str:0, Agi:0 },
    special: { impSancAura: 1, kingsMod: 1, windfury: false }
@@ -157,14 +159,14 @@ var talents = {
    ferocious_insp: 1.03,//
    bestial_wrath: 1,//
    catlike_reflex: 0,// -
-   serp_swift: 1.2, // -
+   serp_swift: 1.2, //
    beast_within: 1,//
    imp_conc_shot: 0, // -
    lethal_shots: 5, //
    imp_hunter_mark: 0, //
    efficiency: 0.9, // 
    GftT: 50, //
-   imp_arc_shot: 0,
+   imp_arc_shot: 0, //
    aimed_shot: 1,
    rapid_killing: 2, //
    imp_stings: 1, 
@@ -179,8 +181,8 @@ var talents = {
    imp_barrage: 0, // 
    master_marksman: 1, //
    silencing_shot: 0, 
-   monster_slaying: 1, 
-   humanoid_slaying: 1, 
+   monster_slaying: 1, //
+   humanoid_slaying: 1, //
    hawk_eye: 0, // -
    savage_strikes: 0, 
    entrapment: 0, // -
@@ -195,7 +197,7 @@ var talents = {
    surv_instincts: 1, //
    killer_instinct: 0, //
    counterattack: 0, //
-   resourcefulness: 0, 
+   resourcefulness: 0, //
    light_reflexes: 1, //
    TotH: 0, //
    wyvern_sting: 0,
@@ -281,7 +283,7 @@ function calcBaseStats() {
   
   // Crit rating and crit chance
    let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
-  MeleeCritRating = critrating + custom.meleecrit;
+  MeleeCritRating = critrating + (currentgear.stats.MeleeCrit || 0) + custom.meleecrit;
   RangeCritRating = critrating + (currentgear.stats.RangeCrit || 0) + custom.rangecrit;
    let crit = BaseCritChance + Agi / AgiToCrit + BuffStats.CritChance + talents.killer_instinct;
   MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
@@ -292,8 +294,8 @@ function calcBaseStats() {
   // Hit rating and hit chance - split between ranged and melee because of hit scope and crit scope and racial
    let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
   MeleeHitRating = hitrating + custom.meleehit;
-  let hitscope = currentgear.stats.RangeHit || 0;
-  RangeHitRating = hitrating + hitscope + custom.rangehit;
+
+  RangeHitRating = hitrating + (currentgear.stats.RangeHit || 0) + custom.rangehit;
    let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
@@ -316,8 +318,8 @@ function calcBaseStats() {
   // formula for spirit regen -> (5 * sqrt(intellect) * spirit * 0.009327) for hunters
   fiveSecRulemp5 = Math.floor(5 * (Math.sqrt(Int) * Spi * BaseRegen));
 
-  // base of 3253 always then add int
-  Mana = 3253 + (Int - 10) * 15;
+  // base of 3383 always then add int
+  Mana = BaseMana + (Int - 20) * 15 + 20;
   // initialize current Mana to Max mana
   currentMana = Mana;
   
@@ -348,14 +350,14 @@ function initializeWeps() {
    range_wep.mindmg = RANGED_WEAPONS[gear.range.id].mindmg;
    range_wep.maxdmg = RANGED_WEAPONS[gear.range.id].maxdmg;
    range_wep.ammodps = (gear.range.id === 34334) ? 0: AMMOS[gear.ammo.id].ammo_dps;
-   range_wep.flatdmg = currentgear.stats.dmgbonus || 0 + currentgear.stats.rangedmgbonus || 0;
+   range_wep.flatdmg = currentgear.special.dmgbonus || 0 + currentgear.special.rangedmgbonus || 0;
    range_wep.basedmgmod = rangedmgmod;
    // initialize mainhand_wep obj
 
    mainhand_wep.speed = MELEE_WEAPONS[gear.mainhand.id].speed;
    mainhand_wep.mindmg = MELEE_WEAPONS[gear.mainhand.id].mindmg;
    mainhand_wep.maxdmg = MELEE_WEAPONS[gear.mainhand.id].maxdmg;
-   mainhand_wep.flatdmg = currentgear.stats.dmgbonus || 0;
+   mainhand_wep.flatdmg = currentgear.special.dmgbonus || 0;
    mainhand_wep.basedmgmod = dmgmod;
    
 }
@@ -374,12 +376,21 @@ function procMana(attack,result){
    // judgement of wisdom gain if active
    if(debuffs.judgewisdom.timer > 0 && !debuffs.judgewisdom.inactive) {
       if ((result === RESULT.CRIT) || (result === RESULT.HIT) || (result === RESULT.GLANCE)) {
-         tmp = 5000; // 50% chance
-         roll = rng10k();
-         if (tmp < roll) {
-            currentMana += 74;
+         if (!useAverages) {
+            tmp = 5000; // 50% chance
+            roll = rng10k();
+            if (tmp < roll) {
+               currentMana += 74;
+               if(combatlogRun) {
+                  combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player gains " + 74 + " Mana from Judgement of Wisdom";
+                  combatlogindex++;
+               }
+            }
+         }
+         else { // adds 37 every time instead of 74 and rolls it when average is selected
+            currentMana += 37;
             if(combatlogRun) {
-               combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player gains " + 74 + " Mana from Judgement of Wisdom";
+               combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player gains " + 37 + " Mana from Judgement of Wisdom";
                combatlogindex++;
             }
          }
@@ -607,21 +618,22 @@ function updateDamageMod() {
 }
 
 // handling for crit changes
-function updateCritChance() {
+function updateCritChance(attack) {
    let critsuppression = CritPenalty + CritAuraPenalty;
-   let combatCritChance = RangeCritChance + critsuppression;
-   if(auras.mastertact.timer > 0) { combatCritChance += talents.master_tac; } // master tactician
+   let attackcrit = (attack === 'melee') ? MeleeCritChance : RangeCritChance; 
+   let combatCrit = attackcrit + critsuppression;
+   if(auras.mastertact.timer > 0) { combatCrit += talents.master_tac; } // master tactician
    
    // from agi changes
-   combatCritChance += combatAgi / AgiToCrit;
-   if(debuffs.judgecrusader.timer > 0 && !debuffs.judgecrusader.inactive) { combatCritChance += debuffs.judgecrusader.crit; } // imp crusader debuff
+   combatCrit += combatAgi / AgiToCrit;
+   if(debuffs.judgecrusader.timer > 0 && !debuffs.judgecrusader.inactive) { combatCrit += debuffs.judgecrusader.crit; } // imp crusader debuff
    // TODO darkmoon card wrath
 
-   return combatCritChance;
+   return combatCrit;
 }
 
 // hit table calc for mainhand
-function rollMainhandWep() {
+function rollMainhandWep(combatCrit) {
    let tmp = 0;
    let roll = rng10k();
    let ff_hit = (debuffs.faeriefire.timer > 0 && debuffs.faeriefire.improved) ? 3 : 0;
@@ -632,32 +644,32 @@ function rollMainhandWep() {
    if (roll < tmp) return RESULT.DODGE;
    tmp += GlanceChance * 100;
    if (roll < tmp) return RESULT.GLANCE;
-   tmp += MeleeCritChance * 100;
+   tmp += combatCrit * 100;
    if (roll < tmp) return RESULT.CRIT; // 1 roll
    return RESULT.HIT;
 
 }
 // hit table calc for ranged
-function rollRangeWep() {
+function rollRangeWep(combatCrit) {
    let tmp = 0;
    let roll = rng10k();
    let ff_hit = (debuffs.faeriefire.timer > 0 && debuffs.faeriefire.improved && !debuffs.faeriefire.inactive) ? 3 : 0;
    let rangemiss = Math.max(RangeMissChance - ff_hit,0);
    tmp += rangemiss * 100;
    if (roll < tmp) return RESULT.MISS;
-   tmp += (100 - rangemiss) * combatCritChance; // pseudo 2 roll
+   tmp += (100 - rangemiss) * combatCrit; // pseudo 2 roll
    if (roll < tmp) return RESULT.CRIT;
    return RESULT.HIT;
    
 }
 /** hit table for spells 2 roll for all */
-function rollSpell(attack,specialcrit) {
+function rollSpell(attack,combatCrit,specialcrit) {
    let tmp = 0;
    let roll = rng10k();
    let ff_hit = (debuffs.faeriefire.timer > 0 && debuffs.faeriefire.improved && !debuffs.faeriefire.inactive) ? 3 : 0;
    let meleemiss = Math.max(RaptorMissChance - ff_hit,0);
    let rangemiss = Math.max(RangeMissChance - ff_hit,0);
-   let crit = specialcrit + combatCritChance;
+   let crit = specialcrit + combatCrit;
 
    if (attack === 'melee'){
       tmp += meleemiss * 100;
@@ -679,33 +691,64 @@ function rollSpell(attack,specialcrit) {
 function rollMagicSpell(){
    let tmp = 0;
    let roll = rng10k();
-   let hit = 17;
+   let miss = 17;
    let crit = 3.6 + (Int/80);
-   tmp += hit * 100;
+   tmp += miss * 100;
    if (roll < tmp) return RESULT.MISS;
    tmp += 14.5 * 100; // partial resist rate approx. 14.5% based on log data at 0 resistance
    if (roll < tmp) return RESULT.PARTIAL;
-   tmp += (100 - hit) * crit; // pseudo 2 roll
+   tmp += (100 - miss - 14.5) * crit; // pseudo 2 roll
    if (roll < tmp) return RESULT.CRIT;
    return RESULT.HIT;
 }
 /** attack with mainhand */
-function attackMainhand() {
+function attackMainhand(meleeAP, extraAttack) {
 
+   let attack = 'melee';
+   let dmg = 0;
+   let combatCrit = updateCritChance(attack);
+   let result = rollMainhandWep(combatCrit); // check attack table
+   spellResultSum(result, 'melee');
+   if (result === RESULT.HIT) {
+      dmg = meleeStrikeCalc(mainhand_wep, meleeAP); // calc damage
+   }
+   else if (result === RESULT.CRIT) {
+      dmg = meleeStrikeCalc(mainhand_wep, meleeAP); // calc damage
+      dmg *= MeleeCritDamage;
+      proccrit(0, attack);
+   }
+   else if (result === RESULT.GLANCE) {
+      dmg = meleeStrikeCalc(mainhand_wep, meleeAP); // calc damage
+      dmg *= GlanceDmgReduction;
+   }
 
+   let done = dealdamage(dmg,result);
+   
+   totaldmgdone += done;
+   meleedmg += done;
+   procattack(attack,result);
+   procMana(attack,result); // expensiveish
+   magicproc(attack);
+
+   if(combatlogRun) {
+      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player Melee " + RESULTARRAY[result] + " for " + done;
+      combatlogindex++;
+   }
+   meleecount++;
+   if (!extraAttack) {
+      procExtraAttacks(attack);
+   }
+   return;
 }
 
 /** attack with auto shot */
 function attackRange() {
 
    let attack = 'ranged';
-   updateAgi();
-   updateAP();
-   updateDamageMod();
-   combatCritChance = updateCritChance();
+   let combatCrit = updateCritChance(attack);
 
    let dmg = 0;
-   let result = rollRangeWep(); // check attack table
+   let result = rollRangeWep(combatCrit); // check attack table
    spellResultSum(result, 'autoshot');
    if (result === RESULT.HIT) {
          dmg = autoShotCalc(range_wep,combatRAP); // calc damage
@@ -737,22 +780,22 @@ function attackRange() {
 /** attack with a spell (yellow) roll for dmg, deal dmg, and trigger any procs */
 function attackSpell(spell,spellcost) {
 
-   updateAgi();
-   updateAP();
-   updateDamageMod();
-   combatCritChance = updateCritChance();
+   let combatCrit = 0;
    let dmg = 0;
    let result = 0;
    let attack = "";
    let specialcrit = 0;
    let beastwithinreduc = (auras.beastwithin.timer > 0) ? 0.8 : 1;
-   let cost = Math.floor(spellcost * talents.efficiency * beastwithinreduc);
-   currentMana -= cost;
+   let cost = 0;
 
    if (spell === 'steadyshot'){
       attack = 'ranged';
+      cost = Math.floor(spellcost * talents.efficiency * beastwithinreduc);
+      currentMana -= cost;
+
+      combatCrit = updateCritChance(attack);
       specialcrit = currentgear.special.rift_stalker_4p_ss_crit;
-      result = rollSpell(attack,specialcrit); // check attack table
+      result = rollSpell(attack, combatCrit, specialcrit); // check attack table
       spellResultSum(result, spell);
       if (result === RESULT.HIT) {
          dmg = steadyShotCalc(range_wep,combatRAP); // calc damage
@@ -769,8 +812,12 @@ function attackSpell(spell,spellcost) {
    } 
    else if (spell === 'multishot') {
       attack = 'ranged';
+      cost = Math.floor(spellcost * talents.efficiency * beastwithinreduc);
+      currentMana -= cost;
+
+      combatCrit = updateCritChance(attack);
       specialcrit = talents.imp_barrage;
-      result = rollSpell(attack,specialcrit); // check attack table
+      result = rollSpell(attack, combatCrit, specialcrit); // check attack table
       spellResultSum(result, spell);
       if (result === RESULT.HIT) {
          dmg = multiShotCalc(range_wep,combatRAP); // calc damage
@@ -787,7 +834,11 @@ function attackSpell(spell,spellcost) {
    }
    else if (spell === 'arcaneshot') {
       attack = 'ranged';
-      result = rollSpell(attack,specialcrit); // check attack table
+      cost = Math.floor(spellcost * talents.efficiency * beastwithinreduc);
+      currentMana -= cost;
+
+      combatCrit = updateCritChance(attack);
+      result = rollSpell(attack, combatCrit, specialcrit); // check attack table
       spellResultSum(result, spell);
       if (result === RESULT.HIT) {
          dmg = arcaneShotCalc(range_wep,combatRAP); // calc damage
@@ -804,8 +855,12 @@ function attackSpell(spell,spellcost) {
    }
    else if (spell === 'raptorstrike') {
       attack = 'melee';
-	   specialcrit = talents.savage_strikes * 10;
-      result = rollSpell(attack,specialcrit); // check attack table
+      cost = Math.floor(spellcost * (1 - talents.resourcefulness * 0.2) * beastwithinreduc);
+      currentMana -= cost;
+
+      combatCrit = updateCritChance(attack);
+	   specialcrit = talents.savage_strikes;
+      result = rollSpell(attack, combatCrit, specialcrit); // check attack table
       spellResultSum(result, spell);
       if (result === RESULT.HIT) {
          dmg = raptorStrikeCalc(mainhand_wep,combatMAP); // calc damage
@@ -815,27 +870,8 @@ function attackSpell(spell,spellcost) {
          dmg *= MeleeCritDamage;
          proccrit(cost, attack);
       }
-
+      procExtraAttacks(attack);
       raptorcount++;
-   }
-   else if (spell === 'melee') {
-      attack = 'melee';
-      result = rollMainhandWep(); // check attack table
-      spellResultSum(result, spell);
-      if (result === RESULT.HIT) {
-         dmg = meleeStrikeCalc(mainhand_wep, combatMAP); // calc damage
-      }
-      else if (result === RESULT.CRIT) {
-         dmg = meleeStrikeCalc(mainhand_wep, combatMAP); // calc damage
-         dmg *= MeleeCritDamage;
-         proccrit(cost, attack);
-      }
-      else if (result === RESULT.GLANCE) {
-         dmg = meleeStrikeCalc(mainhand_wep, combatMAP); // calc damage
-         dmg *= GlanceDmgReduction;
-      }
-
-      meleecount++;
    }
 
    let done = dealdamage(dmg,result,spell);
@@ -863,8 +899,11 @@ function attackSpell(spell,spellcost) {
 }
 /** cast spell (possibly add individual spells) */
 function cast(spell) {
-   //recentcast = true;
+
    let spellcost = 0;
+   updateAgi();
+   updateAP();
+   updateDamageMod();
 
    if(spell === 'autoshot'){
       attackRange();
@@ -872,16 +911,19 @@ function cast(spell) {
    else if (spell === 'steadyshot'){
       spellcost = SPELLS.steadyshot.cost;
       attackSpell(spell,spellcost);
+      recentcast = true;
       //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
    }
    else if (spell === 'multishot'){
       spellcost = SPELLS.multishot.cost;
       attackSpell(spell,spellcost);
+      recentcast = true;
       //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
    }
    else if (spell === 'arcaneshot'){
       spellcost = SPELLS.arcaneshot.cost;
       attackSpell(spell,spellcost);
+      recentcast = true;
       //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
    }
    else if (spell === 'raptorstrike'){
@@ -889,7 +931,7 @@ function cast(spell) {
       attackSpell(spell,spellcost);
    }
    else if (spell === 'melee'){
-      attackSpell(spell,spellcost);
+      attackMainhand(combatMAP);
    }
 return;
 }
@@ -914,6 +956,24 @@ function dealdamage(dmg, result, spell) {
    else {
       return 0;
    }
+}
+/** handling for procs by extra attacks */
+function procExtraAttacks(attack){
+   let windfuryenabled = (buffslist[11].id > 0) ? true : false;
+   if (attack === 'melee' && windfuryenabled) {
+      let roll = rng10k();
+      let tmp = 2000; // 20% chance to proc
+      if (roll < tmp) {
+         let ap = (buffslist[11].talented) ? 1.3 * 445 + combatMAP : 445 + combatMAP;
+         let extraAttack = true;
+         if(combatlogRun) {
+            combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player gains extra attacks.";
+            combatlogindex++;
+         }
+         attackMainhand(ap, extraAttack);
+      }
+   }
+   return;
 }
 /** handling for procs by crits */
 function proccrit(cost, attack) {

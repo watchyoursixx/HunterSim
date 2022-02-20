@@ -136,14 +136,14 @@ function updateSpellCDs(spell,petspell) {
 
 function autoShotCalc(range_wep, combatRAP) {
 
-    let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
+    let dmg = (useAverages) ? (range_wep.mindmg + range_wep.maxdmg) * 0.5 : rng(range_wep.mindmg,range_wep.maxdmg);
     let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * range_wep.speed / 14 + dmg + range_wep.flatdmg) * range_wep.basedmgmod * combatdmgmod * physdmgmod;
     return shotDmg;
 }
 
 function steadyShotCalc(range_wep, combatRAP) {
 
-    let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
+    let dmg = (useAverages) ? (range_wep.mindmg + range_wep.maxdmg) * 0.5 : rng(range_wep.mindmg,range_wep.maxdmg);
     let gronnstalkermod = currentgear.special.gronnstalker_4p_steady_shot_dmg_ratio;
     let shotDmg = (combatRAP * 0.2 + dmg * 2.8 / range_wep.speed + SPELLS.steadyshot.rankdmg) * range_wep.basedmgmod * gronnstalkermod * combatdmgmod * physdmgmod;
     return shotDmg;
@@ -151,7 +151,7 @@ function steadyShotCalc(range_wep, combatRAP) {
 
 function multiShotCalc(range_wep, combatRAP) {
 
-    let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
+    let dmg = (useAverages) ? (range_wep.mindmg + range_wep.maxdmg) * 0.5 : rng(range_wep.mindmg,range_wep.maxdmg);
     let multimod = currentgear.special.multishot_dmg_inc_ratio * talents.barrage;
     let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.multishot.rankdmg) * range_wep.basedmgmod * multimod * combatdmgmod * physdmgmod;
     return shotDmg;
@@ -166,33 +166,33 @@ function arcaneShotCalc(range_wep, combatRAP) {
 
 function aimedShotCalc(range_wep, combatRAP) {
 
-    let dmg = rng(range_wep.mindmg,range_wep.maxdmg);
+    let dmg = (useAverages) ? (range_wep.mindmg + range_wep.maxdmg) * 0.5 : rng(range_wep.mindmg,range_wep.maxdmg);
     let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.aimedshot.rankdmg) * range_wep.basedmgmod * combatdmgmod * physdmgmod;
     return shotDmg;
 }
 
 function raptorStrikeCalc(mainhand_wep, combatMAP) {
 
-    let dmg = rng(mainhand_wep.mindmg, mainhand_wep.maxdmg);
-    let outDmg = (dmg + mainhand_wep.flatdmg + SPELLS.raptorstrike.rankdmg + combatMAP/14*mainhand_wep.speed) * mainhand_wep.basedmgmod * combatdmgmod * physdmgmod;
+    let dmg = (useAverages) ? (mainhand_wep.mindmg + mainhand_wep.maxdmg) * 0.5 : rng(mainhand_wep.mindmg,mainhand_wep.maxdmg);
+    let outDmg = (combatMAP * mainhand_wep.speed / 14 + dmg + mainhand_wep.flatdmg + SPELLS.raptorstrike.rankdmg) * mainhand_wep.basedmgmod * combatdmgmod * physdmgmod;
     return outDmg;
 }
 
 function meleeStrikeCalc(mainhand_wep, combatMAP) {
 
-    let dmg = rng(mainhand_wep.mindmg, mainhand_wep.maxdmg);
-    let outDmg = (dmg + mainhand_wep.flatdmg + combatMAP/14*mainhand_wep.speed) * mainhand_wep.basedmgmod * combatdmgmod * physdmgmod;
+    let dmg = (useAverages) ? (mainhand_wep.mindmg + mainhand_wep.maxdmg) * 0.5 : rng(mainhand_wep.mindmg,mainhand_wep.maxdmg);
+    let outDmg = (combatMAP * mainhand_wep.speed / 14 + dmg + mainhand_wep.flatdmg) * mainhand_wep.basedmgmod * combatdmgmod * physdmgmod;
     return outDmg;
 }
 
 function petAutoCalc(){
-    let dmg = rng(PetMinDmg,PetMaxDmg);
+    let dmg = (useAverages) ? (PetMinDmg + PetMaxDmg) * 0.5 : rng(PetMinDmg,PetMaxDmg);
     let autoDmg = (dmg + pet.combatap * 2 / 14) * pet.dmgmod * pet.combatdmgmod * CobraReflexesPenalty;
     return autoDmg;
 }
 
 function petKillCommCalc(){
-    let dmg = rng(PetMinDmg,PetMaxDmg);
+    let dmg = (useAverages) ? (PetMinDmg + PetMaxDmg) * 0.5 : rng(PetMinDmg,PetMaxDmg);
     let kcDmg = (dmg + pet.combatap * 2 / 14 + 127) * pet.dmgmod * pet.combatdmgmod;
     return kcDmg;
 }
@@ -207,13 +207,13 @@ function spellPetCalc(spellindex){
     if(spellindex <= 3){ // phys spells
         mindmg = PET_SPELLS[spellindex].mindmg; // min dmg of phys spell selected
         maxdmg = PET_SPELLS[spellindex].maxdmg; 
-        dmg = rng(mindmg,maxdmg);
+        dmg = (useAverages) ? (mindmg + maxdmg) * 0.5 : rng(mindmg,maxdmg);
         spelldmg = dmg * basedmgmod;
     } 
     else if (spellindex <= 5 && spellindex > 3){ // lightning breath/stomp
         mindmg = PET_SPELLS[spellindex].mindmg; // min dmg of phys spell selected
         maxdmg = PET_SPELLS[spellindex].maxdmg; 
-        dmg = rng(mindmg,maxdmg);
+        dmg = (useAverages) ? (mindmg + maxdmg) * 0.5 : rng(mindmg,maxdmg);
         spelldmg = (dmg + spellpwr * PET_SPELLS[spellindex].sp_coeff) * basedmgmod;
     } 
     else if (spellindex === 6) { // fire breath
@@ -232,10 +232,14 @@ function spellPetCalc(spellindex){
 
     // gore bonus dmg
     if(spellindex === 3) {
-        let roll = rng10k();
-        if(roll < 5000) {
-            spelldmg *= 2;
+        let roll = 0;
+        if (!useAverages) { 
+            roll = rng10k();
+            if(roll < 5000) {
+                spelldmg *= 2;
+            }
         }
+        else { spelldmg *= 1.5; } // use 150% damage instead of rolling 50% double dmg
     }
     return spelldmg;
 }

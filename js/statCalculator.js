@@ -201,6 +201,26 @@ function getStatsFromEnchants(gear) {
   }, { stats: {}, special: { incWeapDmg: 0, moveSpeed: 1 }, auras: {} })
 }
 
+/** Given the gear object, calculates stats, auras and special values obtained from enchants */
+function getStatsFromAttachments(gear) {
+  return Object.entries(gear).reduce((result, [type, gearData]) => {
+    const attachmentId = gearData.attachment
+
+    if (attachmentId) {
+      if (!ENCHANT_MAP.attachment) throw Error(`Detected attachment for piece of type "${type}", which can't be attached`)
+      if (!ENCHANT_MAP.attachment[attachmentId]) throw Error(`Detected invalid attachment with id "${attachmentId}" for piece of type "${type}"`)
+
+      const attachment = ENCHANT_MAP.attachment[attachmentId]
+
+      if (attachment.stats) sumStats(attachment.stats, result.stats)
+      if (attachment.aura) result.auras[enchantId] = attachment.aura
+      if (attachment.special) addSpecial(attachment.special, result.special)
+    }
+
+    return result
+  }, { stats: {}, special: { incWeapDmg: 0, moveSpeed: 1 }, auras: {} })
+}
+
 /* Given the amount of pieces used for each set, calculates bonuses provided by each set.
    It loops over all the sets so it can provide default values */
 function getSetBonuses(setPieces) {
@@ -267,6 +287,7 @@ function getStatsFromGear(gear) {
   const result = getStatsFromGearPieces(gear)
   mergeResults(getStatsFromGems(gear), result)
   mergeResults(getStatsFromEnchants(gear), result)
+  mergeResults(getStatsFromAttachments(gear), result)
 
   return result
 }

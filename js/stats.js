@@ -281,10 +281,10 @@ function resultCountInitialize() {
       if (spellname === 'primary') {
           spellresult[spellname].Partial = 0;
       }
-      if (spellname === 'primary' || 'petattack' || 'killcommand') {
+      if (spellname === 'primary' || 'petattack' || 'killcommand' || 'raptorstrike' || 'melee') {
           spellresult[spellname].Dodge = 0;
       }
-      if (spellname === 'petattack') {
+      if (spellname === 'petattack' || 'melee') {
           spellresult[spellname].Glance = 0;
       }
 
