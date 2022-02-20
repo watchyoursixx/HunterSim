@@ -302,7 +302,7 @@ function calcBaseStats() {
 
    let penalty = (RangeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
    let dw_penalty = 0;
-   if (!offhandDisabled) {
+   if (!offhandDisabled && (gear.offhand !== undefined)) {
       dw_penalty = (gear.offhand.id > 0) ? -19:0; // offhand penalty for dual wielding 
    } else { dw_penalty = 0; }
   MeleeMissChance = Math.max(8 - MeleeHitChance - penalty - dw_penalty,0);

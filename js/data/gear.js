@@ -12414,6 +12414,7 @@ const TRINKETS = {
     32487: {
         name: "Ashtongue Talisman of Swiftness",
         Location: "Black Temple",
+        stats: {},
         aura: {
             is_proc: true,
             stats: {

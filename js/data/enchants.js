@@ -758,7 +758,10 @@ const RANGE_ENCHANTS = {
 }
 
 const ATTACHMENTS = {
-  34340: {
+  1:{
+    name: 'None',
+  },
+  28421: {
     name: 'Adamantite Weightstone',
     effectId: 2955,
     stats: {
@@ -773,7 +776,7 @@ const ATTACHMENTS = {
     Phase: 1,
     icon: 'inv_stone_weightstone_07'
   },
-  29453: {
+  23529: {
     name: 'Adamantite Sharpening Stone',
     effectId: 2713,
     stats: {
@@ -787,7 +790,7 @@ const ATTACHMENTS = {
     Phase: 1,
     icon: 'inv_stone_sharpeningstone_07'
   },
-  28013: {
+  22521: {
     name: 'Superior Mana Oil',
     effectId: 2677,
     stats: {
@@ -796,7 +799,7 @@ const ATTACHMENTS = {
     Phase: 1,
     icon: 'inv_potion_101'
   },
-  45397: {
+  34539: {
     name: 'Righteous Weapon Coating',
     effectId: 3266,
     Phase: 1,

@@ -24,6 +24,8 @@ document.getElementById("legench").addEventListener("click", function(){gearModa
 document.getElementById("feetench").addEventListener("click", function(){gearModalDisplay("feet")}, false);
 document.getElementById("ring1ench").addEventListener("click", function(){gearModalDisplay("ring1")}, false);
 document.getElementById("ring2ench").addEventListener("click", function(){gearModalDisplay("ring2")}, false);
+document.getElementById("mainhandattach").addEventListener("click", function(){gearModalDisplay("mainhand")}, false);
+document.getElementById("offhandattach").addEventListener("click", function(){gearModalDisplay("offhand")}, false);
 
 document.getElementById("headslot").addEventListener("click", function(){gearModalDisplay("head")}, false);
 document.getElementById("neckslot").addEventListener("click", function(){gearModalDisplay("neck")}, false);
@@ -151,18 +153,127 @@ function selectEnchant(itemid){
     gearSlotsDisplay();
     selectedOptionsResults();
 }
+function selectAttachment(itemid){
+    console.log("you selected "+ itemid);
+    gear[activeslot].attachment = parseInt(itemid);
+    gearSlotsDisplay();
+    selectedOptionsResults();
+}
 
-function generateGearOptionsList(array){
+function filterWeaponLists(array,type){
 
-    let listlength = Object.keys(array).length;
-    let list = Object.keys(array).map(Number);
+    Object.filter = (obj, predicate) => Object.fromEntries(Object.entries(obj).filter(predicate));
+    let twohandcheck = '';
+    let attachcheck = '';
+
+    if (activeslot === 'mainhand' && type === 'item') {
+        array = Object.filter(MELEE_WEAPONS, ([key, obj]) => obj.hand === 'Main' || obj.hand === 'One' || obj.hand === 'Two');
+    } 
+    else if ( activeslot === 'offhand' && type === 'item') {
+        array = Object.filter(MELEE_WEAPONS, ([key, obj]) => obj.hand === 'Off' || obj.hand === 'One');
+    } 
+    else if ( activeslot === 'mainhand' && type === 'enchant') {
+        twohandcheck = MELEE_WEAPONS[gear.mainhand.id].hand;
+        if (twohandcheck !== 'Two') {
+            array = Object.filter(MELEE_ENCHANTS, ([key, obj]) => !obj.for_two_handed);
+        }
+    }
+    else if ( activeslot === 'offhand' && type === 'enchant') {
+        twohandcheck = MELEE_WEAPONS[gear.offhand.id].hand;
+        if (twohandcheck !== 'Two') {
+            array = Object.filter(MELEE_ENCHANTS, ([key, obj]) => !obj.for_two_handed);
+        }
+    }
+    else if ( activeslot === 'mainhand' && type === 'attachment') {
+        attachcheck = MELEE_WEAPONS[gear.mainhand.id].type;
+        if (attachcheck !== 'fist' && attachcheck !== 'staff') {
+            array = Object.filter(ATTACHMENTS, ([key, obj]) => !(obj.type === 'blunt'));
+        }
+    }
+    else if ( activeslot === 'offhand' && type === 'attachment') {
+        attachcheck = MELEE_WEAPONS[gear.offhand.id].type;
+        if (attachcheck !== 'fist' && attachcheck !== 'staff') {
+            array = Object.filter(ATTACHMENTS, ([key, obj]) => !(obj.type === 'blunt'));
+        }
+    }
+    return array;
+}
+
+function filterPhasesOptions(array){
+
+    Object.filter = (obj, predicate) => Object.fromEntries(Object.entries(obj).filter(predicate));
+    let phase = parseInt(document.getElementById('phasecheck').value);
+    let raidcheck = document.getElementById("raidcheck").checked;
+    let pvpcheck = document.getElementById("pvpcheck").checked;
+    let greencheck = document.getElementById("greencheck").checked;
+    let boecheck = document.getElementById("boecheck").checked;
+    let leathercheck = document.getElementById("leathercheck").checked;
+    let repcheck = document.getElementById("repcheck").checked;
+    let bosscheck = document.getElementById("bosscheck").checked;
+    let craftcheck = document.getElementById("craftcheck").checked;
+
+    filteredarray = Object.filter(array, ([key, obj]) => (obj.Phase <= phase) || (key == gear[activeslot].id));
+    if (!raidcheck) {
+        filteredarray = Object.filter(filteredarray, ([key, obj]) => 
+        !(obj.Location == 'Karazhan') && !(obj.Location == 'Mount Hyjal') && !(obj.Location == 'Black Temple')
+        && !(obj.Location == 'Sunwell') && !(obj.Location == "Gruul's Lair") && !(obj.Location == "Magtheridon's Lair")
+        && !(obj.Location == "Zul'Aman") && !(obj.Location == "SerpentShrine Cavern") 
+        && !(obj.Location == "The Eye") || (key == gear[activeslot].id));
+    }
+    if (!pvpcheck) {
+        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'PvP Reward') 
+        && !(obj.Location == 'Arena Reward') && !(obj.Location == 'Honor Reward') || (key == gear[activeslot].id));
+    }
+    if (!greencheck) {
+        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.quality == 'Uncommon') || (key == gear[activeslot].id));
+    }
+    if (!boecheck) {
+        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'World Drop')|| (key == gear[activeslot].id));
+    }
+    if (!leathercheck) {}
+    if (!repcheck) {
+        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'Reputation Reward')|| (key == gear[activeslot].id));
+    }
+    if (!bosscheck) {
+        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'World Boss')|| (key == gear[activeslot].id));
+    }
+    if (!craftcheck) {
+        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'Crafting')|| (key == gear[activeslot].id));
+    }
+    return filteredarray;
+}
+function generateGearOptionsList(array,type){
+
+    if (activeslot === 'mainhand' || activeslot === 'offhand'){
+        array = filterWeaponLists(array, type);
+    }
+    array = filterPhasesOptions(array);
+
+    let listlength = 0;
+    let list = [];
     let index = 0;
-    let selectOptions = '';
     let i = 0;
+    let selectOptions = '';
 
-    for (i=0; i < listlength; i++) {
-        index = list[i];
-        selectOptions += "<option value= "+list[i]+" >" + array[index].name + "</option>";
+    if (type === 'item') {
+
+        array = estimateDpsForObj(array,statweights);
+        let listlength = array.length;
+        //let list = Object.keys(array).map(Number);
+
+        for (i=0; i < listlength; i++) {
+            selectOptions += "<option value= "+array[i].id+" >" + array[i].name + "</option>";
+        }
+    } 
+    else {
+
+        listlength = Object.keys(array).length;
+        list = Object.keys(array).map(Number);
+
+        for (i=0; i < listlength; i++) {
+            index = list[i];
+            selectOptions += "<option value= "+list[i]+" >" + array[index].name + "</option>";
+        }
     }
 
     return selectOptions;
@@ -171,21 +282,36 @@ function itemSelectorDisplay(slotarray){
     if (activeslot === 'offhand' && offhandDisabled) {
         return;
     }
-    let itemselectOptions = generateGearOptionsList(slotarray);
+    let type = 'item';
+    let itemselectOptions = generateGearOptionsList(slotarray,type);
     document.getElementById("itemselect").innerHTML = itemselectOptions;
+    if(activeslot === 'offhand' && gear.offhand === undefined) {
+        document.getElementById("itemselect").value = '';
+    } else {
     document.getElementById("itemselect").value = gear[activeslot].id;
+    }
 }
 function enchSelectorDisplay(slotarray){
-    if (activeslot === 'offhand' && offhandDisabled) {
+    if (activeslot === 'offhand' && (offhandDisabled || gear.offhand === undefined)) {
         return;
     }
-    let enchselectOptions = generateGearOptionsList(slotarray);
+    let type = 'enchant';
+    let enchselectOptions = generateGearOptionsList(slotarray,type);
     document.getElementById("enchseldiv").style.display = "block";
     document.getElementById("enchselect").innerHTML = enchselectOptions;
     document.getElementById("enchselect").value = gear[activeslot].enchant;
 }
+function attachSelectorDisplay(slotarray){
+    if (activeslot === 'offhand' && (offhandDisabled || gear.offhand === undefined)) {
+        return;
+    }
+    let type = 'attachment';
+    let attachselectOptions = generateGearOptionsList(slotarray, type);
+    document.getElementById("attachselect").innerHTML = attachselectOptions;
+    document.getElementById("attachselect").value = gear[activeslot].attachment;
+}
 function gemSelectorDisplay(slotarray){
-    if (activeslot === 'offhand' && offhandDisabled) {
+    if (activeslot === 'offhand' && (offhandDisabled || gear.offhand === undefined)) {
         return;
     }
     let gem1 = 0;
@@ -193,8 +319,7 @@ function gemSelectorDisplay(slotarray){
     let gem3 = 0;
     let gemselectOptions = '';
     let metaselectOptions = '';
-    Object.filter = (obj, predicate) => 
-    Object.fromEntries(Object.entries(obj).filter(predicate));
+    Object.filter = (obj, predicate) => Object.fromEntries(Object.entries(obj).filter(predicate));
 
     let skt = (slotarray[gear[activeslot].id].hasOwnProperty('sockets')) ? slotarray[gear[activeslot].id].sockets : [];
         if (skt.length > 0){
@@ -247,10 +372,16 @@ function gemSelectorDisplay(slotarray){
             document.getElementById("gem3seldiv").style.display = "none"; 
         }
 }
-
+function updateGearLists(){
+    gearModalDisplay(activeslot);
+}
 function gearModalDisplay(slot){
     activeslot = slot;
+    if (activeslot === 'offhand' && offhandDisabled) {
+        return;
+    }
     gearmodal.style.display = "block";
+    document.getElementById("attachseldiv").style.display = "none";
 
     console.log(slot);
     if (slot === 'head') {
@@ -287,11 +418,15 @@ function gearModalDisplay(slot){
         itemSelectorDisplay(MELEE_WEAPONS);
         enchSelectorDisplay(MELEE_ENCHANTS);
         gemSelectorDisplay(MELEE_WEAPONS);
+        document.getElementById("attachseldiv").style.display = "block";
+        attachSelectorDisplay(ATTACHMENTS);
     }
     if (slot === 'offhand') {
         itemSelectorDisplay(MELEE_WEAPONS);
         enchSelectorDisplay(MELEE_ENCHANTS);
         gemSelectorDisplay(MELEE_WEAPONS);
+        document.getElementById("attachseldiv").style.display = "block";
+        attachSelectorDisplay(ATTACHMENTS);
     }
     if (slot === 'range') {
         itemSelectorDisplay(RANGED_WEAPONS);
@@ -347,8 +482,12 @@ function gearModalDisplay(slot){
 
 function textColorDisplay(slot,array){
     let slotname = slot + 'slot';
-    let color = array[gear[slot].id].quality;
-
+    let color = '';
+    if (slot === 'offhand' && gear.offhand === undefined) {
+        color = "Common";
+    } else {
+        color = array[gear[slot].id].quality;
+    }
     document.getElementById(slotname).removeAttribute("class");
     if(color === "Common"){
         document.getElementById(slotname).classList.add("common-text");
@@ -394,6 +533,28 @@ function reduceGearArray(){
 
 }
 
+function estimateDps(item, weights) {
+    let dps = 0;
+    if (item.stats !== undefined){
+        dps = Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
+        dps += (item.sockets?.length || 0) * weights['Agi']
+    }
+
+    return dps
+}
+
+function estimateDpsForObj(obj, weights) {
+    
+    const currentDps = 0;
+    currentDps = estimateDps(obj[gear[activeslot].id], weights)
+  
+    return Object.entries(obj)
+      .map(([id, piece]) => {
+        const dps = estimateDps(piece, weights)
+        return {id, ...piece, DPS: dps, delta: dps - currentDps}
+    }).sort((first, second) => second.delta - first.delta)
+}
+
 function gearSlotsDisplay(){
     
     let headitem = gear.head.id;
@@ -411,7 +572,7 @@ function gearSlotsDisplay(){
     let trink1item = gear.trinket1.id;
     let trink2item = gear.trinket2.id;
     let mainhanditem = gear.mainhand.id;
-    let offhanditem = (offhandDisabled === false) ? gear.offhand.id : 0;
+    let offhanditem = ((offhandDisabled === false) && (gear.offhand !== undefined)) ? gear.offhand.id : 0;
     let rangeitem = gear.range.id;
     let ammoitem = gear.ammo.id;
     
@@ -751,11 +912,14 @@ function gearSlotsDisplay(){
     let mainhandencheffect = (mainhandench > 0) ? "&ench="+MELEE_ENCHANTS[gear.mainhand.enchant].effectId : 0;
     let mainhandgemlist = "&gems="+mainhandgem1+":"+mainhandgem2+":"+mainhandgem3;
     let mainhanddata = mainhanditem + mainhandencheffect + mainhandgemlist;
+    let mainhandattach = gear.mainhand.attachment || 0;
 
     document.getElementById("mainhandslot").href = "https://tbc.wowhead.com/item="+ mainhanddata;
     document.getElementById("mainhandslot").innerHTML = MELEE_WEAPONS[gear.mainhand.id].name;
     document.getElementById("mainhandench").href = (mainhandench > 0) ? "https://tbc.wowhead.com/spell="+ mainhandench :"";  
     document.getElementById("mainhandench").innerHTML = (mainhandench > 0) ? MELEE_ENCHANTS[gear.mainhand.enchant].name: "No Enchant";
+    document.getElementById("mainhandattach").href = (mainhandattach > 1) ? "https://tbc.wowhead.com/item="+ mainhandattach : "";
+    document.getElementById("mainhandattach").innerHTML = (mainhandattach > 1) ? ATTACHMENTS[gear.mainhand.attachment].name: "No Attachment";
     
     document.getElementById("offhandslot").removeAttribute("class");
     if(offhanditem == 0){
@@ -763,6 +927,8 @@ function gearSlotsDisplay(){
         document.getElementById("offhandslot").innerHTML = "Off Hand";
         document.getElementById("offhandench").href = "#"; 
         document.getElementById("offhandench").innerHTML = "No Enchant";
+        document.getElementById("offhandattach").href = "#"; 
+        document.getElementById("offhandattach").innerHTML = "No Attachment";
         let offhandicon = "images/OffHand.jpg";
         document.getElementById("offhandicon").src = offhandicon;
         document.getElementsByClassName("itemsocket")[15].style.display = "none";
@@ -825,10 +991,15 @@ function gearSlotsDisplay(){
         let offhandencheffect = (offhandench > 0) ? "&ench="+MELEE_ENCHANTS[gear.offhand.enchant].effectId : 0;
         let offhandgemlist = "&gems="+offhandgem1+":"+offhandgem2+":"+offhandgem3;
         let offhanddata = offhanditem + offhandencheffect + offhandgemlist;
+        let offhandattach = gear.offhand.attachment || 0;
+
         document.getElementById("offhandslot").href = "https://tbc.wowhead.com/item="+ offhanddata;
         document.getElementById("offhandslot").innerHTML = MELEE_WEAPONS[gear.offhand.id].name;
         document.getElementById("offhandench").href = (offhandench > 0) ? "https://tbc.wowhead.com/spell="+ offhandench : ""; 
         document.getElementById("offhandench").innerHTML = (offhandench > 0) ? MELEE_ENCHANTS[gear.offhand.enchant].name: "No Enchant";
+        document.getElementById("offhandattach").href = (offhandattach > 1) ? "https://tbc.wowhead.com/item="+ offhandattach : "";
+        document.getElementById("offhandattach").innerHTML = (offhandattach > 1) ? ATTACHMENTS[gear.offhand.attachment].name: "No Attachment";
+
     }
 
     // ranged

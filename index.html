@@ -133,6 +133,7 @@
                   <p class="u-align-center u-text u-text-white u-text-20" id="dpsmin"> min</p>
                   <p class="u-align-center u-text u-text-white u-text-21" id="dpsmax"> max</p>
                   <p class="u-align-center u-text u-text-white u-text-22" id="executetime">0.000</p>
+                  <p class="u-align-center u-text u-text-19" id="dpscompare"></p>
                 </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-45 u-layout-cell-2">
@@ -242,7 +243,7 @@
                         <div class="gear-slot-details">
                           <p class="u-text item-name"><a href="#" id="mainhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Main Hand</a></p>
                           <p class="u-text enchant-name"><a id="mainhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                          <p class="u-text attach-name">No Attachment</p>
+                          <p class="u-text attach-name"><a id="mainhandattach" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Attachment</a></p>
                         </div>
                       </div>
                       <div class="gear-slot">
@@ -256,7 +257,7 @@
                         <div class="gear-slot-details">
                           <p class="u-text item-name"><a href="#" id="offhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Off Hand</a></p>
                           <p class="u-text enchant-name"><a id="offhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                          <p class="u-text attach-name">No Attachment</p>
+                          <p class="u-text attach-name"><a id="offhandattach" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Attachment</a></p>
                         </div>
                       </div>
                       <div class="gear-slot">
@@ -441,28 +442,6 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h3 class="header-1">Settings</h3>
-    <div class="settings-gearfilter">
-      <label class="label-filter">Gear List Filters</label>
-      <div class="div-filters">
-        <label class="container container-3">Raid<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">PvP<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">Greens<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">BoEs<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">Leather<input type="checkbox"><span class="checkmark"></span></label>
-      </div>
-      <div class="div-filters">
-        <label class="container container-3">Rep<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">W Boss<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">Crafted<input type="checkbox"><span class="checkmark"></span></label>
-      </div>
-      <select onchange="" class="select hover-grey select-filters">
-        <option value="5">Phase 5</option>
-        <option value="4">Phase 4</option>
-        <option selected value="3">Phase 3</option>
-        <option value="2">Phase 2</option>
-        <option value="1">Phase 1</option>
-      </select>
-    </div>
     <div class="settings">
     <label class="settings-header-1">Party Buffs</label>
     <ul>
@@ -881,6 +860,9 @@
       </table>
     </div>
     <div class="chartBox">
+      <canvas id="horizontalbar"></canvas>
+    </div>
+    <div class="chartBox">
       <canvas id="histogram"></canvas>
     </div>
     <hr><!--generated series of <p></p> for displaying combat log data-->
@@ -893,6 +875,28 @@
 <div id="gearmodal" class="modal-gear">
   <div class="modal-gear-content">
     <span class="close">&times;</span>
+    <div class="settings-gearfilter">
+      <label class="label-filter">Gear List Filters</label>
+      <div class="div-filters">
+        <label class="container container-3">Raid<input type="checkbox" id="raidcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">PvP<input type="checkbox" id="pvpcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">Greens<input type="checkbox" id="greencheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">BoEs<input type="checkbox" id="boecheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">Leather<input type="checkbox" id="leathercheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+      </div>
+      <div class="div-filters">
+        <label class="container container-3">Rep<input type="checkbox" id="repcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">W Boss<input type="checkbox" id="bosscheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">Crafted<input type="checkbox" id="craftcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+      </div>
+      <select class="select hover-grey select-filters" id="phasecheck" onchange=updateGearLists()>
+        <option value="5">Phase 5</option>
+        <option value="4">Phase 4</option>
+        <option selected value="3">Phase 3</option>
+        <option value="2">Phase 2</option>
+        <option value="1">Phase 1</option>
+      </select>
+    </div>
     <div>
       <div id="itemseldiv"><label class="label-2">Item:</label>
       <select id="itemselect" onchange="selectItem(this.value)" class="select hover-grey gear-select-input">
@@ -908,6 +912,9 @@
       </select></div>
       <div id="enchseldiv"><label class="label-2">Enchant:</label>
       <select id="enchselect" onchange="selectEnchant(this.value)" class="select hover-grey gear-select-input">
+      </select></div>
+      <div id="attachseldiv"><label class="label-2">Attachment:</label>
+        <select id="attachselect" onchange="selectAttachment(this.value)" class="select hover-grey gear-select-input">
       </select></div>
     </div>
   </div>

@@ -24,6 +24,12 @@ var playerconsumes = {};
 var petconsumes = {};
 var talentindex = '6';
 var whtalentlink = '';
+var dpsresult = document.getElementById("dpsresult");
+var dpsmin = document.getElementById("dpsmin");
+var dpsmax = document.getElementById("dpsmax");
+var dpserr = document.getElementById("dpserr");
+var executetime = document.getElementById("executetime");
+var dpscompare = document.getElementById("dpscompare");
 
 // show the stats on the HTML
 function displayStats(){
@@ -47,27 +53,40 @@ function displayStats(){
 function displayDPSResults(){
     let dpsrounding = (avgDPS > 1000) ? 1 : 2;
     let errrounding = (err > 10) ? 1 : 2;
-    document.getElementById("dpsresult").innerHTML = avgDPS.toFixed(dpsrounding);
-    document.getElementById("dpsmin").innerHTML = mindps.toFixed(2) + " min";
-    document.getElementById("dpsmax").innerHTML = maxdps.toFixed(2) + " max";
-    document.getElementById("dpserr").innerHTML = "DPS ​± " + err.toFixed(errrounding);
-    document.getElementById("executetime").innerHTML = Math.round(executecodetime * 10000) / 10000 + " s";
+    dpsresult.innerHTML = avgDPS.toFixed(dpsrounding);
+    dpsmin.innerHTML = mindps.toFixed(2) + " min";
+    dpsmax.innerHTML = maxdps.toFixed(2) + " max";
+    dpserr.innerHTML = "DPS ​± " + err.toFixed(errrounding);
+    executetime.innerHTML = Math.round(executecodetime * 10000) / 10000 + " s";
+    if (prevDPS > 0 && combatlogRun) {
+        dpscompare.innerHTML = (avgDPS - prevDPS).toFixed(2) + " - Compared to last Sim";
+        if (avgDPS - prevDPS >= 0) { 
+            dpscompare.classList.add("positive-result");
+            dpscompare.classList.remove("negative-result");
+        }
+        else if (avgDPS - prevDPS < 0) {
+            dpscompare.classList.add("negative-result");
+            dpscompare.classList.remove("positive-result");
+        }
+        
+    }
+    
 }
 
 function displayStatWeights(){
-    document.getElementsByClassName('weight-name')[0].innerHTML = statweights.str.toFixed(2);
-    document.getElementsByClassName('weight-name')[1].innerHTML = statweights.agi.toFixed(2);
-    document.getElementsByClassName('weight-name')[2].innerHTML = statweights.int.toFixed(2);
-    document.getElementsByClassName('weight-name')[3].innerHTML = statweights.mp5.toFixed(2);
+    document.getElementsByClassName('weight-name')[0].innerHTML = statweights.Str.toFixed(2);
+    document.getElementsByClassName('weight-name')[1].innerHTML = statweights.Agi.toFixed(2);
+    document.getElementsByClassName('weight-name')[2].innerHTML = statweights.Int.toFixed(2);
+    document.getElementsByClassName('weight-name')[3].innerHTML = statweights.MP5.toFixed(2);
     document.getElementsByClassName('weight-name')[4].innerHTML = statweights.RAP.toFixed(2);
     document.getElementsByClassName('weight-name')[5].innerHTML = statweights.rangehit.toFixed(2);
     document.getElementsByClassName('weight-name')[6].innerHTML = statweights.rangecrit.toFixed(2);
-    document.getElementsByClassName('weight-name')[7].innerHTML = statweights.haste.toFixed(2);
-    document.getElementsByClassName('weight-name')[8].innerHTML = statweights.arp.toFixed(2);
+    document.getElementsByClassName('weight-name')[7].innerHTML = statweights.Haste.toFixed(2);
+    document.getElementsByClassName('weight-name')[8].innerHTML = statweights.ArP.toFixed(2);
     document.getElementsByClassName('weight-name')[9].innerHTML = statweights.MAP.toFixed(2);
     document.getElementsByClassName('weight-name')[10].innerHTML = statweights.meleehit.toFixed(2);
     document.getElementsByClassName('weight-name')[11].innerHTML = statweights.meleecrit.toFixed(2);
-    document.getElementsByClassName('weight-name')[12].innerHTML = statweights.expertise.toFixed(2);
+    document.getElementsByClassName('weight-name')[12].innerHTML = statweights.Expertise.toFixed(2);
 }
 // initialize stats display
 displayStats();

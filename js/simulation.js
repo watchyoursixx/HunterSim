@@ -54,6 +54,7 @@ var spread = [];
 var countruns = 0;
 var err = 0;
 var avgDPS = 0;
+var prevDPS = 0;
 var sumdmg = 0;
 var sumduration = 0;
 var steptime = 0;
@@ -85,7 +86,8 @@ var combatlogRun = false;
 const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance", "Partial Resist"]; // debugging
 /** Begins sim DPS functionality when ran with "Sim DPS - Loop" button. */
 function startSync() {
-    
+
+    prevDPS = avgDPS;
     loopSim();
 
 }
@@ -206,6 +208,7 @@ function finalResults() {
     let newspread = spread.map(function(each_element){
         return Number(Math.floor(each_element / 5) * 5);
     });
+    buildBuffUptimes();
     buildData(newspread);
     createHistogram();
     console.log("*****************");
@@ -544,13 +547,13 @@ problematic cases: raptor + arcane, multi + arcane + raptor
 	return "autoshot";
 }
 
-var statweights = { str: 0, agi: 0.947, int: 0, RAP: 0.428, rangehit: 1.255, rangecrit: 0.782, 
-    haste: 0.779, arp: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, expertise: 0, mp5: 0
+var statweights = { Str: 0, Agi: 0.947, Int: 0, RAP: 0.428, rangehit: 1.255, rangecrit: 0.782, 
+    Haste: 0.779, ArP: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, Expertise: 0, MP5: 0, Hit:1.255, Crit:0.782
 }
 
 function statWeightLoop(){
     isStatWeights = true;
-    statweights = { str: 0, agi: 0, int: 0, RAP: 0, rangehit: 0, rangecrit: 0, 
+    statweights = { Str: 0, Agi: 0, Int: 0, RAP: 0, rangehit: 0, rangecrit: 0, 
         haste: 0, arp: 0, MAP: 0, meleehit: 0, meleecrit: 0, expertise: 0, mp5: 0
     }
     let basedps = 0;
