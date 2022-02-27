@@ -1,14 +1,21 @@
 var activeslot = '';
+var prevslot = '';
+var phase = parseInt(document.getElementById('phasecheck').value);
+var raidcheck = document.getElementById("raidcheck").checked;
+var pvpcheck = document.getElementById("pvpcheck").checked;
+var greencheck = document.getElementById("greencheck").checked;
+var boecheck = document.getElementById("boecheck").checked;
+var leathercheck = document.getElementById("leathercheck").checked;
+var repcheck = document.getElementById("repcheck").checked;
+var bosscheck = document.getElementById("bosscheck").checked;
+var craftcheck = document.getElementById("craftcheck").checked;
 
-var gearmodal = document.getElementById("gearmodal");
-// Get the <span> element that closes the modal
-var headdiv = document.getElementById("gearhead");
-var gearspan = document.getElementsByClassName("close")[2];
-// When the user clicks on <span> (x), close the modal
-gearspan.onclick = function() {
-    gearmodal.style.display = "none";
+preferredGems = {
+    Red: 24028,
+    Blue: 24055,
+    Yellow: 31868,
+    Meta: 32409
 }
-
 // on click listeners for slots and enchants
 
 document.getElementById("headench").addEventListener("click", function(){gearModalDisplay("head")}, false);
@@ -47,34 +54,37 @@ document.getElementById("trinket2slot").addEventListener("click", function(){gea
 document.getElementById("ammoslot").addEventListener("click", function(){gearModalDisplay("ammo")}, false);
 
 function selectItem(itemid) {
+    let ench = (!!gear[activeslot].enchant && gear[activeslot].enchant > 0) ? gear[activeslot].enchant : 0;
+    let attach = (!!gear[activeslot].attachment && gear[activeslot].attachment > 0) ? gear[activeslot].attachment : 0;
+
     switch (activeslot){
         case 'head':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
-        case 'neck':            
+        case 'neck':
             console.log("you selected "+ itemid);
             gear[activeslot] = { id: parseInt(itemid), gems: [] };
         break;
-        case 'shoulder':            
+        case 'shoulder':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'back':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'chest':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'wrist':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'mainhand':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench, attachment: attach };
             checkWeaponType();
             if(offhandDisabled) {
                 delete gear.offhand;
@@ -82,15 +92,15 @@ function selectItem(itemid) {
         break;
         case 'offhand':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'range':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'hand':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'waist':
             console.log("you selected "+ itemid);
@@ -98,19 +108,19 @@ function selectItem(itemid) {
         break;
         case 'leg':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'feet':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'ring1':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'ring2':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 0 };
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
         break;
         case 'trinket1':
             console.log("you selected "+ itemid);
@@ -127,37 +137,55 @@ function selectItem(itemid) {
     }
     gearModalDisplay(activeslot);
     gearSlotsDisplay();
+    displayCurrentGearTabs();
     selectedOptionsResults();
+
+    return false;
 }
 function selectFirstGem(itemid){
     console.log("you selected "+ itemid);
     gear[activeslot].gems[0] = parseInt(itemid);
+    gearModalDisplay(activeslot);
     gearSlotsDisplay();
+    displayCurrentGearTabs();
     selectedOptionsResults();
+    return false;
 }
 function selectSecondGem(itemid){
     console.log("you selected "+ itemid);
     gear[activeslot].gems[1] = parseInt(itemid);
+    gearModalDisplay(activeslot);
     gearSlotsDisplay();
+    displayCurrentGearTabs();
     selectedOptionsResults();
+    return false;
 }
 function selectThirdGem(itemid){
     console.log("you selected "+ itemid);
     gear[activeslot].gems[2] = parseInt(itemid);
+    gearModalDisplay(activeslot);
     gearSlotsDisplay();
+    displayCurrentGearTabs();
     selectedOptionsResults();
+    return false;
 }
 function selectEnchant(itemid){
     console.log("you selected "+ itemid);
     gear[activeslot].enchant = parseInt(itemid);
+    gearModalDisplay(activeslot);
     gearSlotsDisplay();
+    displayCurrentGearTabs();
     selectedOptionsResults();
+    return false;
 }
 function selectAttachment(itemid){
     console.log("you selected "+ itemid);
     gear[activeslot].attachment = parseInt(itemid);
+    gearModalDisplay(activeslot);
     gearSlotsDisplay();
+    displayCurrentGearTabs();
     selectedOptionsResults();
+    return false;
 }
 
 function filterWeaponLists(array,type){
@@ -199,118 +227,103 @@ function filterWeaponLists(array,type){
     return array;
 }
 
-function filterPhasesOptions(array){
+function filterPhasesOptions(array, type){
 
+    let lookup = 0;
     Object.filter = (obj, predicate) => Object.fromEntries(Object.entries(obj).filter(predicate));
-    let phase = parseInt(document.getElementById('phasecheck').value);
-    let raidcheck = document.getElementById("raidcheck").checked;
-    let pvpcheck = document.getElementById("pvpcheck").checked;
-    let greencheck = document.getElementById("greencheck").checked;
-    let boecheck = document.getElementById("boecheck").checked;
-    let leathercheck = document.getElementById("leathercheck").checked;
-    let repcheck = document.getElementById("repcheck").checked;
-    let bosscheck = document.getElementById("bosscheck").checked;
-    let craftcheck = document.getElementById("craftcheck").checked;
+    phase = parseInt(document.getElementById('phasecheck').value);
+    let currgear = gear[activeslot];
 
-    filteredarray = Object.filter(array, ([key, obj]) => (obj.Phase <= phase) || (key == gear[activeslot].id));
-    if (!raidcheck) {
-        filteredarray = Object.filter(filteredarray, ([key, obj]) => 
-        !(obj.Location == 'Karazhan') && !(obj.Location == 'Mount Hyjal') && !(obj.Location == 'Black Temple')
-        && !(obj.Location == 'Sunwell') && !(obj.Location == "Gruul's Lair") && !(obj.Location == "Magtheridon's Lair")
-        && !(obj.Location == "Zul'Aman") && !(obj.Location == "SerpentShrine Cavern") 
-        && !(obj.Location == "The Eye") || (key == gear[activeslot].id));
-    }
-    if (!pvpcheck) {
-        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'PvP Reward') 
-        && !(obj.Location == 'Arena Reward') && !(obj.Location == 'Honor Reward') || (key == gear[activeslot].id));
-    }
-    if (!greencheck) {
-        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.quality == 'Uncommon') || (key == gear[activeslot].id));
-    }
-    if (!boecheck) {
-        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'World Drop')|| (key == gear[activeslot].id));
-    }
-    if (!leathercheck) {}
-    if (!repcheck) {
-        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'Reputation Reward')|| (key == gear[activeslot].id));
-    }
-    if (!bosscheck) {
-        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'World Boss')|| (key == gear[activeslot].id));
-    }
-    if (!craftcheck) {
-        filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'Crafting')|| (key == gear[activeslot].id));
+    if (type != 'item') {
+        if (type == 'gem1') {
+            lookup = currgear.gems[0];
+        } else if (type == 'gem2') {
+            lookup = currgear.gems[1];
+        } else if (type == 'gem3') {
+            lookup = currgear.gems[2];
+        } else if (type == 'enchant') {
+            lookup = currgear.enchant;
+        } else if (type == 'attachment') {
+            lookup = currgear.attachment;
+        }
+        filteredarray = Object.filter(array, ([key, obj]) => (obj.Phase <= phase) || (key == lookup));
+        console.log(lookup)
+        console.log(filteredarray);
+    } else {
+        lookup = gear[activeslot].id;
+        filteredarray = Object.filter(array, ([key, obj]) => (obj.Phase <= phase) || (key == lookup));
+    
+        if (!raidcheck) {
+            filteredarray = Object.filter(filteredarray, ([key, obj]) => 
+            !(obj.Location == 'Karazhan') && !(obj.Location == 'Mount Hyjal') && !(obj.Location == 'Black Temple')
+            && !(obj.Location == 'Sunwell') && !(obj.Location == "Gruul's Lair") && !(obj.Location == "Magtheridon's Lair")
+            && !(obj.Location == "Zul'Aman") && !(obj.Location == "SerpentShrine Cavern") 
+            && !(obj.Location == "The Eye") || (key == gear[activeslot].id));
+        }
+        if (!pvpcheck) {
+            filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'PvP Reward') 
+            && !(obj.Location == 'Arena Reward') && !(obj.Location == 'Honor Reward') || (key == gear[activeslot].id));
+        }
+        if (!greencheck) {
+            filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.quality == 'Uncommon') || (key == gear[activeslot].id));
+        }
+        if (!boecheck) {
+            filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'World Drop')|| (key == gear[activeslot].id));
+        }
+        if (!leathercheck) {}
+        if (!repcheck) {
+            filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'Reputation Reward')|| (key == gear[activeslot].id));
+        }
+        if (!bosscheck) {
+            filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'World Boss')|| (key == gear[activeslot].id));
+        }
+        if (!craftcheck) {
+            filteredarray = Object.filter(filteredarray, ([key, obj]) => !(obj.Location == 'Crafting')|| (key == gear[activeslot].id));
+        }
     }
     return filteredarray;
 }
 
-function generateGearOptionsList(array,type){
+function generateGearOptionsList(obj,type){
 
     if (activeslot === 'mainhand' || activeslot === 'offhand'){
-        array = filterWeaponLists(array, type);
+        obj = filterWeaponLists(obj, type);
     }
-    array = filterPhasesOptions(array);
-
-    let listlength = 0;
-    let list = [];
-    let index = 0;
-    let i = 0;
-    let selectOptions = '';
-
-    if (type === 'item') {
-
-        array = estimateDpsForObj(array,statweights);
-        let listlength = array.length;
-        //let list = Object.keys(array).map(Number);
-
-        for (i=0; i < listlength; i++) {
-            selectOptions += "<option value= "+array[i].id+" >" + array[i].name + "</option>";
-        }
-    } 
-    else {
-
-        listlength = Object.keys(array).length;
-        list = Object.keys(array).map(Number);
-
-        for (i=0; i < listlength; i++) {
-            index = list[i];
-            selectOptions += "<option value= "+list[i]+" >" + array[index].name + "</option>";
-        }
-    }
-
-    return selectOptions;
+    obj = filterPhasesOptions(obj, type);
+    
+    obj = estimateDpsForObj(obj, statweights, type);
+    console.log(obj);
+    //let list = Object.keys(obj).map(Number);
+    generateGearTable(obj, type);
 }
+
 function itemSelectorDisplay(slotarray){
     if (activeslot === 'offhand' && offhandDisabled) {
         return;
     }
     let type = 'item';
-    let itemselectOptions = generateGearOptionsList(slotarray,type);
-    document.getElementById("itemselect").innerHTML = itemselectOptions;
-    if(activeslot === 'offhand' && gear.offhand === undefined) {
-        document.getElementById("itemselect").value = '';
-    } else {
-    document.getElementById("itemselect").value = gear[activeslot].id;
-    }
+    generateGearOptionsList(slotarray, type);
+
 }
+
 function enchSelectorDisplay(slotarray){
     if (activeslot === 'offhand' && (offhandDisabled || gear.offhand === undefined)) {
         return;
     }
     let type = 'enchant';
-    let enchselectOptions = generateGearOptionsList(slotarray,type);
-    document.getElementById("enchseldiv").style.display = "block";
-    document.getElementById("enchselect").innerHTML = enchselectOptions;
-    document.getElementById("enchselect").value = gear[activeslot].enchant;
+    generateGearOptionsList(slotarray, type);
+    
 }
+
 function attachSelectorDisplay(slotarray){
     if (activeslot === 'offhand' && (offhandDisabled || gear.offhand === undefined)) {
         return;
     }
     let type = 'attachment';
-    let attachselectOptions = generateGearOptionsList(slotarray, type);
-    document.getElementById("attachselect").innerHTML = attachselectOptions;
-    document.getElementById("attachselect").value = gear[activeslot].attachment;
+    generateGearOptionsList(slotarray, type);
+
 }
+
 function gemSelectorDisplay(slotarray){
     if (activeslot === 'offhand' && (offhandDisabled || gear.offhand === undefined)) {
         return;
@@ -320,69 +333,68 @@ function gemSelectorDisplay(slotarray){
     let gem3 = 0;
     let gemselectOptions = '';
     let metaselectOptions = '';
+    
     Object.filter = (obj, predicate) => Object.fromEntries(Object.entries(obj).filter(predicate));
 
     let skt = (slotarray[gear[activeslot].id].hasOwnProperty('sockets')) ? slotarray[gear[activeslot].id].sockets : [];
-        if (skt.length > 0){
-            gem1 = gear[activeslot].gems[0] || 0;
-            gem2 = gear[activeslot].gems[1] || 0;
-            gem3 = gear[activeslot].gems[2] || 0;
+    if (skt.length > 0){
+        gem1 = gear[activeslot].gems[0] || 0;
+        gem2 = gear[activeslot].gems[1] || 0;
+        gem3 = gear[activeslot].gems[2] || 0;
 
-            if (activeslot === 'head') { 
-
-                
-                let META = Object.filter(GEMS, ([key, obj]) => obj.meta === 'Y');
-                metaselectOptions = generateGearOptionsList(META);
-            }
-            let NO_META = Object.filter(GEMS, ([key, obj]) => obj.meta !== 'Y');
-            gemselectOptions = generateGearOptionsList(NO_META);
-            if(skt.length < 1){
-                document.getElementById("gem1seldiv").style.display = "none"; 
+        let META = Object.filter(GEMS, ([key, obj]) => obj.meta === 'Y');
+        let NO_META = Object.filter(GEMS, ([key, obj]) => obj.meta !== 'Y');
+        if(skt.length < 1){
+        } else {
+            if (skt[0] === 'Meta') {
+                metaselectOptions = generateGearOptionsList(META,'gem1');
             } else {
-                document.getElementById("gem1seldiv").style.display = "block";
-                if (skt[0] === 'Meta') {
-                    document.getElementById("gem1select").innerHTML = metaselectOptions;
-                } else {document.getElementById("gem1select").innerHTML = gemselectOptions; 
-                }
-                document.getElementById("gem1select").value = gem1;
+                gemselectOptions = generateGearOptionsList(NO_META,'gem1');
             }
-            if(skt.length < 2){
-                document.getElementById("gem2seldiv").style.display = "none"; 
-            } else {
-                document.getElementById("gem2seldiv").style.display = "block";
-                if (skt[1] === 'Meta') {
-                    document.getElementById("gem2select").innerHTML = metaselectOptions;
-                } else {document.getElementById("gem2select").innerHTML = gemselectOptions;
-                }
-                document.getElementById("gem2select").value = gem2;
-            }
-           if(skt.length < 3){
-                document.getElementById("gem3seldiv").style.display = "none";
-            } else {
-                document.getElementById("gem3seldiv").style.display = "block";
-                if (skt[2] === 'Meta') {
-                    document.getElementById("gem3select").innerHTML = metaselectOptions;
-                } else {document.getElementById("gem3select").innerHTML = gemselectOptions;
-                }
-                document.getElementById("gem3select").value = gem3;
-            }
-        } 
-        else {
-            document.getElementById("gem1seldiv").style.display = "none"; 
-            document.getElementById("gem2seldiv").style.display = "none"; 
-            document.getElementById("gem3seldiv").style.display = "none"; 
         }
+        if(skt.length < 2){
+        } else {
+            if (skt[1] === 'Meta') {
+                metaselectOptions = generateGearOptionsList(META,'gem2');
+            } else {
+                gemselectOptions = generateGearOptionsList(NO_META,'gem2');
+            }
+        }
+        if(skt.length < 3){
+        } else {
+            if (skt[2] === 'Meta') {
+                metaselectOptions = generateGearOptionsList(META,'gem3');
+            } else {
+                gemselectOptions = generateGearOptionsList(NO_META,'gem3');
+            }
+        }
+    } 
 }
+
 function updateGearLists(){
+
+    phase = parseInt(document.getElementById('phasecheck').value);
+    raidcheck = document.getElementById("raidcheck").checked;
+    pvpcheck = document.getElementById("pvpcheck").checked;
+    greencheck = document.getElementById("greencheck").checked;
+    boecheck = document.getElementById("boecheck").checked;
+    leathercheck = document.getElementById("leathercheck").checked;
+    repcheck = document.getElementById("repcheck").checked;
+    bosscheck = document.getElementById("bosscheck").checked;
+    craftcheck = document.getElementById("craftcheck").checked;
+    storeData();
+
     gearModalDisplay(activeslot);
 }
+
 function gearModalDisplay(slot){
+    
     activeslot = slot;
+    displayCurrentGearTabs();
     if (activeslot === 'offhand' && offhandDisabled) {
         return;
     }
     gearmodal.style.display = "block";
-    document.getElementById("attachseldiv").style.display = "none";
 
     console.log(slot);
     if (slot === 'head') {
@@ -393,7 +405,6 @@ function gearModalDisplay(slot){
     else if (slot === 'neck') {
         itemSelectorDisplay(NECKS);
         gemSelectorDisplay(NECKS);
-        document.getElementById("enchseldiv").style.display = "none";
     }
     if (slot === 'shoulder') {
         itemSelectorDisplay(SHOULDERS);
@@ -419,14 +430,12 @@ function gearModalDisplay(slot){
         itemSelectorDisplay(MELEE_WEAPONS);
         enchSelectorDisplay(MELEE_ENCHANTS);
         gemSelectorDisplay(MELEE_WEAPONS);
-        document.getElementById("attachseldiv").style.display = "block";
         attachSelectorDisplay(ATTACHMENTS);
     }
     if (slot === 'offhand') {
         itemSelectorDisplay(MELEE_WEAPONS);
         enchSelectorDisplay(MELEE_ENCHANTS);
         gemSelectorDisplay(MELEE_WEAPONS);
-        document.getElementById("attachseldiv").style.display = "block";
         attachSelectorDisplay(ATTACHMENTS);
     }
     if (slot === 'range') {
@@ -442,7 +451,6 @@ function gearModalDisplay(slot){
     if (slot === 'waist') {
         itemSelectorDisplay(WAISTS);
         gemSelectorDisplay(WAISTS);
-        document.getElementById("enchseldiv").style.display = "none";
     }
     if (slot === 'leg') {
         itemSelectorDisplay(LEGS);
@@ -467,18 +475,33 @@ function gearModalDisplay(slot){
     if (slot === 'trinket1') {
         itemSelectorDisplay(TRINKETS);
         gemSelectorDisplay(TRINKETS);
-        document.getElementById("enchseldiv").style.display = "none";
     }
     if (slot === 'trinket2') {
         itemSelectorDisplay(TRINKETS);
         gemSelectorDisplay(TRINKETS);
-        document.getElementById("enchseldiv").style.display = "none";
     }
     if (slot === 'ammo') {        
         itemSelectorDisplay(AMMOS);
         gemSelectorDisplay(AMMOS);
-        document.getElementById("enchseldiv").style.display = "none";
     }
+}
+
+function qualityColorCheck(color){
+    let quality = '';
+
+    if(color === "Common"){
+        quality = "common-text";
+    } else if(color === "Uncommon") {
+        quality = "uncommon-text";
+    } else if(color === "Rare") {
+        quality = "rare-text";
+    } else if(color === "Epic") {
+        quality = "epic-text";
+    } else if(color === "Legendary") {
+        quality = "legendary-text";
+    } else { new Error("No color selected")}
+
+    return quality;
 }
 
 function textColorDisplay(slot,array){
@@ -490,38 +513,259 @@ function textColorDisplay(slot,array){
         color = array[gear[slot].id].quality;
     }
     document.getElementById(slotname).removeAttribute("class");
-    if(color === "Common"){
-        document.getElementById(slotname).classList.add("common-text");
-    } else if(color === "Uncommon") {
-        document.getElementById(slotname).classList.add("uncommon-text");
-    } else if(color === "Rare") {
-        document.getElementById(slotname).classList.add("rare-text");
-    } else if(color === "Epic") {
-        document.getElementById(slotname).classList.add("epic-text");
-    } else if(color === "Legendary") {
-        document.getElementById(slotname).classList.add("legendary-text");
-    } else { new Error("No color selected")}
+    let quality = qualityColorCheck(color);
+
+    document.getElementById(slotname).classList.add(quality);
+    
 }
 
 function estimateDps(item, weights) {
     let dps = 0;
-    if (item.stats !== undefined){
+    console.log(item)
+    if (!!item.stats) {
         dps = Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
-        dps += (item.sockets?.length || 0) * weights['Agi']
+    } else { return 0 }
+    if (item.sockets?.length) {
+        const allRed = item.sockets.length * estimateDps(GEMS[preferredGems.Red], weights)
+        const matchingSockets = item.sockets.reduce((dps, socket) =>
+            dps + estimateDps(GEMS[preferredGems[socket]], weights),
+            estimateDps({ stats: item.socketBonus }, weights)
+      )
+  
+    dps += allRed > matchingSockets ? allRed : matchingSockets
     }
-
     return dps
 }
 
-function estimateDpsForObj(obj, weights) {
-    
-    currentDps = estimateDps(obj[gear[activeslot].id], weights)
-  
+function estimateDpsForObj(obj, weights, type) {
+    let currentDps = 0;
+    let currgear = gear[activeslot];
+    console.log(type)
+
+    switch(type) {
+        case 'item':
+            if(!!currgear.id) { currentDps = estimateDps(obj[currgear.id], weights)}
+        break;
+        case 'gem1':
+            if(!!currgear.gems[0]) { currentDps = estimateDps(obj[currgear.gems[0]], weights)}
+        break;
+        case 'gem2':
+            if(!!currgear.gems[1]) { currentDps = estimateDps(obj[currgear.gems[1]], weights)}
+        break;
+        case 'gem3':
+            if(!!currgear.gems[2]) { currentDps = estimateDps(obj[currgear.gems[2]], weights)}
+        break;
+        case 'enchant':
+            if(!!currgear.enchant) { currentDps = estimateDps(obj[currgear.enchant], weights)}
+        break;
+        case 'attachment':
+            if(!!currgear.attachment) { currentDps = estimateDps(obj[currgear.attachment], weights)}
+        break;
+    }
     return Object.entries(obj)
       .map(([id, piece]) => {
         const dps = estimateDps(piece, weights)
         return {id, ...piece, DPS: dps, delta: dps - currentDps}
     }).sort((first, second) => second.delta - first.delta)
+}
+
+// used to swap tabs on the gear popup
+function changeGearTab(evt, type) {
+    let i = 0;
+    let content = document.getElementsByClassName("geartab-content");
+    for (i = 0; i < content.length; i++) {
+
+      content[i].style.display = "none";
+    }
+    let gearTab = document.getElementsByClassName("item-selector-tab");
+    for (i = 0; i < gearTab.length; i++) {
+
+      gearTab[i].className = gearTab[i].className.replace(" active", "");
+    }
+
+    document.getElementById(type).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+document.getElementById("dftTab").click();
+
+function filterField(input , table) {
+    var input, filter, table, tr, td, i, txtValue;
+    
+    input = document.getElementById(input);
+    filter = input.value.toUpperCase();
+
+    table = document.getElementById(table);
+
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+}
+
+function generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata){
+
+    let tbody = document.getElementById(idname);
+    let arraylength = array.length;
+    let quality = '';
+    let src = '';
+    let altrow = '';
+    let y = 0;
+    let id = 0;
+    let final = '';
+    let highlight = '';
+    let imgreformat = '';
+    let i = 0;
+
+    tbody.innerHTML = '';
+    for (i = 0; i < arraylength; i++) {
+        y = (y > 1) ? 0 : y;
+        altrow = (y == 0) ? 'altrow' : 'baserow';
+
+        id = parseInt(array[i].id);
+        highlight = (id == lookup) ? "class='highlight-border'" : "";
+        imgreformat = (id == lookup) ? "highlight-img-td" : "norm-img-td";
+        href = "https://tbc.wowhead.com/" + hrefdata + id;
+        result = (array[i].delta >= 0) ? 'positive-result' : 'negative-result';
+        quality = qualityColorCheck(array[i].quality);
+
+        let tr = "<tr class='" + altrow + "' onclick='return "+fnc+"("+ id + ")'>";
+
+        src = "https://wow.zamimg.com/images/wow/icons/large/" + array[i].icon +".jpg";
+
+        tr += "<td class='"+ imgreformat +"'><a href=" + href + "><img "+highlight+" style='vertical-align: middle;'src=" + src + "></a></td>" +
+        "<td style='text-align:left'><a class=" + quality + " href=" + href + ">" + array[i].name + "</a></td>" + 
+        "<td class='positive-result' style='text-align:center'>" + (array[i].DPS).toFixed(2) + "</td>" + 
+        "<td class=" + result + " style='text-align:center'>" + (array[i].delta).toFixed(2) + "</td>";
+        tr += (locdata.length > 0) ? locdata[i] + "</tr>" : "</tr>";
+        "</tr>";
+        final += tr;
+        y++;
+    }
+
+        tbody.innerHTML = final;
+}
+
+function generateGearTable(array, type) {
+
+    let start = performance.now();
+    let arraylength = array.length;
+    let currgear = gear[activeslot];
+    let i = 0;
+    let idname = '';
+    let locdata = [];
+    let hrefdata = (type == 'enchant') ? "spell=" : "item=";
+
+    console.log(type);
+    if (type == 'item') {
+        idname = "itemtbody";
+        for (i = 0; i < arraylength; i++) {
+            locdata[i] = "<td style='text-align:center'>" + (array[i].Location) + "</td>";
+        }
+        lookup = currgear.id;
+        fnc = "selectItem";
+
+    } else if (type == 'gem1') {
+        idname = "gem1tbody";
+        lookup = currgear.gems[0];
+        fnc = "selectFirstGem";
+
+    } else if (type == 'gem2') {
+        idname = "gem2tbody";
+        lookup = currgear.gems[1];
+        fnc = "selectSecondGem";
+
+    } else if (type == 'gem3') {
+        idname = "gem3tbody";
+        lookup = currgear.gems[2];
+        fnc = "selectThirdGem";
+
+    } else if (type == 'enchant') {
+        idname = "enchtbody";
+        lookup = currgear.enchant;
+        fnc = "selectEnchant";
+    } else if (type == 'attachment') {
+        idname = "attachtbody";
+        lookup = currgear.attachment;
+        fnc = "selectAttachment";
+    }
+
+    generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata);
+
+    let end = performance.now();
+    let execute = (end - start) / 1000; // milliseconds convert to sec
+    console.log("generateGearTable "+execute.toFixed(3));
+}
+
+function displayCurrentGearTabs(){
+
+    if (activeslot != prevslot) { document.getElementById("dftTab").click(); }
+    let i = 0;
+    let currgear = gear[activeslot];
+    let gearobj = GEAR_MAP[activeslot];
+    let enchobj = ENCHANT_MAP[activeslot];
+    let skt = (gearobj[currgear.id].hasOwnProperty('sockets')) ? gearobj[currgear.id].sockets : [];
+    let defaultench = "https://wow.zamimg.com/images/wow/icons/large/inv_misc_note_01.jpg"
+    let defaultattach = "https://wow.zamimg.com/images/wow/icons/large/inv_stone_weightstone_07.jpg"
+
+    document.getElementById('selectoritem').src = "https://wow.zamimg.com/images/wow/icons/large/" + gearobj[currgear.id].icon +".jpg";
+    // check for skt display and show tab option
+    for (i=0; i < 3; i++){
+
+        if (skt.length >=(i+1)) { 
+            document.getElementsByClassName("selector-skt")[i].style.display = "block";
+            document.getElementsByClassName('item-selector-tab')[i+1].style.display = "block";
+            document.getElementsByClassName('selector-skt')[i].src = "images/" + skt[i] + "_empty.jfif";
+        } else {
+            document.getElementsByClassName("selector-skt")[i].style.display = "none";
+            document.getElementsByClassName('item-selector-tab')[i+1].style.display = "none";
+        }
+    }
+    // if gems exist, check each one
+    if(!!currgear.gems) {
+
+        if(!!currgear.gems[0]) {   
+            document.getElementsByClassName('item-selector-tab')[1].style.display = "block";
+            document.getElementById('selectorgem1').style.display = "block";
+            document.getElementById('selectorgem1').src = "https://wow.zamimg.com/images/wow/icons/large/" + GEMS[currgear.gems[0]].icon +".jpg";
+        } else {document.getElementById('selectorgem1').style.display = "none";}
+        if(!!currgear.gems[1]) {   
+            document.getElementsByClassName('item-selector-tab')[2].style.display = "block";
+            document.getElementById('selectorgem2').style.display = "block";
+            document.getElementById('selectorgem2').src = "https://wow.zamimg.com/images/wow/icons/large/" + GEMS[currgear.gems[1]].icon +".jpg";
+        } else {document.getElementById('selectorgem2').style.display = "none";}
+        if(!!currgear.gems[2]) {   
+            document.getElementsByClassName('item-selector-tab')[3].style.display = "block";
+            document.getElementById('selectorgem3').style.display = "block";
+            document.getElementById('selectorgem3').src = "https://wow.zamimg.com/images/wow/icons/large/" + GEMS[currgear.gems[2]].icon +".jpg";
+        } else {document.getElementById('selectorgem3').style.display = "none";}
+    } else {
+        document.getElementsByClassName('item-selector-tab')[1].style.display = "none"; // gem 1
+        document.getElementsByClassName('item-selector-tab')[2].style.display = "none"; // gem 2
+        document.getElementsByClassName('item-selector-tab')[3].style.display = "none"; // gem 3
+    }
+    if((activeslot !== 'neck') && (activeslot !== 'trinket1') && (activeslot !== 'trinket2') 
+        && (activeslot !== 'waist') && (activeslot !== 'ammo')) {   
+        document.getElementsByClassName('item-selector-tab')[4].style.display = "block";
+        document.getElementById('selectorenchant').src = (!!currgear.enchant) ? "https://wow.zamimg.com/images/wow/icons/large/" + enchobj[currgear.enchant].icon +".jpg" : defaultench;
+    } else {
+        document.getElementsByClassName('item-selector-tab')[4].style.display = "none";
+    }
+    if((activeslot === 'mainhand') || (activeslot === 'offhand')) {
+        document.getElementsByClassName('item-selector-tab')[5].style.display = "block";
+        document.getElementById('selectorattachment').src = (!!currgear.attachment) ? "https://wow.zamimg.com/images/wow/icons/large/" + ATTACHMENTS[currgear.attachment].icon +".jpg" : defaultattach;
+    } else {
+        document.getElementsByClassName('item-selector-tab')[5].style.display = "none";
+    }
+    prevslot = activeslot;
 }
 
 function gearSlotsDisplay(){
@@ -604,7 +848,7 @@ function gearSlotsDisplay(){
     document.getElementById("headslot").href = "https://tbc.wowhead.com/item="+ headdata;
     document.getElementById("headslot").innerHTML = HEADS[gear.head.id].name;
     document.getElementById("headench").href = (headench > 0) ? "https://tbc.wowhead.com/spell="+ headench : "";
-    document.getElementById("headench").innerHTML = (headench > 0) ? HEAD_ENCHANTS[gear.head.enchant].name: "No Enchant";
+    document.getElementById("headench").innerHTML = (headench > 0) ? HEAD_ENCHANTS[gear.head.enchant].desc: "No Enchant";
     // neck
     textColorDisplay('neck',NECKS);
 
@@ -694,7 +938,7 @@ function gearSlotsDisplay(){
     document.getElementById("shoulderslot").href = "https://tbc.wowhead.com/item="+ shoulderdata;
     document.getElementById("shoulderslot").innerHTML = SHOULDERS[gear.shoulder.id].name;
     document.getElementById("shoulderench").href = (shoulderench > 0) ? "https://tbc.wowhead.com/spell="+ shoulderench : "";
-    document.getElementById("shoulderench").innerHTML = (shoulderench > 0) ? SHOULDER_ENCHANTS[gear.shoulder.enchant].name: "No Enchant";
+    document.getElementById("shoulderench").innerHTML = (shoulderench > 0) ? SHOULDER_ENCHANTS[gear.shoulder.enchant].desc: "No Enchant";
     
     // back
     textColorDisplay('back',BACKS);
@@ -728,7 +972,7 @@ function gearSlotsDisplay(){
     document.getElementById("backslot").href = "https://tbc.wowhead.com/item="+ backdata;
     document.getElementById("backslot").innerHTML = BACKS[gear.back.id].name;
     document.getElementById("backench").href = (backench > 0) ? "https://tbc.wowhead.com/spell="+ backench : "";
-    document.getElementById("backench").innerHTML = (backench > 0) ? BACK_ENCHANTS[gear.back.enchant].name: "No Enchant";
+    document.getElementById("backench").innerHTML = (backench > 0) ? BACK_ENCHANTS[gear.back.enchant].desc: "No Enchant";
     
     // chest
     textColorDisplay('chest',CHESTS);
@@ -789,7 +1033,7 @@ function gearSlotsDisplay(){
     document.getElementById("chestslot").href = "https://tbc.wowhead.com/item="+ chestdata;
     document.getElementById("chestslot").innerHTML = CHESTS[gear.chest.id].name;
     document.getElementById("chestench").href = (chestench > 0) ? "https://tbc.wowhead.com/spell="+ chestench : "";
-    document.getElementById("chestench").innerHTML = (chestench > 0) ? CHEST_ENCHANTS[gear.chest.enchant].name: "No Enchant";
+    document.getElementById("chestench").innerHTML = (chestench > 0) ? CHEST_ENCHANTS[gear.chest.enchant].desc: "No Enchant";
     
     // wrist
     textColorDisplay('wrist',WRISTS);
@@ -824,7 +1068,7 @@ function gearSlotsDisplay(){
     document.getElementById("wristslot").href = "https://tbc.wowhead.com/item="+ wristdata;
     document.getElementById("wristslot").innerHTML = WRISTS[gear.wrist.id].name;
     document.getElementById("wristench").href = (wristench > 0) ? "https://tbc.wowhead.com/spell="+ wristench:""; 
-    document.getElementById("wristench").innerHTML = (wristench > 0) ? WRIST_ENCHANTS[gear.wrist.enchant].name: "No Enchant";
+    document.getElementById("wristench").innerHTML = (wristench > 0) ? WRIST_ENCHANTS[gear.wrist.enchant].desc: "No Enchant";
     
     // mainhand
     textColorDisplay('mainhand',MELEE_WEAPONS);
@@ -886,7 +1130,7 @@ function gearSlotsDisplay(){
     document.getElementById("mainhandslot").href = "https://tbc.wowhead.com/item="+ mainhanddata;
     document.getElementById("mainhandslot").innerHTML = MELEE_WEAPONS[gear.mainhand.id].name;
     document.getElementById("mainhandench").href = (mainhandench > 0) ? "https://tbc.wowhead.com/spell="+ mainhandench :"";  
-    document.getElementById("mainhandench").innerHTML = (mainhandench > 0) ? MELEE_ENCHANTS[gear.mainhand.enchant].name: "No Enchant";
+    document.getElementById("mainhandench").innerHTML = (mainhandench > 0) ? MELEE_ENCHANTS[gear.mainhand.enchant].desc: "No Enchant";
     document.getElementById("mainhandattach").href = (mainhandattach > 1) ? "https://tbc.wowhead.com/item="+ mainhandattach : "";
     document.getElementById("mainhandattach").innerHTML = (mainhandattach > 1) ? ATTACHMENTS[gear.mainhand.attachment].name: "No Attachment";
     
@@ -965,7 +1209,7 @@ function gearSlotsDisplay(){
         document.getElementById("offhandslot").href = "https://tbc.wowhead.com/item="+ offhanddata;
         document.getElementById("offhandslot").innerHTML = MELEE_WEAPONS[gear.offhand.id].name;
         document.getElementById("offhandench").href = (offhandench > 0) ? "https://tbc.wowhead.com/spell="+ offhandench : ""; 
-        document.getElementById("offhandench").innerHTML = (offhandench > 0) ? MELEE_ENCHANTS[gear.offhand.enchant].name: "No Enchant";
+        document.getElementById("offhandench").innerHTML = (offhandench > 0) ? MELEE_ENCHANTS[gear.offhand.enchant].desc: "No Enchant";
         document.getElementById("offhandattach").href = (offhandattach > 1) ? "https://tbc.wowhead.com/item="+ offhandattach : "";
         document.getElementById("offhandattach").innerHTML = (offhandattach > 1) ? ATTACHMENTS[gear.offhand.attachment].name: "No Attachment";
 
@@ -1016,7 +1260,7 @@ function gearSlotsDisplay(){
     document.getElementById("rangeslot").href = "https://tbc.wowhead.com/item="+ rangedata;
     document.getElementById("rangeslot").innerHTML = RANGED_WEAPONS[gear.range.id].name;
     document.getElementById("rangeench").href = (rangeench > 0) ? "https://tbc.wowhead.com/spell="+ rangeench : "";
-    document.getElementById("rangeench").innerHTML = (rangeench > 0) ? RANGE_ENCHANTS[gear.range.enchant].name: "No Enchant";
+    document.getElementById("rangeench").innerHTML = (rangeench > 0) ? RANGE_ENCHANTS[gear.range.enchant].desc: "No Enchant";
     
     // hand
     textColorDisplay('hand',HANDS);
@@ -1063,7 +1307,7 @@ function gearSlotsDisplay(){
     document.getElementById("handslot").href = "https://tbc.wowhead.com/item="+ handdata;
     document.getElementById("handslot").innerHTML = HANDS[gear.hand.id].name;
     document.getElementById("handench").href = (handench > 0) ? "https://tbc.wowhead.com/spell="+ handench : "";
-    document.getElementById("handench").innerHTML = (handench > 0) ? HAND_ENCHANTS[gear.hand.enchant].name: "No Enchant";
+    document.getElementById("handench").innerHTML = (handench > 0) ? HAND_ENCHANTS[gear.hand.enchant].desc: "No Enchant";
     
     // waist
     textColorDisplay('waist',WAISTS);
@@ -1167,7 +1411,7 @@ function gearSlotsDisplay(){
     document.getElementById("legslot").href = "https://tbc.wowhead.com/item="+ legdata;
     document.getElementById("legslot").innerHTML = LEGS[gear.leg.id].name;
     document.getElementById("legench").href = (legench > 0) ? "https://tbc.wowhead.com/spell="+ legench : "";
-    document.getElementById("legench").innerHTML = (legench > 0) ? LEG_ENCHANTS[gear.leg.enchant].name: "No Enchant";
+    document.getElementById("legench").innerHTML = (legench > 0) ? LEG_ENCHANTS[gear.leg.enchant].desc: "No Enchant";
     
     // feet
     textColorDisplay('feet',FEET);
@@ -1214,7 +1458,7 @@ function gearSlotsDisplay(){
     document.getElementById("feetslot").href = "https://tbc.wowhead.com/item="+ feetdata;
     document.getElementById("feetslot").innerHTML = FEET[gear.feet.id].name;
     document.getElementById("feetench").href = (feetench > 0) ? "https://tbc.wowhead.com/spell="+ feetench : "";
-    document.getElementById("feetench").innerHTML = (feetench > 0) ? FEET_ENCHANTS[gear.feet.enchant].name: "No Enchant";
+    document.getElementById("feetench").innerHTML = (feetench > 0) ? FEET_ENCHANTS[gear.feet.enchant].desc: "No Enchant";
 
     // ring1
     textColorDisplay('ring1',RINGS);
@@ -1249,7 +1493,7 @@ function gearSlotsDisplay(){
     document.getElementById("ring1slot").href = "https://tbc.wowhead.com/item="+ ring1data;
     document.getElementById("ring1slot").innerHTML = RINGS[gear.ring1.id].name;
     document.getElementById("ring1ench").href = (ring1ench > 0) ? "https://tbc.wowhead.com/spell="+ ring1ench : "";
-    document.getElementById("ring1ench").innerHTML = (ring1ench > 0) ? RING_ENCHANTS[gear.ring1.enchant].name: "No Enchant";
+    document.getElementById("ring1ench").innerHTML = (ring1ench > 0) ? RING_ENCHANTS[gear.ring1.enchant].desc: "No Enchant";
     // ring2
     textColorDisplay('ring2',RINGS);
 
@@ -1283,7 +1527,7 @@ function gearSlotsDisplay(){
     document.getElementById("ring2slot").href = "https://tbc.wowhead.com/item="+ ring2data;
     document.getElementById("ring2slot").innerHTML = RINGS[gear.ring2.id].name;
     document.getElementById("ring2ench").href = (ring2ench > 0) ? "https://tbc.wowhead.com/spell="+ ring2ench : "";
-    document.getElementById("ring2ench").innerHTML = (ring2ench > 0) ? RING_ENCHANTS[gear.ring2.enchant].name: "No Enchant";
+    document.getElementById("ring2ench").innerHTML = (ring2ench > 0) ? RING_ENCHANTS[gear.ring2.enchant].desc: "No Enchant";
 
     // trinket1
     textColorDisplay('trinket1',TRINKETS);

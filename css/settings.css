@@ -20,7 +20,6 @@ ul {
 }
 .settings-gearfilter {
   color: white;
-  display: inline-block;
   vertical-align: top;
   background-color: #252529;
   border: 3px solid #000;
@@ -245,14 +244,13 @@ ul {
 /* gear Modal Content */
 .modal-gear-content {
   position:absolute;
-  left: 35%;
+  left: 15%;
   background-color: #1e1e22;
-  top: 40%;
+  top: 10%;
   margin: auto;
-  padding: 20px;
-  border: 4px solid #2e2e33;
-  width: 600px;
-  height: 300px;
+  padding: 10px;
+  width: 70%;
+  height: auto;
 }
 .modal-import {
   display: none; 
@@ -814,4 +812,112 @@ ul {
   top: 55px;
   left: 67%;
   width: 120px;
+}
+
+.item-selector {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  list-style: none;
+  background-color: #000;
+  width: 100%;
+  height: 4.5rem;
+}
+
+/* Style the buttons inside the tab */
+.item-selector button {
+  background: transparent;
+  position: relative;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.2s;
+  font-size: 18px;
+  height: 4.5rem;
+  width: 4rem;
+}
+
+/* Change background color of buttons on hover */
+.item-selector button:hover {
+  background-color: rgb(43, 43, 43);
+}
+
+/* Create an active/current tablink class */
+.item-selector button.active {
+
+  border-bottom: 3px solid #21b641;
+}
+
+.gear-img-selector {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 2.0rem;
+  border-radius: 0.125rem;
+}
+.item-selector-list {
+  margin-right : 0.4rem;
+  height: 4.5rem;
+}
+
+.gem-selector {
+  position:absolute;
+  width: 1.5rem;
+  top: 1.25rem;
+  left: 1.2rem;
+  border-radius: 0.125rem;
+}
+
+.selector-skt {
+  top: 1rem;
+  left: 1rem;
+  position: absolute;
+  width: 2.0rem;
+  border-radius: 0.125rem;
+}
+
+.altrow {
+  background-color:#19191b;
+  cursor: pointer;
+}
+
+.altrow:hover {
+  background-color:#0c0c0e;
+}
+
+.baserow:hover {
+  background-color:#0c0c0e;
+}
+
+.baserow {
+  background-color:#1e1e22;
+  cursor: pointer;
+}
+
+.highlight-img-td {
+  padding: 0.375rem;
+}
+
+.norm-img-td {
+  padding: 0.5rem;
+}
+
+.highlight-border {
+  border: 0.125rem solid rgb(30, 255, 0);
+}
+
+.searchfield {
+  color: rgb(255, 255, 255);
+  height: 2.5rem;
+  width: 100%;
+  font-size: 0.875rem;
+  background: rgb(43, 46, 51);
+  border-radius: 0.3125rem;
+  padding: 0px 0.9375rem;
+  outline: none;
+  border-width: 0.125rem;
+  border-style: solid;
+  border-color: transparent;
 }

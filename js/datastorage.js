@@ -70,135 +70,126 @@ function storeData(){
     localStorage.setItem("spellcdoption", document.getElementById("spellcdoption").value);
     localStorage.setItem("secpotoption", document.getElementById("secpotoption").value);
 
+    localStorage.setItem("phasecheck", document.getElementById("phasecheck").value);
+    localStorage.setItem("raidcheck", document.getElementById("raidcheck").checked);
+    localStorage.setItem("pvpcheck", document.getElementById("pvpcheck").checked);
+    localStorage.setItem("boecheck", document.getElementById("boecheck").checked);
+    localStorage.setItem("craftcheck", document.getElementById("craftcheck").checked);
+    localStorage.setItem("bosscheck", document.getElementById("bosscheck").checked);
+    localStorage.setItem("greencheck", document.getElementById("greencheck").checked);
+    localStorage.setItem("repcheck", document.getElementById("repcheck").checked);
+    localStorage.setItem("leathercheck", document.getElementById("leathercheck").checked);
+
     localStorage.setItem('savecheck','true');
 }
 
 function fetchData(){
 
     // gear
-    let savedgear = JSON.parse(localStorage.getItem('gear'));
-    gear = savedgear;
+    gear = (JSON.parse(localStorage.getItem('gear')) != null) ? JSON.parse(localStorage.getItem('gear')) : gear;
     // buffs
-    let savedbuffs = JSON.parse(localStorage.getItem('buffs'));
-    buffslist = savedbuffs;
+    buffslist = (JSON.parse(localStorage.getItem('buffs')) != null) ? JSON.parse(localStorage.getItem('buffs')) : buffslist;
     // player consumes
-    let savedplayercons = JSON.parse(localStorage.getItem('pla_consumes'));
-    playerconsumes = savedplayercons;
+    playerconsumes = (JSON.parse(localStorage.getItem('pla_consumes')) != null) ? JSON.parse(localStorage.getItem('pla_consumes')):playerconsumes;
     // pet consumes
-    let savedpetcons = JSON.parse(localStorage.getItem('pet_consumes'));
-    petconsumes = savedpetcons;
+    petconsumes = (JSON.parse(localStorage.getItem('pet_consumes')) != null) ? JSON.parse(localStorage.getItem('pet_consumes')):petconsumes;
     // debuffs
-    debuffs = JSON.parse(localStorage.getItem('debuffs'));
+    debuffs = (JSON.parse(localStorage.getItem('debuffs')) != null) ? JSON.parse(localStorage.getItem('debuffs')):debuffs;
     // saves each value below as a string - fight settings
-    let savediters = parseInt(localStorage.getItem('iterations'));
-    iterations = savediters;
-    let savedminfight = parseInt(localStorage.getItem('minfight'));
-    minfighttimer = savedminfight;
-    let savedmaxfight = parseInt(localStorage.getItem('maxfight'));
-    maxfighttimer = savedmaxfight;
-    let savedlatency = JSON.parse(localStorage.getItem('latency'));
-    latency = savedlatency;
-    let savedplayuptime = parseInt(localStorage.getItem('playeruptime'));
-    playeruptime = savedplayuptime;
-    let savedpetuptime = parseInt(localStorage.getItem('petuptime'));
-    petuptime = savedpetuptime;
-    let savedweavetime = JSON.parse(localStorage.getItem('weavetime'));
-    weavetime = savedweavetime;
-    let savedhunters = parseInt(localStorage.getItem('huntraid'));
-    huntersinraid = savedhunters;
-    let savedberserkhp = parseInt(localStorage.getItem('berserkhp'));
-    BerserkStartHP = savedberserkhp;
-    let savedpet = parseInt(localStorage.getItem('petselect'));
-    selectedPet = savedpet;
-    let savedrace = parseInt(localStorage.getItem('raceselect'));
-    selectedRace = savedrace;
-    let savedtarget = JSON.parse(localStorage.getItem('target'));
-    target = savedtarget;
+    iterations = (parseInt(localStorage.getItem('iterations')) != null) ? parseInt(localStorage.getItem('iterations')) : iterations;
+    minfighttimer = (parseInt(localStorage.getItem('minfight')) != null) ? parseInt(localStorage.getItem('minfight')) : minfighttimer;
+    maxfighttimer = (parseInt(localStorage.getItem('maxfight')) != null) ? parseInt(localStorage.getItem('maxfight')) : maxfighttimer;
+    latency = (JSON.parse(localStorage.getItem('latency')) != null) ? JSON.parse(localStorage.getItem('latency')):latency;
+    playeruptime = (parseInt(localStorage.getItem('playeruptime')) != null) ? parseInt(localStorage.getItem('playeruptime')):playeruptime;
+    petuptime = (parseInt(localStorage.getItem('petuptime')) != null) ? parseInt(localStorage.getItem('petuptime')):petuptime;
+    weavetime = (JSON.parse(localStorage.getItem('weavetime')) != null) ? JSON.parse(localStorage.getItem('weavetime')):weavetime;
+    huntersinraid = (parseInt(localStorage.getItem('huntraid')) != null) ? parseInt(localStorage.getItem('huntraid')): huntersinraid;
+    BerserkStartHP = (parseInt(localStorage.getItem('berserkhp')) != null) ? parseInt(localStorage.getItem('berserkhp')):BerserkStartHP;
+    selectedPet = (parseInt(localStorage.getItem('petselect')) != null) ? parseInt(localStorage.getItem('petselect')):selectedPet;
+    selectedRace = (parseInt(localStorage.getItem('raceselect')) != null) ? parseInt(localStorage.getItem('raceselect')):selectedRace;
+    target = (JSON.parse(localStorage.getItem('target')) != null) ? JSON.parse(localStorage.getItem('target')):target;
     // talents
-    let savedtalentindex = localStorage.getItem('talentindex');
-    talentindex = savedtalentindex;
-    let savedwhlink = localStorage.getItem('whtalentlink');
-    whtalentlink = savedwhlink;
-    let savedtalents = JSON.parse(localStorage.getItem('talents'));
-    talents = savedtalents;
+    talentindex = (localStorage.getItem('talentindex') != null) ? localStorage.getItem('talentindex'):talentindex;
+    whtalentlink = (localStorage.getItem('whtalentlink') != null) ? localStorage.getItem('whtalentlink'):whtalentlink;
+    talents = (JSON.parse(localStorage.getItem('talents')) != null) ? JSON.parse(localStorage.getItem('talents')):talents;
     // spell enables
-    let rapidcheck = JSON.parse(localStorage.getItem('rapidcheck'));
-    auras.rapid.enable = rapidcheck;
-    let beastcheck = JSON.parse(localStorage.getItem('beastcheck'));
-    beastenable = beastcheck;
-    let racialcheck = JSON.parse(localStorage.getItem('racialcheck'));
-    racialenable = racialcheck;
-    let lustcheck = JSON.parse(localStorage.getItem('lustcheck'));
-    auras.lust.enable = lustcheck;
-    let drumcheck = JSON.parse(localStorage.getItem('drumcheck'));
-    auras.drums.enable = drumcheck;
-    let hastecheck = JSON.parse(localStorage.getItem('hastecheck'));
-    auras.potion.primary = hastecheck;
-    let secpotcheck = JSON.parse(localStorage.getItem('secpotcheck'));
-    auras.potion.secondary = secpotcheck;
-    let runecheck = JSON.parse(localStorage.getItem('runecheck'));
-    auras.rune.enable = runecheck;
-    let multicheck = JSON.parse(localStorage.getItem('multicheck'));
-    SPELLS.multishot.enable = multicheck;
-    let arcanecheck = JSON.parse(localStorage.getItem('arcanecheck'));
-    SPELLS.arcaneshot.enable = arcanecheck;
-    let raptorcheck = JSON.parse(localStorage.getItem('raptorcheck'));
-    SPELLS.raptorstrike.enable = raptorcheck;
-    let meleecheck = JSON.parse(localStorage.getItem('meleecheck'));
-    SPELLS.melee.enable = meleecheck;
+    auras.rapid.enable = (JSON.parse(localStorage.getItem('rapidcheck')) != null) ? JSON.parse(localStorage.getItem('rapidcheck')):auras.rapid.enable;
+    beastenable = (JSON.parse(localStorage.getItem('beastcheck')) != null) ? JSON.parse(localStorage.getItem('beastcheck')):beastenable;
+    racialenable = (JSON.parse(localStorage.getItem('racialcheck')) != null) ? JSON.parse(localStorage.getItem('racialcheck')):racialenable;
+    auras.lust.enable = (JSON.parse(localStorage.getItem('lustcheck')) != null) ? JSON.parse(localStorage.getItem('lustcheck')):auras.lust.enable;
+
+    auras.drums.enable = (JSON.parse(localStorage.getItem('drumcheck')) != null) ? JSON.parse(localStorage.getItem('drumcheck')):auras.drums.enable;
+    auras.potion.primary = (JSON.parse(localStorage.getItem('hastecheck')) != null) ? JSON.parse(localStorage.getItem('hastecheck')):auras.potion.primary;
+    auras.potion.secondary = (JSON.parse(localStorage.getItem('secpotcheck')) != null) ? JSON.parse(localStorage.getItem('secpotcheck')):auras.potion.secondary;
+
+    auras.rune.enable = (JSON.parse(localStorage.getItem('runecheck')) != null) ? JSON.parse(localStorage.getItem('runecheck')):auras.rune.enable;
+    SPELLS.multishot.enable = (JSON.parse(localStorage.getItem('multicheck')) != null) ? JSON.parse(localStorage.getItem('multicheck')):SPELLS.multishot.enable;
+    SPELLS.arcaneshot.enable = (JSON.parse(localStorage.getItem('arcanecheck')) != null) ? JSON.parse(localStorage.getItem('arcanecheck')):SPELLS.arcaneshot.enable;
+    SPELLS.raptorstrike.enable = (JSON.parse(localStorage.getItem('raptorcheck')) != null) ? JSON.parse(localStorage.getItem('raptorcheck')):SPELLS.raptorstrike.enable;
+    SPELLS.melee.enable = (JSON.parse(localStorage.getItem('meleecheck')) != null) ? JSON.parse(localStorage.getItem('meleecheck')):SPELLS.melee.enable;
 
     // spell offsets
-    let rapidoffset = localStorage.getItem('rapidoffset');
-    auras.rapid.offset = parseInt(rapidoffset);
-    let beastoffset = localStorage.getItem('beastoffset');
-    auras.beastwithin.offset = parseInt(beastoffset);
-    let racialoffset = localStorage.getItem('racialoffset');
-    auras.berserk.offset = parseInt(racialoffset);
-    auras.bloodfury.offset = parseInt(racialoffset);
-    let lustoffset = localStorage.getItem('lustoffset');
-    auras.lust.offset = parseInt(lustoffset);
-    let drumoffset = localStorage.getItem('drumoffset');
-    auras.drums.offset = parseInt(drumoffset);
-    let trink1offset = localStorage.getItem('trink1offset');
-    auras.aptrink1.offset = parseInt(trink1offset);
-    let trink2offset = localStorage.getItem('trink2offset');
-    auras.aptrink2.offset = parseInt(trink2offset);
-    let startpotoffset = localStorage.getItem('startpotoffset');
-    auras.potion.offset = parseInt(startpotoffset);
-    //let runeoffset = localStorage.getItem('runeoffset');
-    //auras.rune.offset = parseInt(runeoffset);
+    auras.rapid.offset = (localStorage.getItem('rapidoffset') != null) ? parseInt(localStorage.getItem('rapidoffset')) : auras.rapid.offset;
+    auras.beastwithin.offset = (localStorage.getItem('beastoffset') != null) ? parseInt(localStorage.getItem('beastoffset')):auras.beastwithin.offset;
+    if (localStorage.getItem('racialoffset') != null) {
+        auras.berserk.offset = parseInt(localStorage.getItem('racialoffset'));
+        auras.bloodfury.offset = parseInt(localStorage.getItem('racialoffset'));
+    }
+    auras.lust.offset = (localStorage.getItem('lustoffset') != null) ? parseInt(localStorage.getItem('lustoffset')):auras.lust.offset;
+    auras.drums.offset = (localStorage.getItem('drumoffset') != null) ? parseInt(localStorage.getItem('drumoffset')):auras.drums.offset;
+    auras.aptrink1.offset = (localStorage.getItem('trink1offset') != null) ? parseInt(localStorage.getItem('trink1offset')):auras.aptrink1.offset;
+    auras.aptrink2.offset = (localStorage.getItem('trink2offset') != null) ? parseInt(localStorage.getItem('trink2offset')):auras.aptrink2.offset;
+    auras.potion.offset = (localStorage.getItem('startpotoffset') != null) ? parseInt(localStorage.getItem('startpotoffset')):auras.potion.offset;
+    //auras.rune.offset = (localStorage.getItem('runeoffset') != null) ? parseInt(localStorage.getItem('runeoffset')):auras.rune.offset;
+
     // spell option
-    let lustoption = localStorage.getItem('lustoption');
-    switch (lustoption) {
-        case "1":   auras.lust.duration = 40;
-        break;
-        case "2":   auras.lust.duration = 80;
-        break;
-        case "3":   auras.lust.duration = 120;
-        break;
-        case "4":   auras.lust.duration = 160;
-        break;
+    let lustoption = '';
+    if (localStorage.getItem('lustoption') != null) {
+        lustoption = localStorage.getItem('lustoption');
+        switch (lustoption) {
+            case "1":   auras.lust.duration = 40;
+            break;
+            case "2":   auras.lust.duration = 80;
+            break;
+            case "3":   auras.lust.duration = 120;
+            break;
+            case "4":   auras.lust.duration = 160;
+            break;
+        }
     }
-    auras.drums.type = localStorage.getItem('drumoption');
-    let spellcdoption = localStorage.getItem('spellcdoption');
-    switch (spellcdoption) {
-        case "2min":
-            two_min_cds = 180;
-            three_min_cds = 180;
-            setSpellCDs();
-        break;
-        case "3min":
-            two_min_cds = 120;
-            three_min_cds = 240;
-            setSpellCDs();
-        break;
-        case "CD":
-            two_min_cds = 120;
-            three_min_cds = 180;
-            setSpellCDs();
-        break;
+    auras.drums.type = (localStorage.getItem('drumoption') != null) ? localStorage.getItem('drumoption'):auras.drums.type;
+    let spellcdoption = '';
+    if (localStorage.getItem('spellcdoption') != null) {
+        spellcdoption = localStorage.getItem('spellcdoption');
+        switch (spellcdoption) {
+            case "2min":
+                two_min_cds = 180;
+                three_min_cds = 180;
+                setSpellCDs();
+            break;
+            case "3min":
+                two_min_cds = 120;
+                three_min_cds = 240;
+                setSpellCDs();
+            break;
+            case "CD":
+                two_min_cds = 120;
+                three_min_cds = 180;
+                setSpellCDs();
+            break;
+        }
     }
-    secondaryPotion = localStorage.getItem('secpotoption');
+    secondaryPotion = (localStorage.getItem('secpotoption') != null) ? localStorage.getItem('secpotoption') : secondaryPotion;
+    phase = (localStorage.getItem("phasecheck") != null) ? parseInt(localStorage.getItem("phasecheck")) : phase;
+    raidcheck = (localStorage.getItem("raidcheck") != null) ? JSON.parse(localStorage.getItem("raidcheck")) : raidcheck;
+    pvpcheck = (localStorage.getItem("pvpcheck") != null) ? JSON.parse(localStorage.getItem("pvpcheck")) : pvpcheck;
+    greencheck = (localStorage.getItem("greencheck") != null) ? JSON.parse(localStorage.getItem("greencheck")):greencheck;
+    boecheck = (localStorage.getItem("boecheck") != null) ? JSON.parse(localStorage.getItem("boecheck")) : boecheck;
+    leathercheck = (localStorage.getItem("leathercheck") != null) ? JSON.parse(localStorage.getItem("leathercheck")) : leathercheck;
+    repcheck = (localStorage.getItem("repcheck") != null) ? JSON.parse(localStorage.getItem("repcheck")) : repcheck;
+    bosscheck = (localStorage.getItem("bosscheck") != null) ? JSON.parse(localStorage.getItem("bosscheck")) : bosscheck;
+    craftcheck = (localStorage.getItem("craftcheck") != null) ? JSON.parse(localStorage.getItem("craftcheck")) : craftcheck;
+    
     /* Display initialization for fetched values */
     // fight settings initialization
     document.getElementById("simulations").value = iterations;
@@ -306,6 +297,15 @@ function fetchData(){
     document.getElementById("spellcdoption").value = spellcdoption;
     document.getElementById("secpotoption").value = secondaryPotion;
 
+    document.getElementById("phasecheck").value = phase;
+    document.getElementById("raidcheck").checked = raidcheck;
+    document.getElementById("pvpcheck").checked = pvpcheck;
+    document.getElementById("boecheck").checked = boecheck;
+    document.getElementById("greencheck").checked = greencheck;
+    document.getElementById("bosscheck").checked = bosscheck;
+    document.getElementById("leathercheck").checked = leathercheck;
+    document.getElementById("craftcheck").checked = craftcheck;
+    document.getElementById("repcheck").checked = repcheck;
     // initialize the settings after loading
     selectedOptionsResults();
 }

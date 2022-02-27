@@ -6,6 +6,7 @@ const HEAD_ENCHANTS = {
         Haste: 10
     },
     Phase: 1,
+    quality: "Uncommon",
     icon: 'inv_misc_gem_02',
     desc: '+10 Haste'
   },
@@ -17,6 +18,9 @@ const HEAD_ENCHANTS = {
       Hit: 10,
       RAP: 24
     },
+    Phase: 1,
+    icon: 'spell_nature_forceofnature',
+    quality: "Rare",
     desc: '+10 Stam, +10 Hit, +24 RAP'
   },
   35452: {
@@ -28,6 +32,7 @@ const HEAD_ENCHANTS = {
         Hit: 16
     },
     Phase: 1,
+    quality: "Uncommon",
     icon: 'classic_ability_druid_demoralizingroar',
     desc: '+34 AP, +16 Hit'
   },
@@ -39,6 +44,7 @@ const HEAD_ENCHANTS = {
         Resil: 20
     },
     Phase: 5,
+    quality: "Uncommon",
     icon: 'inv_misc_statue_04',
     desc: '+18 Stam, +20 Resil'
   },
@@ -49,6 +55,7 @@ const HEAD_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
+    quality: "Common",
     icon: 'inv_misc_armorkit_25',
     desc: '+10 Stam'
   },
@@ -59,6 +66,7 @@ const HEAD_ENCHANTS = {
       Agi: 8
     },
     Phase: 1,
+    quality: "Uncommon",
     icon: 'inv_misc_gem_03',
     desc: '+8 Agi'
   },
@@ -74,6 +82,7 @@ const SHOULDER_ENCHANTS = {
       Crit: 15
     },
     Phase: 1,
+    quality: "Rare",
     icon: 'spell_holy_weaponmastery',
     desc: '+20 AP, +15 Crit'
   },
@@ -86,6 +95,7 @@ const SHOULDER_ENCHANTS = {
       Crit: 10
     },
     Phase: 1,
+    quality: "Rare",
     icon: 'spell_holy_greaterblessingofkings',
     desc: '+30 AP, +10 Crit'
   },
@@ -96,6 +106,7 @@ const SHOULDER_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
+    quality: "Common",
     icon: 'inv_misc_armorkit_25',
     desc: '+10 Stam'
   },
@@ -106,6 +117,7 @@ const SHOULDER_ENCHANTS = {
       Crit: 13
     },
     Phase: 1,
+    quality: "Uncommon",
     icon: 'ability_dualwield',
     desc: '+13 Crit'
   },
@@ -117,6 +129,7 @@ const SHOULDER_ENCHANTS = {
       RAP: 26,
     },
     Phase: 1,
+    quality: "Uncommon",
     icon: 'spell_holy_fistofjustice',
     desc: '+26 AP'
   },
@@ -129,6 +142,7 @@ const SHOULDER_ENCHANTS = {
       Crit: 14
     },
     Phase: 1,
+    quality: "Epic",
     icon: 'spell_shadow_deathpact',
     desc: '+26 AP, +14 Crit'
   },
@@ -140,6 +154,7 @@ const SHOULDER_ENCHANTS = {
       RAP: 30
     },
     Phase: 1,
+    quality: "Rare",
     icon: 'inv_misc_armorkit_08',
     desc: '+30 AP'
   },
@@ -153,7 +168,9 @@ const BACK_ENCHANTS = {
       Agi: 12
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+12 Agi'
   },
   13882: {
     name: 'Lesser Agility',
@@ -162,7 +179,9 @@ const BACK_ENCHANTS = {
       Agi: 3
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+3 Agi'
   },
   13419: {
     name: 'Minor Agility',
@@ -171,7 +190,9 @@ const BACK_ENCHANTS = {
       Agi: 1
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+1 Agi'
   }
 }
 
@@ -183,7 +204,9 @@ const CHEST_ENCHANTS = {
       Health: 150
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+150 HP'
   },
   27958: {
     name: 'Exceptional Mana',
@@ -192,7 +215,9 @@ const CHEST_ENCHANTS = {
       Mana: 150
     },
     Phase: 1,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+150 Mana'
   },
   27960: {
     name: 'Exceptional Stats',
@@ -205,7 +230,9 @@ const CHEST_ENCHANTS = {
       Int: 6
     },
     Phase: 1,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+6 All Stats'
   },
   20025: {
     name: 'Greater Stats',
@@ -218,7 +245,9 @@ const CHEST_ENCHANTS = {
       Int: 4
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+4 All Stats'
   },
   44968: {
     name: 'Heavy Knothide Armor Kit',
@@ -227,7 +256,9 @@ const CHEST_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    quality: "Common",
+    icon: 'inv_misc_armorkit_25',
+    desc: '+10 Stam'
   },
   33992: {
     name: 'Major Resilience',
@@ -236,7 +267,9 @@ const CHEST_ENCHANTS = {
       Resil: 15
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+15 Resil'
   },
   33991: {
     name: 'Restore Mana Prime',
@@ -245,7 +278,9 @@ const CHEST_ENCHANTS = {
       MP5: 6
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+6 Mp5'
   },
   13941: {
     name: 'Stats',
@@ -258,7 +293,9 @@ const CHEST_ENCHANTS = {
       Int: 3
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+3 All Stats'
   },
 }
 
@@ -271,7 +308,9 @@ const WRIST_ENCHANTS = {
       RAP: 24
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+24 AP'
   },
   27899: {
     name: 'Brawn',
@@ -280,7 +319,9 @@ const WRIST_ENCHANTS = {
       Str: 12
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+12 Str'
   },
   27914: {
     name: 'Fortitude',
@@ -289,7 +330,9 @@ const WRIST_ENCHANTS = {
       Stam: 12
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+12 Stam'
   },
   34001: {
     name: 'Major Intellect',
@@ -298,7 +341,9 @@ const WRIST_ENCHANTS = {
       Int: 12
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+12 Int'
   },
   27913: {
     name: 'Restore Mana Prime',
@@ -307,7 +352,9 @@ const WRIST_ENCHANTS = {
       MP5: 6
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+6 Mp5'
   },
   27905: {
     name: 'Stats',
@@ -320,7 +367,9 @@ const WRIST_ENCHANTS = {
       Int: 4
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+4 All Stats'
   }
 }
 
@@ -332,7 +381,9 @@ const HAND_ENCHANTS = {
       Agi: 5
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+5 Agi'
   },
   33996: {
     name: 'Assault',
@@ -342,7 +393,9 @@ const HAND_ENCHANTS = {
       RAP: 26
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+26 AP'
   },
   20012: {
     name: 'Greater Agility',
@@ -351,16 +404,9 @@ const HAND_ENCHANTS = {
       Agi: 7
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
-  },
-  44968: {
-    name: 'Heavy Knothide Armor Kit',
-    effectId: 2841,
-    stats: {
-      Stam: 10
-    },
-    Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+7 Agi'
   },
   33995: {
     name: 'Major Strength',
@@ -369,7 +415,9 @@ const HAND_ENCHANTS = {
       Str: 15
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+15 Str'
   },
   44968: {
     name: 'Heavy Knothide Armor Kit',
@@ -378,7 +426,9 @@ const HAND_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    quality: "Common",
+    icon: 'inv_misc_armorkit_25',
+    desc: '+10 Stam'
   },
   25080: {
     name: 'Superior Agility',
@@ -387,7 +437,9 @@ const HAND_ENCHANTS = {
       Agi: 15
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+15 Agi'
   },
 }
 
@@ -399,7 +451,9 @@ const LEG_ENCHANTS = {
         Haste: 10
     },
     Phase: 1,
-    icon: 'inv_misc_gem_02'
+    quality: "Uncommon",
+    icon: 'inv_misc_gem_02',
+    desc: '+10 Haste'
   },
   35489: {
     name: 'Clefthide Leg Armor',
@@ -409,7 +463,9 @@ const LEG_ENCHANTS = {
       Stam: 30
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_23'
+    quality: "Rare",
+    icon: 'inv_misc_armorkit_23',
+    desc: '+10 Agi, +30 Stam'
   },
   35488: {
     name: 'Cobrahide Leg Armor',
@@ -420,7 +476,9 @@ const LEG_ENCHANTS = {
       Crit: 10
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_21'
+    quality: "Rare",
+    icon: 'inv_misc_armorkit_21',
+    desc: '+40 AP, +10 Crit'
   },
   24162: {
     name: "Falcon's Call",
@@ -429,7 +487,11 @@ const LEG_ENCHANTS = {
       Stam: 10,
       Hit: 10,
       RAP: 24
-    }
+    },
+    Phase: 1,
+    icon: 'spell_nature_forceofnature',
+    quality: "Rare",
+    desc: '+10 Stam, +10 Hit, +24 RAP',
   },
   44968: {
     name: 'Heavy Knothide Armor Kit',
@@ -438,7 +500,9 @@ const LEG_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    quality: "Common",
+    icon: 'inv_misc_armorkit_25',
+    desc: '+10 Stam'
   },
   15402: {
     name: 'Lesser Arcanum of Voracity',
@@ -447,7 +511,9 @@ const LEG_ENCHANTS = {
       Agi: 8
     },
     Phase: 1,
-    icon: 'inv_misc_gem_03'
+    quality: "Uncommon",
+    icon: 'inv_misc_gem_03',
+    desc: '+8 Agi'
   },
   35495: {
     name: 'Nethercleft Leg Armor',
@@ -457,7 +523,9 @@ const LEG_ENCHANTS = {
       Stam: 40
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    quality: "Epic",
+    icon: 'inv_misc_armorkit_25',
+    desc: '+12 Agi, +40 Stam'
   },
   35490: {
     name: 'Nethercobra Leg Armor',
@@ -468,7 +536,9 @@ const LEG_ENCHANTS = {
       Crit: 12
     },
     Phase: 1,
+    quality: "Epic",
     icon: 'inv_misc_armorkit_25',
+    desc: '+50 AP, +12 Crit'
   }
 }
 
@@ -480,7 +550,9 @@ const FEET_ENCHANTS = {
       Agi: 5
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+5 Agi'
   },
   34008: {
     name: "Boar's Speed",
@@ -490,7 +562,9 @@ const FEET_ENCHANTS = {
       Stam: 9,
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+9 Stam, +8% Speed'
   },
   34007: {
     name: "Cat's Switfness",
@@ -500,7 +574,9 @@ const FEET_ENCHANTS = {
       Agi: 6,
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+6 Agi, +8% Speed'
   },
   27951: {
     name: 'Dexterity',
@@ -509,7 +585,9 @@ const FEET_ENCHANTS = {
       Agi: 12
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+12 Agi'
   },
   27950: {
     name: 'Fortitude',
@@ -518,7 +596,9 @@ const FEET_ENCHANTS = {
       Stam: 12
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+12 Stam'
   },
   20023: {
     name: 'Greater Agility',
@@ -527,7 +607,9 @@ const FEET_ENCHANTS = {
       Agi: 7
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+7 Agi'
   },
   44968: {
     name: 'Heavy Knothide Armor Kit',
@@ -536,7 +618,9 @@ const FEET_ENCHANTS = {
       Stam: 10
     },
     Phase: 1,
-    icon: 'inv_misc_armorkit_25'
+    quality: "Common",
+    icon: 'inv_misc_armorkit_25',
+    desc: '+10 Stam'
   },
   27954: {
     name: 'Surefooted',
@@ -545,7 +629,9 @@ const FEET_ENCHANTS = {
       Hit: 10
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+10 Hit'
   },
   27948: {
     name: 'Vitality',
@@ -555,7 +641,9 @@ const FEET_ENCHANTS = {
       HP5: 4
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+4 Mp5, 4 Hp5'
   }
 }
 
@@ -571,7 +659,9 @@ const RING_ENCHANTS = {
       Int: 4
     },
     Phase: 3,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+4 All Stats'
   },
   27920: {
     name: 'Striking',
@@ -579,7 +669,9 @@ const RING_ENCHANTS = {
     special: { dmgbonus: 2 },
     stats: {},
     Phase: 1,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+2 Damage'
   }
 }
 
@@ -591,7 +683,9 @@ const MELEE_ENCHANTS = {
       Agi: 15,
     },
     Phase: 1,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+15 Agi'
   },
   27837: {
     name: 'Agility (2H)',
@@ -601,7 +695,9 @@ const MELEE_ENCHANTS = {
       Agi: 25,
     },
     Phase: 1,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+25 Agi (2H)'
   },
   42620: {
     name: 'Greater Agility',
@@ -610,7 +706,8 @@ const MELEE_ENCHANTS = {
       Agi: 20
     },
     Phase: 3,
-    icon: 'inv_misc_note_01'
+    icon: 'inv_misc_note_01',
+    desc: '+20 Agi'
   },
   27977: {
     name: 'Major Agility (2H)',
@@ -620,7 +717,9 @@ const MELEE_ENCHANTS = {
       Agi: 35
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+35 Agi (2H)'
   },
   27968: {
     name: 'Major Intellect',
@@ -629,7 +728,9 @@ const MELEE_ENCHANTS = {
       Int: 30
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+30 Int'
   },
   23804: {
     name: 'Mighty Intellect',
@@ -638,7 +739,9 @@ const MELEE_ENCHANTS = {
       Int: 22
     },
     Phase: 1,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+22 Int'
   },
   27972: {
     name: 'Potency',
@@ -647,7 +750,9 @@ const MELEE_ENCHANTS = {
       Str: 20
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+20 Str'
   },
   27971: {
     name: 'Savagery (2H)',
@@ -658,7 +763,9 @@ const MELEE_ENCHANTS = {
       RAP: 70
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: '+70 AP (2H)'
   },
   23799: {
     name: 'Strength',
@@ -667,7 +774,9 @@ const MELEE_ENCHANTS = {
       Str: 15
     },
     Phase: 1,
-    icon: 'inv_misc_note_01'
+    quality: "Common",
+    icon: 'inv_misc_note_01',
+    desc: '+15 Str'
   },
   27984: {
     name: 'Mongoose',
@@ -682,7 +791,9 @@ const MELEE_ENCHANTS = {
       proc_type: 4
     },
     Phase: 1,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: 'Proc +120 Agi for 15s'
   },
   42974: {
     name: 'Executioner',
@@ -696,7 +807,9 @@ const MELEE_ENCHANTS = {
       proc_type: 4
     },
     Phase: 4,
-    icon: 'spell_holy_greaterheal'
+    quality: "Common",
+    icon: 'spell_holy_greaterheal',
+    desc: 'Proc +840 ArP for 15s'
   }
 }
 
@@ -708,7 +821,9 @@ const RANGE_ENCHANTS = {
       rangedmgbonus: 3
     },
     Phase: 1,
-    icon: 'trade_engineering'
+    quality: "Common",
+    icon: 'trade_engineering',
+    desc: '+3 Ranged Weapon Damage'
   },
   12459: {
     name: 'Deadly Scope',
@@ -717,7 +832,9 @@ const RANGE_ENCHANTS = {
       rangedmgbonus: 5
     },
     Phase: 1,
-    icon: 'trade_engineering'
+    quality: "Common",
+    icon: 'trade_engineering',
+    desc: '+5 Ranged Weapon Damage'
   },
   22779: {
     name: 'Biznicks 247x128 Accurascope',
@@ -726,7 +843,9 @@ const RANGE_ENCHANTS = {
       RangeHit: 30
     },
     Phase: 1,
-    icon: 'trade_engineering'
+    quality: "Rare",
+    icon: 'trade_engineering',
+    desc: '+30 Ranged Hit'
   },
   30252: {
     name: 'Khorium Scope',
@@ -735,7 +854,9 @@ const RANGE_ENCHANTS = {
       rangedmgbonus: 12
     },
     Phase: 1,
-    icon: 'trade_engineering'
+    quality: "Rare",
+    icon: 'trade_engineering',
+    desc: '+12 Ranged Weapon Damage'
   },
   12460: {
     name: 'Sniper Scope',
@@ -744,7 +865,9 @@ const RANGE_ENCHANTS = {
       rangedmgbonus: 7
     },
     Phase: 1,
-    icon: 'trade_engineering'
+    quality: "Common",
+    icon: 'trade_engineering',
+    desc: '+7 Ranged Weapon Damage'
   },
   30260: {
     name: 'Stabilitzed Eternium Scope',
@@ -753,7 +876,9 @@ const RANGE_ENCHANTS = {
       RangeCrit: 28
     },
     Phase: 1,
-    icon: 'trade_engineering'
+    quality: "Rare",
+    icon: 'trade_engineering',
+    desc: '+28 Ranged Crit'
   }
 }
 
@@ -774,6 +899,7 @@ const ATTACHMENTS = {
     },
     type: 'blunt',
     Phase: 1,
+    quality: "Uncommon",
     icon: 'inv_stone_weightstone_07'
   },
   23529: {
@@ -788,6 +914,7 @@ const ATTACHMENTS = {
     },
     type: 'sharp',
     Phase: 1,
+    quality: "Uncommon",
     icon: 'inv_stone_sharpeningstone_07'
   },
   22521: {
@@ -797,12 +924,14 @@ const ATTACHMENTS = {
       MP5: 14
     },
     Phase: 1,
+    quality: "Common",
     icon: 'inv_potion_101'
   },
   34539: {
     name: 'Righteous Weapon Coating',
     effectId: 3266,
     Phase: 1,
+    quality: "Common",
     icon: 'inv_potion_101'
   },
 }

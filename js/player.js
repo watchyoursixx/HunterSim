@@ -561,7 +561,7 @@ function updateAgi() {
       GoAtimer -= 10;
    } 
    if((windfuryenabled && (GoAtimer <= 8.5) || !windfuryenabled) && graceenabled) {
-      bonusagi = (buffslist[4].talented) ? 1.15 : 1;
+      let bonusagi = (buffslist[4].talented) ? 1.15 : 1;
       combatAgi += 77 * bonusagi;
    }
    
@@ -771,7 +771,7 @@ function attackRange() {
    magicproc(attack);
 
    if(combatlogRun) {
-      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player Auto Shot " + RESULTARRAY[result] + " for " + done;
+      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player Auto Shot " + RESULTARRAY[result] + " for " + done + ". RAP => " + combatRAP;
       combatlogindex++;
    }
    autocount++;
@@ -892,7 +892,7 @@ function attackSpell(spell,spellcost) {
    magicproc(attack);
 
    if(combatlogRun) {
-      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player " + SPELL_MAPPER[spell] + " " + RESULTARRAY[result] + " for " + done;
+      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player " + SPELL_MAPPER[spell] + " " + RESULTARRAY[result] + " for " + done + ". RAP => " + combatRAP;
       combatlogindex++;
    }
    return;

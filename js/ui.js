@@ -33,19 +33,20 @@ var dpscompare = document.getElementById("dpscompare");
 
 // show the stats on the HTML
 function displayStats(){
+    let bonusagi = (buffslist[4].talented && (buffslist[4].id > 0)) ? 1.15 * 77 * agimod : 77 * agimod;
     document.getElementById("str").innerHTML = Str;
-    document.getElementById("agi").innerHTML = Agi;
+    document.getElementById("agi").innerHTML = Agi + " (" + (Agi + bonusagi).toFixed(0)+ ")";
     document.getElementById("stam").innerHTML = Stam;
     document.getElementById("int").innerHTML = Int;
     document.getElementById("spi").innerHTML = Spi;
     document.getElementById("rap").innerHTML = Math.floor(BaseRAP);
-    document.getElementById("rangehit").innerHTML = RangeHitChance.toFixed(2) + " %";
-    document.getElementById("rangecrit").innerHTML = RangeCritChance.toFixed(2) + " %";
-    document.getElementById("haste").innerHTML = HasteRating;
+    document.getElementById("rangehit").innerHTML = RangeHitRating + " ("+RangeHitChance.toFixed(2)+"%)";
+    document.getElementById("rangecrit").innerHTML = RangeCritRating + " ("+RangeCritChance.toFixed(2)+"%)";
+    document.getElementById("haste").innerHTML = HasteRating + " (" + (HasteRating / HasteRatingRatio).toFixed(2)+"%)";
     document.getElementById("arp").innerHTML = ArmorPen;
     document.getElementById("map").innerHTML = Math.floor(BaseMAP);
-    document.getElementById("meleehit").innerHTML = MeleeHitChance.toFixed(2) + " %";
-    document.getElementById("meleecrit").innerHTML = MeleeCritChance.toFixed(2) + " %";
+    document.getElementById("meleehit").innerHTML = MeleeHitRating + " ("+MeleeHitChance.toFixed(2)+"%)";
+    document.getElementById("meleecrit").innerHTML = MeleeCritRating + " ("+MeleeCritChance.toFixed(2)+"%)";
     document.getElementById("exp").innerHTML = Expertise;
     document.getElementById("mp5").innerHTML = ManaPer5;
 }
@@ -107,7 +108,13 @@ function initializeModals(){
     settingspan.onclick = function() {
         settingmodal.style.display = "none";
     }
-
+    let gearmodal = document.getElementById("gearmodal");
+    // Get the <span> element that closes the modal
+    let gearspan = document.getElementsByClassName("close")[2];
+    // When the user clicks on <span> (x), close the modal
+    gearspan.onclick = function() {
+        gearmodal.style.display = "none";
+    }
     // Get the modal
     let importmodal = document.getElementById("importmodal");
     // Get the button that opens the modal
@@ -840,7 +847,6 @@ function spellOffsets(){
     let trink1offset = document.getElementById("trink1offset").value;
     let trink2offset = document.getElementById("trink2offset").value;
     let startpotoffset = document.getElementById("startpotoffset").value;
-    let runeoffset = document.getElementById("runeoffset").value;
 
     auras.rapid.offset = parseInt(rapidoffset);
     auras.beastwithin.offset = parseInt(beastoffset);
@@ -851,7 +857,6 @@ function spellOffsets(){
     auras.aptrink1.offset = (auras.aptrink1.enable) ? parseInt(trink1offset): 0;
     auras.aptrink2.offset = (auras.aptrink2.enable) ? parseInt(trink2offset): 0;
     auras.potion.offset = parseInt(startpotoffset);
-    auras.rune.offset = parseInt(runeoffset);
     storeData();
 }
 

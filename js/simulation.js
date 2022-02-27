@@ -519,7 +519,7 @@ problematic cases: raptor + arcane, multi + arcane + raptor
 	
 	let t_equi_steady2auto = t_ready_auto + (t_ready_auto + 0.5*h - t_ready_steady) * dps_steady / dps_auto - 1.5*h - latency;
 	steadyuse = steadyuse && (t_ready_steady <= t_equi_steady2auto);
-	
+ 
 	if(steadyuse){
 		if(t_ready_steady + 1.5*h < t_ready_auto - latency){
 			//no clipping of auto via casting steady
