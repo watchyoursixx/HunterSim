@@ -1,5 +1,7 @@
 var activeslot = '';
 var prevslot = '';
+var activetab = '';
+
 var phase = parseInt(document.getElementById('phasecheck').value);
 var raidcheck = document.getElementById("raidcheck").checked;
 var pvpcheck = document.getElementById("pvpcheck").checked;
@@ -9,15 +11,21 @@ var leathercheck = document.getElementById("leathercheck").checked;
 var repcheck = document.getElementById("repcheck").checked;
 var bosscheck = document.getElementById("bosscheck").checked;
 var craftcheck = document.getElementById("craftcheck").checked;
+var lastoffhand = gear.offhand; // placeholder to prevent an error
+document.getElementById("1hfilter").checked = true; // set true on load
+document.getElementById("2hfilter").checked = true; // set true on load
+var onehandfilter = document.getElementById("1hfilter").checked;
+var twohandfilter = document.getElementById("2hfilter").checked;
 
-preferredGems = {
+// used for Estimating DPS by socket
+var preferredGems = {
     Red: 24028,
     Blue: 24055,
     Yellow: 31868,
     Meta: 32409
 }
-// on click listeners for slots and enchants
 
+// on click listeners for slots and enchants
 document.getElementById("headench").addEventListener("click", function(){gearModalDisplay("head")}, false);
 document.getElementById("shoulderench").addEventListener("click", function(){gearModalDisplay("shoulder")}, false);
 document.getElementById("backench").addEventListener("click", function(){gearModalDisplay("back")}, false);
@@ -53,6 +61,7 @@ document.getElementById("trinket1slot").addEventListener("click", function(){gea
 document.getElementById("trinket2slot").addEventListener("click", function(){gearModalDisplay("trinket2")}, false);
 document.getElementById("ammoslot").addEventListener("click", function(){gearModalDisplay("ammo")}, false);
 
+// select an item based on given itemid input, selected from a clicked row in the gear tbody
 function selectItem(itemid) {
     let ench = (!!gear[activeslot].enchant && gear[activeslot].enchant > 0) ? gear[activeslot].enchant : 0;
     let attach = (!!gear[activeslot].attachment && gear[activeslot].attachment > 0) ? gear[activeslot].attachment : 0;
@@ -84,15 +93,33 @@ function selectItem(itemid) {
         break;
         case 'mainhand':
             console.log("you selected "+ itemid);
+            // check if 2h ench or 20 agi, if so check for 2h, then apply either +35 agi or 20 agi
+            if (ench == 27977 || ench == 42620 || ench == 27971 || ench == 27837) {
+                ench = (MELEE_WEAPONS[itemid].hand == 'Two') ? 27977 : 42620;
+            }
+            // if attach is a stone, check if selected is fist then use weightstone, else use sharp stone
+            if (attach == 28421 || attach == 23529) {
+                attach = ((MELEE_WEAPONS[itemid].type == 'fist') || (MELEE_WEAPONS[itemid].type == 'staff')) ? 28421 : 23529;
+            }
+            
             gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench, attachment: attach };
             checkWeaponType();
             if(offhandDisabled) {
+                lastoffhand = gear.offhand;
                 delete gear.offhand;
+            }
+            else if(!gear.offhand) {
+                gear.offhand = lastoffhand;
             }
         break;
         case 'offhand':
             console.log("you selected "+ itemid);
-            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench };
+
+            // if attach is a stone, check if selected is fist then use weightstone, else use sharp stone
+            if (attach == 28421 || attach == 23529) {
+                attach = ((MELEE_WEAPONS[itemid].type == 'fist')) ? 28421 : 23529;
+            }
+            gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 42620, attachment: attach };
         break;
         case 'range':
             console.log("you selected "+ itemid);
@@ -193,12 +220,19 @@ function filterWeaponLists(array,type){
     Object.filter = (obj, predicate) => Object.fromEntries(Object.entries(obj).filter(predicate));
     let twohandcheck = '';
     let attachcheck = '';
+    if (activeslot == 'mainhand' && type =='item' && !onehandfilter && twohandfilter) {
+        array = Object.filter(MELEE_WEAPONS, ([key, obj]) => obj.hand === 'Two' || key == gear[activeslot].id);
+    } else if (activeslot == 'mainhand' && type == 'item' && !twohandfilter && onehandfilter) {
+        array = Object.filter(MELEE_WEAPONS, ([key, obj]) => obj.hand === 'One' || obj.hand === 'Main' || key == gear[activeslot].id);
+    } else if (activeslot == 'mainhand' && type =='item') {
+        array = MELEE_WEAPONS;
+    }
 
     if (activeslot === 'mainhand' && type === 'item') {
-        array = Object.filter(MELEE_WEAPONS, ([key, obj]) => obj.hand === 'Main' || obj.hand === 'One' || obj.hand === 'Two');
+        array = Object.filter(array, ([key, obj]) => obj.hand === 'Main' || obj.hand === 'One' || obj.hand === 'Two');
     } 
     else if ( activeslot === 'offhand' && type === 'item') {
-        array = Object.filter(MELEE_WEAPONS, ([key, obj]) => obj.hand === 'Off' || obj.hand === 'One');
+        array = Object.filter(array, ([key, obj]) => obj.hand === 'Off' || obj.hand === 'One');
     } 
     else if ( activeslot === 'mainhand' && type === 'enchant') {
         twohandcheck = MELEE_WEAPONS[gear.mainhand.id].hand;
@@ -247,8 +281,7 @@ function filterPhasesOptions(array, type){
             lookup = currgear.attachment;
         }
         filteredarray = Object.filter(array, ([key, obj]) => (obj.Phase <= phase) || (key == lookup));
-        console.log(lookup)
-        console.log(filteredarray);
+
     } else {
         lookup = gear[activeslot].id;
         filteredarray = Object.filter(array, ([key, obj]) => (obj.Phase <= phase) || (key == lookup));
@@ -292,7 +325,6 @@ function generateGearOptionsList(obj,type){
     obj = filterPhasesOptions(obj, type);
     
     obj = estimateDpsForObj(obj, statweights, type);
-    console.log(obj);
     //let list = Object.keys(obj).map(Number);
     generateGearTable(obj, type);
 }
@@ -331,8 +363,6 @@ function gemSelectorDisplay(slotarray){
     let gem1 = 0;
     let gem2 = 0;
     let gem3 = 0;
-    let gemselectOptions = '';
-    let metaselectOptions = '';
     
     Object.filter = (obj, predicate) => Object.fromEntries(Object.entries(obj).filter(predicate));
 
@@ -382,6 +412,9 @@ function updateGearLists(){
     repcheck = document.getElementById("repcheck").checked;
     bosscheck = document.getElementById("bosscheck").checked;
     craftcheck = document.getElementById("craftcheck").checked;
+
+    onehandfilter = document.getElementById("1hfilter").checked;
+    twohandfilter = document.getElementById("2hfilter").checked;
     storeData();
 
     gearModalDisplay(activeslot);
@@ -394,9 +427,13 @@ function gearModalDisplay(slot){
     if (activeslot === 'offhand' && offhandDisabled) {
         return;
     }
-    gearmodal.style.display = "block";
+    document.getElementById("gearmodal").style.display = "block";
+    if (activeslot == 'mainhand') {
+        document.getElementById("filterweps").style.display = "block";
+    } else {
+        document.getElementById("filterweps").style.display = "none";
+    }
 
-    console.log(slot);
     if (slot === 'head') {
         itemSelectorDisplay(HEADS);
         enchSelectorDisplay(HEAD_ENCHANTS);
@@ -521,7 +558,7 @@ function textColorDisplay(slot,array){
 
 function estimateDps(item, weights) {
     let dps = 0;
-    console.log(item)
+
     if (!!item.stats) {
         dps = Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
     } else { return 0 }
@@ -540,7 +577,6 @@ function estimateDps(item, weights) {
 function estimateDpsForObj(obj, weights, type) {
     let currentDps = 0;
     let currgear = gear[activeslot];
-    console.log(type)
 
     switch(type) {
         case 'item':
@@ -582,11 +618,34 @@ function changeGearTab(evt, type) {
 
       gearTab[i].className = gearTab[i].className.replace(" active", "");
     }
-
+    if (type != 'gearitem') { 
+        document.getElementById("remove").style.display = "block";
+    } else {
+        document.getElementById("remove").style.display = "none";
+    }
+    activetab = type;
     document.getElementById(type).style.display = "block";
     evt.currentTarget.className += " active";
 }
+// initialize dft tab on load
 document.getElementById("dftTab").click();
+
+// removes enchants, gems, or attachments upon pressing unequip button
+function unequipItemFromGear(){
+
+    if ((activetab == 'geargem1') && (gear[activeslot].gems[0] > 0)) {
+        gear[activeslot].gems[0] = 0;
+    } else if ((activetab == 'geargem2') && (gear[activeslot].gems[1] > 0)){
+        gear[activeslot].gems[1] = 0;
+    } else if ((activetab == 'geargem3') && (gear[activeslot].gems[2] > 0)){
+        gear[activeslot].gems[2] = 0;
+    } else if ((activetab == 'gearench') && (!!gear[activeslot].enchant)) {
+        delete gear[activeslot].enchant;
+    } else if ((activetab == 'gearattach') && (!!gear[activeslot].attachment)) {
+        delete gear[activeslot].attachment;
+    }
+    gearModalDisplay(activeslot);
+}
 
 function filterField(input , table) {
     var input, filter, table, tr, td, i, txtValue;
@@ -656,7 +715,7 @@ function generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata){
 
 function generateGearTable(array, type) {
 
-    let start = performance.now();
+    // let start = performance.now();
     let arraylength = array.length;
     let currgear = gear[activeslot];
     let i = 0;
@@ -664,7 +723,6 @@ function generateGearTable(array, type) {
     let locdata = [];
     let hrefdata = (type == 'enchant') ? "spell=" : "item=";
 
-    console.log(type);
     if (type == 'item') {
         idname = "itemtbody";
         for (i = 0; i < arraylength; i++) {
@@ -700,9 +758,9 @@ function generateGearTable(array, type) {
 
     generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata);
 
-    let end = performance.now();
-    let execute = (end - start) / 1000; // milliseconds convert to sec
-    console.log("generateGearTable "+execute.toFixed(3));
+    // let end = performance.now();
+    // let execute = (end - start) / 1000; // milliseconds convert to sec
+    // console.log("generateGearTable "+execute.toFixed(3));
 }
 
 function displayCurrentGearTabs(){

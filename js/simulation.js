@@ -548,7 +548,8 @@ problematic cases: raptor + arcane, multi + arcane + raptor
 }
 
 var statweights = { Str: 0, Agi: 0.947, Int: 0, RAP: 0.428, rangehit: 0.91, rangecrit: 0.782, 
-    Haste: 0.779, ArP: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, Expertise: 0, MP5: 0, Hit:0.91, Crit:0.782
+    Haste: 0.779, ArP: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, Expertise: 0, MP5: 0, Hit:0.91, Crit:0.782,
+    relentless:20.35, beasttamer: 41.11, bonusdmg: 0.75
 }
 
 function statWeightLoop(){

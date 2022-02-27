@@ -706,6 +706,7 @@ const MELEE_ENCHANTS = {
       Agi: 20
     },
     Phase: 3,
+    quality: "Common",
     icon: 'inv_misc_note_01',
     desc: '+20 Agi'
   },

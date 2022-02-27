@@ -9,7 +9,7 @@ function sumStats(src, dst, statModifier = st => st) {
   Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + statModifier(amount))
 }
 
-const SPECIAL_ADD = ['incWeapDmg']
+const SPECIAL_ADD = ['incWeapDmg', 'multishot_dmg_inc_ratio']
 /** Auxiliar function to add two special objects. Will overwrite dst values if one prop appears in both objects,
    unless they are in the SPECIAL_ADD list */
 function addSpecial(src, dst) {

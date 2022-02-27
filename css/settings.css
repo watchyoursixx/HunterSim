@@ -319,11 +319,12 @@ ul {
     padding-left: 0;
     padding-right: 4.5%;
     margin-bottom: 0px;
+    margin-left: 15px;
     position: relative;
     top: -5px;
     text-align: right;
     vertical-align: middle;
-    width: 18%;
+    width: 15%;
   }
   /* Hide the browser's default checkbox */
   .container input {
@@ -850,6 +851,34 @@ ul {
   border-bottom: 3px solid #21b641;
 }
 
+.filterchecks-1 {
+  position: relative;
+  top: -10px;
+  color:rgb(255, 255, 255);
+  width: 50px;
+  padding-right: 2%;
+  display:inline-block;
+}
+.filterchecks-2 {
+  position: relative;
+  top: -10px;
+  color:rgb(255, 255, 255);
+  width: 50px;
+  padding-right: 2%;
+  display:inline-block;
+}
+
+.geartab-content {
+  overflow-y: auto;
+  height: 500px;
+}
+
+.geartab-content thead th {
+  position: sticky;
+  top: 0px;
+  background-color: #1e1e22;
+}
+
 .gear-img-selector {
   position: absolute;
   top: 1rem;
@@ -920,4 +949,34 @@ ul {
   border-width: 0.125rem;
   border-style: solid;
   border-color: transparent;
+}
+
+.removebtn {
+  height: 1.5625rem;
+  line-height: 1.5rem;
+  font-size: 0.75rem;
+  padding: 0px 1.25rem;
+  color: rgb(255, 255, 255);
+  background: rgb(49, 49, 54);
+  position: absolute;
+  left: 80%;
+  top: 23%;
+  border-width: 0.0625rem;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 0.3125rem;
+  outline: none;
+}
+.removebtn:hover {
+  border-color: white;
+}
+.removebtn span {
+  line-height: 1.5rem;
+  font-size: 0.75rem;
+  color: rgb(255, 255, 255);
+  text-transform: none;
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+
 }

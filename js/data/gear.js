@@ -7856,7 +7856,7 @@ const MELEE_WEAPONS = {
         mindmg: 380,
         maxdmg: 570,
         hand: "Two",
-        Phase: 2,
+        Phase: 4,
         icon: "inv_sword_108",
         quality: "Epic"
     },
@@ -8555,7 +8555,7 @@ const MELEE_WEAPONS = {
         mindmg: 375,
         maxdmg: 563,
         hand: "Two",
-        Phase: 3,
+        Phase: 5,
         icon: "inv_axe_04",
         quality: "Epic"
     },

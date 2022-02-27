@@ -981,7 +981,13 @@
       <li><button class="item-selector-tab" onclick="changeGearTab(event,'gearattach')" >
         <img class="gear-img-selector" id="selectorattachment" src="" data-image-width="24" data-image-height="24"></button></li>
     </ul>
-    
+    <div id="filterweps">
+      <label class="container container-3 filterchecks-1">2H<input type="checkbox" id="2hfilter" onchange=updateGearLists()><span class="checkmark"></span></label>
+      <label class="container container-3 filterchecks-2">1H<input type="checkbox" id="1hfilter" onchange=updateGearLists()><span class="checkmark"></span></label>
+    </div>
+    <div id="remove">
+      <button class="removebtn" onclick="unequipItemFromGear()"><span>Unequip</span></button>
+    </div>
     <div id="gearitem" class="geartab-content">
       <table class="table-gear">
           <colgroup class="colgroup-results">
