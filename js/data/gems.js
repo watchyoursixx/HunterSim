@@ -1077,8 +1077,8 @@ const GEMS = {
           "red"
       ],
       stats: {
-          MAP: 24,
-          RAP: 24
+          MAP: 32,
+          RAP: 32
       },
       Phase: 1,
       quality: "Epic",
