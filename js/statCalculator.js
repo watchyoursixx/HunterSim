@@ -9,14 +9,17 @@ function sumStats(src, dst, statModifier = st => st) {
   Object.entries(src).forEach(([stat, amount]) => dst[stat] = (dst[stat] || 0) + statModifier(amount))
 }
 
-const SPECIAL_ADD = ['incWeapDmg', 'multishot_dmg_inc_ratio']
-/** Auxiliar function to add two special objects. Will overwrite dst values if one prop appears in both objects,
-   unless they are in the SPECIAL_ADD list */
+/** Auxiliar function to add two special objects.*/
 function addSpecial(src, dst) {
+  console.log(src, dst)
+
   Object.entries(src).forEach(([k,v])=> {
-    if (SPECIAL_ADD.includes(k)) dst[k] = (dst[k] || 0) + v
+    if (k === 'incWeapDmg') dst[k] = (dst[k] || 0) + v
+    else if (k === 'multishot_dmg_inc_ratio') dst[k] = dst[k] > 1 ? (dst[k] || 1) + v - 1 : v
     else dst[k] = v
   })
+
+  console.log(dst)
 }
 
 /** Auxiliar function to add two aura objects. Will throw error if an aura appears in both objects. */
@@ -265,9 +268,10 @@ function getStatsFromGearPieces(gear) {
       else if (gearPiece.type === 'bullet' && gearPiece.range?.type !== 'Gun') throw new Error(`Tried to use bullets on a bow/x-bow`)
     }
 
+
     if (gearPiece.stats) sumStats(gearPiece.stats, acc.stats)
     if (gearPiece.aura) acc.auras[id] = gearPiece.aura
-    if (gearPiece.special) acc.special = addSpecial(gearPiece.special, acc.special)
+    if (gearPiece.special) addSpecial(gearPiece.special, acc.special)
     if (gearPiece.set) {
       if (!SETS[gearPiece.set]) throw Error(`Gear piece "${gearPiece.name}" is linked to set with id ${gearPiece.set}, but no related set could be found.`)
       setPieces[gearPiece.set] = (setPieces[gearPiece.set] || 0) + 1
