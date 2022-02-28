@@ -34344,14 +34344,14 @@ a.u-link.u-text-hover-grey-90:hover {
         .u-table-alt-custom-color-1 tr:nth-child(even)
         {
             color: #ffffff;
-            background-color: #252529;
+            background-color: #18181b;
         }
 
         .u-button-style.u-custom-color-1,
         .u-button-style.u-custom-color-1[class*="u-border-"]
         {
             color: #ffffff !important;
-            background-color: #252529 !important;
+            background-color: #18181b !important;
         }
 
         .u-button-style.u-custom-color-1:hover,
@@ -34782,14 +34782,14 @@ a.u-link.u-text-hover-grey-90:hover {
         .u-border-custom-color-1,
         .u-separator-custom-color-1:after
         {
-            border-color: #252529;
-            stroke: #252529;
+            border-color: #18181b;
+            stroke: #18181b;
         }
 
         .u-button-style.u-border-custom-color-1
         {
-            border-color: #252529 !important;
-            color: #252529 !important;
+            border-color: #18181b !important;
+            color: #18181b !important;
             background-color: transparent !important;
         }
 
@@ -34812,13 +34812,13 @@ a.u-link.u-text-hover-grey-90:hover {
         a.u-button-style.u-button-style.active > .u-border-active-custom-color-1,
         li.active > a.u-button-style.u-button-style.u-border-active-custom-color-1
         {
-            color: #252529 !important;
-            border-color: #252529 !important;
+            color: #18181b !important;
+            border-color: #18181b !important;
         }
 
         .u-link.u-border-custom-color-1[class*="u-border-"]
         {
-            border-color: #252529 !important;
+            border-color: #18181b !important;
         }
 
         .u-link.u-border-custom-color-1[class*="u-border-"]:hover
@@ -35120,7 +35120,7 @@ a.u-link.u-text-hover-grey-90:hover {
         a.u-button-style.u-text-custom-color-1,
         a.u-button-style.u-text-custom-color-1[class*="u-border-"]
         {
-            color: #252529 !important;
+            color: #18181b !important;
         }
 
         a.u-button-style.u-text-custom-color-1:hover,
@@ -35156,7 +35156,7 @@ a.u-link.u-text-hover-grey-90:hover {
         .u-popupmenu-items.u-text-hover-custom-color-1 .u-nav-link:hover,
         .u-popupmenu-items.u-popupmenu-items.u-text-active-custom-color-1 .u-nav-link.active
         {
-            color: #252529 !important;
+            color: #18181b !important;
         }
 
         .u-text-custom-color-1 svg,
@@ -35165,7 +35165,7 @@ a.u-link.u-text-hover-grey-90:hover {
         .u-button-style.u-button-style.active > .u-text-active-custom-color-1 svg,
         .u-text-hover-custom-color-1:focus svg
         {
-            fill: #252529;
+            fill: #18181b;
         }
 
         .u-link.u-text-custom-color-1:hover
@@ -35175,7 +35175,7 @@ a.u-link.u-text-hover-grey-90:hover {
 
         a.u-link.u-text-hover-custom-color-1:hover
         {
-            color: #252529 !important;
+            color: #18181b !important;
         }
         
         

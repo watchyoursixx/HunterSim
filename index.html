@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>TBC Hunter Sim</title>
+    <link rel="icon" href="images/WoW-Classic-Hunter.png">
     <link rel="stylesheet" href="css/nicepage.css" media="screen">
     <link rel="stylesheet" href="css/Main.css" media="screen">
     <link rel="stylesheet" href="css/settings.css">
@@ -30,7 +31,7 @@
     <script class="u-script" type="text/javascript" src="js/expected_dmg.js"></script>
     
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
-    <script>const whTooltips = {colorLinks: true, iconizeLinks: false, renameLinks: true};</script>
+    <script>const whTooltips = {colorLinks: false, iconizeLinks: false, renameLinks: false};</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
     <style> /* width */
 	::-webkit-scrollbar {
@@ -52,15 +53,9 @@
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     
     
-    <script type="application/ld+json">{
-		"@context": "http://schema.org",
-		"@type": "Organization",
-		"name": "HunterSim",
-		"logo": "images/WoW-Classic-Hunter.png"
-}</script>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="TBC Hunter Sim">
-    <meta property="og:description" content="Simulates gear setups and testing ideas">
+    <meta property="og:description" content="Realistic Sim created by Sixx">
     <meta property="og:type" content="website">
   </head>
   <body data-home-page="index.html" data-home-page-title="TBC Hunter Sim" class="u-body"><header class="u-black u-clearfix u-header u-sticky u-sticky-ca90 u-header" id="sec-f767"><div class="u-clearfix u-sheet u-sheet-1">
@@ -103,44 +98,97 @@
             <div class="u-layout-row">
               <div class="u-container-style u-layout-cell u-size-15 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
-                  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-1"></div>
-                  <h6 class="u-align-center u-text u-text-1">Stats<span style="font-weight: 700;"></span>
-                  </h6>
-                  <p class="u-align-right u-text u-text-2">Strength<br>Agility<br>Stamina<br>Intellect<br>Spirit<br>
-                    <br>Ranged AP<br>Ranged Hit Chance<br>Ranged Crit Chance<br>Haste<br>Armor Pen<br>Melee Attack Power<br>Melee Hit Chance<br>Melee Crit Chance<br>Expertise<br>Mp5
-                  </p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-3" id="str">70</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-4" id="agi">650</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-5" id="stam">500</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-6" id="int">251</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-7" id="spi">89</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-8" id="rap">2431</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-9" id="rangehit">9.01%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-10" id="rangecrit">25.42%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-11" id="haste">0</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-12" id="arp">0</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-13" id="map">2530</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-14" id="meleehit">9.01%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-15" id="meleecrit">20.42%</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-16" id="exp">0</p>
-                  <p class="Stats u-align-right u-text u-text-custom-color-4 u-text-17" id="mp5">0</p>
+                  
                   <a href="javascript:;" id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
-                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Sim Soon</a>
-                  <a href="javascript:;" onclick="startSync()" id="simdps" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Sim DPS - Loop<div class="loadbar" id="loadbar"></div></a>
+                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Sim EP</a>
+                  <a href="javascript:;" onclick="startSync()" id="simdps" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Sim DPS<div class="loadbar" id="loadbar"></div></a>
                   <a href="javascript:;" onclick="combatLogDisplay()" onmouseover="combatLogDisplay()" id="logbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-6">Combat Log</a>
-                  <p class="u-align-right u-text u-text-custom-color-7 u-text-18 u-text-1819" id="dpsresult">2000.1</p>
-                  <p class="u-align-left u-text u-text-custom-color-7 u-text-19 u-text-1819" id="dpserr">DPS ​± 0.00</p>
-                  <p class="u-align-center u-text u-text-white u-text-20" id="dpsmin"> min</p>
-                  <p class="u-align-center u-text u-text-white u-text-21" id="dpsmax"> max</p>
+                  <div class="dps-result">
+                    <p class="u-align-right u-text u-text-custom-color-7 u-text-18 u-text-1819" id="dpsresult">2000.1</p>
+                    <p class="u-align-left u-text u-text-custom-color-7 u-text-19 u-text-1819" id="dpserr">DPS ​± 0.00</p>
+                  </div>
+                  <div class="dps-min-max">
+                    <p class="u-align-center u-text u-text-white u-text-20" id="dpsmin"> min</p>
+                    <p class="u-align-center u-text u-text-white u-text-21" id="dpsmax"> max</p>
+                  </div>
                   <p class="u-align-center u-text u-text-white u-text-22" id="executetime">0.000</p>
+                  <p class="u-align-center u-text u-text-19" id="dpscompare"></p>
+                  
+                  <h6 class="u-align-center u-text u-text-1">Stats<span style="font-weight: 700;"></span></h6>
+                  <div class="stat-totals">
+                    <div class="stat-group">
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Strength</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="str">70</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Agility</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="agi">650</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Stamina</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="stam">500</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Intellect</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="int">251</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Spirit</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="spi">89</p>
+                      </div>
+                    </div>
+                    <div class="stat-group">
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Ranged AP</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="rap">2431</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Ranged Hit Chance</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="rangehit">9.01%</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Ranged Crit Chance</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="rangecrit">25.42%</p>
+                      </div>
+                    </div>
+                    <div class="stat-group">
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Melee Attack Power</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="map">2530</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Melee Hit Chance</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="meleehit">9.01%</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Melee Crit Chance</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="meleecrit">20.42%</p>
+                      </div>
+                    </div>
+                    <div class="stat-group">
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Haste</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="haste">0</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Armor Pen</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="arp">0</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Expertise</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="exp">0</p>
+                      </div>
+                      <div class="stat-item-total">
+                        <p class="u-align-right u-text stat-name">Mp5</p>
+                        <p class="Stats u-align-left u-text u-text-custom-color-4 stat-total-name" id="mp5">0</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="u-container-style u-layout-cell u-size-45 u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-2">
-                  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-2"></div>
-                  <div class="u-absolute-hcenter u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-3"></div>
-                  <div class="u-border-3 u-border-grey-dark-1 u-line u-line-vertical u-line-4"></div>
-                  <div class="u-absolute-hcenter-lg u-absolute-hcenter-md u-absolute-hcenter-sm u-absolute-hcenter-xs u-border-3 u-border-grey-dark-1 u-line u-line-horizontal u-line-5"></div>
                   <div class="u-container-style u-grey-75 u-group u-shape-rectangle u-group-1">
                     <div class="u-container-layout u-valign-middle u-container-layout-3">
                       <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23">
@@ -242,7 +290,7 @@
                         <div class="gear-slot-details">
                           <p class="u-text item-name"><a href="#" id="mainhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Main Hand</a></p>
                           <p class="u-text enchant-name"><a id="mainhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                          <p class="u-text attach-name">No Attachment</p>
+                          <p class="u-text attach-name"><a id="mainhandattach" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Attachment</a></p>
                         </div>
                       </div>
                       <div class="gear-slot">
@@ -256,7 +304,7 @@
                         <div class="gear-slot-details">
                           <p class="u-text item-name"><a href="#" id="offhandslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Off Hand</a></p>
                           <p class="u-text enchant-name"><a id="offhandench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
-                          <p class="u-text attach-name">No Attachment</p>
+                          <p class="u-text attach-name"><a id="offhandattach" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Attachment</a></p>
                         </div>
                       </div>
                       <div class="gear-slot">
@@ -441,28 +489,6 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h3 class="header-1">Settings</h3>
-    <div class="settings-gearfilter">
-      <label class="label-filter">Gear List Filters</label>
-      <div class="div-filters">
-        <label class="container container-3">Raid<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">PvP<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">Greens<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">BoEs<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">Leather<input type="checkbox"><span class="checkmark"></span></label>
-      </div>
-      <div class="div-filters">
-        <label class="container container-3">Rep<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">W Boss<input type="checkbox"><span class="checkmark"></span></label>
-        <label class="container container-3">Crafted<input type="checkbox"><span class="checkmark"></span></label>
-      </div>
-      <select onchange="" class="select hover-grey select-filters">
-        <option value="5">Phase 5</option>
-        <option value="4">Phase 4</option>
-        <option selected value="3">Phase 3</option>
-        <option value="2">Phase 2</option>
-        <option value="1">Phase 1</option>
-      </select>
-    </div>
     <div class="settings">
     <label class="settings-header-1">Party Buffs</label>
     <ul>
@@ -881,6 +907,9 @@
       </table>
     </div>
     <div class="chartBox">
+      <canvas id="horizontalbar"></canvas>
+    </div>
+    <div class="chartBox">
       <canvas id="histogram"></canvas>
     </div>
     <hr><!--generated series of <p></p> for displaying combat log data-->
@@ -893,7 +922,29 @@
 <div id="gearmodal" class="modal-gear">
   <div class="modal-gear-content">
     <span class="close">&times;</span>
-    <div>
+    <div class="settings-gearfilter">
+      <label class="label-filter">Gear List Filters</label>
+      <div class="div-filters">
+        <label class="container container-3">Raid<input type="checkbox" id="raidcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">PvP<input type="checkbox" id="pvpcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">Greens<input type="checkbox" id="greencheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">BoEs<input type="checkbox" id="boecheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">Leather<input type="checkbox" id="leathercheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+      </div>
+      <div class="div-filters">
+        <label class="container container-3">Rep<input type="checkbox" id="repcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">W Boss<input type="checkbox" id="bosscheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+        <label class="container container-3">Crafted<input type="checkbox" id="craftcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
+      </div>
+      <select class="select hover-grey select-filters" id="phasecheck" onchange=updateGearLists()>
+        <option value="5">Phase 5</option>
+        <option value="4">Phase 4</option>
+        <option selected value="3">Phase 3</option>
+        <option value="2">Phase 2</option>
+        <option value="1">Phase 1</option>
+      </select>
+    </div>
+    <!--<div>
       <div id="itemseldiv"><label class="label-2">Item:</label>
       <select id="itemselect" onchange="selectItem(this.value)" class="select hover-grey gear-select-input">
       </select></div>
@@ -909,6 +960,147 @@
       <div id="enchseldiv"><label class="label-2">Enchant:</label>
       <select id="enchselect" onchange="selectEnchant(this.value)" class="select hover-grey gear-select-input">
       </select></div>
+      <div id="attachseldiv"><label class="label-2">Attachment:</label>
+        <select id="attachselect" onchange="selectAttachment(this.value)" class="select hover-grey gear-select-input">
+      </select></div>
+    </div><-->
+    <ul class="item-selector">
+      <li><button class="item-selector-tab" onclick="changeGearTab(event,'gearitem')" id="dftTab">
+        <img class="gear-img-selector" id="selectoritem" src="" data-image-width="24" data-image-height="24"></button></li>
+      <li><button class="item-selector-tab" onclick="changeGearTab(event,'geargem1')" >
+        <img class="selector-skt" src="">
+        <img class="gem-selector" id="selectorgem1" src="" data-image-width="24" data-image-height="24"></button></li>
+      <li><button class="item-selector-tab" onclick="changeGearTab(event,'geargem2')" >
+        <img class="selector-skt" src="">
+        <img class="gem-selector" id="selectorgem2" src="" data-image-width="24" data-image-height="24"></button></li>
+      <li><button class="item-selector-tab" onclick="changeGearTab(event,'geargem3')" >
+        <img class="selector-skt" src="">
+        <img class="gem-selector" id="selectorgem3" src="" data-image-width="24" data-image-height="24"></button></li>
+      <li><button class="item-selector-tab" onclick="changeGearTab(event,'gearench')" >
+        <img class="gear-img-selector" id="selectorenchant" src="" data-image-width="24" data-image-height="24"></button></li>
+      <li><button class="item-selector-tab" onclick="changeGearTab(event,'gearattach')" >
+        <img class="gear-img-selector" id="selectorattachment" src="" data-image-width="24" data-image-height="24"></button></li>
+    </ul>
+    <div id="filterweps">
+      <label class="container container-3 filterchecks-1">2H<input type="checkbox" id="2hfilter" onchange=updateGearLists()><span class="checkmark"></span></label>
+      <label class="container container-3 filterchecks-2">1H<input type="checkbox" id="1hfilter" onchange=updateGearLists()><span class="checkmark"></span></label>
+    </div>
+    <div id="remove">
+      <button class="removebtn" onclick="unequipItemFromGear()"><span>Unequip</span></button>
+    </div>
+    <div id="gearitem" class="geartab-content">
+      <table class="table-gear">
+          <colgroup class="colgroup-results">
+          <col style="width: 5%">
+          <col style="width: 45%">
+          <col style="width: 15%">
+          <col style="width: 15%">
+          <col style="width: 20%">
+          </colgroup>
+        <thead>
+          <th>Item</th>
+          <th><input type="text" class="searchfield" id="gearfield" onkeyup="filterField('gearfield','gearitem')" placeholder="Search.."></th>
+          <th>DPS</th>
+          <th>Δ +/-</th>
+          <th>Location</th>
+        </thead>
+        <tbody id="itemtbody">
+        </tbody>
+      </table>
+    </div>
+    <div id="geargem1" class="geartab-content">
+      <table class="table-gear">
+        <colgroup class="colgroup-results">
+          <col style="width: 5%">
+          <col style="width: 55%">
+          <col style="width: 20%">
+          <col style="width: 20%">
+          </colgroup>
+        <thead>
+          <th>Item</th>
+          <th><input type="text" class="searchfield" id="gem1field" onkeyup="filterField('gem1field','geargem1')" placeholder="Search.."></th>
+          <th>DPS</th>
+          <th>Δ +/-</th>
+        </thead>
+        <tbody id="gem1tbody">
+        </tbody>
+      </table>
+    </div>
+
+    <div id="geargem2" class="geartab-content">
+      <table class="table-gear">
+        <colgroup class="colgroup-results">
+          <col style="width: 5%">
+          <col style="width: 55%">
+          <col style="width: 20%">
+          <col style="width: 20%">
+          </colgroup>
+        <thead>
+          <th>Item</th>
+          <th><input type="text" class="searchfield" id="gem2field" onkeyup="filterField('gem2field','geargem2')" placeholder="Search.."></th>
+          <th>DPS</th>
+          <th>Δ +/-</th>
+        </thead>
+        <tbody id="gem2tbody">
+        </tbody>
+      </table>
+    </div>
+
+    <div id="geargem3" class="geartab-content">
+      <table class="table-gear">
+        <colgroup class="colgroup-results">
+          <col style="width: 5%">
+          <col style="width: 55%">
+          <col style="width: 20%">
+          <col style="width: 20%">
+          </colgroup>
+        <thead>
+          <th>Item</th>
+          <th><input type="text" class="searchfield" id="gem3field" onkeyup="filterField('gem3field','geargem3')" placeholder="Search.."></th>
+          <th>DPS</th>
+          <th>Δ +/-</th>
+        </thead>
+        <tbody id="gem3tbody">
+        </tbody>
+      </table>
+    </div>
+
+    <div id="gearench" class="geartab-content">
+      <table class="table-gear">
+        <colgroup class="colgroup-results">
+          <col style="width: 5%">
+          <col style="width: 55%">
+          <col style="width: 20%">
+          <col style="width: 20%">
+          </colgroup>
+        <thead>
+          <th>Item</th>
+          <th></th>
+          <th>DPS</th>
+          <th>Δ +/-</th>
+        </thead>
+        <tbody id="enchtbody">
+        </tbody>
+      </table>
+    </div>
+
+    <div id="gearattach" class="geartab-content">
+      <table class="table-gear">
+        <colgroup class="colgroup-results">
+          <col style="width: 5%">
+          <col style="width: 55%">
+          <col style="width: 20%">
+          <col style="width: 20%">
+          </colgroup>
+        <thead>
+          <th>Item</th>
+          <th></th>
+          <th>DPS</th>
+          <th>Δ +/-</th>
+        </thead>
+        <tbody id="attachtbody">
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

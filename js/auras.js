@@ -141,7 +141,17 @@ function initializeAuras() {
     auras.donsantos.enable = (gear.range.id === 31323) ? true : false;
     auras.eternalchamp.enable = ((gear.ring1.id === 29301) || (gear.ring2.id === 29301)) ? true : false;
     auras.imphawk.enable = (talents.imp_hawk > 1) ? true : false;
-    auras.righteous.enable = temp_oil ? true : false;
+    let mainhandcheck = (gear.mainhand.attachment !== undefined) && (gear.mainhand.attachment > 1);
+    let offhandcheck = (gear.offhand != undefined) && (gear.offhand.attachment != undefined) && (gear.offhand.attachment > 1);
+    if ((gear.offhand === undefined) && (gear.mainhand.attachment > 1)) {
+        auras.righteous.enable = (gear.mainhand.attachment === 34539) ? true : false;
+    } 
+    else if(mainhandcheck && offhandcheck){
+        auras.righteous.enable = ((gear.mainhand.attachment === 34539) || (gear.offhand.attachment === 34539)) ? true : false;
+    } else {
+        auras.righteous.enable = false;
+    }
+
     auras.mongoose.enable = (gear.mainhand.enchant === 27984) ? true : false;
     auras.executioner.enable = (gear.mainhand.enchant === 42974) ? true : false;
 

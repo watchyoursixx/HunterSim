@@ -152,7 +152,7 @@ function steadyShotCalc(range_wep, combatRAP) {
 function multiShotCalc(range_wep, combatRAP) {
 
     let dmg = (useAverages) ? (range_wep.mindmg + range_wep.maxdmg) * 0.5 : rng(range_wep.mindmg,range_wep.maxdmg);
-    let multimod = currentgear.special.multishot_dmg_inc_ratio * talents.barrage;
+    let multimod = (!!currentgear.special.multishot_dmg_inc_ratio) ? currentgear.special.multishot_dmg_inc_ratio * talents.barrage : talents.barrage;
     let shotDmg = (range_wep.ammodps * range_wep.speed + combatRAP * 0.2 + dmg + range_wep.flatdmg + SPELLS.multishot.rankdmg) * range_wep.basedmgmod * multimod * combatdmgmod * physdmgmod;
     return shotDmg;
 }

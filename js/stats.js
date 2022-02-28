@@ -1,4 +1,5 @@
 var spreaddata = {};
+var uptimedata = {};
 var actions = {
   auto: "Auto Shot",
   arcane: "Arcane Shot",
@@ -13,8 +14,8 @@ var actions = {
 
 function buildData(spread){
 
-  data = [];
-  results = {};
+  let data = [];
+  let results = {};
   spreaddata = {
     labels: [],
     datasets: []
@@ -53,7 +54,8 @@ function createHistogram(){
               offset: false
             },
             ticks: {
-              stepSize: 10
+              stepSize: 10,
+              color: 'white'
             },
             title: {
               display:true,
@@ -66,6 +68,9 @@ function createHistogram(){
               display:true,
               text: 'Frequency',
               color: 'rgb(170,	211, 114)'
+            },
+            ticks: {
+              color: 'white'
             }
           //beginAtZero: true
           }
@@ -81,6 +86,48 @@ function createHistogram(){
           }
         }
     }
+  });
+  horizontalbar.destroy();
+  cty = document.getElementById('horizontalbar').getContext('2d');
+  horizontalbar = new Chart(cty, {
+    type: 'bar',
+    data: uptimedata,
+    options: {
+      indexAxis: 'y',
+      // Elements options apply to all of the options unless overridden in a dataset
+      // In this case, we are setting the border of each horizontal bar to be 2px wide
+      elements: {
+        bar: {
+          borderWidth: 2,
+        }
+      },
+      scales: {
+        x: {
+          min: 0,
+          max: 100,
+          ticks: {
+            color: 'white'
+          },
+        },
+        y: {
+          ticks: {
+            color: 'white'
+          }
+        }
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: 'Buff Uptimes',
+          color: 'white'
+        }
+      }
+    },
   });
 }
 
@@ -127,6 +174,58 @@ var histogram = new Chart(ctx, {
       }
   }
 });
+function buildBuffUptimes(){
+
+  let filtereduptimes = Object.entries(buff_uptimes).filter(key => !key.includes('0.00'));
+  let data = [];
+
+  uptimedata = {
+    labels: [],
+    datasets: []
+  };
+
+  for (key in filtereduptimes) {
+    uptimedata.labels.push(filtereduptimes[key][0]);
+    data.push(filtereduptimes[key][1]);
+  }
+
+  uptimedata.datasets.push({
+    data: data,
+    backgroundColor: 'rgba(0, 238, 255,0.6)',
+    borderColor: 'rgb(0, 238, 255)',
+    borderWidth: 1,
+    barPercentage: 0.6,
+    categoryPercentage: 0.8,
+  });
+
+}
+const barconfig = {
+  type: 'bar',
+  data: uptimedata,
+  options: {
+    indexAxis: 'y',
+    // Elements options apply to all of the options unless overridden in a dataset
+    // In this case, we are setting the border of each horizontal bar to be 2px wide
+    elements: {
+      bar: {
+        borderWidth: 2,
+      }
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'right',
+      },
+      title: {
+        display: true,
+        text: 'Buff Uptimes'
+      }
+    }
+  },
+};
+
+var cty = document.getElementById('horizontalbar').getContext('2d');
+var horizontalbar = new Chart(cty, barconfig);
 
 function damageResults(){
   simresults = {
