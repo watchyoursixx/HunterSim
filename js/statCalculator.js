@@ -11,7 +11,6 @@ function sumStats(src, dst, statModifier = st => st) {
 
 /** Auxiliar function to add two special objects.*/
 function addSpecial(src, dst) {
-  console.log(src, dst)
 
   Object.entries(src).forEach(([k,v])=> {
     if (k === 'incWeapDmg') dst[k] = (dst[k] || 0) + v
@@ -19,7 +18,6 @@ function addSpecial(src, dst) {
     else dst[k] = v
   })
 
-  console.log(dst)
 }
 
 /** Auxiliar function to add two aura objects. Will throw error if an aura appears in both objects. */

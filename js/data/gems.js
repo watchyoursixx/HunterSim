@@ -20,7 +20,7 @@ const GEMS = {
           Agi: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_bloodgem_02"
   },
   23100: {
@@ -34,7 +34,7 @@ const GEMS = {
           Hit: 3
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_flamespessarite_02"
   },
   23104: {
@@ -48,7 +48,7 @@ const GEMS = {
           Crit: 3
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_deepperidot_02"
   },
   23106: {
@@ -62,7 +62,7 @@ const GEMS = {
           MP5: 1
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_deepperidot_02"
   },
   23110: {
@@ -76,7 +76,7 @@ const GEMS = {
           Stam: 4
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_ebondraenite_02"
   },
   23113: {
@@ -88,7 +88,7 @@ const GEMS = {
           Int: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_goldendraenite_02"
   },
   23116: {
@@ -100,7 +100,7 @@ const GEMS = {
           Hit: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_goldendraenite_02"
   },
   23118: {
@@ -112,7 +112,7 @@ const GEMS = {
           Stam: 9
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_azuredraenite_02"
   },
   23121: {
@@ -124,7 +124,7 @@ const GEMS = {
           MP5: 2
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_azuredraenite_02"
   },
   24028: {
@@ -379,7 +379,7 @@ const GEMS = {
           Crit: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_goldendraenite_02"
   },
   28361: {
@@ -395,91 +395,6 @@ const GEMS = {
       quality: "Rare",
       unique: true,
       icon: "inv_misc_gem_bloodstone_02"
-  },
-  28459: {
-      name: "Delicate Tourmaline",
-      colors: [
-          "red"
-      ],
-      stats: {
-          Agi: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_ruby_03"
-  },
-  28462: {
-      name: "Bright Tourmaline",
-      colors: [
-          "red"
-      ],
-      stats: {
-          MAP: 8,
-          RAP: 8
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_ruby_03"
-  },
-  28463: {
-      name: "Solid Zircon",
-      colors: [
-          "blue"
-      ],
-      stats: {
-          Stam: 6
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_crystal_03"
-  },
-  28465: {
-      name: "Lustrous Zircon",
-      colors: [
-          "blue"
-      ],
-      stats: {
-          MP5: 1
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_crystal_03"
-  },
-  28466: {
-      name: "Brilliant Amber",
-      colors: [
-          "yellow"
-      ],
-      stats: {
-          Int: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_topaz_03"
-  },
-  28467: {
-      name: "Smooth Amber",
-      colors: [
-          "yellow"
-      ],
-      stats: {
-          Crit: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_topaz_03"
-  },
-  28468: {
-      name: "Rigid Amber",
-      colors: [
-          "yellow"
-      ],
-      stats: {
-          Hit: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_topaz_03"
   },
   28556: {
       name: "Swift Windfire Diamond",
@@ -508,7 +423,7 @@ const GEMS = {
           RAP: 12
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_bloodgem_02"
   },
   30549: {
@@ -708,7 +623,7 @@ const GEMS = {
           RAP: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_ebondraenite_02"
   },
   31863: {
@@ -738,7 +653,7 @@ const GEMS = {
           MP5: 1
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_ebondraenite_02"
   },
   31865: {
@@ -783,7 +698,7 @@ const GEMS = {
           Crit: 3
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_flamespessarite_02"
   },
   32194: {
@@ -807,7 +722,7 @@ const GEMS = {
           Stam: 15
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
   32202: {
@@ -819,7 +734,7 @@ const GEMS = {
           MP5: 4
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
   32204: {
@@ -881,7 +796,7 @@ const GEMS = {
           Stam: 7
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32213: {
@@ -896,7 +811,7 @@ const GEMS = {
           RAP: 10
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32214: {
@@ -911,7 +826,7 @@ const GEMS = {
           MP5: 2
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32220: {
@@ -925,7 +840,7 @@ const GEMS = {
           Hit: 5
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_pyrestone_02"
   },
   32222: {
@@ -940,7 +855,7 @@ const GEMS = {
           Crit: 5
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_pyrestone_02"
   },
   32225: {
@@ -954,7 +869,7 @@ const GEMS = {
           MP5: 2
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_seasprayemerald_02"
   },
   32226: {
@@ -968,7 +883,7 @@ const GEMS = {
           Crit: 5
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_seasprayemerald_02"
   },
   32409: {

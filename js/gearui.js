@@ -558,7 +558,10 @@ function textColorDisplay(slot,array){
 
 function estimateDps(item, weights) {
     let dps = 0;
-
+    if (item.name == 'Relentless Earthstorm Diamond') {
+        dps += weights.relentless + weights.Agi * 12;
+        return dps;
+    }
     if (!!item.stats) {
         dps = Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
     } else { return 0 }
@@ -568,7 +571,7 @@ function estimateDps(item, weights) {
             dps + estimateDps(GEMS[preferredGems[socket]], weights),
             estimateDps({ stats: item.socketBonus }, weights)
       )
-  
+    
     dps += allRed > matchingSockets ? allRed : matchingSockets
     }
     return dps
