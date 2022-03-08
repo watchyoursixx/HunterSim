@@ -111,7 +111,7 @@ function validateImportedGear(gear) {
       const gem = gems[i]
       if (gem && !GEMS[gem]) {
         errors.push(`Unknown gem #${i + 1} with id ${gem} on ${slot} slot.`)
-        gear[slot][i] = undefined
+        gear[slot].gems[i] = undefined
       }
     }
 
@@ -121,6 +121,5 @@ function validateImportedGear(gear) {
     }
   })
 
-  if (errors.length)
-    throw new Error(`The following errors where found when validating imported gear:\n${errors.join('\n')}`)
+  if (errors.length) gear.errors = errors
 }
