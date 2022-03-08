@@ -23,7 +23,7 @@ const INITIAL_GEAR = { ammo: { id: 33803 }, quiver: { id: 18714 }}
 function findEnchantByEffectId(pieceName, effectId) {
   let enchantId = Object.keys(ENCHANT_MAP[pieceName]).find(id => ENCHANT_MAP[pieceName][id].effectId === effectId)
 
-  if (enchantId <= 0) throw new Error(`Unknown enchant with effect id ${effectId}`)
+  if (!enchantId) throw new Error(`Unknown enchant with effect id ${effectId}`)
   return Number(enchantId)
 }
 
@@ -42,6 +42,7 @@ function importGearFrom70U(items) {
     gear[pieceName] = gearPiece
   })
 
+  validateImportedGear(gear)
   return gear
 }
 
@@ -93,5 +94,33 @@ function importFromWA(data) {
     }
   })
 
+  validateImportedGear(gear)
   return gear
+}
+
+function validateImportedGear(gear) {
+  const errors = []
+
+  Object.entries(gear).forEach(([slot, {id, enchant, gems = []}]) => {
+    if (enchant && !ENCHANT_MAP[slot]?.[enchant]) {
+      errors.push(`Unknown enchant with id ${enchant} on ${slot} slot.`)
+      gear[slot][enchant] = undefined
+    }
+
+    for (let i = 0; i < gems.length; ++i) {
+      const gem = gems[i]
+      if (gem && !GEMS[gem]) {
+        errors.push(`Unknown gem #${i + 1} with id ${gem} on ${slot} slot.`)
+        gear[slot][i] = undefined
+      }
+    }
+
+    if (!GEAR_MAP[slot][id]) {
+      errors.push(`Unknown piece with id ${id} on ${slot} slot.`)
+      gear[slot] = undefined
+    }
+  })
+
+  if (errors.length)
+    throw new Error(`The following errors where found when validating imported gear:\n${errors.join('\n')}`)
 }
