@@ -937,6 +937,13 @@ ul {
   border: 0.125rem solid rgb(30, 255, 0);
 }
 
+.sktrecommend {
+  color: rgb(30, 255, 0);
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
 .searchfield {
   color: rgb(255, 255, 255);
   height: 2.5rem;

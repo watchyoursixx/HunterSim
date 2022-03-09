@@ -100,7 +100,7 @@
                 <div class="u-container-layout u-container-layout-1">
                   
                   <a href="javascript:;" id="settingsbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-1">Settings</a>
-                  <a href="javascript:;" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Sim EP</a>
+                  <a href="javascript:;" onclick="statWeightLoop()"class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-2">Sim EP<div class="weightloadbar" id="weightloadbar"></div></a>
                   <a href="javascript:;" onclick="startSync()" id="simdps" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-3">Sim DPS<div class="loadbar" id="loadbar"></div></a>
                   <a href="javascript:;" onclick="combatLogDisplay()" onmouseover="combatLogDisplay()" id="logbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-6">Combat Log</a>
                   <div class="dps-result">
@@ -219,6 +219,7 @@
                         <div class="gear-slot-details">
                           <p class="u-text item-name"><a href="#" id="headslot" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">Head</a></p>
                           <p class="u-text enchant-name"><a id="headench" class="enchant-text" onmouseover="gearSlotsDisplay()" onclick="this.href='javascript:;';">No Enchant</a></p>
+                          <p class="u-text meta-req-fail" id="metareq">Meta: 2 Red, 2 Blue, 2 Yellow</p>
                         </div>
                       </div>
                       <div class="gear-slot">
@@ -944,26 +945,6 @@
         <option value="1">Phase 1</option>
       </select>
     </div>
-    <!--<div>
-      <div id="itemseldiv"><label class="label-2">Item:</label>
-      <select id="itemselect" onchange="selectItem(this.value)" class="select hover-grey gear-select-input">
-      </select></div>
-      <div id="gem1seldiv"><label id="labelgem1" class="label-2">Gem 1:</label>
-      <select id="gem1select" onchange="selectFirstGem(this.value)" class="select hover-grey gear-select-input">
-      </select></div>
-      <div id="gem2seldiv"><label id="labelgem2" class="label-2">Gem 2:</label>
-      <select id="gem2select" onchange="selectSecondGem(this.value)" class="select hover-grey gear-select-input">
-      </select></div>
-      <div id="gem3seldiv"><label id="labelgem3" class="label-2">Gem 3:</label>
-      <select id="gem3select" onchange="selectThirdGem(this.value)" class="select hover-grey gear-select-input">
-      </select></div>
-      <div id="enchseldiv"><label class="label-2">Enchant:</label>
-      <select id="enchselect" onchange="selectEnchant(this.value)" class="select hover-grey gear-select-input">
-      </select></div>
-      <div id="attachseldiv"><label class="label-2">Attachment:</label>
-        <select id="attachselect" onchange="selectAttachment(this.value)" class="select hover-grey gear-select-input">
-      </select></div>
-    </div><-->
     <ul class="item-selector">
       <li><button class="item-selector-tab" onclick="changeGearTab(event,'gearitem')" id="dftTab">
         <img class="gear-img-selector" id="selectoritem" src="" data-image-width="24" data-image-height="24"></button></li>
@@ -980,6 +961,7 @@
         <img class="gear-img-selector" id="selectorenchant" src="" data-image-width="24" data-image-height="24"></button></li>
       <li><button class="item-selector-tab" onclick="changeGearTab(event,'gearattach')" >
         <img class="gear-img-selector" id="selectorattachment" src="" data-image-width="24" data-image-height="24"></button></li>
+      <li><label class="sktrecommend"></label></li>
     </ul>
     <div id="filterweps">
       <label class="container container-3 filterchecks-1">2H<input type="checkbox" id="2hfilter" onchange=updateGearLists()><span class="checkmark"></span></label>
@@ -1113,7 +1095,9 @@
 
       <textarea id="importdata" name="import" rows="4" cols="50"></textarea>
       <br>
-      <button onclick="submitImportData()">Submit!</button>
+      <button onclick="submitImportData('70U')">Submit 70U!</button>
+      <button onclick="submitImportData('WA')">Submit WA Data!</button>
+      <button onclick="importSavedDataStorage()">Submit Exported Data!</button>
 
       <p id="confirmimport" class="label-2"></p>
     </div>

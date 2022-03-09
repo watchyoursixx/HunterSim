@@ -17,9 +17,17 @@ const GEAR_MAPPER = {
   TRINKET_2: 'trinket2',
   RANGED: 'range'
 }
+const INITIAL_GEAR = { ammo: { id: 33803 }, quiver: { id: 18714 }}
+
+function findEnchantByEffectId(pieceName, effectId) {
+  let enchantId = Object.keys(ENCHANT_MAP[pieceName]).find(id => ENCHANT_MAP[pieceName][id].effectId === effectId)
+
+  if (enchantId <= 0) throw new Error(`Unknown enchant with effect id ${effectId}`)
+  return Number(enchantId)
+}
 
 function importGearFrom70U(items) {
-  const gear = { ammo: { id: 33803 }, quiver: { id: 18714 }}
+  const gear = { ...INITIAL_GEAR }
 
   items.forEach(item => {
     const gearPiece = {}
@@ -28,11 +36,7 @@ function importGearFrom70U(items) {
 
     gearPiece.id = item.id
     if (item.gems) gearPiece.gems = item.gems.map(gem => gem.id)
-    if (item.enchant?.id) {
-      let enchantId = Object.keys(ENCHANT_MAP[pieceName]).find(id => ENCHANT_MAP[pieceName][id].effectId === item.enchant.id)
-      if (enchantId > 0) gearPiece.enchant = Number(enchantId)
-      else throw new Error(`Unknown enchant with effect id ${item.enchant.id}`)
-    }
+    if (item.enchant?.id) gearPiece.enchant = findEnchantByEffectId(pieceName, item.enchant.id)
 
     gear[pieceName] = gearPiece
   })
@@ -58,4 +62,35 @@ function importFrom70U(data) {
     gear: importGearFrom70U(items),
     talents: importTalentsFrom70U(talents)
   }
+}
+
+const GEAR_ORDER = ['ammo', 'head', 'neck', 'shoulder', 'shirt', 'chest', 'waist', 'leg', 'feet', 'wrist', 'hand', 'ring1', 'ring2', 'trinket1', 'trinket2', 'back', 'mainhand', 'offhand', 'range', 'tabard']
+const TO_SKIP = [0, 4, 19]
+
+function importFromWA(data) {
+  const gear = { ...INITIAL_GEAR }
+  if (data[0] !== '{' || data[data.length - 1] !== '}') throw new Error('ImportFromWA received invalid input')
+
+  data.slice(1, -1).split(',').forEach((line, i) => {
+    if (!line) return
+
+    const [idx,,id, enchant, gem1, gem2, gem3] = line.split(':')
+    if (TO_SKIP.includes(Number(idx))) return
+    if (idx !== i.toString()) throw new Error('ImportFromWA received invalid input')
+
+    if (id) {
+      const piece = { id: Number(id) }
+      const pieceName = GEAR_ORDER[idx]
+
+      if (enchant) piece.enchant = findEnchantByEffectId(pieceName, Number(enchant))
+      if (gem1 || gem2 || gem3) piece.gems = []
+      if (gem1) piece.gems[0] = Number(gem1)
+      if (gem2) piece.gems[1] = Number(gem2)
+      if (gem3) piece.gems[2] = Number(gem3)
+
+      gear[pieceName] = piece
+    }
+  })
+
+  return gear
 }

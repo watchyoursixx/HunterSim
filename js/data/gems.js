@@ -295,7 +295,8 @@ const GEMS = {
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "1 Red, 2 Yellow"
   },
   25895: {
       name: "Enigmatic Skyfire Diamond",
@@ -310,7 +311,8 @@ const GEMS = {
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "More Red than Yellow"
   },
   25896: {
       name: "Powerful Earthstorm Diamond",
@@ -325,7 +327,8 @@ const GEMS = {
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_06"
+      icon: "inv_misc_gem_diamond_06",
+      desc: "3 Blue"
   },
   25901: {
       name: "Insightful Earthstorm Diamond",
@@ -340,7 +343,8 @@ const GEMS = {
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_06"
+      icon: "inv_misc_gem_diamond_06",
+      desc: "2 Red, 2 Yellow, 2 Blue"
   },
   27679: {
       name: "Sublime Mystic Dawnstone",
@@ -411,7 +415,8 @@ const GEMS = {
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "2 Yellow, 1 Red"
   },
   28595: {
       name: "Bright Blood Garnet",
@@ -901,7 +906,8 @@ const GEMS = {
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_06"
+      icon: "inv_misc_gem_diamond_06",
+      desc: "2 Red, 2 Yellow, 2 Blue"
   },
   32410: {
       name: "Thundering Skyfire Diamond",
@@ -919,12 +925,12 @@ const GEMS = {
                 duration: 6,
             }
         }
-
         return bonus
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "2 Red, 2 Yellow, 2 Blue"
   },
   32634: {
       name: "Unstable Amethyst",
@@ -984,7 +990,8 @@ const GEMS = {
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "More Blue than Yellow"
   },
   33131: {
       name: "Crimson Sun",

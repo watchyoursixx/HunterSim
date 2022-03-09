@@ -75,19 +75,19 @@ function displayDPSResults(){
 }
 
 function displayStatWeights(){
-    document.getElementsByClassName('weight-name')[0].innerHTML = statweights.Str.toFixed(2);
-    document.getElementsByClassName('weight-name')[1].innerHTML = statweights.Agi.toFixed(2);
-    document.getElementsByClassName('weight-name')[2].innerHTML = statweights.Int.toFixed(2);
-    document.getElementsByClassName('weight-name')[3].innerHTML = statweights.MP5.toFixed(2);
-    document.getElementsByClassName('weight-name')[4].innerHTML = statweights.RAP.toFixed(2);
-    document.getElementsByClassName('weight-name')[5].innerHTML = statweights.rangehit.toFixed(2);
-    document.getElementsByClassName('weight-name')[6].innerHTML = statweights.rangecrit.toFixed(2);
-    document.getElementsByClassName('weight-name')[7].innerHTML = statweights.Haste.toFixed(2);
-    document.getElementsByClassName('weight-name')[8].innerHTML = statweights.ArP.toFixed(2);
-    document.getElementsByClassName('weight-name')[9].innerHTML = statweights.MAP.toFixed(2);
-    document.getElementsByClassName('weight-name')[10].innerHTML = statweights.meleehit.toFixed(2);
-    document.getElementsByClassName('weight-name')[11].innerHTML = statweights.meleecrit.toFixed(2);
-    document.getElementsByClassName('weight-name')[12].innerHTML = statweights.Expertise.toFixed(2);
+    document.getElementsByClassName('weight-name')[0].innerHTML = statweights.Str.toFixed(3);
+    document.getElementsByClassName('weight-name')[1].innerHTML = statweights.Agi.toFixed(3);
+    document.getElementsByClassName('weight-name')[2].innerHTML = statweights.Int.toFixed(3);
+    document.getElementsByClassName('weight-name')[3].innerHTML = statweights.MP5.toFixed(3);
+    document.getElementsByClassName('weight-name')[4].innerHTML = statweights.RAP.toFixed(3);
+    document.getElementsByClassName('weight-name')[5].innerHTML = statweights.RangeHit.toFixed(3);
+    document.getElementsByClassName('weight-name')[6].innerHTML = statweights.RangeCrit.toFixed(3);
+    document.getElementsByClassName('weight-name')[7].innerHTML = statweights.Haste.toFixed(3);
+    document.getElementsByClassName('weight-name')[8].innerHTML = statweights.ArP.toFixed(3);
+    document.getElementsByClassName('weight-name')[9].innerHTML = statweights.MAP.toFixed(3);
+    document.getElementsByClassName('weight-name')[10].innerHTML = statweights.MeleeHit.toFixed(3);
+    document.getElementsByClassName('weight-name')[11].innerHTML = statweights.MeleeCrit.toFixed(3);
+    document.getElementsByClassName('weight-name')[12].innerHTML = statweights.Expertise.toFixed(3);
 }
 // initialize stats display
 displayStats();
@@ -208,17 +208,27 @@ function removeZeros(){
     filteredbuffs = buffslist.filter(filterById);
 }
 
-function submitImportData() {
+function submitImportData(type) {
 
     let importedgear = document.getElementById("importdata").value;
-    
+    let newgear = {};
+
     try {
-        let importdata = JSON.parse(importedgear);
-        let newgear = importFrom70U(importdata);
-        console.log(newgear);
+        if (type == '70U') {
+            newgear = importFrom70U(JSON.parse(importedgear));
+            newgear.gear.ammo.id = gear.ammo.id;
+
+            gear = newgear.gear;
+        } else if (type == 'WA') {
+            newgear = importFromWA(importedgear);
+            newgear.ammo.id = gear.ammo.id;
+
+            gear = newgear;
+        }
+        
+        
         // initialize ammo before re-writing
-        newgear.gear.ammo.id = gear.ammo.id;
-        gear = newgear.gear;
+        
 
         document.getElementById("importdata").value = '';
         document.getElementById("confirmimport").innerHTML = "Successfully Imported!";
@@ -229,6 +239,31 @@ function submitImportData() {
         console.log(err);
     }
     
+}
+
+function exportSavedDataStorage() {
+    JSON.stringify(localStorage)
+}
+
+function importSavedDataStorage() {
+
+    let importeddata = document.getElementById("importdata").value;
+    let newstorage = JSON.parse(importeddata);
+    try {
+        
+        for (let key in newstorage) {
+            localStorage[key] = newstorage[key];
+        }
+
+        document.getElementById("importdata").value = '';
+        document.getElementById("confirmimport").innerHTML = "Successfully Imported!";
+        fetchData();
+        selectedOptionsResults();
+    }
+    catch(err){
+        document.getElementById("confirmimport").innerHTML = "Failed to import.. Check copied data and try again.";
+        console.log(err);
+    }
 }
 
 // called each time buffs change to filter zeros, get, recalc, and display them

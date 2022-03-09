@@ -740,7 +740,7 @@ const BACKS = {
             ArP: 112
         },
         Location: "Badge Reward",
-        Phase: 3,
+        Phase: 4,
         icon: "inv_misc_cape_20",
         quality: "Epic"
     },
@@ -1855,7 +1855,7 @@ const CHESTS = {
             MAP: 8,
             RAP: 8
         },
-        Phase: 1,
+        Phase: 5,
         icon: "inv_chest_chain_17",
         quality: "Epic"
     },
@@ -1877,7 +1877,7 @@ const CHESTS = {
             MAP: 4,
             RAP: 4
         },
-        Phase: 3,
+        Phase: 5,
         icon: "inv_chest_chain_17",
         quality: "Epic"
     },
@@ -1897,7 +1897,7 @@ const CHESTS = {
         socketBonus: {
             Stam: 3
         },
-        Phase: 3,
+        Phase: 5,
         icon: "inv_chest_plate02",
         quality: "Epic"
     },
@@ -2526,7 +2526,7 @@ const FEET = {
         socketBonus: {
             Hit: 3
         },
-        Phase: 3,
+        Phase: 4,
         icon: "inv_boots_07",
         quality: "Epic"
     },
@@ -2792,7 +2792,7 @@ const HANDS = {
             Hit: 17
         },
         Location: "Badge Reward",
-        Phase: 3,
+        Phase: 4,
         icon: "inv_gauntlets_01",
         quality: "Rare"
     },
@@ -3137,7 +3137,7 @@ const HANDS = {
         icon: "inv_gauntlets_03",
         quality: "Uncommon"
     },
-    31796: {
+    34234: {
         name: "Shadowed Gauntlets of Paroxysm",
         stats: {
             Agi: 41,
@@ -3155,8 +3155,8 @@ const HANDS = {
             Agi: 3
         },
         Phase: 5,
-        icon: "inv_gauntlets_14",
-        quality: "Uncommon"
+        icon: "inv_gauntlets_28",
+        quality: "Epic"
     },
     31961: {
         name: "Merciless Gladiator's Chain Gauntlets",
@@ -3274,7 +3274,7 @@ const HANDS = {
             Haste: 25
         },
         Location: "Badge Reward",
-        Phase: 3,
+        Phase: 5,
         icon: "inv_gauntlets_50",
         quality: "Epic"
     },
@@ -3298,7 +3298,7 @@ const HANDS = {
         icon: "inv_gauntlets_59",
         quality: "Epic"
     },
-    34234: {
+    31796: {
         name: "Sha'tari Marksman's Gloves",
         stats: {
             Agi: 20,
@@ -3309,8 +3309,8 @@ const HANDS = {
         },
         Location: "Quest Reward",
         Phase: 1,
-        icon: "inv_gauntlets_28",
-        quality: "Epic"
+        icon: "inv_gauntlets_14",
+        quality: "Uncommon"
     },
     34343: {
         name: "Thalassian Ranger Gauntlets",
@@ -3397,7 +3397,7 @@ const HANDS = {
         socketBonus: {
             Agi: 2
         },
-        Phase: 3,
+        Phase: 5,
         icon: "inv_gauntlets_25",
         quality: "Epic"
     },
@@ -5098,7 +5098,7 @@ const LEGS = {
             ArP: 175
         },
         Location: "Badge Reward",
-        Phase: 3,
+        Phase: 5,
         icon: "inv_pants_leather_23",
         quality: "Epic"
     },
@@ -5222,7 +5222,7 @@ const LEGS = {
         socketBonus: {
             Agi: 3
         },
-        Phase: 3,
+        Phase: 4,
         icon: "inv_pants_mail_05",
         quality: "Epic"
     },
@@ -7814,13 +7814,13 @@ const MELEE_WEAPONS = {
             RAP: 22,
             Hit: 12
         },
-        Location: "Reputation Reward",
+        Location: "Zul'Aman",
         type: "dagger",
         speed: 1.8,
         mindmg: 79,
         maxdmg: 120,
         hand: "One",
-        Phase: 1,
+        Phase: 4,
         icon: "inv_sword_107",
         quality: "Epic"
     },
@@ -8573,7 +8573,7 @@ const MELEE_WEAPONS = {
         mindmg: 180,
         maxdmg: 335,
         hand: "Main",
-        Phase: 4,
+        Phase: 5,
         icon: "inv_weapon_hand_16",
         quality: "Epic"
     },
@@ -8609,7 +8609,7 @@ const MELEE_WEAPONS = {
         mindmg: 108,
         maxdmg: 201,
         hand: "Off",
-        Phase: 3,
+        Phase: 5,
         icon: "inv_weapon_shortblade_78",
         quality: "Epic"
     },
@@ -8663,7 +8663,7 @@ const MELEE_WEAPONS = {
         mindmg: 130,
         maxdmg: 241,
         hand: "Off",
-        Phase: 3,
+        Phase: 5,
         icon: "inv_weapon_shortblade_78",
         quality: "Epic"
     }
@@ -13272,7 +13272,7 @@ const WAISTS = {
             ArP: 70
         },
         Location: "Badge Reward",
-        Phase: 3,
+        Phase: 4,
         icon: "inv_belt_22",
         quality: "Epic"
     },
@@ -13332,7 +13332,7 @@ const WAISTS = {
         socketBonus: {
             Agi: 2
         },
-        Phase: 3,
+        Phase: 5,
         icon: "inv_belt_03",
         quality: "Epic"
     }
@@ -13853,7 +13853,7 @@ const WRISTS = {
             ArP: 105
         },
         Location: "Badge Reward",
-        Phase: 3,
+        Phase: 4,
         icon: "inv_bracer_02",
         quality: "Epic"
     },
@@ -13873,7 +13873,7 @@ const WRISTS = {
         socketBonus: {
             Crit: 2
         },
-        Phase: 3,
+        Phase: 4,
         icon: "inv_bracer_07",
         quality: "Epic"
     },

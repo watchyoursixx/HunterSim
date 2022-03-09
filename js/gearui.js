@@ -415,6 +415,22 @@ function updateGearLists(){
 
     onehandfilter = document.getElementById("1hfilter").checked;
     twohandfilter = document.getElementById("2hfilter").checked;
+    if (phase >= 3) {
+        preferredGems = {
+            Red: 32194,
+            Blue: 32212,
+            Yellow: 32222,
+            Meta: 32409
+        }
+    } else {
+        preferredGems = {
+            Red: 24028,
+            Blue: 24055,
+            Yellow: 31868,
+            Meta: 32409
+        }
+    }
+
     storeData();
 
     gearModalDisplay(activeslot);
@@ -558,21 +574,59 @@ function textColorDisplay(slot,array){
 
 function estimateDps(item, weights) {
     let dps = 0;
+    // check for meta gems
     if (item.name == 'Relentless Earthstorm Diamond') {
         dps += weights.relentless + weights.Agi * 12;
         return dps;
+    } else if (item.name == 'Swift Skyfire Diamond' || item.name == 'Potent Unstable Diamond') {
+        dps += weights.RAP * 24 + weights.MAP * 24;
+        return dps;
+    } else if (item.name == 'Swift Windfire Diamond') {
+        dps += weights.RAP * 20 + weights.MAP * 20;
+        return dps;
+    } else if (item.name == 'Enigmatic Skyfire Diamond') {
+        dps += weights.Crit * 12;
+        return dps;
+    } 
+    // check for special weight
+    else if (item.name == 'Beast-tamer\'s Shoulders') {
+        dps += weights.beasttamer;
     }
+    // check for weightstone/sharp stone for weps
+    if ((activeslot == 'mainhand' || activeslot == 'offhand') && !!item.type) {
+        if (item.type == 'fist' || item.type == 'staff') {
+            dps += weights.rangedmgbonus * 12 + weights.dmgbonus * 12 + weights.RangeCrit * 14 + weights.MeleeCrit * 14;
+        } else {
+            dps += weights.rangedmgbonus * 12 + weights.dmgbonus * 12 + weights.MeleeCrit * 14;
+        }
+        if (item.hand == 'Two') {
+            dps += weights.Agi * 35;
+        } else {
+            dps += weights.Agi * 20;
+        }
+    }
+    // add stats
     if (!!item.stats) {
-        dps = Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
-    } else { return 0 }
+        dps += Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
+    } // if no stats, add specials, else return any previous calc'd value
+    else if (!!item.special) {
+        dps += Object.entries(item.special).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
+    } else { return dps }
+
     if (item.sockets?.length) {
-        const allRed = item.sockets.length * estimateDps(GEMS[preferredGems.Red], weights)
-        const matchingSockets = item.sockets.reduce((dps, socket) =>
+        var allRed = 0;
+        if(activeslot == 'head' && item.sockets.includes('Meta')){
+            allRed = ((item.sockets.length - 1) > 0) ? (item.sockets.length - 1) * estimateDps(GEMS[preferredGems.Red], weights) : 0;
+            allRed += weights.relentless + weights.Agi * 12;
+        } else {
+            allRed = item.sockets.length * estimateDps(GEMS[preferredGems.Red], weights);
+        }
+            
+        var matchingSockets = item.sockets.reduce((dps, socket) =>
             dps + estimateDps(GEMS[preferredGems[socket]], weights),
             estimateDps({ stats: item.socketBonus }, weights)
-      )
-    
-    dps += allRed > matchingSockets ? allRed : matchingSockets
+        )
+        dps += allRed > matchingSockets ? allRed : matchingSockets
     }
     return dps
 }
@@ -718,7 +772,7 @@ function generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata){
 
 function generateGearTable(array, type) {
 
-    // let start = performance.now();
+    let start = performance.now();
     let arraylength = array.length;
     let currgear = gear[activeslot];
     let i = 0;
@@ -761,9 +815,9 @@ function generateGearTable(array, type) {
 
     generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata);
 
-    // let end = performance.now();
-    // let execute = (end - start) / 1000; // milliseconds convert to sec
-    // console.log("generateGearTable "+execute.toFixed(3));
+    let end = performance.now();
+    let execute = (end - start) / 1000; // milliseconds convert to sec
+    console.log("generateGearTable "+execute.toFixed(3));
 }
 
 function displayCurrentGearTabs(){

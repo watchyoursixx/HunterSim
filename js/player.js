@@ -64,6 +64,7 @@ var combatMAP = 0;
 var combatdmgmod = 1;
 var physdmgmod = 1;
 var magdmgmod = 1;
+var magdmgmod = 1;
 var naturedmgmod = 1;
 var haste = 1;
 
@@ -213,7 +214,7 @@ function checkWeaponType(){
    let equippedRangeType = RANGED_WEAPONS[gear.range.id].type; 
    let equippedMHType = MELEE_WEAPONS[gear.mainhand.id].type;
    // check for gun and dwarf, or bow and troll
-   if ((equippedRangeType === 'gun' && selectedRace === 1) || (equippedRangeType === 'bow' && selectedRace === 4)) {
+   if ((equippedRangeType === 'Gun' && selectedRace === 1) || (equippedRangeType === 'Bow' && selectedRace === 4)) {
       races[selectedRace].critchance = 1;
    } else {
       races[selectedRace].critchance = 0;
@@ -539,9 +540,11 @@ function updateAP() {
          HM_map = 110 * 1;
       }
    }
+
+   let unleashMAP = (partybuffs.unleashedrage.timer > 0 && !partybuffs.unleashedrage.inactive) ? 1.1 : 1;
    // totals AP - HM and targetAP do not buff pet
    combatRAP += (bonusAP + targetAP + HM_rap) * rapmod;
-   combatMAP += (bonusAP + targetAP + HM_map) * mapmod;
+   combatMAP += (bonusAP + targetAP + HM_map) * mapmod * unleashMAP;
 
    //console.log("rap: " + combatRAP);
    // returns AP used in the pet function call
@@ -606,14 +609,18 @@ function updateHaste() {
    return;
 }
 // handling for dmg mod changes from auras
-function updateDamageMod() {
+function updateDmgMod() {
    combatdmgmod = 1;
    physdmgmod = 1;
+   magdmgmod = 1;
+
    if(auras.beastwithin.timer > 0) { combatdmgmod *= 1.1;} // beast within
    if(pet.ferocious.timer > 0) { combatdmgmod *= talents.ferocious_insp; } // ferocious insp pet buff
-   if(debuffs.bloodfrenzy.timer > 0 && !debuffs.bloodfrenzy.inactive) { physdmgmod *= 1.04; } // blood frenzy
+   if((partybuffs.ferociousinsp.timer > 0) && !partybuffs.ferociousinsp.inactive) { combatdmgmod *= 1.03 * partybuffs.ferociousinsp.stacks; } // ferocious insp from others
+   if((debuffs.bloodfrenzy.timer > 0) && !debuffs.bloodfrenzy.inactive) { physdmgmod *= 1.04; } // blood frenzy
    // special mods for non-physical dmg
-
+   if((debuffs.curseofele.timer > 0) && !debuffs.curseofele.inactive) { magdmgmod *= 1.1; } // curse of ele
+   if((debuffs.misery.timer > 0) && !debuffs.misery.inactive) { magdmgmod *= 1.05; } // misery
    return;
 }
 
@@ -903,7 +910,7 @@ function cast(spell) {
    let spellcost = 0;
    updateAgi();
    updateAP();
-   updateDamageMod();
+   updateDmgMod();
 
    if(spell === 'autoshot'){
       attackRange();

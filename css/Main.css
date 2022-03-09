@@ -318,7 +318,14 @@ td {
   min-height: 539px;
   margin: -25px auto 0 756px;
 }
-
+.weightloadbar {
+  position:absolute;
+  width: 0%;
+  height: 5px;
+  top:45px;
+  left: 0px;
+  background-color: #ff9900;
+}
 .loadbar {
   position:absolute;
   width: 0%;
@@ -553,7 +560,20 @@ td {
   word-wrap: normal;
   margin: 0px 0px 0px 0px;
 }
-
+.u-section-1 .meta-req-met {
+  font-size: 0.75rem;
+  font-style: italic;
+  word-wrap: normal;
+  margin: 0px 0px 0px 0px;
+  color:#1fed03;
+}
+.u-section-1 .meta-req-fail {
+  font-size: 0.75rem;
+  font-style: italic;
+  word-wrap: normal;
+  margin: 0px 0px 0px 0px;
+  color:darkgrey;
+}
 .u-section-1 .attach-name {
   font-size: 0.75rem;
   font-style: italic;

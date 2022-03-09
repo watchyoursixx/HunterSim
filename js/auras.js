@@ -40,7 +40,13 @@ var auras = {
     shattered: {enable:false, type:'aldor', timer:0, procchance:15, cooldown:0, duration: 10, uptime: 0},
  
  }
- debuffs = {
+
+ var partybuffs = {
+    unleashedrage: {uptime_g:100, timer:0, duration:10, uptime:0},
+    ferociousinsp: {uptime_g:100, timer:0, duration:10, stacks: 1, uptime:0}
+ }
+
+ var debuffs = {
     hm: {uptime_g:100, timer:0, duration:120, improved:true, stacks:0, rap:110, map:0, uptime:0},
     exposeweakness: {uptime_g:0, timer:0, duration:7, agi:0, uptime:0},
     judgewisdom: {uptime_g:90, timer:0, duration:30, uptime:0},
@@ -50,8 +56,8 @@ var auras = {
     impexpose: {uptime_g:90, timer:0, duration:30, arp:3075, uptime:0},
     curseofreck: {uptime_g:95, timer:0, duration:120, arp:800, uptime:0},
     bloodfrenzy: {uptime_g:95, timer:0, duration:12, dmgbonus:1.04, uptime:0},
-    curseofele: {uptime_g:0},
-    misery: {uptime_g:0},
+    curseofele: {uptime_g:100, timer:0, duration:120, dmgbonus:1.1, uptime:0},
+    misery: {uptime_g:100, timer:0, duration:18, dmgbonus:1.05, uptime:0}
  
  }
 
@@ -96,9 +102,16 @@ var debuff_uptimes = {
     impexpose: 0,
     curseofreck: 0,
     bloodfrenzy: 0,
+    curseofele: 0,
+    misery: 0
 }
 
-// setup auras
+var partybuff_uptimes = {
+    unleashedrage: 0,
+    ferociousinsp: 0
+}
+
+/** Initializes auras for procs and actives */
 function initializeAuras() {
     // set up on use AP trinkets diff from the rest of auras
     let aptrink1 = currentgear.auras[gear.trinket1.id] || {};
@@ -161,6 +174,10 @@ function initializeAuras() {
     
     for(let prop in debuffs){
         debuffs[prop].uptime = 0;
+    }
+
+    for(let prop in partybuffs){
+        partybuffs[prop].uptime = 0;
     }
  
     if (selectedRace == 3) { // orc
@@ -248,11 +265,15 @@ function initializeAuras() {
     debuffs.curseofele.timer = 0;
     debuffs.misery.timer = 0;
 
+    partybuffs.unleashedrage.timer = 0;
+    partybuffs.ferociousinsp.timer = 0;
+
     sharedtrinketcd = 0;
 
     return;
  }
 
+/** Sets cooldowns for certain auras based on spell CD behaviour setting from settings. */
 function setSpellCDs(){
     auras.rapid.basecd = (rapidcd === 180) ? three_min_cds : rapidcd;
     auras.swarmguard.basecd = three_min_cds;
@@ -271,62 +292,45 @@ function setSpellCDs(){
     return;
 }
 
-// handling for auras
+/** Executes functions related to stepping time values for auras.
+ * @param steptime Takes the time for the current step to modify auras and cooldowns.
+ */
 function updateAuras(steptime) {
     // set timer of on use AP trinkets
 
-    debuffHandler();
+    IntervalAuraHandler();
     stepauras(steptime);
     uptimecalc();
 
     // proc cooldowns
-    if(auras.tsunami.cooldown > 0)            { auras.tsunami.cooldown = Math.max(auras.tsunami.cooldown - steptime,0); 
-       /*console.log("tsunami cd: " + (Math.round(auras.tsunami.cooldown * 100) / 100));*/ } 
-    if(auras.hourglass.cooldown > 0)          { auras.hourglass.cooldown = Math.max(auras.hourglass.cooldown - steptime,0);
-       /*console.log("hourglass cd: " + (Math.round(auras.hourglass.cooldown * 100) / 100));*/ }
-    if(auras.dragonspine.cooldown > 0)        { auras.dragonspine.cooldown = Math.max(auras.dragonspine.cooldown - steptime,0);
-       /*console.log("dragonspine cd: " + (Math.round(auras.dragonspine.cooldown * 100) / 100));*/ }
-    if(auras.naarusliver.cooldown > 0)        { auras.naarusliver.cooldown = Math.max(auras.naarusliver.cooldown - steptime,0); 
-       /*console.log("naaru sliver cd: " + (Math.round(auras.naarusliver.cooldown * 100) / 100));*/ } 
-    if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0);
-       /*console.log("eternalchamp cd: " + (Math.round(auras.eternalchamp.cooldown * 100) / 100));*/ }
+    if(auras.tsunami.cooldown > 0)            { auras.tsunami.cooldown = Math.max(auras.tsunami.cooldown - steptime,0); } 
+    if(auras.hourglass.cooldown > 0)          { auras.hourglass.cooldown = Math.max(auras.hourglass.cooldown - steptime,0); }
+    if(auras.dragonspine.cooldown > 0)        { auras.dragonspine.cooldown = Math.max(auras.dragonspine.cooldown - steptime,0); }
+    if(auras.naarusliver.cooldown > 0)        { auras.naarusliver.cooldown = Math.max(auras.naarusliver.cooldown - steptime,0); } 
+    if(auras.eternalchamp.cooldown > 0)       { auras.eternalchamp.cooldown = Math.max(auras.eternalchamp.cooldown - steptime,0); }
     // active cooldowns
-    if(auras.drums.cooldown > 0)              { auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0);
-       /*console.log("drums cd: " + (Math.round(auras.drums.cooldown * 100) / 100));*/ }
-    if(auras.lust.cooldown > 0)               { auras.lust.cooldown = Math.max(auras.lust.cooldown - steptime,0);
-       /*console.log("lust cd: " + (Math.round(auras.lust.cooldown * 100) / 100));*/ }
-    if(auras.potion.cooldown > 0)             { auras.potion.cooldown = Math.max(auras.potion.cooldown - steptime,0);
-       /*console.log("potion cd: " + (Math.round(auras.potion.cooldown * 100) / 100));*/ }
-    if(auras.rune.cooldown > 0)             { auras.rune.cooldown = Math.max(auras.rune.cooldown - steptime,0);
-       /*console.log("rune cd: " + (Math.round(auras.rune.cooldown * 100) / 100)); */}
-    if(auras.abacus.cooldown > 0)             { auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0);
-       /*console.log("abacus cd: " + (Math.round(auras.abacus.cooldown * 100) / 100));*/ }
-    if(auras.bloodfury.cooldown > 0)          { auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0);
-       /*console.log("bloodfury cd: " + (Math.round(auras.bloodfury.cooldown * 100) / 100));*/ }
-    if(auras.berserk.cooldown > 0)            { auras.berserk.cooldown = Math.max(auras.berserk.cooldown - steptime,0);
-       /*console.log("berserk cd: " + (Math.round(auras.berserk.cooldown * 100) / 100));*/ }
-    if(auras.rapid.cooldown > 0)              { auras.rapid.cooldown = Math.max(auras.rapid.cooldown - steptime,0);
-       /*console.log("rapid cd: " + (Math.round(auras.rapid.cooldown * 100) / 100));*/ }
-    if(auras.swarmguard.cooldown > 0)         { auras.swarmguard.cooldown = Math.max(auras.swarmguard.cooldown - steptime,0);
-       /*console.log("swarmguard cd: " + (Math.round(auras.swarmguard.cooldown * 100) / 100));*/ }
-    if(auras.unyieldingcourage.cooldown > 0)  { auras.unyieldingcourage.cooldown = Math.max(auras.unyieldingcourage.cooldown - steptime,0);
-       /*console.log("unyielding cd: " + (Math.round(auras.unyieldingcourage.cooldown * 100) / 100));*/ }
-    if(auras.beastwithin.cooldown > 0)  { auras.beastwithin.cooldown = Math.max(auras.beastwithin.cooldown - steptime,0);
-       /*console.log("beastwithin cd: " + (Math.round(auras.beastwithin.cooldown * 100) / 100));*/ }
-    if(auras.aptrink1.enable && (auras.aptrink1.cooldown > 0))  { auras.aptrink1.cooldown = Math.max(auras.aptrink1.cooldown - steptime,0);
-       /*console.log("aptrink1 cd: " + (Math.round(auras.aptrink1.cooldown * 100) / 100));*/ }
-    if(auras.aptrink2.enable && (auras.aptrink2.cooldown > 0))  { auras.aptrink2.cooldown = Math.max(auras.aptrink2.cooldown - steptime,0);
-     /*console.log("aptrink2 cd: " + (Math.round(auras.aptrink2.cooldown * 100) / 100));*/ }
-    if(auras.tenacity.cooldown > 0)  { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0);
-       /*console.log("tenacity cd: " + (Math.round(auras.tenacity.cooldown * 100) / 100));*/ }
-    if(auras.righteous.cooldown > 0)  { auras.righteous.cooldown = Math.max(auras.righteous.cooldown - steptime,0);
-       /*console.log("righteous cd: " + (Math.round(auras.righteous.cooldown * 100) / 100));*/ }
-    if(auras.shattered.cooldown > 0)  { auras.shattered.cooldown = Math.max(auras.shattered.cooldown - steptime,0);
-       console.log("shattered cd: " + (Math.round(auras.shattered.cooldown * 100) / 100)); }
+    if(auras.drums.cooldown > 0)              { auras.drums.cooldown = Math.max(auras.drums.cooldown - steptime,0); }
+    if(auras.lust.cooldown > 0)               { auras.lust.cooldown = Math.max(auras.lust.cooldown - steptime,0); }
+    if(auras.potion.cooldown > 0)             { auras.potion.cooldown = Math.max(auras.potion.cooldown - steptime,0); }
+    if(auras.rune.cooldown > 0)               { auras.rune.cooldown = Math.max(auras.rune.cooldown - steptime,0); }
+    if(auras.abacus.cooldown > 0)             { auras.abacus.cooldown = Math.max(auras.abacus.cooldown - steptime,0); }
+    if(auras.bloodfury.cooldown > 0)          { auras.bloodfury.cooldown = Math.max(auras.bloodfury.cooldown - steptime,0); }
+    if(auras.berserk.cooldown > 0)            { auras.berserk.cooldown = Math.max(auras.berserk.cooldown - steptime,0); }
+    if(auras.rapid.cooldown > 0)              { auras.rapid.cooldown = Math.max(auras.rapid.cooldown - steptime,0); }
+    if(auras.swarmguard.cooldown > 0)         { auras.swarmguard.cooldown = Math.max(auras.swarmguard.cooldown - steptime,0); }
+    if(auras.unyieldingcourage.cooldown > 0)  { auras.unyieldingcourage.cooldown = Math.max(auras.unyieldingcourage.cooldown - steptime,0); }
+    if(auras.beastwithin.cooldown > 0)        { auras.beastwithin.cooldown = Math.max(auras.beastwithin.cooldown - steptime,0); }
+    if(auras.aptrink1.enable && (auras.aptrink1.cooldown > 0))  { auras.aptrink1.cooldown = Math.max(auras.aptrink1.cooldown - steptime,0); }
+    if(auras.aptrink2.enable && (auras.aptrink2.cooldown > 0))  { auras.aptrink2.cooldown = Math.max(auras.aptrink2.cooldown - steptime,0); }
+    if(auras.tenacity.cooldown > 0)           { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0); }
+    if(auras.righteous.cooldown > 0)          { auras.righteous.cooldown = Math.max(auras.righteous.cooldown - steptime,0); }
+    if(auras.shattered.cooldown > 0)          { auras.shattered.cooldown = Math.max(auras.shattered.cooldown - steptime,0); }
     return;   
  }
 
-// related to above - specifically timing of auras
+/** Executes steps each aura timer down by steptime.
+ * @param steptime Takes the time for the current step to modify auras and cooldowns.
+ */
 function stepauras(steptime) {
     // actives
     if(auras.lust.timer > 0)               { auras.lust.timer = Math.max(auras.lust.timer - steptime,0); }
@@ -356,7 +360,7 @@ function stepauras(steptime) {
     if(auras.donsantos.timer > 0)          { auras.donsantos.timer = Math.max(auras.donsantos.timer - steptime,0); }
     if(auras.mastertact.timer > 0)         { auras.mastertact.timer = Math.max(auras.mastertact.timer - steptime,0); }
     if(auras.ashtongue.timer > 0)          { auras.ashtongue.timer = Math.max(auras.ashtongue.timer - steptime,0); }
-    if(auras.righteous.timer > 0)         { auras.righteous.timer = Math.max(auras.righteous.timer - steptime,0); }
+    if(auras.righteous.timer > 0)          { auras.righteous.timer = Math.max(auras.righteous.timer - steptime,0); }
     if(auras.shattered.timer > 0)          { auras.shattered.timer = Math.max(auras.shattered.timer - steptime,0); }
     // if talented, expose treated like a proc
     if(debuffs.exposeweakness.timer > 0 && talents.exp_weakness > 0)   { debuffs.exposeweakness.timer = Math.max(debuffs.exposeweakness.timer - steptime,0); }
@@ -370,6 +374,11 @@ function stepauras(steptime) {
     if(debuffs.faeriefire.timer > 0)       { debuffs.faeriefire.timer = debuffs.faeriefire.timer - steptime; }
     if(debuffs.curseofreck.timer > 0)      { debuffs.curseofreck.timer = debuffs.curseofreck.timer - steptime; }
     if(debuffs.bloodfrenzy.timer > 0)      { debuffs.bloodfrenzy.timer = debuffs.bloodfrenzy.timer - steptime; }
+    if(debuffs.curseofele.timer > 0)      { debuffs.curseofele.timer = debuffs.curseofele.timer - steptime; }
+    if(debuffs.misery.timer > 0)      { debuffs.misery.timer = debuffs.misery.timer - steptime; }
+
+    if(partybuffs.unleashedrage.timer > 0)      { partybuffs.unleashedrage.timer = partybuffs.unleashedrage.timer - steptime; }
+    if(partybuffs.ferociousinsp.timer > 0)      { partybuffs.ferociousinsp.timer = partybuffs.ferociousinsp.timer - steptime; }
     
     // count down the timer on shared CDs for trinkets
     if(sharedtrinketcd > 0) { sharedtrinketcd = Math.max(sharedtrinketcd - steptime,0); }
@@ -428,46 +437,55 @@ function uptimecalc() {
     if(debuffs.judgewisdom.timer > 0 && !debuffs.judgewisdom.inactive) { debuffs.judgewisdom.uptime += steptime; }
     else if(debuffs.judgewisdom.timer < 0) {
        debuffs.judgewisdom.uptime += steptime;
-       
     }
     if(debuffs.judgecrusader.timer > 0 && !debuffs.judgecrusader.inactive) { debuffs.judgecrusader.uptime += steptime; }
     else if(debuffs.judgecrusader.timer < 0) {
        debuffs.judgecrusader.uptime += steptime;
-       
     }
     if(debuffs.sunder.timer > 0 && !debuffs.sunder.inactive) { debuffs.sunder.uptime += steptime; }
     else if(debuffs.sunder.timer < 0) {
        debuffs.sunder.uptime += steptime;
-       
     }
     if(debuffs.impexpose.timer > 0 && !debuffs.impexpose.inactive) { debuffs.impexpose.uptime += steptime; }
     else if(debuffs.impexpose.timer < 0) {
        debuffs.impexpose.uptime += steptime;
-       
     }
     if(debuffs.faeriefire.timer > 0 && !debuffs.faeriefire.inactive) { debuffs.faeriefire.uptime += steptime; }
     else if(debuffs.faeriefire.timer < 0) {
        debuffs.faeriefire.uptime += steptime;
-       
     }
     if(debuffs.curseofreck.timer > 0 && !debuffs.curseofreck.inactive) { debuffs.curseofreck.uptime += steptime; }
     else if(debuffs.curseofreck.timer < 0) {
        debuffs.curseofreck.uptime += steptime;
-       
     }
     if(debuffs.bloodfrenzy.timer > 0 && !debuffs.bloodfrenzy.inactive) { debuffs.bloodfrenzy.uptime += steptime; }
     else if(debuffs.bloodfrenzy.timer < 0) {
        debuffs.bloodfrenzy.uptime += steptime;
-       
+    }
+    if(debuffs.curseofele.timer > 0 && !debuffs.curseofele.inactive) { debuffs.curseofele.uptime += steptime; }
+    else if(debuffs.curseofele.timer < 0) {
+       debuffs.curseofele.uptime += steptime;
+    }
+    if(debuffs.misery.timer > 0 && !debuffs.misery.inactive) { debuffs.misery.uptime += steptime; }
+    else if(debuffs.misery.timer < 0) {
+       debuffs.misery.uptime += steptime;
+    }
+
+    if(partybuffs.unleashedrage.timer > 0 && !partybuffs.unleashedrage.inactive) { partybuffs.unleashedrage.uptime += steptime; }
+    else if(partybuffs.unleashedrage.timer < 0) {
+       partybuffs.unleashedrage.uptime += steptime;
+    }
+    if(partybuffs.ferociousinsp.timer > 0 && !partybuffs.ferociousinsp.inactive) { partybuffs.ferociousinsp.uptime += steptime; }
+    else if(partybuffs.ferociousinsp.timer < 0) {
+       partybuffs.ferociousinsp.uptime += steptime;
     }
     return;
 }
 
-function debuffInitializer(){
+/** Initializes auras that are triggered on a fixed interval. Sets the refresh rate 
+  * and interval for a given fight length. */
+function intervalAuraInitializer(){
 
-    for (prop in debuffs) {
-        debuffs[prop].timer = 0;
-    }
     // hunters mark
     if(debuffs.hm.uptime_g > 0){
         let hm_total_time = (debuffs.hm.uptime_g === 100) ? fightduration : (fightduration * debuffs.hm.uptime_g) / 100;
@@ -575,28 +593,76 @@ function debuffInitializer(){
         debuffs.bloodfrenzy.full_refresh = bloodfrenzy_refresh_int; // # of applications as whole integer
         debuffs.bloodfrenzy.part_refresh_dur = bloodfrenzy_refresh_dec * debuffs.bloodfrenzy.duration; // duration of a partial refresh to end the fight
     }
+    // curse of elements
+    if(debuffs.curseofele.uptime_g > 0){
+        let curseofele_total_time = (debuffs.curseofele.uptime_g === 100) ? fightduration : (fightduration * debuffs.curseofele.uptime_g) / 100;
+        let curseofele_refresh_int = Math.ceil(curseofele_total_time / debuffs.curseofele.duration);
+        let curseofele_refresh_dec = (curseofele_total_time / debuffs.curseofele.duration) - Math.floor(curseofele_total_time / debuffs.curseofele.duration);     
+        debuffs.curseofele.refresh_ct = 0; // incrementing count of refreshes and applications
+        debuffs.curseofele.inactive = false; // flag for debuff being active or not
+        debuffs.curseofele.interval = (fightduration - curseofele_total_time) / (curseofele_refresh_int); // interval of inactive
+        debuffs.curseofele.full_refresh = curseofele_refresh_int; // # of applications as whole integer
+        debuffs.curseofele.part_refresh_dur = curseofele_refresh_dec * debuffs.curseofele.duration; // duration of a partial refresh to end the fight
+    }
+    // misery
+    if(debuffs.misery.uptime_g > 0){
+        let misery_total_time = (debuffs.misery.uptime_g === 100) ? fightduration : (fightduration * debuffs.misery.uptime_g) / 100;
+        let misery_refresh_int = Math.ceil(misery_total_time / debuffs.misery.duration);
+        let misery_refresh_dec = (misery_total_time / debuffs.misery.duration) - Math.floor(misery_total_time / debuffs.misery.duration);
+        debuffs.misery.refresh_ct = 0; // incrementing count of refreshes and applications
+        debuffs.misery.inactive = false; // flag for debuff being active or not
+        debuffs.misery.interval = (fightduration - misery_total_time) / (misery_refresh_int); // interval of inactive
+        debuffs.misery.full_refresh = misery_refresh_int; // # of applications as whole integer
+        debuffs.misery.part_refresh_dur = misery_refresh_dec * debuffs.misery.duration; // duration of a partial refresh to end the fight
+    }
+
+    //***************************************************************/
+    // party auras handled on an interval
+    // unleashed rage
+    if(partybuffs.unleashedrage.uptime_g > 0){
+        let unleashedrage_total_time = (partybuffs.unleashedrage.uptime_g === 100) ? fightduration : (fightduration * partybuffs.unleashedrage.uptime_g) / 100;
+        let unleashedrage_refresh_int = Math.ceil(unleashedrage_total_time / partybuffs.unleashedrage.duration);
+        let unleashedrage_refresh_dec = (unleashedrage_total_time / partybuffs.unleashedrage.duration) - Math.floor(unleashedrage_total_time / partybuffs.unleashedrage.duration);
+        partybuffs.unleashedrage.refresh_ct = 0; // incrementing count of refreshes and applications
+        partybuffs.unleashedrage.inactive = false; // flag for debuff being active or not
+        partybuffs.unleashedrage.interval = (fightduration - unleashedrage_total_time) / (unleashedrage_refresh_int); // interval of inactive
+        partybuffs.unleashedrage.full_refresh = unleashedrage_refresh_int; // # of applications as whole integer
+        partybuffs.unleashedrage.part_refresh_dur = unleashedrage_refresh_dec * partybuffs.unleashedrage.duration; // duration of a partial refresh to end the fight
+    }
+    // unleashed rage
+    if(partybuffs.ferociousinsp.uptime_g > 0){
+        let ferociousinsp_total_time = (partybuffs.ferociousinsp.uptime_g === 100) ? fightduration : (fightduration * partybuffs.ferociousinsp.uptime_g) / 100;
+        let ferociousinsp_refresh_int = Math.ceil(ferociousinsp_total_time / partybuffs.ferociousinsp.duration);
+        let ferociousinsp_refresh_dec = (ferociousinsp_total_time / partybuffs.ferociousinsp.duration) - Math.floor(ferociousinsp_total_time / partybuffs.ferociousinsp.duration);
+        partybuffs.ferociousinsp.refresh_ct = 0; // incrementing count of refreshes and applications
+        partybuffs.ferociousinsp.inactive = false; // flag for debuff being active or not
+        partybuffs.ferociousinsp.interval = (fightduration - ferociousinsp_total_time) / (ferociousinsp_refresh_int); // interval of inactive
+        partybuffs.ferociousinsp.full_refresh = ferociousinsp_refresh_int; // # of applications as whole integer
+        partybuffs.ferociousinsp.part_refresh_dur = ferociousinsp_refresh_dec * partybuffs.ferociousinsp.duration; // duration of a partial refresh to end the fight
+    }
+
 }
 
-/**Handles the debuff timers and stacks. Adds the timer value from debuffSetTime and prev timer to keep any
+/**Handles the debuff timers and stacks. Adds the timer value from IntervalAuraSetTime and prev timer to keep any
  * negative values and carry it over. For example, if a timer ends in 0.2s, but the next step is 0.3,
  * it would start the next timer at "time + (-0.1)" because the debuffs are independent of the player
  * steps and are applied potentially during a step. A timer of 30 would start at 29.9 on the next step.
  */
-function debuffHandler(){
+function IntervalAuraHandler(){
     if(debuffs.hm.timer <= 0 || debuffs.hm.inactive) {debuffs.hm.stacks = 0;} // sets stacks to 0 when inactive
-    if((debuffs.hm.timer <= 0) && (debuffs.hm.uptime_g > 0)) { debuffs.hm.timer += debuffSetTime("hm"); } // sets the timer to inactive or active
+    if((debuffs.hm.timer <= 0) && (debuffs.hm.uptime_g > 0)) { debuffs.hm.timer += IntervalAuraSetTime("hm","debuff"); } // sets the timer to inactive or active
     
     if((debuffs.exposeweakness.timer <= 0) && (talents.exp_weakness === 0 && debuffs.exposeweakness.uptime_g > 0)) { 
-        debuffs.exposeweakness.timer = debuffSetTime("exposeweakness"); } // sets the timer to inactive or active
+        debuffs.exposeweakness.timer = IntervalAuraSetTime("exposeweakness","debuff"); } // sets the timer to inactive or active
 
     if((debuffs.judgewisdom.timer <= 0) && (debuffs.judgewisdom.uptime_g > 0)) { 
-        debuffs.judgewisdom.timer += debuffSetTime("judgewisdom"); } // sets the timer to inactive or active
+        debuffs.judgewisdom.timer += IntervalAuraSetTime("judgewisdom","debuff"); } // sets the timer to inactive or active
 
     if((debuffs.judgecrusader.timer <= 0) && (debuffs.judgecrusader.uptime_g > 0)) { 
-        debuffs.judgecrusader.timer += debuffSetTime("judgecrusader"); } // sets the timer to inactive or active
+        debuffs.judgecrusader.timer += IntervalAuraSetTime("judgecrusader","debuff"); } // sets the timer to inactive or active
     
     if((debuffs.sunder.timer <= 0) && (debuffs.sunder.uptime_g > 0)) { 
-        debuffs.sunder.timer += debuffSetTime("sunder"); } // sets the timer to inactive or active
+        debuffs.sunder.timer += IntervalAuraSetTime("sunder","debuff"); } // sets the timer to inactive or active
     let timeforstack = debuffs.sunder.stacktime / 4;
     if ((debuffs.sunder.timer > 0) && (!debuffs.sunder.inactive) && (debuffs.sunder.stacks < 5)) {
         sunderstart = (sunderstart === 0 || ((sunderstart + 30) < steptimeend)) ? steptimeend : sunderstart;
@@ -606,16 +672,28 @@ function debuffHandler(){
     }
     
     if((debuffs.faeriefire.timer <= 0) && (debuffs.faeriefire.uptime_g > 0)) { 
-        debuffs.faeriefire.timer += debuffSetTime("faeriefire"); } // sets the timer to inactive or active
+        debuffs.faeriefire.timer += IntervalAuraSetTime("faeriefire","debuff"); } // sets the timer to inactive or active
     
     if((debuffs.impexpose.timer <= 0) && (debuffs.impexpose.uptime_g > 0)) { 
-        debuffs.impexpose.timer += debuffSetTime("impexpose"); } // sets the timer to inactive or active
+        debuffs.impexpose.timer += IntervalAuraSetTime("impexpose","debuff"); } // sets the timer to inactive or active
     
     if((debuffs.curseofreck.timer <= 0) && (debuffs.curseofreck.uptime_g > 0)) { 
-        debuffs.curseofreck.timer += debuffSetTime("curseofreck"); } // sets the timer to inactive or active
+        debuffs.curseofreck.timer += IntervalAuraSetTime("curseofreck","debuff"); } // sets the timer to inactive or active
     
     if((debuffs.bloodfrenzy.timer <= 0) && (debuffs.bloodfrenzy.uptime_g > 0)) { 
-        debuffs.bloodfrenzy.timer += debuffSetTime("bloodfrenzy"); } // sets the timer to inactive or active
+        debuffs.bloodfrenzy.timer += IntervalAuraSetTime("bloodfrenzy","debuff"); } // sets the timer to inactive or active
+    
+    if((debuffs.curseofele.timer <= 0) && (debuffs.curseofele.uptime_g > 0)) { 
+        debuffs.curseofele.timer += IntervalAuraSetTime("curseofele","debuff"); } // sets the timer to inactive or active
+    
+    if((debuffs.misery.timer <= 0) && (debuffs.misery.uptime_g > 0)) { 
+        debuffs.misery.timer += IntervalAuraSetTime("misery","debuff"); } // sets the timer to inactive or active
+    // *************** party buffs ******************
+    if((partybuffs.unleashedrage.timer <= 0) && (partybuffs.unleashedrage.uptime_g > 0)) { 
+        partybuffs.unleashedrage.timer += IntervalAuraSetTime("unleashedrage","partybuff"); } // sets the timer to inactive or active
+            
+    if((partybuffs.ferociousinsp.timer <= 0) && (partybuffs.ferociousinsp.uptime_g > 0)) { 
+        partybuffs.ferociousinsp.timer += IntervalAuraSetTime("ferociousinsp","partybuff"); } // sets the timer to inactive or active
 }
 
 /** runs when timer is <= 0 for whichever debuff. Initializes timer as inactive for a set duration
@@ -625,31 +703,58 @@ function debuffHandler(){
  * full active durations have been used. Final duration is based on the % of remaining time for a full duration.
  * @param name debuff name
  */
-function debuffSetTime(name){
-    if(debuffs[name].uptime_g === 100){
-        debuffs[name].inactive = true;
-    }
-    if(debuffs[name].inactive){debuffs[name].refresh_ct++;}
-    if(debuffs[name].refresh_ct === debuffs[name].full_refresh && debuffs[name].inactive){ 
-        debuffs[name].refresh_ct++; 
-    }
-    if ((debuffs[name].refresh_ct <= debuffs[name].full_refresh) && (!debuffs[name].inactive)) {
-        timer = debuffs[name].interval;
-        debuffs[name].inactive = true;
-        if(debuffs[name].refresh_ct === debuffs[name].full_refresh){debuffs[name].refresh_ct++;}
-        //console.log(timer);
-    }
-    else if ((debuffs[name].refresh_ct < debuffs[name].full_refresh) && (debuffs[name].inactive)){
-        timer = debuffs[name].duration;
-        debuffs[name].inactive = false;
-        //console.log(timer);
-    }
-    else if (debuffs[name].refresh_ct > debuffs[name].full_refresh){
-        timer = debuffs[name].part_refresh_dur;
-        debuffs[name].inactive = false;
-        //console.log(timer);
-    }
+function IntervalAuraSetTime(name,type){
 
+    if (type == 'partybuff') {
+        if(partybuffs[name].uptime_g === 100){
+            partybuffs[name].inactive = true;
+        }
+        if(partybuffs[name].inactive){partybuffs[name].refresh_ct++;}
+        if(partybuffs[name].refresh_ct === partybuffs[name].full_refresh && partybuffs[name].inactive){ 
+            partybuffs[name].refresh_ct++; 
+        }
+        if ((partybuffs[name].refresh_ct <= partybuffs[name].full_refresh) && (!partybuffs[name].inactive)) {
+            timer = partybuffs[name].interval;
+            partybuffs[name].inactive = true;
+            if(partybuffs[name].refresh_ct === partybuffs[name].full_refresh){partybuffs[name].refresh_ct++;}
+            //console.log(timer);
+        }
+        else if ((partybuffs[name].refresh_ct < partybuffs[name].full_refresh) && (partybuffs[name].inactive)){
+            timer = partybuffs[name].duration;
+            partybuffs[name].inactive = false;
+            //console.log(timer);
+        }
+        else if (partybuffs[name].refresh_ct > partybuffs[name].full_refresh){
+            timer = partybuffs[name].part_refresh_dur;
+            partybuffs[name].inactive = false;
+            //console.log(timer);
+        }
+    } else {
+        if(debuffs[name].uptime_g === 100){
+            debuffs[name].inactive = true;
+        }
+        if(debuffs[name].inactive){debuffs[name].refresh_ct++;}
+        if(debuffs[name].refresh_ct === debuffs[name].full_refresh && debuffs[name].inactive){ 
+            debuffs[name].refresh_ct++; 
+        }
+        if ((debuffs[name].refresh_ct <= debuffs[name].full_refresh) && (!debuffs[name].inactive)) {
+            timer = debuffs[name].interval;
+            //console.log(name)
+            debuffs[name].inactive = true;
+            if(debuffs[name].refresh_ct === debuffs[name].full_refresh){debuffs[name].refresh_ct++;}
+            //console.log(timer);
+        }
+        else if ((debuffs[name].refresh_ct < debuffs[name].full_refresh) && (debuffs[name].inactive)){
+            timer = debuffs[name].duration;
+            debuffs[name].inactive = false;
+            //console.log(timer);
+        }
+        else if (debuffs[name].refresh_ct > debuffs[name].full_refresh){
+            timer = debuffs[name].part_refresh_dur;
+            debuffs[name].inactive = false;
+            //console.log(timer);
+        }
+    }
     return timer;
 }
 
