@@ -26,6 +26,15 @@ function findEnchantByEffectId(pieceName, effectId) {
   return Number(enchantId)
 }
 
+const INITIAL_GEAR = { ammo: { id: 33803 }, quiver: { id: 18714 }}
+
+function findEnchantByEffectId(pieceName, effectId) {
+  let enchantId = Object.keys(ENCHANT_MAP[pieceName]).find(id => ENCHANT_MAP[pieceName][id].effectId === effectId)
+
+  if (enchantId <= 0) throw new Error(`Unknown enchant with effect id ${effectId}`)
+  return Number(enchantId)
+}
+
 function importGearFrom70U(items) {
   const gear = { ...INITIAL_GEAR }
 
