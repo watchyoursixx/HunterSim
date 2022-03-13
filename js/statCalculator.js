@@ -119,7 +119,7 @@ function getMetagemBonuses(usedMeta, gemsUsed) {
   Object.entries(GEMS).filter(([, gemData]) => gemData.meta === 'Y')
     .forEach(([gemId, gemData]) => {
       const metaBonus = gemData.activation(Number(gemId) === usedMeta ? gemsUsed : noGems)
-      Object.entries(metaBonus).forEach(([bonus, val]) => {
+      Object.entries(metaBonus.bonus).forEach(([bonus, val]) => {
         if (bonus === 'aura') result.auras[gemId] = val
         else if (bonus === 'stats') sumStats(val, result.stats)
         else result.special[bonus] = val
@@ -173,7 +173,7 @@ function getStatsFromGems(gear) {
     if (isBonusFulfilled && gearPiece.socketBonus) sumStats(gearPiece.socketBonus, accStats)
     return accStats
   }, {})
-
+  gemsTotalsEquipped = gemCount
   const result = getMetagemBonuses(usedMeta, gemCount)
   sumStats(stats, result.stats)
 

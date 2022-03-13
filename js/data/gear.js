@@ -8649,6 +8649,51 @@ const MELEE_WEAPONS = {
         icon: "inv_weapon_hand_16",
         quality: "Epic"
     },
+    34247: {
+        name: "Apolyon, the Soul-Render",
+        stats: {
+            Stam: 75,
+            Crit: 42,
+            Haste: 32,
+            MAP: 126,
+            RAP: 126
+        },
+        Location: "Sunwell",
+        sockets: [
+            "Red",
+            "Red",
+            "Red"
+        ],
+        socketBonus: {
+            Stam: 6
+        },
+        type: "sword",
+        speed: 3.4,
+        mindmg: 404,
+        maxdmg: 607,
+        hand: "Two",
+        Phase: 5,
+        icon: "inv_sword_116",
+        quality: "Epic"
+    },
+    34198: {
+        name: "Stanchion of Primal Instinct",
+        stats: {
+            Agi: 75,
+            Str: 47,
+            Stam: 50,
+            ArP: 350
+        },
+        Location: "Sunwell",
+        type: "staff",
+        speed: 3.0,
+        mindmg: 137,
+        maxdmg: 306,
+        hand: "Two",
+        Phase: 5,
+        icon: "inv_staff_12",
+        quality: "Epic"
+    },
     34952: {
         name: "The Mutilator",
         stats: {
@@ -9264,20 +9309,6 @@ const QUIVERS = {
 }
 
 const RANGED_WEAPONS = {
-    12651: {
-        name: "Blackcrow",
-        stats: {
-            Agi: 3,
-            Hit: 10
-        },
-        type: "Xbow",
-        mindmg: 99,
-        maxdmg: 149,
-        speed: 3.2,
-        Phase: 1,
-        icon: "inv_weapon_crossbow_04",
-        quality: "Rare"
-    },
     15808: {
         name: "Fine Light Crossbow",
         type: "Xbow",
@@ -9286,62 +9317,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_crossbow_02",
-        quality: "Common"
-    },
-    17072: {
-        name: "Blastershot Launcher",
-        stats: {
-            Stam: 6,
-            Crit: 14
-        },
-        type: "Gun",
-        mindmg: 89,
-        maxdmg: 167,
-        speed: 2.6,
-        Phase: 1,
-        icon: "inv_weapon_rifle_09",
-        quality: "Epic"
-    },
-    18713: {
-        name: "Rhok'delar, Longbow of the Ancient Keepers",
-        stats: {
-            RAP: 17,
-            Crit: 14
-        },
-        type: "Bow",
-        mindmg: 108,
-        maxdmg: 201,
-        speed: 2.9,
-        Phase: 1,
-        icon: "inv_weapon_bow_01",
-        quality: "Epic"
-    },
-    18729: {
-        name: "Screeching Bow",
-        stats: {
-            Stam: 3
-        },
-        type: "Bow",
-        mindmg: 90,
-        maxdmg: 90,
-        speed: 2.3,
-        Phase: 1,
-        icon: "inv_weapon_bow_12",
-        quality: "Rare"
-    },
-    19350: {
-        name: "Heartstriker",
-        stats: {
-            MAP: 24,
-            RAP: 24
-        },
-        type: "Bow",
-        mindmg: 97,
-        maxdmg: 180,
-        speed: 2.6,
-        Phase: 1,
-        icon: "inv_weapon_bow_09",
-        quality: "Epic"
+        quality: "Common",
+        Location: "Vendor"
     },
     19361: {
         name: "Ashjre'thul, Crossbow of Smiting",
@@ -9355,81 +9332,8 @@ const RANGED_WEAPONS = {
         speed: 3.4,
         Phase: 1,
         icon: "inv_weapon_crossbow_09",
-        quality: "Epic"
-    },
-    20437: {
-        name: "Outrider's Bow",
-        stats: {
-            Agi: 4,
-            Stam: 10
-        },
-        type: "Bow",
-        mindmg: 68,
-        maxdmg: 128,
-        speed: 2.4,
-        Phase: 1,
-        icon: "inv_weapon_bow_06",
-        quality: "Rare"
-    },
-    20599: {
-        name: "Polished Ironwood Crossbow",
-        stats: {
-            Stam: 5,
-            MAP: 24,
-            RAP: 24
-        },
-        type: "Xbow",
-        mindmg: 124,
-        maxdmg: 186,
-        speed: 3.1,
-        Phase: 1,
-        icon: "inv_weapon_crossbow_11",
-        quality: "Epic"
-    },
-    21272: {
-        name: "Blessed Qiraji Musket",
-        stats: {
-            Stam: 10,
-            RAP: 31
-        },
-        type: "Gun",
-        mindmg: 103,
-        maxdmg: 192,
-        speed: 2.6,
-        Phase: 1,
-        icon: "inv_weapon_rifle_11",
-        quality: "Epic"
-    },
-    21459: {
-        name: "Crossbow of Imminent Doom",
-        stats: {
-            Str: 5,
-            Agi: 7,
-            Stam: 5,
-            Hit: 10
-        },
-        type: "Xbow",
-        mindmg: 126,
-        maxdmg: 189,
-        speed: 3.1,
-        Phase: 1,
-        icon: "inv_weapon_crossbow_06",
-        quality: "Epic"
-    },
-    22318: {
-        name: "Malgen's Long Bow",
-        stats: {
-            Stam: 4,
-            MAP: 20,
-            RAP: 20
-        },
-        type: "Bow",
-        mindmg: 80,
-        maxdmg: 150,
-        speed: 2.9,
-        Phase: 1,
-        icon: "inv_weapon_bow_12",
-        quality: "Rare"
+        quality: "Epic",
+        Location: "BWL"
     },
     22812: {
         name: "Nerubian Slavemaker",
@@ -9444,7 +9348,8 @@ const RANGED_WEAPONS = {
         speed: 3.2,
         Phase: 1,
         icon: "inv_weapon_crossbow_12",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Naxx"
     },
     23746: {
         name: "Adamantite Rifle",
@@ -9459,7 +9364,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 1,
         icon: "inv_weapon_rifle_04",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "Crafted"
     },
     23747: {
         name: "Felsteel Boomstick",
@@ -9473,7 +9379,8 @@ const RANGED_WEAPONS = {
         speed: 2.4,
         Phase: 1,
         icon: "inv_weapon_rifle_04",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Crafted"
     },
     23748: {
         name: "Ornate Khorium Rifle",
@@ -9487,7 +9394,8 @@ const RANGED_WEAPONS = {
         speed: 3.1,
         Phase: 1,
         icon: "inv_weapon_rifle_03",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Crafted"
     },
     24381: {
         name: "Coilfang Needler",
@@ -9502,7 +9410,8 @@ const RANGED_WEAPONS = {
         speed: 2.9,
         Phase: 1,
         icon: "inv_weapon_crossbow_11",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     25248: {
         name: "Talbuk Hunting Bow",
@@ -9512,7 +9421,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_bow_16",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "World Drop"
     },
     25249: {
         name: "Ranger's Recurved Bow",
@@ -9522,7 +9432,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_bow_05",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "World Drop"
     },
     25260: {
         name: "Archer's Crossbow",
@@ -9532,7 +9443,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_crossbow_02",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "World Drop"
     },
     25262: {
         name: "Battle Damaged Crossbow",
@@ -9542,7 +9454,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_crossbow_02",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "World Drop"
     },
     25263: {
         name: "Assassins' Silent Crossbow",
@@ -9552,7 +9465,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_crossbow_02",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "World Drop"
     },
     25267: {
         name: "Rampant Crossbow",
@@ -9562,7 +9476,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_crossbow_02",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "World Drop"
     },
     25278: {
         name: "Nessingwary Longrifle",
@@ -9572,7 +9487,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_rifle_03",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "World Drop"
     },
     25639: {
         name: "Hemet's Elekk Gun",
@@ -9587,7 +9503,8 @@ const RANGED_WEAPONS = {
         speed: 2.5,
         Phase: 1,
         icon: "inv_weapon_rifle_05",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Quest Reward"
     },
     25953: {
         name: "Ethereal Warp-Bow",
@@ -9601,7 +9518,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_bow_20",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     27507: {
         name: "Adamantine Repeater",
@@ -9615,7 +9533,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 1,
         icon: "inv_weapon_crossbow_15",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     27526: {
         name: "Skyfire Hawk-Bow",
@@ -9630,7 +9549,8 @@ const RANGED_WEAPONS = {
         speed: 2.4,
         Phase: 1,
         icon: "inv_weapon_bow_17",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     27794: {
         name: "Recoilless Rocket Ripper X-54",
@@ -9644,7 +9564,8 @@ const RANGED_WEAPONS = {
         speed: 2.9,
         Phase: 1,
         icon: "inv_weapon_rifle_19",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     27817: {
         name: "Starbolt Longbow",
@@ -9658,7 +9579,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 1,
         icon: "inv_weapon_bow_06",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     27898: {
         name: "Wrathfire Hand-Cannon",
@@ -9673,7 +9595,8 @@ const RANGED_WEAPONS = {
         speed: 2,
         Phase: 1,
         icon: "inv_weapon_rifle_20",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     27931: {
         name: "Splintermark",
@@ -9689,7 +9612,8 @@ const RANGED_WEAPONS = {
         speed: 2.5,
         Phase: 1,
         icon: "inv_weapon_bow_04",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Vendor"
     },
     27987: {
         name: "Melmorta's Twilight Longbow",
@@ -9704,7 +9628,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 1,
         icon: "inv_weapon_bow_19",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     28286: {
         name: "Telescopic Sharprifle",
@@ -9719,7 +9644,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 1,
         icon: "inv_weapon_rifle_22",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     28294: {
         name: "Gladiator's Heavy Crossbow",
@@ -9735,7 +9661,8 @@ const RANGED_WEAPONS = {
         speed: 3.1,
         Phase: 1,
         icon: "inv_weapon_crossbow_10",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Arena Reward"
     },
     28397: {
         name: "Emberhawk Crossbow",
@@ -9750,7 +9677,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 1,
         icon: "inv_weapon_crossbow_17",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Dungeon"
     },
     28504: {
         name: "Steelhawk Crossbow",
@@ -9765,7 +9693,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 1,
         icon: "inv_weapon_crossbow_18",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Karazhan"
     },
     28581: {
         name: "Wolfslayer Sniper Rifle",
@@ -9780,7 +9709,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_rifle_23",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Karazhan"
     },
     28772: {
         name: "Sunfury Bow of the Phoenix",
@@ -9795,7 +9725,8 @@ const RANGED_WEAPONS = {
         speed: 2.9,
         Phase: 1,
         icon: "inv_weapon_bow_18",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Karazhan"
     },
     29115: {
         name: "Consortium Blaster",
@@ -9811,7 +9742,8 @@ const RANGED_WEAPONS = {
         speed: 2.4,
         Phase: 1,
         icon: "inv_weapon_rifle_07",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Reputation Reward"
     },
     29151: {
         name: "Veteran's Musket",
@@ -9827,7 +9759,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_rifle_02",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Reputation Reward"
     },
     29152: {
         name: "Marksman's Bow",
@@ -9843,7 +9776,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 1,
         icon: "inv_weapon_bow_08",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Reputation Reward"
     },
     29351: {
         name: "Wrathtide Longbow",
@@ -9858,7 +9792,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 1,
         icon: "inv_weapon_crossbow_16",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Dungeon"
     },
     29949: {
         name: "Arcanite Steam-Pistol",
@@ -9872,7 +9807,8 @@ const RANGED_WEAPONS = {
         speed: 2.9,
         Phase: 2,
         icon: "inv_weapon_rifle_18",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Serpentshrine Cavern"
     },
     30105: {
         name: "Serpent Spine Longbow",
@@ -9888,7 +9824,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 2,
         icon: "inv_weapon_bow_08",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Serpentshrine Cavern"
     },
     30226: {
         name: "Alley's Recurve",
@@ -9905,7 +9842,8 @@ const RANGED_WEAPONS = {
         speed: 2.5,
         Phase: 1,
         icon: "inv_weapon_bow_03",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "Quest Reward"
     },
     30279: {
         name: "Mama's Insurance",
@@ -9921,7 +9859,8 @@ const RANGED_WEAPONS = {
         speed: 2.2,
         Phase: 1,
         icon: "inv_weapon_rifle_06",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "Quest Reward"
     },
     30397: {
         name: "Spymaster's Crossbow",
@@ -9937,7 +9876,8 @@ const RANGED_WEAPONS = {
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_crossbow_14",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "Quest Reward"
     },
     30724: {
         name: "Barrel-Blade Longrifle",
@@ -9957,7 +9897,8 @@ const RANGED_WEAPONS = {
         speed: 2.6,
         Phase: 1,
         icon: "inv_weapon_rifle_22",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "World Boss"
     },
     30906: {
         name: "Bristleblitz Striker",
@@ -9971,7 +9912,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 3,
         icon: "inv_weapon_bow_30",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Mount Hyjal"
     },
     31000: {
         name: "Bloodwarder's Rifle",
@@ -9987,7 +9929,8 @@ const RANGED_WEAPONS = {
         speed: 2.6,
         Phase: 1,
         icon: "inv_weapon_rifle_07",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Quest Reward"
     },
     31072: {
         name: "Lohn'goron, Bow of the Torn-heart",
@@ -10002,7 +9945,8 @@ const RANGED_WEAPONS = {
         speed: 2.6,
         Phase: 1,
         icon: "inv_weapon_bow_16",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Quest Reward"
     },
     31204: {
         name: "The Gunblade",
@@ -10016,7 +9960,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 1,
         icon: "inv_weapon_rifle_07",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "World Drop"
     },
     31303: {
         name: "Valanos' Longbow",
@@ -10032,7 +9977,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 1,
         icon: "inv_weapon_bow_04",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "World Drop"
     },
     31323: {
         name: "Don Santos' Famous Hunting Rifle",
@@ -10052,7 +9998,8 @@ const RANGED_WEAPONS = {
         },
         Phase: 1,
         icon: "inv_weapon_rifle_21",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "World Drop"
     },
     31416: {
         name: "Scorch Wood Bow",
@@ -10068,7 +10015,8 @@ const RANGED_WEAPONS = {
         speed: 2.2,
         Phase: 1,
         icon: "inv_weapon_bow_08",
-        quality: "Uncommon"
+        quality: "Uncommon",
+        Location: "Quest Reward"
     },
     31986: {
         name: "Merciless Gladiator's Crossbow of the Phoenix",
@@ -10084,7 +10032,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 2,
         icon: "inv_weapon_crossbow_10",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Arena Reward"
     },
     32253: {
         name: "Legionkiller",
@@ -10098,7 +10047,8 @@ const RANGED_WEAPONS = {
         speed: 2.9,
         Phase: 3,
         icon: "inv_weapon_crossbow_20",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Black Temple"
     },
     32325: {
         name: "Rifle of the Stoic Guardian",
@@ -10111,7 +10061,8 @@ const RANGED_WEAPONS = {
         speed: 1.9,
         Phase: 3,
         icon: "inv_weapon_rifle_21",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Black Temple"
     },
     32336: {
         name: "Black Bow of the Betrayer",
@@ -10125,7 +10076,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 3,
         icon: "inv_weapon_bow_31",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Black Temple"
     },
     32645: {
         name: "Crystalline Crossbow",
@@ -10140,7 +10092,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 3,
         icon: "inv_weapon_crossbow_14",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Reputation Reward"
     },
     32756: {
         name: "Gyro-Balanced Khorium Destroyer",
@@ -10159,7 +10112,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 3,
         icon: "inv_weapon_rifle_13",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Crafted"
     },
     33006: {
         name: "Vengeful Gladiator's Heavy Crossbow",
@@ -10175,7 +10129,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 3,
         icon: "inv_weapon_crossbow_19",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Arena Reward"
     },
     33474: {
         name: "Ancient Amani Longbow",
@@ -10190,7 +10145,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 4,
         icon: "inv_weapon_bow_32",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Zul'Aman"
     },
     33491: {
         name: "Tuskbreaker",
@@ -10205,7 +10161,8 @@ const RANGED_WEAPONS = {
         speed: 2.9,
         Phase: 4,
         icon: "inv_weapon_rifle_24",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Zul'Aman"
     },
     34196: {
         name: "Golden Bow of Quel'Thalas",
@@ -10221,7 +10178,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 5,
         icon: "inv_weapon_bow_38",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Sunwell"
     },
     34334: {
         name: "Thori'dal, the Stars Fury",
@@ -10236,9 +10194,10 @@ const RANGED_WEAPONS = {
         mindmg: 356,
         maxdmg: 524,
         speed: 2.7,
-        Phase: 1,
+        Phase: 5,
         icon: "inv_weapon_bow_39",
-        quality: "Legendary"
+        quality: "Legendary",
+        Location: "Sunwell"
     },
     34529: {
         name: "Vengeful Gladiator's Longbow",
@@ -10254,7 +10213,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 3,
         icon: "inv_weapon_bow_20",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Arena Reward"
     },
     34530: {
         name: "Vengeful Gladiator's Rifle",
@@ -10270,7 +10230,8 @@ const RANGED_WEAPONS = {
         speed: 3,
         Phase: 3,
         icon: "inv_weapon_rifle_15",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Arena Reward"
     },
     34674: {
         name: "Truestrike Crossbow",
@@ -10287,7 +10248,8 @@ const RANGED_WEAPONS = {
         speed: 2.6,
         Phase: 1,
         icon: "inv_weapon_crossbow_14",
-        quality: "Rare"
+        quality: "Rare",
+        Location: "Reputation Reward"
     },
     34892: {
         name: "Crossbow of Relentless Strikes",
@@ -10303,7 +10265,8 @@ const RANGED_WEAPONS = {
         speed: 2.8,
         Phase: 5,
         icon: "inv_weapon_crossbow_26",
-        quality: "Epic"
+        quality: "Epic",
+        Location: "Badge Reward"
     }
 }
 
@@ -12762,7 +12725,7 @@ const WAISTS = {
         icon: "inv_belt_25",
         quality: "Rare"
     },
-    27637: {
+    32265: {
         name: "Shadow-walker's Cord",
         stats: {
             Agi: 27,
@@ -12773,8 +12736,8 @@ const WAISTS = {
         },
         Location: "Black Temple",
         Phase: 3,
-        icon: "inv_belt_15",
-        quality: "Rare"
+        icon: "inv_belt_26",
+        quality: "Epic"
     },
     27646: {
         name: "Marksman's Belt",
@@ -13178,7 +13141,7 @@ const WAISTS = {
         icon: "inv_belt_23",
         quality: "Uncommon"
     },
-    32265: {
+    27637: {
         name: "Shadowstalker's Sash",
         stats: {
             Agi: 17,
@@ -13190,8 +13153,8 @@ const WAISTS = {
         },
         Location: "PvP Reward",
         Phase: 1,
-        icon: "inv_belt_26",
-        quality: "Epic"
+        icon: "inv_belt_15",
+        quality: "Rare"
     },
     32346: {
         name: "Boneweave Girdle",

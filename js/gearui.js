@@ -25,6 +25,7 @@ var preferredGems = {
     Meta: 32409
 }
 
+var gemsTotalsEquipped = {};
 // on click listeners for slots and enchants
 document.getElementById("headench").addEventListener("click", function(){gearModalDisplay("head")}, false);
 document.getElementById("shoulderench").addEventListener("click", function(){gearModalDisplay("shoulder")}, false);
@@ -605,6 +606,13 @@ function estimateDps(item, weights) {
             dps += weights.Agi * 20;
         }
     }
+    if (activeslot == 'mainhand' && !!item.type && SPELLS.raptorstrike.enable) {
+        dps += item.speed * 30 + ((item.mindmg + item.maxdmg) / 2) / item.speed * 0.46;
+    } else if (activeslot == 'range' && !!item.type && item.name == "Thori'dal, the Stars Fury") {
+        dps += item.speed * 50 + ((item.mindmg + item.maxdmg) / 2) / item.speed * 5.8 / 1.25;
+    } else if (activeslot == 'range' && !!item.type) {
+        dps += item.speed * 50 + ((item.mindmg + item.maxdmg) / 2) / item.speed * 5.8;
+    }
     // add stats
     if (!!item.stats) {
         dps += Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
@@ -703,7 +711,7 @@ function unequipItemFromGear(){
     }
     gearModalDisplay(activeslot);
 }
-
+/** takes a given input and filters a given table based on slot, tab selected. */
 function filterField(input , table) {
     var input, filter, table, tr, td, i, txtValue;
     
@@ -727,6 +735,7 @@ function filterField(input , table) {
     }
 }
 
+/** Generates the table bodies for displaying sorted gear/gem/enchants */
 function generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata){
 
     let tbody = document.getElementById(idname);
@@ -770,9 +779,10 @@ function generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata){
         tbody.innerHTML = final;
 }
 
+/** Initial function to generate tables for gear/gems/enchants */
 function generateGearTable(array, type) {
 
-    let start = performance.now();
+    //let start = performance.now();
     let arraylength = array.length;
     let currgear = gear[activeslot];
     let i = 0;
@@ -815,9 +825,9 @@ function generateGearTable(array, type) {
 
     generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata);
 
-    let end = performance.now();
-    let execute = (end - start) / 1000; // milliseconds convert to sec
-    console.log("generateGearTable "+execute.toFixed(3));
+    //let end = performance.now();
+    //let execute = (end - start) / 1000; // milliseconds convert to sec
+    //console.log("generateGearTable "+execute.toFixed(3));
 }
 
 function displayCurrentGearTabs(){
@@ -883,6 +893,23 @@ function displayCurrentGearTabs(){
     prevslot = activeslot;
 }
 
+/** Changes color and description of meta gem for seeing if it's active */
+function setMetaDisplay(metagem) {
+
+    let metadata = GEMS[metagem];
+    document.getElementById("metareq").innerHTML = "Meta: " + metadata.desc;
+
+    let metacheck = metadata.activation(gemsTotalsEquipped);
+    if (metacheck.active) {
+        document.getElementById("metareq").classList.remove("meta-req-fail");
+        document.getElementById("metareq").classList.add("meta-req-met");
+    }
+    else {
+        document.getElementById("metareq").classList.remove("meta-req-met");
+        document.getElementById("metareq").classList.add("meta-req-fail");
+    }
+}
+
 function gearSlotsDisplay(){
     
     let headitem = gear.head.id;
@@ -935,6 +962,9 @@ function gearSlotsDisplay(){
         if(headgem1 === 0){
             document.getElementsByClassName("gemskt")[0].style.visibility = "hidden";
         } else {
+            if (!!GEMS[headgem1].meta) {
+                setMetaDisplay(headgem1);
+            }
             document.getElementsByClassName("gemskt")[0].src = "https://wow.zamimg.com/images/wow/icons/large/"+GEMS[headgem1].icon+".jpg";
             document.getElementsByClassName("gemskt")[0].style.visibility = "visible";
         }
@@ -942,6 +972,9 @@ function gearSlotsDisplay(){
         if(headgem2 === 0){
             document.getElementsByClassName("gemskt")[1].style.visibility = "hidden";
         } else {
+            if (!!GEMS[headgem2].meta) {
+                setMetaDisplay(headgem2);
+            }
             document.getElementsByClassName("gemskt")[1].src = "https://wow.zamimg.com/images/wow/icons/large/"+GEMS[headgem2].icon+".jpg";
             document.getElementsByClassName("gemskt")[1].style.visibility = "visible";
         }
@@ -949,6 +982,9 @@ function gearSlotsDisplay(){
         if(headgem3 === 0){
             document.getElementsByClassName("gemskt")[2].style.visibility = "hidden";
         } else {
+            if (!!GEMS[headgem3].meta) {
+                setMetaDisplay(headgem3);
+            }
             document.getElementsByClassName("gemskt")[2].src = "https://wow.zamimg.com/images/wow/icons/large/"+GEMS[headgem3].icon+".jpg";
             document.getElementsByClassName("gemskt")[2].style.visibility = "visible";
         }

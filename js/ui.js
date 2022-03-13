@@ -347,7 +347,7 @@ function selectGearlist() {
     console.log(gear);
     selectedOptionsResults();
 }
-function debuffSettings(){
+function auraUptimeSettings(){
     let hmuptime = document.getElementById("hmuptime").value;
     let hmbonus = document.getElementById("hmbonus").selected;
     let ewuptime = document.getElementById("ewuptime").value;
@@ -364,6 +364,9 @@ function debuffSettings(){
     let misuptime = document.getElementById("misuptime").value;
     let coeuptime = document.getElementById("coeuptime").value;
     let coebonus = document.getElementById("coebonus").selected;
+    let unluptime = document.getElementById("unlrageuptime").value;
+    let ferocuptime = document.getElementById("ferocuptime").value;
+    let ferocstacks = document.getElementById("ferocstacks").value;
 
     debuffs.hm.uptime_g = parseInt(hmuptime);
     debuffs.hm.improved = hmbonus ? true : false;
@@ -381,6 +384,9 @@ function debuffSettings(){
     debuffs.bloodfrenzy.uptime_g = parseInt(bfuptime);
     debuffs.curseofele.uptime_g = parseInt(coeuptime);
     debuffs.curseofele.improved = coebonus ? true : false;
+    partybuffs.unleashedrage.uptime_g = parseInt(unluptime);
+    partybuffs.ferociousinsp.uptime_g = parseInt(ferocuptime);
+    partybuffs.ferociousinsp.stacks = parseInt(ferocstacks);
     storeData();
 }
 

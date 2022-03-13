@@ -285,13 +285,15 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { swift_metagem_run_speed_increase: 1.00 }
+        var active = false;
 
         if (gemsUsed.yellow >= 2 && gemsUsed.red >= 1) {
             bonus.stats = { MAP: 24, RAP: 24 }
             bonus.swift_metagem_run_speed_increase = 1.08
+            active = true;
         }
 
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
@@ -303,11 +305,12 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
-        if (gemsUsed.red > gemsUsed.yellow)
+        var active = false;
+        if (gemsUsed.red > gemsUsed.yellow) {
             bonus.stats = { Crit: 12 }
-
-        return bonus
+            active = true;
+        }
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
@@ -319,11 +322,12 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
-        if (gemsUsed.blue >= 3)
+        var active = false;
+        if (gemsUsed.blue >= 3) {
             bonus.stats = { Stam: 18 }
-
-        return bonus
+            active = true;
+        }
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
@@ -335,11 +339,12 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
-        if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2)
+        var active = false;
+        if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
             bonus.stats = { Int: 12 }
-
-        return bonus
+            active = true;
+        }
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
@@ -405,13 +410,14 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { swift_metagem_run_speed_increase: 1.00 }
-
+        var active = false;
         if (gemsUsed.yellow >= 2 && gemsUsed.red >= 1) {
             bonus.stats = { MAP: 20, RAP: 20 }
             bonus.swift_metagem_run_speed_increase = 1.08
+            active = true;
         }
 
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
@@ -896,13 +902,14 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { relentless_metagem_crit_dmg_inc: 1.00 }
-
+        var active = false;
         if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
             bonus.stats = { Agi: 12 }
             bonus.relentless_metagem_crit_dmg_inc = 1.03
+            active = true;
         }
 
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
@@ -914,7 +921,7 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
+        var active = false;
         if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
             bonus.aura = {
                 stats: { Haste: 240 },
@@ -924,8 +931,9 @@ const GEMS = {
                 proc_type: 2,
                 duration: 6,
             }
+            active = true;
         }
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
@@ -984,9 +992,14 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-        if (gemsUsed.blue > gemsUsed.yellow) bonus.stats = { MAP: 24, RAP: 24 }
+        var active = false;
+        if (gemsUsed.blue > gemsUsed.yellow) {
 
-        return bonus
+            bonus.stats = { MAP: 24, RAP: 24 }
+            active = true;
+        }
+        
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",

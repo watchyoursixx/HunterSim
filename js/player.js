@@ -616,10 +616,10 @@ function updateDmgMod() {
 
    if(auras.beastwithin.timer > 0) { combatdmgmod *= 1.1;} // beast within
    if(pet.ferocious.timer > 0) { combatdmgmod *= talents.ferocious_insp; } // ferocious insp pet buff
-   if((partybuffs.ferociousinsp.timer > 0) && !partybuffs.ferociousinsp.inactive) { combatdmgmod *= 1.03 * partybuffs.ferociousinsp.stacks; } // ferocious insp from others
+   if((partybuffs.ferociousinsp.timer > 0) && !partybuffs.ferociousinsp.inactive) { combatdmgmod *= Math.pow(1.03, partybuffs.ferociousinsp.stacks); } // ferocious insp from others
    if((debuffs.bloodfrenzy.timer > 0) && !debuffs.bloodfrenzy.inactive) { physdmgmod *= 1.04; } // blood frenzy
    // special mods for non-physical dmg
-   if((debuffs.curseofele.timer > 0) && !debuffs.curseofele.inactive) { magdmgmod *= 1.1; } // curse of ele
+   if((debuffs.curseofele.timer > 0) && !debuffs.curseofele.inactive) { magdmgmod *= (debuffs.curseofele.improved) ? 1.13 : 1.1; } // curse of ele
    if((debuffs.misery.timer > 0) && !debuffs.misery.inactive) { magdmgmod *= 1.05; } // misery
    return;
 }

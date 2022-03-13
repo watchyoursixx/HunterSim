@@ -167,7 +167,7 @@ function loopSimHelper(callback, isStatWeights) {
         }
     }
     else if (currentiteration === iterations){
-        if (weightiteration === maxWeightIteration) {
+        if (weightiteration === maxWeightIteration && isStatWeights) {
             document.getElementById("weightloadbar").style.width =  100 + "%";
         }
         document.getElementById("loadbar").style.width =  100 + "%";
@@ -579,7 +579,7 @@ function statWeightLoop(){
     let olditerations = iterations;
     iterations = 20000;
     weightiteration = 0;
-    maxWeightIteration = iterations * 9;
+    maxWeightIteration = iterations * 13;
 
         
     loopSim().then(() => {
@@ -593,7 +593,6 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.Agi = (avgDPS - basedps)/50;
-        console.log(statweights.Agi);
         custom = {str: 0,agi: -50,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
@@ -601,7 +600,6 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.Agi = (Math.abs((avgDPS - basedps)/50)+statweights.Agi) / 2;
-        console.log(statweights.Agi);
         // ************** RAP *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 100,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
@@ -617,7 +615,6 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.RAP = (Math.abs((avgDPS - basedps)/100)+statweights.RAP) / 2;
-        console.log(statweights.RAP);
         // ************** RANGECRIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 50,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
@@ -633,7 +630,6 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.RangeCrit = (Math.abs((avgDPS - basedps)/50)+statweights.RangeCrit) / 2;
-        console.log(statweights.RangeCrit);
         // ************** RANGEHIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 10,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
@@ -649,7 +645,6 @@ function statWeightLoop(){
     }).then(() => { // save range hit
         // more followup work
         statweights.RangeHit = (Math.abs((avgDPS - basedps)/10)+statweights.RangeHit) / 2;
-        console.log(statweights.RangeHit);
         // ************** HASTE *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 100,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
@@ -665,7 +660,6 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.Haste = (Math.abs((avgDPS - basedps)/100)+statweights.Haste) / 2;
-        console.log(statweights.Haste);
         // ************** ArP *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 100,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
@@ -681,7 +675,6 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.ArP = (Math.abs((avgDPS - basedps)/100)+statweights.ArP) / 2;
-        console.log(statweights.ArP);
         // ************** MAP *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 100,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
@@ -697,7 +690,6 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.MAP = (Math.abs((avgDPS - basedps)/100)+statweights.MAP) / 2;
-        console.log(statweights.MAP);
         // ************** MELEE HIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 10,meleecrit: 0,expertise: 0,mp5: 0};
@@ -705,7 +697,7 @@ function statWeightLoop(){
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.MAP = Math.max((avgDPS - basedps) / 10, 0);
+        statweights.MeleeHit = Math.max((avgDPS - basedps) / 10, 0);
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
@@ -713,6 +705,67 @@ function statWeightLoop(){
     }).then(() => {
         // more followup work
         statweights.MeleeHit = (Math.abs((avgDPS - basedps)/10)+statweights.MeleeHit) / 2;
+        // ************** MELEE CRIT *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 50,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MeleeCrit = Math.max((avgDPS - basedps) / 50, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: -50,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MeleeCrit = (Math.abs((avgDPS - basedps)/50)+statweights.MeleeCrit) / 2;
+        // ************** EXPERTISE *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 20,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Expertise = Math.max((avgDPS - basedps) / 20, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: -20,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Expertise = (Math.abs((avgDPS - basedps)/20)+statweights.Expertise) / 2;
+        // ************** MP5 *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 50};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MP5 = Math.max((avgDPS - basedps) / 50, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: -50};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MP5 = (Math.abs((avgDPS - basedps)/50)+statweights.MP5) / 2;
+        // ************** INTELLECT *******************
+        custom = {str: 0,agi: 0,int: 50,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Int = Math.max((avgDPS - basedps) / 50, 0);
+        custom = {str: 0,agi: 0,int: -50,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Int = (Math.abs((avgDPS - basedps)/50)+statweights.Int) / 2;
+        // ************* RESET AND DISPLAY ****************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         console.log(statweights);
