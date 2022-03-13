@@ -39,6 +39,7 @@ var petautodmg = 0;
 var petduration = 0;
 var petsteptime = 0;
 var spellindex = 0;
+var beast_tame_weight = false;
 
 var PETS = [
     { 
@@ -86,7 +87,7 @@ function petStatsCalc(){
     let racialmod = (selectedRace === 3) ? 1.05 : 1; // 5% pet dmg if orc
     let beasttamers_crit = 0;
     let beasttamers_dmg = 1;
-    if (gear.shoulder.id === 30892) {
+    if (gear.shoulder.id === 30892 || beast_tame_weight) {
         beasttamers_dmg = 1.02;
         beasttamers_crit = 2;
     };
@@ -126,7 +127,7 @@ function petUpdateDmgMod(){
     pet.combatdmgmod = 1;
     if(auras.beastwithin.timer > 0) { pet.combatdmgmod *= 1.5; } // bestial wrath
     if(pet.ferocious.timer > 0) { pet.combatdmgmod *= talents.ferocious_insp; } // ferocious insp pet buff
-    //if(auras.ferocious.timer > 0) { pet.combatdmgmod *= 1.03 * BMHuntersInGroup; } // ferocious insp from others
+    if(partybuffs.ferociousinsp.timer > 0 && !partybuffs.ferociousinsp.inactive) { pet.combatdmgmod *= Math.pow(1.03, partybuffs.ferociousinsp.stacks); } // ferocious insp from others
     if(debuffs.bloodfrenzy.timer > 0 && !debuffs.bloodfrenzy.inactive) { pet.combatdmgmod *= 1.04;} // blood frenzy debuff
     return;
 }
@@ -161,6 +162,9 @@ function petUpdateStats(){
     else if (debuffs.exposeweakness.timer > 0 && !debuffs.exposeweakness.inactive) {
         pet.combatap += debuffs.exposeweakness.agi / 4;
     }
+    let unleashMAP = (partybuffs.unleashedrage.timer > 0 && !partybuffs.unleashedrage.inactive) ? 1.1 : 1;
+    pet.combatap *= unleashMAP;
+    // ******************** Crit *******************
     pet.combatcrit += combatAgi / 33;
     // pet crit imp crusader
     if(debuffs.judgecrusader.timer > 0 && !debuffs.judgecrusader.inactive) { 

@@ -11,7 +11,6 @@ function sumStats(src, dst, statModifier = st => st) {
 
 /** Auxiliar function to add two special objects.*/
 function addSpecial(src, dst) {
-  console.log(src, dst)
 
   Object.entries(src).forEach(([k,v])=> {
     if (k === 'incWeapDmg') dst[k] = (dst[k] || 0) + v
@@ -19,7 +18,6 @@ function addSpecial(src, dst) {
     else dst[k] = v
   })
 
-  console.log(dst)
 }
 
 /** Auxiliar function to add two aura objects. Will throw error if an aura appears in both objects. */
@@ -121,7 +119,7 @@ function getMetagemBonuses(usedMeta, gemsUsed) {
   Object.entries(GEMS).filter(([, gemData]) => gemData.meta === 'Y')
     .forEach(([gemId, gemData]) => {
       const metaBonus = gemData.activation(Number(gemId) === usedMeta ? gemsUsed : noGems)
-      Object.entries(metaBonus).forEach(([bonus, val]) => {
+      Object.entries(metaBonus.bonus).forEach(([bonus, val]) => {
         if (bonus === 'aura') result.auras[gemId] = val
         else if (bonus === 'stats') sumStats(val, result.stats)
         else result.special[bonus] = val
@@ -175,7 +173,7 @@ function getStatsFromGems(gear) {
     if (isBonusFulfilled && gearPiece.socketBonus) sumStats(gearPiece.socketBonus, accStats)
     return accStats
   }, {})
-
+  gemsTotalsEquipped = gemCount
   const result = getMetagemBonuses(usedMeta, gemCount)
   sumStats(stats, result.stats)
 

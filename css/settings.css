@@ -170,6 +170,15 @@ ul {
   font-size: 14px;
 
 }
+.label-9 {
+  position: relative;
+  display: inline-block;
+  color: white;
+  top: 0px;
+  left: 2%;
+  vertical-align: center;
+  font-size: 12px;
+}
 .label-filter {
   position: relative;
   text-align: middle;
@@ -326,6 +335,10 @@ ul {
     vertical-align: middle;
     width: 15%;
   }
+
+  .container-adjust-top {
+      top: 0px;
+    }
   /* Hide the browser's default checkbox */
   .container input {
     position: absolute;
@@ -466,61 +479,73 @@ ul {
   /* Reset */
   width: 120px;
   left: 3px;
-
+  z-index: 1;
 }
 .select-1 {
   float: right;
   right: 40px;
+  z-index: 1;
   }
 .select-2 {
   float: right;
   right: 40px;
-
+  z-index: 1;
 }
 .select-3 {
   position: absolute;
-  top: 160px; /*158px*/
+  top: -12px;
   height: 48px;
   float: right;
-  right: 44px;
-
+  right: 38px;
+  z-index: 1;
 }
 .select-4 {
   float: right;
   right: 40px;
+  z-index: 1;
 }
 .select-5 {
   /* Reset */
   float: right;
   right: 40px;
+  z-index: 1;
 }
 .select-6 {
   float: right;
   right: 40px;
+  z-index: 1;
 }
 .select-7 {
     /* Reset */
     float: right;
   right: 40px;
+  z-index: 1;
 
 }
 .select-8 {
   /* Reset */
   float: right;
   right: 40px;
-
+  z-index: 1;
 }
-.select-9 {
+.select-imp-auras-2 {
   /* Reset */
   left: -7px;
+  z-index: 1;
+}
 
+.select-imp-auras {
+  top: -26px;
+  left: 100px;
+  position: absolute;
+  z-index: 1;
 }
 
 .select-10 {
   /* Reset */
   float: right;
   right: 40px;
-
+  z-index: 1;
 }
 .select-relative {
     position: relative;
@@ -537,127 +562,15 @@ ul {
   font-weight: 600;
 }
 
-.settings-image-1 {
+.settings-image-buffs {
   position: absolute;
-  left: 5px;
-  top: 42px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-2 {
-  position: absolute;
-  left: 5px;
-  top: 71px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-3 {
-  position: absolute;
-  left: 5px;
-  top:  100px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-4 {
-  position: absolute;
-  left: 5px;
-  top: 130px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-5 {
-  position: absolute;
-  left: 5px;
-  top: 159px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-6 {
-  position: absolute;
-  left: 5px;
-  top: 187px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-7 {
-  position: absolute;
-  left: 5px;
-  top: 215px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-8 {
-  position: absolute;
-  left: 5px;
-  top: 243px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-9 {
-  position: absolute;
-  left: 5px;
-  top: 274px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-10 {
-  position: absolute;
-  left: 5px;
-  top: 303px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-11 {
-  position: absolute;
-  left: 5px;
-  top: 331px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-12 {
-  position: absolute;
-  left: 5px;
-  top: 360px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-13 {
-  position: absolute;
-  left: 5px;
-  top: 390px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-14 {
-  position: absolute;
-  left: 5px;
-  top: 419px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-15 {
-  position: absolute;
-  left: 5px;
-  top: 449px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-16 {
-  position: absolute;
-  left: 5px;
-  top: 477px;
-  width: 22px;
-  height: auto;
-}
-.settings-image-17 {
-  position: absolute;
-  left: 5px;
-  top: 505px;
+  left: -22px;
+  top: 16px;
   width: 22px;
   height: auto;
 }
 
-.settings-image-18 {
+.settings-image-auras {
   position: relative;
   left: -20px;
   top: 6px;
@@ -671,51 +584,10 @@ ul {
 }
 .spells-image {
   position: absolute;
-  left: -2px;
+  left: -22px;
+  top: 0px;
   width: 22px;
   height: auto;
-}
-.spells-image-1 {
-  top: 16px;
-}
-.spells-image-2 {
-  top: 44px;
-}
-.spells-image-3 {
-  top:  72px;
-}
-.spells-image-4 {
-  top: 101px;
-}
-.spells-image-5 {
-  top: 131px;
-}
-.spells-image-6 {
-  top: 160px;
-}
-.spells-image-7 {
-  top: 188px;
-}
-.spells-image-8 {
-  top: 253px;
-}
-.spells-image-9 {
-  top: 282px;
-}
-.spells-image-10 {
-  top: 312px;
-}
-.spells-image-11 {
-  top: 365px;
-}
-.spells-image-12 {
-  top: 393px;
-}
-.spells-image-13 {
-  top: 421px;
-}
-.spells-image-14 {
-  top: 449px;
 }
 
 .spell-option-1 {
@@ -734,6 +606,7 @@ ul {
 .spells-input {
   position: absolute;
   left: 72%;
+  top: 0px;
   width: 50px;
   text-align: center;
 }
@@ -770,24 +643,28 @@ ul {
   /* Reset */
   width: 95px;
   left: 20%;
+  z-index: 1;
 }
 
 .select-spell-option-2 {
   /* Reset */
   width: 95px;
   left: 25.2%;
+  z-index: 1;
 }
 
 .select-spell-option-3 {
   /* Reset */
   width: 95px;
   left: 9.4%;
+  z-index: 1;
 }
 
 .select-spell-option-4 {
   /* Reset */
   width: 95px;
   left: 4.5%;
+  z-index: 1;
 }
 
 .spell-label-1 {
@@ -935,6 +812,13 @@ ul {
 
 .highlight-border {
   border: 0.125rem solid rgb(30, 255, 0);
+}
+
+.sktrecommend {
+  color: rgb(30, 255, 0);
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .searchfield {

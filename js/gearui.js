@@ -25,6 +25,7 @@ var preferredGems = {
     Meta: 32409
 }
 
+var gemsTotalsEquipped = {};
 // on click listeners for slots and enchants
 document.getElementById("headench").addEventListener("click", function(){gearModalDisplay("head")}, false);
 document.getElementById("shoulderench").addEventListener("click", function(){gearModalDisplay("shoulder")}, false);
@@ -415,6 +416,22 @@ function updateGearLists(){
 
     onehandfilter = document.getElementById("1hfilter").checked;
     twohandfilter = document.getElementById("2hfilter").checked;
+    if (phase >= 3) {
+        preferredGems = {
+            Red: 32194,
+            Blue: 32212,
+            Yellow: 32222,
+            Meta: 32409
+        }
+    } else {
+        preferredGems = {
+            Red: 24028,
+            Blue: 24055,
+            Yellow: 31868,
+            Meta: 32409
+        }
+    }
+
     storeData();
 
     gearModalDisplay(activeslot);
@@ -558,18 +575,66 @@ function textColorDisplay(slot,array){
 
 function estimateDps(item, weights) {
     let dps = 0;
-
+    // check for meta gems
+    if (item.name == 'Relentless Earthstorm Diamond') {
+        dps += weights.relentless + weights.Agi * 12;
+        return dps;
+    } else if (item.name == 'Swift Skyfire Diamond' || item.name == 'Potent Unstable Diamond') {
+        dps += weights.RAP * 24 + weights.MAP * 24;
+        return dps;
+    } else if (item.name == 'Swift Windfire Diamond') {
+        dps += weights.RAP * 20 + weights.MAP * 20;
+        return dps;
+    } else if (item.name == 'Enigmatic Skyfire Diamond') {
+        dps += weights.Crit * 12;
+        return dps;
+    } 
+    // check for special weight
+    else if (item.name == 'Beast-tamer\'s Shoulders') {
+        dps += weights.beasttamer;
+    }
+    // check for weightstone/sharp stone for weps
+    if ((activeslot == 'mainhand' || activeslot == 'offhand') && !!item.type) {
+        if (item.type == 'fist' || item.type == 'staff') {
+            dps += weights.rangedmgbonus * 12 + weights.dmgbonus * 12 + weights.RangeCrit * 14 + weights.MeleeCrit * 14;
+        } else {
+            dps += weights.rangedmgbonus * 12 + weights.dmgbonus * 12 + weights.MeleeCrit * 14;
+        }
+        if (item.hand == 'Two') {
+            dps += weights.Agi * 35;
+        } else {
+            dps += weights.Agi * 20;
+        }
+    }
+    if (activeslot == 'mainhand' && !!item.type && SPELLS.raptorstrike.enable) {
+        dps += item.speed * 30 + ((item.mindmg + item.maxdmg) / 2) / item.speed * 0.46;
+    } else if (activeslot == 'range' && !!item.type && item.name == "Thori'dal, the Stars Fury") {
+        dps += item.speed * 50 + ((item.mindmg + item.maxdmg) / 2) / item.speed * 5.8 / 1.25;
+    } else if (activeslot == 'range' && !!item.type) {
+        dps += item.speed * 50 + ((item.mindmg + item.maxdmg) / 2) / item.speed * 5.8;
+    }
+    // add stats
     if (!!item.stats) {
-        dps = Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
-    } else { return 0 }
+        dps += Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
+    } // if no stats, add specials, else return any previous calc'd value
+    else if (!!item.special) {
+        dps += Object.entries(item.special).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
+    } else { return dps }
+
     if (item.sockets?.length) {
-        const allRed = item.sockets.length * estimateDps(GEMS[preferredGems.Red], weights)
-        const matchingSockets = item.sockets.reduce((dps, socket) =>
+        var allRed = 0;
+        if(activeslot == 'head' && item.sockets.includes('Meta')){
+            allRed = ((item.sockets.length - 1) > 0) ? (item.sockets.length - 1) * estimateDps(GEMS[preferredGems.Red], weights) : 0;
+            allRed += weights.relentless + weights.Agi * 12;
+        } else {
+            allRed = item.sockets.length * estimateDps(GEMS[preferredGems.Red], weights);
+        }
+            
+        var matchingSockets = item.sockets.reduce((dps, socket) =>
             dps + estimateDps(GEMS[preferredGems[socket]], weights),
             estimateDps({ stats: item.socketBonus }, weights)
-      )
-  
-    dps += allRed > matchingSockets ? allRed : matchingSockets
+        )
+        dps += allRed > matchingSockets ? allRed : matchingSockets
     }
     return dps
 }
@@ -646,7 +711,7 @@ function unequipItemFromGear(){
     }
     gearModalDisplay(activeslot);
 }
-
+/** takes a given input and filters a given table based on slot, tab selected. */
 function filterField(input , table) {
     var input, filter, table, tr, td, i, txtValue;
     
@@ -670,6 +735,7 @@ function filterField(input , table) {
     }
 }
 
+/** Generates the table bodies for displaying sorted gear/gem/enchants */
 function generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata){
 
     let tbody = document.getElementById(idname);
@@ -713,9 +779,10 @@ function generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata){
         tbody.innerHTML = final;
 }
 
+/** Initial function to generate tables for gear/gems/enchants */
 function generateGearTable(array, type) {
 
-    // let start = performance.now();
+    //let start = performance.now();
     let arraylength = array.length;
     let currgear = gear[activeslot];
     let i = 0;
@@ -758,9 +825,9 @@ function generateGearTable(array, type) {
 
     generateGearTbodies(array, fnc, idname, lookup, hrefdata, locdata);
 
-    // let end = performance.now();
-    // let execute = (end - start) / 1000; // milliseconds convert to sec
-    // console.log("generateGearTable "+execute.toFixed(3));
+    //let end = performance.now();
+    //let execute = (end - start) / 1000; // milliseconds convert to sec
+    //console.log("generateGearTable "+execute.toFixed(3));
 }
 
 function displayCurrentGearTabs(){
@@ -826,6 +893,23 @@ function displayCurrentGearTabs(){
     prevslot = activeslot;
 }
 
+/** Changes color and description of meta gem for seeing if it's active */
+function setMetaDisplay(metagem) {
+
+    let metadata = GEMS[metagem];
+    document.getElementById("metareq").innerHTML = "Meta: " + metadata.desc;
+
+    let metacheck = metadata.activation(gemsTotalsEquipped);
+    if (metacheck.active) {
+        document.getElementById("metareq").classList.remove("meta-req-fail");
+        document.getElementById("metareq").classList.add("meta-req-met");
+    }
+    else {
+        document.getElementById("metareq").classList.remove("meta-req-met");
+        document.getElementById("metareq").classList.add("meta-req-fail");
+    }
+}
+
 function gearSlotsDisplay(){
     
     let headitem = gear.head.id;
@@ -878,6 +962,9 @@ function gearSlotsDisplay(){
         if(headgem1 === 0){
             document.getElementsByClassName("gemskt")[0].style.visibility = "hidden";
         } else {
+            if (!!GEMS[headgem1].meta) {
+                setMetaDisplay(headgem1);
+            }
             document.getElementsByClassName("gemskt")[0].src = "https://wow.zamimg.com/images/wow/icons/large/"+GEMS[headgem1].icon+".jpg";
             document.getElementsByClassName("gemskt")[0].style.visibility = "visible";
         }
@@ -885,6 +972,9 @@ function gearSlotsDisplay(){
         if(headgem2 === 0){
             document.getElementsByClassName("gemskt")[1].style.visibility = "hidden";
         } else {
+            if (!!GEMS[headgem2].meta) {
+                setMetaDisplay(headgem2);
+            }
             document.getElementsByClassName("gemskt")[1].src = "https://wow.zamimg.com/images/wow/icons/large/"+GEMS[headgem2].icon+".jpg";
             document.getElementsByClassName("gemskt")[1].style.visibility = "visible";
         }
@@ -892,6 +982,9 @@ function gearSlotsDisplay(){
         if(headgem3 === 0){
             document.getElementsByClassName("gemskt")[2].style.visibility = "hidden";
         } else {
+            if (!!GEMS[headgem3].meta) {
+                setMetaDisplay(headgem3);
+            }
             document.getElementsByClassName("gemskt")[2].src = "https://wow.zamimg.com/images/wow/icons/large/"+GEMS[headgem3].icon+".jpg";
             document.getElementsByClassName("gemskt")[2].style.visibility = "visible";
         }

@@ -1,5 +1,7 @@
 var iterations = 10000;
 var currentiteration = 0;
+var weightiteration = 0;
+var maxWeightIteration = 0;
 var loopcheck = 0;
 var minfighttimer = 243;
 var maxfighttimer = 245;
@@ -136,6 +138,7 @@ function loopSim() {
 
 function loopSimHelper(callback, isStatWeights) {
     currentiteration++;
+    if (isStatWeights) { weightiteration++;}
     if (currentiteration === iterations) {
         combatlogRun = true;
     } else {combatlogRun = false;}
@@ -143,13 +146,18 @@ function loopSimHelper(callback, isStatWeights) {
     sumdmg += totaldmgdone;
     sumpetdmg += petdmgdone;
     sumduration += totalduration;
-    
+
     if (currentiteration < iterations) {
         let visualcheck = currentiteration / 100;
 
         if (visualcheck > loopcheck){
             loopcheck++;
             setTimeout(() => loopSimHelper(callback, isStatWeights), 0);
+            if (isStatWeights) {
+
+                let loadweightbar = (weightiteration / maxWeightIteration) * 100;
+                document.getElementById("weightloadbar").style.width =  loadweightbar + "%";
+            }
             let loadpercent = (currentiteration / iterations) * 100;
             document.getElementById("loadbar").style.width =  loadpercent + "%";
             displayDPSResults();
@@ -159,7 +167,9 @@ function loopSimHelper(callback, isStatWeights) {
         }
     }
     else if (currentiteration === iterations){
-        
+        if (weightiteration === maxWeightIteration && isStatWeights) {
+            document.getElementById("weightloadbar").style.width =  100 + "%";
+        }
         document.getElementById("loadbar").style.width =  100 + "%";
         
         if (!isStatWeights) {
@@ -179,11 +189,15 @@ function finalResults() {
     for (let prop in debuff_uptimes){
         debuff_uptimes[prop] = (debuffs[prop].uptime / sumduration * 100).toFixed(2);
     }
+    for (let prop in partybuff_uptimes){
+        partybuff_uptimes[prop] = (partybuffs[prop].uptime / sumduration * 100).toFixed(2);
+    }
 
     damageResults();
     //console.log(pet);
     console.log(buff_uptimes);
     console.log(debuff_uptimes);
+    console.log(partybuff_uptimes);
     console.log(currentMana);
 
     function standardError(x, u_x) {
@@ -239,7 +253,7 @@ function runSim() {
 
     initializeSpells();
     ResetAuras();
-    debuffInitializer();
+    intervalAuraInitializer();
 
     while (totalduration < fightduration){
 
@@ -547,79 +561,211 @@ problematic cases: raptor + arcane, multi + arcane + raptor
 	return "autoshot";
 }
 
-var statweights = { Str: 0, Agi: 0.947, Int: 0, RAP: 0.428, rangehit: 0.91, rangecrit: 0.782, 
-    Haste: 0.779, ArP: 0.161, MAP: 0, meleehit: 0, meleecrit: 0, Expertise: 0, MP5: 0, Hit:0.91, Crit:0.782,
-    relentless:20.35, beasttamer: 41.11, bonusdmg: 0.75
+var statweights = { Str: 0, Agi: 0.947, Int: 0, RAP: 0.428, RangeHit: 0.91, RangeCrit: 0.782, 
+    Haste: 0.779, ArP: 0.161, MAP: 0, MeleeHit: 0, MeleeCrit: 0, Expertise: 0, MP5: 0, Hit:0.91, Crit:0.782,
+    relentless:20.35, beasttamer: 22.11, dmgbonus: 0.75, rangedmgbonus: 0.75
 }
 
 function statWeightLoop(){
     isStatWeights = true;
-    statweights = { Str: 0, Agi: 0, Int: 0, RAP: 0, rangehit: 0, rangecrit: 0, 
-        haste: 0, arp: 0, MAP: 0, meleehit: 0, meleecrit: 0, expertise: 0, mp5: 0
+    useAverages = true;
+
+    statweights = { Str: 0, Agi: 0, Int: 0, RAP: 0, RangeHit: 0, RangeCrit: 0, 
+        Haste: 0, ArP: 0, MAP: 0, MeleeHit: 0, MeleeCrit: 0, Expertise: 0, MP5: 0, Hit:0, Crit:0,
+        relentless:0, beasttamer: 0, dmgbonus: 0, rangedmgbonus: 0
     }
     let basedps = 0;
     let performance1 = performance.now(); // test debug time check
     let olditerations = iterations;
     iterations = 20000;
+    weightiteration = 0;
+    maxWeightIteration = iterations * 13;
 
+        
     loopSim().then(() => {
         basedps = avgDPS;
-        custom = {str: 0,agi: 10,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+        // ************** AGI *******************
+        custom = {str: 0,agi: 50,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        iterations = 10000;
+        return loopSim();       
+    }).then(() => {
+        // more followup work
+        statweights.Agi = (avgDPS - basedps)/50;
+        custom = {str: 0,agi: -50,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-    }).then(() => { // save agi
+    }).then(() => {
         // more followup work
-        statweights.agi = (avgDPS - basedps) / 10;
-        custom = {str: 0,agi: 0,int: 0,RAP: 10,rangehit: 0,rangecrit: 0,
+        statweights.Agi = (Math.abs((avgDPS - basedps)/50)+statweights.Agi) / 2;
+        // ************** RAP *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 100,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-    }).then(() => { // save RAP
+    }).then(() => {
         // more followup work
-        statweights.RAP = (avgDPS - basedps) / 10;
-        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 10,
+        statweights.RAP = Math.max((avgDPS - basedps) / 100, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: -100,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-    }).then(() => { // save range crit
+    }).then(() => {
         // more followup work
-        statweights.rangecrit = (avgDPS - basedps) / 10;
+        statweights.RAP = (Math.abs((avgDPS - basedps)/100)+statweights.RAP) / 2;
+        // ************** RANGECRIT *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 50,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.RangeCrit = Math.max((avgDPS - basedps) / 50, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: -50,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.RangeCrit = (Math.abs((avgDPS - basedps)/50)+statweights.RangeCrit) / 2;
+        // ************** RANGEHIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 10,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.RangeHit = Math.max((avgDPS - basedps) / 10, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -10,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => { // save range hit
         // more followup work
-        statweights.rangehit = (avgDPS - basedps) / 10;
+        statweights.RangeHit = (Math.abs((avgDPS - basedps)/10)+statweights.RangeHit) / 2;
+        // ************** HASTE *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 100,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-    }).then(() => { // save haste
+    }).then(() => {
         // more followup work
-        statweights.haste = (avgDPS - basedps) / 10;
+        statweights.Haste = Math.max((avgDPS - basedps) / 100, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: -100,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Haste = (Math.abs((avgDPS - basedps)/100)+statweights.Haste) / 2;
+        // ************** ArP *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 100,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-    }).then(() => { // save arp
+    }).then(() => {
         // more followup work
-        statweights.arp = (avgDPS - basedps) / 10;
+        statweights.ArP = Math.max((avgDPS - basedps) / 100, 0);
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
-            haste: 0,arp: 0,MAP: 10,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+            haste: 0,arp: -100,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-    }).then(() => { // save MAP
+    }).then(() => {
         // more followup work
-        statweights.MAP = (avgDPS - basedps) / 10;
+        statweights.ArP = (Math.abs((avgDPS - basedps)/100)+statweights.ArP) / 2;
+        // ************** MAP *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 100,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MAP = Math.max((avgDPS - basedps) / 100, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: -100,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MAP = (Math.abs((avgDPS - basedps)/100)+statweights.MAP) / 2;
+        // ************** MELEE HIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 10,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
-    }).then(() => { // save hit
+    }).then(() => {
         // more followup work
-        statweights.meleehit = (avgDPS - basedps) / 10;
+        statweights.MeleeHit = Math.max((avgDPS - basedps) / 10, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MeleeHit = (Math.abs((avgDPS - basedps)/10)+statweights.MeleeHit) / 2;
+        // ************** MELEE CRIT *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 50,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MeleeCrit = Math.max((avgDPS - basedps) / 50, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: -50,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MeleeCrit = (Math.abs((avgDPS - basedps)/50)+statweights.MeleeCrit) / 2;
+        // ************** EXPERTISE *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 20,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Expertise = Math.max((avgDPS - basedps) / 20, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: -20,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Expertise = (Math.abs((avgDPS - basedps)/20)+statweights.Expertise) / 2;
+        // ************** MP5 *******************
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 50};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MP5 = Math.max((avgDPS - basedps) / 50, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: -50};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.MP5 = (Math.abs((avgDPS - basedps)/50)+statweights.MP5) / 2;
+        // ************** INTELLECT *******************
+        custom = {str: 0,agi: 0,int: 50,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Int = Math.max((avgDPS - basedps) / 50, 0);
+        custom = {str: 0,agi: 0,int: -50,RAP: 0,rangehit: 0,rangecrit: 0,
+            haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
+        calcBaseStats();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        statweights.Int = (Math.abs((avgDPS - basedps)/50)+statweights.Int) / 2;
+        // ************* RESET AND DISPLAY ****************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         console.log(statweights);
@@ -629,6 +775,10 @@ function statWeightLoop(){
         displayDPSResults();
         displayStatWeights();
         iterations = olditerations;
+        useAverages = false;
+        isStatWeights = false;
+        statweights.Crit = statweights.RangeCrit + statweights.MeleeCrit;
+        statweights.Hit = statweights.RangeHit + statweights.MeleeHit;
         console.log("*****************");
     })
 

@@ -20,7 +20,7 @@ const GEMS = {
           Agi: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_bloodgem_02"
   },
   23100: {
@@ -34,7 +34,7 @@ const GEMS = {
           Hit: 3
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_flamespessarite_02"
   },
   23104: {
@@ -48,7 +48,7 @@ const GEMS = {
           Crit: 3
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_deepperidot_02"
   },
   23106: {
@@ -62,7 +62,7 @@ const GEMS = {
           MP5: 1
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_deepperidot_02"
   },
   23110: {
@@ -76,7 +76,7 @@ const GEMS = {
           Stam: 4
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_ebondraenite_02"
   },
   23113: {
@@ -88,7 +88,7 @@ const GEMS = {
           Int: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_goldendraenite_02"
   },
   23116: {
@@ -100,7 +100,7 @@ const GEMS = {
           Hit: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_goldendraenite_02"
   },
   23118: {
@@ -112,7 +112,7 @@ const GEMS = {
           Stam: 9
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_azuredraenite_02"
   },
   23121: {
@@ -124,7 +124,7 @@ const GEMS = {
           MP5: 2
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_azuredraenite_02"
   },
   24028: {
@@ -285,62 +285,71 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { swift_metagem_run_speed_increase: 1.00 }
+        var active = false;
 
         if (gemsUsed.yellow >= 2 && gemsUsed.red >= 1) {
             bonus.stats = { MAP: 24, RAP: 24 }
             bonus.swift_metagem_run_speed_increase = 1.08
+            active = true;
         }
 
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "1 Red, 2 Yellow"
   },
   25895: {
       name: "Enigmatic Skyfire Diamond",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
-        if (gemsUsed.red > gemsUsed.yellow)
+        var active = false;
+        if (gemsUsed.red > gemsUsed.yellow) {
             bonus.stats = { Crit: 12 }
-
-        return bonus
+            active = true;
+        }
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "More Red than Yellow"
   },
   25896: {
       name: "Powerful Earthstorm Diamond",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
-        if (gemsUsed.blue >= 3)
+        var active = false;
+        if (gemsUsed.blue >= 3) {
             bonus.stats = { Stam: 18 }
-
-        return bonus
+            active = true;
+        }
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_06"
+      icon: "inv_misc_gem_diamond_06",
+      desc: "3 Blue"
   },
   25901: {
       name: "Insightful Earthstorm Diamond",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
-        if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2)
+        var active = false;
+        if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
             bonus.stats = { Int: 12 }
-
-        return bonus
+            active = true;
+        }
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_06"
+      icon: "inv_misc_gem_diamond_06",
+      desc: "2 Red, 2 Yellow, 2 Blue"
   },
   27679: {
       name: "Sublime Mystic Dawnstone",
@@ -379,7 +388,7 @@ const GEMS = {
           Crit: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_goldendraenite_02"
   },
   28361: {
@@ -396,107 +405,24 @@ const GEMS = {
       unique: true,
       icon: "inv_misc_gem_bloodstone_02"
   },
-  28459: {
-      name: "Delicate Tourmaline",
-      colors: [
-          "red"
-      ],
-      stats: {
-          Agi: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_ruby_03"
-  },
-  28462: {
-      name: "Bright Tourmaline",
-      colors: [
-          "red"
-      ],
-      stats: {
-          MAP: 8,
-          RAP: 8
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_ruby_03"
-  },
-  28463: {
-      name: "Solid Zircon",
-      colors: [
-          "blue"
-      ],
-      stats: {
-          Stam: 6
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_crystal_03"
-  },
-  28465: {
-      name: "Lustrous Zircon",
-      colors: [
-          "blue"
-      ],
-      stats: {
-          MP5: 1
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_crystal_03"
-  },
-  28466: {
-      name: "Brilliant Amber",
-      colors: [
-          "yellow"
-      ],
-      stats: {
-          Int: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_topaz_03"
-  },
-  28467: {
-      name: "Smooth Amber",
-      colors: [
-          "yellow"
-      ],
-      stats: {
-          Crit: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_topaz_03"
-  },
-  28468: {
-      name: "Rigid Amber",
-      colors: [
-          "yellow"
-      ],
-      stats: {
-          Hit: 4
-      },
-      Phase: 1,
-      quality: "Common",
-      icon: "inv_misc_gem_topaz_03"
-  },
   28556: {
       name: "Swift Windfire Diamond",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { swift_metagem_run_speed_increase: 1.00 }
-
+        var active = false;
         if (gemsUsed.yellow >= 2 && gemsUsed.red >= 1) {
             bonus.stats = { MAP: 20, RAP: 20 }
             bonus.swift_metagem_run_speed_increase = 1.08
+            active = true;
         }
 
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "2 Yellow, 1 Red"
   },
   28595: {
       name: "Bright Blood Garnet",
@@ -508,7 +434,7 @@ const GEMS = {
           RAP: 12
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_bloodgem_02"
   },
   30549: {
@@ -708,7 +634,7 @@ const GEMS = {
           RAP: 6
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_ebondraenite_02"
   },
   31863: {
@@ -738,7 +664,7 @@ const GEMS = {
           MP5: 1
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_ebondraenite_02"
   },
   31865: {
@@ -783,7 +709,7 @@ const GEMS = {
           Crit: 3
       },
       Phase: 1,
-      quality: "Common",
+      quality: "Uncommon",
       icon: "inv_misc_gem_flamespessarite_02"
   },
   32194: {
@@ -807,7 +733,7 @@ const GEMS = {
           Stam: 15
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
   32202: {
@@ -819,7 +745,7 @@ const GEMS = {
           MP5: 4
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
   32204: {
@@ -881,7 +807,7 @@ const GEMS = {
           Stam: 7
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32213: {
@@ -896,7 +822,7 @@ const GEMS = {
           RAP: 10
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32214: {
@@ -911,7 +837,7 @@ const GEMS = {
           MP5: 2
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32220: {
@@ -925,7 +851,7 @@ const GEMS = {
           Hit: 5
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_pyrestone_02"
   },
   32222: {
@@ -940,7 +866,7 @@ const GEMS = {
           Crit: 5
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_pyrestone_02"
   },
   32225: {
@@ -954,7 +880,7 @@ const GEMS = {
           MP5: 2
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_seasprayemerald_02"
   },
   32226: {
@@ -968,7 +894,7 @@ const GEMS = {
           Crit: 5
       },
       Phase: 3,
-      quality: "Rare",
+      quality: "Epic",
       icon: "inv_jewelcrafting_seasprayemerald_02"
   },
   32409: {
@@ -976,24 +902,26 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { relentless_metagem_crit_dmg_inc: 1.00 }
-
+        var active = false;
         if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
             bonus.stats = { Agi: 12 }
             bonus.relentless_metagem_crit_dmg_inc = 1.03
+            active = true;
         }
 
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_06"
+      icon: "inv_misc_gem_diamond_06",
+      desc: "2 Red, 2 Yellow, 2 Blue"
   },
   32410: {
       name: "Thundering Skyfire Diamond",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-
+        var active = false;
         if (gemsUsed.red >= 2 && gemsUsed.yellow >= 2 && gemsUsed.blue >= 2) {
             bonus.aura = {
                 stats: { Haste: 240 },
@@ -1003,13 +931,14 @@ const GEMS = {
                 proc_type: 2,
                 duration: 6,
             }
+            active = true;
         }
-
-        return bonus
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "2 Red, 2 Yellow, 2 Blue"
   },
   32634: {
       name: "Unstable Amethyst",
@@ -1063,13 +992,19 @@ const GEMS = {
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
-        if (gemsUsed.blue > gemsUsed.yellow) bonus.stats = { MAP: 24, RAP: 24 }
+        var active = false;
+        if (gemsUsed.blue > gemsUsed.yellow) {
 
-        return bonus
+            bonus.stats = { MAP: 24, RAP: 24 }
+            active = true;
+        }
+        
+        return { bonus, active }
       },
       Phase: 1,
       quality: "Rare",
-      icon: "inv_misc_gem_diamond_07"
+      icon: "inv_misc_gem_diamond_07",
+      desc: "More Blue than Yellow"
   },
   33131: {
       name: "Crimson Sun",

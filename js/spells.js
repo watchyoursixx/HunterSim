@@ -159,8 +159,7 @@ function multiShotCalc(range_wep, combatRAP) {
 
 function arcaneShotCalc(range_wep, combatRAP) {
 
-    let arcanemod = 1;
-    let shotDmg = (combatRAP * 0.15 + SPELLS.arcaneshot.rankdmg) * range_wep.basedmgmod * combatdmgmod * arcanemod;
+    let shotDmg = (combatRAP * 0.15 + SPELLS.arcaneshot.rankdmg) * range_wep.basedmgmod * combatdmgmod * magdmgmod;
     return shotDmg;
 }
 

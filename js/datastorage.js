@@ -14,6 +14,9 @@ function storeData(){
     localStorage.setItem('pet_consumes',JSON.stringify(petconsumes));
     // debuffs
     localStorage.setItem('debuffs',JSON.stringify(debuffs));
+    // partybuffs
+    localStorage.setItem('partybuffs',JSON.stringify(partybuffs));
+
     
     localStorage.setItem('flask',document.getElementById("flask").value);
     localStorage.setItem('battle',document.getElementById("battle").value);
@@ -95,6 +98,7 @@ function fetchData(){
     petconsumes = (JSON.parse(localStorage.getItem('pet_consumes')) != null) ? JSON.parse(localStorage.getItem('pet_consumes')):petconsumes;
     // debuffs
     debuffs = (JSON.parse(localStorage.getItem('debuffs')) != null) ? JSON.parse(localStorage.getItem('debuffs')):debuffs;
+    partybuffs = (JSON.parse(localStorage.getItem('partybuffs')) != null) ? JSON.parse(localStorage.getItem('partybuffs')):partybuffs;
     // saves each value below as a string - fight settings
     iterations = (parseInt(localStorage.getItem('iterations')) != null) ? parseInt(localStorage.getItem('iterations')) : iterations;
     minfighttimer = (parseInt(localStorage.getItem('minfight')) != null) ? parseInt(localStorage.getItem('minfight')) : minfighttimer;
@@ -140,7 +144,6 @@ function fetchData(){
     auras.aptrink1.offset = (localStorage.getItem('trink1offset') != null) ? parseInt(localStorage.getItem('trink1offset')):auras.aptrink1.offset;
     auras.aptrink2.offset = (localStorage.getItem('trink2offset') != null) ? parseInt(localStorage.getItem('trink2offset')):auras.aptrink2.offset;
     auras.potion.offset = (localStorage.getItem('startpotoffset') != null) ? parseInt(localStorage.getItem('startpotoffset')):auras.potion.offset;
-    //auras.rune.offset = (localStorage.getItem('runeoffset') != null) ? parseInt(localStorage.getItem('runeoffset')):auras.rune.offset;
 
     // spell option
     let lustoption = '';
@@ -267,6 +270,9 @@ function fetchData(){
     document.getElementById("misuptime").value = debuffs.misery.uptime_g;
     document.getElementById("coeuptime").value = debuffs.curseofele.uptime_g;
     document.getElementById("coebonus").selected = debuffs.curseofele.improved ? true : false;
+    document.getElementById("unlrageuptime").value = partybuffs.unleashedrage.uptime_g;
+    document.getElementById("ferocuptime").value = partybuffs.ferociousinsp.uptime_g;
+    document.getElementById("ferocstacks").value = partybuffs.ferociousinsp.stacks;
 
     // spell enables
     document.getElementById("rapidcheck").checked = auras.rapid.enable;
@@ -290,7 +296,6 @@ function fetchData(){
     document.getElementById("trink1offset").value = auras.aptrink1.offset;
     document.getElementById("trink2offset").value = auras.aptrink2.offset;
     document.getElementById("startpotoffset").value = auras.potion.offset;
-    //document.getElementById("runeoffset").value = auras.rune.offset;
     // spell options
     document.getElementById("lustoption").value = lustoption;
     document.getElementById("drumoption").value = auras.drums.type;
