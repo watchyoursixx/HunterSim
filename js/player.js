@@ -64,7 +64,6 @@ var combatMAP = 0;
 var combatdmgmod = 1;
 var physdmgmod = 1;
 var magdmgmod = 1;
-var magdmgmod = 1;
 var naturedmgmod = 1;
 var haste = 1;
 

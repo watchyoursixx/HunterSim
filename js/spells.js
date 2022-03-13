@@ -213,15 +213,15 @@ function spellPetCalc(spellindex){
         mindmg = PET_SPELLS[spellindex].mindmg; // min dmg of phys spell selected
         maxdmg = PET_SPELLS[spellindex].maxdmg; 
         dmg = (useAverages) ? (mindmg + maxdmg) * 0.5 : rng(mindmg,maxdmg);
-        spelldmg = (dmg + spellpwr * PET_SPELLS[spellindex].sp_coeff) * basedmgmod;
+        spelldmg = (dmg + spellpwr * PET_SPELLS[spellindex].sp_coeff) * basedmgmod * naturedmgmod;
     } 
     else if (spellindex === 6) { // fire breath
         dmg = PET_SPELLS[spellindex].tick;
-        spelldmg = (dmg + spellpwr * PET_SPELLS[spellindex].sp_coeff) * basedmgmod * 3; // 3 ticks over 3 sec, just doing x3
+        spelldmg = (dmg + spellpwr * PET_SPELLS[spellindex].sp_coeff) * basedmgmod * 3 * magdmgmod; // 3 ticks over 3 sec, just doing x3
     } 
     else if (spellindex === 7) { // poison spit
         dmg = PET_SPELLS[spellindex].tick;
-        spelldmg = dmg * basedmgmod * 4; // 4 ticks over 8 sec, just doing x4
+        spelldmg = dmg * basedmgmod * 4 * naturedmgmod; // 4 ticks over 8 sec, just doing x4
     }
     else if (spellindex === 8) { // scorpid poison
         dmg = PET_SPELLS[spellindex].tick;

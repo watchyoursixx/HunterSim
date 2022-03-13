@@ -125,10 +125,13 @@ function petStatsCalc(){
 
 function petUpdateDmgMod(){
     pet.combatdmgmod = 1;
+    naturedmgmod = 1;
     if(auras.beastwithin.timer > 0) { pet.combatdmgmod *= 1.5; } // bestial wrath
     if(pet.ferocious.timer > 0) { pet.combatdmgmod *= talents.ferocious_insp; } // ferocious insp pet buff
     if(partybuffs.ferociousinsp.timer > 0 && !partybuffs.ferociousinsp.inactive) { pet.combatdmgmod *= Math.pow(1.03, partybuffs.ferociousinsp.stacks); } // ferocious insp from others
     if(debuffs.bloodfrenzy.timer > 0 && !debuffs.bloodfrenzy.inactive) { pet.combatdmgmod *= 1.04;} // blood frenzy debuff
+    
+    if((debuffs.misery.timer > 0) && !debuffs.misery.inactive) { naturedmgmod *= 1.05; } // misery
     return;
 }
 
