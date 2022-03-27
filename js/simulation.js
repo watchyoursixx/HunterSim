@@ -784,3 +784,293 @@ function statWeightLoop(){
 
       
 }
+
+function trinketSimLoop(){
+    isStatWeights = true;
+    useAverages = true;
+
+    //let basedps = 0;
+    let performance1 = performance.now(); // test debug time check
+    let olditerations = iterations;
+    iterations = 10000;
+    weightiteration = 0;
+    maxWeightIteration = iterations * 20;
+    let oldtrink1 = gear.trinket1;
+    let oldtrink2 = gear.trinket2;
+
+    // initialize trinket baseline
+    gear.trinket1 = { id: 23835 };
+    gear.trinket2 = { id: 23835 };
+    let basedps = 0;
+    let DPSdiff = [];
+    let loopnum = 0;
+    initialize();
+    let trinketlist = [
+        {id: 21670, name: "Badge of the Swarmguard" },
+        {id: 23041, name: "Slayer's Crest" },
+        {id: 23206, name: "Mark of the Champion" },
+        {id: 24128, name: "Figurine - Nightseye Panther" },
+        {id: 28034, name: "Hourglass of the Unraveller" },
+        {id: 28121, name: "Icon of Unyielding Courage" },
+        {id: 28288, name: "Abacus of Violent Odds" },
+        {id: 28579, name: "Romulo's Poison Vial" },
+        {id: 28830, name: "Dragonspine Trophy" },
+        {id: 29383, name: "Bloodlust Brooch" },
+        {id: 30627, name: "Tsunami Talisman" },
+        {id: 31856, name: "Darkmoon Card: Crusade" },
+        {id: 32487, name: "Ashtongue Talisman of Swiftness" },
+        {id: 32505, name: "Madness of the Betrayer" },
+        {id: 32654, name: "Crystalforged Trinket" },
+        {id: 32658, name: "Badge of Tenacity" },
+        {id: 33831, name: "Berserker's Call" },
+        {id: 34427, name: "Blackened Naaru Sliver" },
+        {id: 35702, name: "Figurine - Shadowsong Panther" }
+
+    ];
+    loopSim().then(() => {
+        basedps = avgDPS;
+        // ************** AGI *******************
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        initialize();
+        return loopSim();       
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+
+        // ************** RAP *******************
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+
+        // ************** RANGECRIT *******************
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+
+        // ************** RANGEHIT *******************
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => { // save range hit
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** HASTE *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** ArP *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** MAP *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** MELEE HIT *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** MELEE CRIT *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** EXPERTISE *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        // more followup work
+
+        // ************* RESET AND DISPLAY ****************
+        gear.trinket1 = oldtrink1;
+        gear.trinket2 = oldtrink2;
+        initialize();
+        let performance2 = performance.now(); // test debug time check
+        executecodetime = (performance2 - performance1) / 1000; // milliseconds convert to sec
+        displayDPSResults();
+        //displayStatWeights();
+        console.log(DPSdiff);
+        iterations = olditerations;
+        useAverages = false;
+        isStatWeights = false;
+
+        console.log("*****************");
+    })
+
+      
+}

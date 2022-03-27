@@ -649,7 +649,7 @@ function intervalAuraInitializer(){
  * steps and are applied potentially during a step. A timer of 30 would start at 29.9 on the next step.
  */
 function IntervalAuraHandler(){
-    if(debuffs.hm.timer <= 0 || debuffs.hm.inactive) {debuffs.hm.stacks = 0;} // sets stacks to 0 when inactive
+    if(debuffs.hm.timer <= 0 || debuffs.hm.inactive && (debuffs.hm.uptime_g < 98)) {debuffs.hm.stacks = 0;} // sets stacks to 0 when inactive
     if((debuffs.hm.timer <= 0) && (debuffs.hm.uptime_g > 0)) { debuffs.hm.timer += IntervalAuraSetTime("hm","debuff"); } // sets the timer to inactive or active
     
     if((debuffs.exposeweakness.timer <= 0) && (talents.exp_weakness === 0 && debuffs.exposeweakness.uptime_g > 0)) { 
@@ -725,13 +725,14 @@ function IntervalAuraSetTime(name,type){
             //console.log(timer);
         }
         else if (partybuffs[name].refresh_ct > partybuffs[name].full_refresh){
-            timer = partybuffs[name].part_refresh_dur;
+            timer = (partybuffs[name].part_refresh_dur == 0) ? partybuffs[name].duration : partybuffs[name].part_refresh_dur;
             partybuffs[name].inactive = false;
             //console.log(timer);
         }
     } else {
         if(debuffs[name].uptime_g === 100){
             debuffs[name].inactive = true;
+            //console.log(name)
         }
         if(debuffs[name].inactive){debuffs[name].refresh_ct++;}
         if(debuffs[name].refresh_ct === debuffs[name].full_refresh && debuffs[name].inactive){ 
@@ -750,7 +751,7 @@ function IntervalAuraSetTime(name,type){
             //console.log(timer);
         }
         else if (debuffs[name].refresh_ct > debuffs[name].full_refresh){
-            timer = debuffs[name].part_refresh_dur;
+            timer = (debuffs[name].part_refresh_dur == 0) ? debuffs[name].duration : debuffs[name].part_refresh_dur;
             debuffs[name].inactive = false;
             //console.log(timer);
         }

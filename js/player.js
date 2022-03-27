@@ -334,8 +334,8 @@ function initialize(){
    checkWeaponType();
    currentgear = getStatsFromGear(gear);
    addGear();
-   console.log("current gear: ");
-   console.log(currentgear);
+   //console.log("current gear: ");
+   //console.log(currentgear);
    addBuffs();
    calcBaseStats();
    petStatsCalc();
