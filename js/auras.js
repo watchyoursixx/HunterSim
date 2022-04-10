@@ -5,6 +5,8 @@ var racialenable = false;
 var beastenable = false;
 var temp_oil = false;
 
+var readiness = {enable:false, cooldown: 0, basecd: 300};
+var queueReadiness = false;
 var auras = {
     // actives
     drums: {enable:true, timer:0, cooldown:0,basecd:120, duration:30, uptime:0, type:'battle', offset:0},// coded
@@ -193,6 +195,8 @@ function initializeAuras() {
     rapidcd = 300 - talents.rapid_killing * 60;
     auras.rapid.basecd = rapidcd;
 
+    readiness.enable = (talents.readiness > 0) ? true : false;
+
     return;
  }
  function ResetAuras(){
@@ -269,6 +273,7 @@ function initializeAuras() {
     partybuffs.ferociousinsp.timer = 0;
 
     sharedtrinketcd = 0;
+    readiness.cooldown = 0;
 
     return;
  }
@@ -325,6 +330,8 @@ function updateAuras(steptime) {
     if(auras.tenacity.cooldown > 0)           { auras.tenacity.cooldown = Math.max(auras.tenacity.cooldown - steptime,0); }
     if(auras.righteous.cooldown > 0)          { auras.righteous.cooldown = Math.max(auras.righteous.cooldown - steptime,0); }
     if(auras.shattered.cooldown > 0)          { auras.shattered.cooldown = Math.max(auras.shattered.cooldown - steptime,0); }
+    if(readiness.cooldown > 0)                { readiness.cooldown = Math.max(readiness.cooldown - steptime,0); }
+    
     return;   
  }
 
@@ -788,7 +795,7 @@ function onUseSpellCheck(){
         }
     }
     let rapidcost = Math.floor(100 * beastwithinreduc);
-    if(auras.rapid.enable && auras.rapid.cooldown === 0 && currentMana >= rapidcost){
+    if(auras.rapid.enable && auras.rapid.cooldown === 0 && (currentMana >= rapidcost) && auras.rapid.timer == 0){
         auras.rapid.timer = (auras.rapid.cooldown === 0) ? auras.rapid.duration : auras.rapid.timer; // set timer
         auras.rapid.cooldown = (auras.rapid.timer === auras.rapid.duration) ? auras.rapid.basecd: auras.rapid.cooldown; // set cd
         if(combatlogRun) {
@@ -875,6 +882,19 @@ function onUseSpellCheck(){
         if(combatlogRun) {
             combatlogarray[combatlogindex] = steptimeend.toFixed(3) + " - Player gains Tenacity";
             combatlogindex++;
+        }
+    }
+
+    if (readiness.enable && (readiness.cooldown == 0) && auras.rapid.cooldown > 0) {
+        if (SPELLS.multishot.enable && SPELLS.multishot.cd > 5) {
+            queueReadiness = true;
+            
+        }
+        else if (!SPELLS.multishot.enable && SPELLS.steadyshot.cd > 0) {
+            queueReadiness = true;
+            
+        }
+        else { queueReadiness = false;
         }
     }
 }

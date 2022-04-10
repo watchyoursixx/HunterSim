@@ -269,13 +269,17 @@ function runSim() {
         if (spell === '') {
     
 			//spell = spell_choice_method_A();
-			spell = spell_choice_method_B();
-			
+			if (queueReadiness) {
+                spell = 'readiness';
+            }
+            else { spell = spell_choice_method_B(); }
+
             playertimestart = startTime(spell);
             
         }
         //console.log("spell => "+spell);
         killCommandCheck();
+        
         nextEvent(playertimestart);
     
         //console.log("step "+ steptime);
@@ -293,7 +297,12 @@ function runSim() {
     spread[countruns] = DPS;
     countruns++;
 }
-
+function startStepInitialize(){
+    fightduration = 180;
+    initializeAuras();
+    initializeSpells();
+    intervalAuraInitializer();
+}
 /** This is used to step through a fight rather than do a while loop. Useful for debugging. */
 function startStepOnly(){
     performancecheck1 = performance.now(); // test debug time check
@@ -308,7 +317,11 @@ function startStepOnly(){
     /******* decide spell selection ******/
     if (spell === '') {
 
-        spell = spell_choice_method_B();
+        if (queueReadiness) {
+            spell = 'readiness';
+        }
+        else { spell = spell_choice_method_B(); }
+
         playertimestart = startTime(spell);
         
     }
@@ -347,6 +360,7 @@ function startTime(spell){
     playertimestart += (spell === "raptorstrike") ? Math.max(SPELLS.raptorstrike.cd,0) + latency + 0.5 * weavetime: 0;
     playertimestart += (spell === "melee") ? Math.max(SPELLS.melee.cd,0) + latency + 0.5 * weavetime : 0;
     playertimestart += (spell === "aimedshot") ? Math.max(SPELLS.aimedshot.cd,0) + latency: 0;
+    playertimestart += (spell === "readiness") ? Math.max(currentgcd - playertimeend,0) : 0;
 
     return playertimestart;
 }
@@ -417,6 +431,18 @@ function nextEvent(playertimestart){
         }
         else if (spell === 'melee'){
             playertimeend = playertimestart;
+        }
+        else if (spell === 'readiness'){
+            currentgcd = playertimestart + 1; // gcd
+            //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
+            playertimeend = playertimestart;
+            if(combatlogRun) {
+                combatlogarray[combatlogindex] = playertimestart.toFixed(3) + " - Player casts Readiness. Next GCD => " + (Math.round(currentgcd * 1000) / 1000).toFixed(3) + "s";
+                combatlogindex++;
+            }
+            readiness.cooldown = 300;
+            auras.rapid.cooldown = 0;
+            queueReadiness = false;
         }
         playerattackready = true;
         //console.log(SPELLS);

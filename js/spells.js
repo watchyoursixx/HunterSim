@@ -10,6 +10,7 @@ var SPELLS = {
 
 };
 
+// for referencing spell names in combatlog
 SPELL_MAPPER = {
     autoshot: "Auto Shot",
     steadyshot: 'Steady Shot',
@@ -85,8 +86,8 @@ function initializeSpells(){
     SPELLS.steadyshot.cd = 0;
     SPELLS.multishot.cd = 0.5;
     SPELLS.arcaneshot.cd = 0.5;
-    SPELLS.raptorstrike.cd = 4; // set to 4 for initial delay for melee
-    SPELLS.melee.cd = 4; // set to 4 for initial delay for melee
+    SPELLS.raptorstrike.cd = 4; // set to 4 for initial delay for melee due to running in
+    SPELLS.melee.cd = 4; // set to 4 for initial delay for melee due to running in
     //SPELLS.aimedshot.cd = 0;
     // set pet spell CDs to 0
     PET_SPELLS[0].cd = 0;
@@ -101,8 +102,15 @@ function updateSpellCDs(spell,petspell) {
     SPELLS.multishot.cd = (spell === 'multishot') ? 10 : Math.max(SPELLS.multishot.cd - steptime, 0);
     SPELLS.arcaneshot.cd = (spell === 'arcaneshot') ? (6 - talents.imp_arc_shot) : Math.max(SPELLS.arcaneshot.cd - steptime, 0);
     //SPELLS.aimedshot.cd = Math.max(SPELLS.aimedshot.cd - steptime, 0);
-
-	if(spell === 'raptorstrike'){
+    
+    if(spell === 'readiness'){ // set spell cd's to 0
+        SPELLS.steadyshot.cd = 0;
+        SPELLS.multishot.cd = 0;
+        SPELLS.arcaneshot.cd = 0;
+        SPELLS.raptorstrike.cd = (SPELLS.melee.cd == 0) ? 0 : SPELLS.melee.cd;
+        //SPELLS.aimedshot.cd = 0;
+    }
+	else if(spell === 'raptorstrike'){
 		SPELLS.melee.cd = meleespeed;
 		SPELLS.raptorstrike.cd = 6;
 	}
