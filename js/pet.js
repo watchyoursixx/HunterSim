@@ -91,7 +91,7 @@ function petStatsCalc(){
         beasttamers_dmg = 1.02;
         beasttamers_crit = 2;
     };
-    pet.dmgmod = PetHappiness * talents.unleash_fury * PETS[selectedPet].dmgmod * racialmod * beasttamers_dmg;
+    pet.dmgmod = PetHappiness * talents.unleash_fury * PETS[selectedPet].dmgmod * racialmod * beasttamers_dmg * selectedbuffs.special.impSancAura;
 
     pet.str = Math.floor((PetBaseStr + (selectedbuffs.stats.Str || 0) + (petconsumestats.Str || 0)) * selectedbuffs.special.kingsMod);
     pet.agi = Math.floor((PetBaseAgi + (selectedbuffs.stats.Agi || 0) + (petconsumestats.Agi || 0)) * selectedbuffs.special.kingsMod);

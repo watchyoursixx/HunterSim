@@ -269,13 +269,17 @@ function runSim() {
         if (spell === '') {
     
 			//spell = spell_choice_method_A();
-			spell = spell_choice_method_B();
-			
+			if (queueReadiness) {
+                spell = 'readiness';
+            }
+            else { spell = spell_choice_method_B(); }
+
             playertimestart = startTime(spell);
             
         }
         //console.log("spell => "+spell);
         killCommandCheck();
+        
         nextEvent(playertimestart);
     
         //console.log("step "+ steptime);
@@ -293,7 +297,12 @@ function runSim() {
     spread[countruns] = DPS;
     countruns++;
 }
-
+function startStepInitialize(){
+    fightduration = 180;
+    initializeAuras();
+    initializeSpells();
+    intervalAuraInitializer();
+}
 /** This is used to step through a fight rather than do a while loop. Useful for debugging. */
 function startStepOnly(){
     performancecheck1 = performance.now(); // test debug time check
@@ -308,7 +317,11 @@ function startStepOnly(){
     /******* decide spell selection ******/
     if (spell === '') {
 
-        spell = spell_choice_method_B();
+        if (queueReadiness) {
+            spell = 'readiness';
+        }
+        else { spell = spell_choice_method_B(); }
+
         playertimestart = startTime(spell);
         
     }
@@ -347,6 +360,7 @@ function startTime(spell){
     playertimestart += (spell === "raptorstrike") ? Math.max(SPELLS.raptorstrike.cd,0) + latency + 0.5 * weavetime: 0;
     playertimestart += (spell === "melee") ? Math.max(SPELLS.melee.cd,0) + latency + 0.5 * weavetime : 0;
     playertimestart += (spell === "aimedshot") ? Math.max(SPELLS.aimedshot.cd,0) + latency: 0;
+    playertimestart += (spell === "readiness") ? Math.max(currentgcd - playertimeend,0) : 0;
 
     return playertimestart;
 }
@@ -417,6 +431,18 @@ function nextEvent(playertimestart){
         }
         else if (spell === 'melee'){
             playertimeend = playertimestart;
+        }
+        else if (spell === 'readiness'){
+            currentgcd = playertimestart + 1; // gcd
+            //console.log("gcd => " + (Math.round(currentgcd * 1000) / 1000));
+            playertimeend = playertimestart;
+            if(combatlogRun) {
+                combatlogarray[combatlogindex] = playertimestart.toFixed(3) + " - Player casts Readiness. Next GCD => " + (Math.round(currentgcd * 1000) / 1000).toFixed(3) + "s";
+                combatlogindex++;
+            }
+            readiness.cooldown = 300;
+            auras.rapid.cooldown = 0;
+            queueReadiness = false;
         }
         playerattackready = true;
         //console.log(SPELLS);
@@ -631,13 +657,13 @@ function statWeightLoop(){
         // more followup work
         statweights.RangeCrit = (Math.abs((avgDPS - basedps)/50)+statweights.RangeCrit) / 2;
         // ************** RANGEHIT *******************
-        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 10,rangecrit: 0,
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -10,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.RangeHit = Math.max((avgDPS - basedps) / 10, 0);
+        statweights.RangeHit = Math.max((basedps - avgDPS) / 10, 0);
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -10,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
@@ -692,12 +718,12 @@ function statWeightLoop(){
         statweights.MAP = (Math.abs((avgDPS - basedps)/100)+statweights.MAP) / 2;
         // ************** MELEE HIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
-            haste: 0,arp: 0,MAP: 0,meleehit: 10,meleecrit: 0,expertise: 0,mp5: 0};
+            haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.MeleeHit = Math.max((avgDPS - basedps) / 10, 0);
+        statweights.MeleeHit = Math.max((basedps - avgDPS) / 10, 0);
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
@@ -779,6 +805,296 @@ function statWeightLoop(){
         isStatWeights = false;
         statweights.Crit = statweights.RangeCrit + statweights.MeleeCrit;
         statweights.Hit = statweights.RangeHit + statweights.MeleeHit;
+        console.log("*****************");
+    })
+
+      
+}
+
+function trinketSimLoop(){
+    isStatWeights = true;
+    useAverages = true;
+
+    //let basedps = 0;
+    let performance1 = performance.now(); // test debug time check
+    let olditerations = iterations;
+    iterations = 10000;
+    weightiteration = 0;
+    maxWeightIteration = iterations * 20;
+    let oldtrink1 = gear.trinket1;
+    let oldtrink2 = gear.trinket2;
+
+    // initialize trinket baseline
+    gear.trinket1 = { id: 23835 };
+    gear.trinket2 = { id: 23835 };
+    let basedps = 0;
+    let DPSdiff = [];
+    let loopnum = 0;
+    initialize();
+    let trinketlist = [
+        {id: 21670, name: "Badge of the Swarmguard" },
+        {id: 23041, name: "Slayer's Crest" },
+        {id: 23206, name: "Mark of the Champion" },
+        {id: 24128, name: "Figurine - Nightseye Panther" },
+        {id: 28034, name: "Hourglass of the Unraveller" },
+        {id: 28121, name: "Icon of Unyielding Courage" },
+        {id: 28288, name: "Abacus of Violent Odds" },
+        {id: 28579, name: "Romulo's Poison Vial" },
+        {id: 28830, name: "Dragonspine Trophy" },
+        {id: 29383, name: "Bloodlust Brooch" },
+        {id: 30627, name: "Tsunami Talisman" },
+        {id: 31856, name: "Darkmoon Card: Crusade" },
+        {id: 32487, name: "Ashtongue Talisman of Swiftness" },
+        {id: 32505, name: "Madness of the Betrayer" },
+        {id: 32654, name: "Crystalforged Trinket" },
+        {id: 32658, name: "Badge of Tenacity" },
+        {id: 33831, name: "Berserker's Call" },
+        {id: 34427, name: "Blackened Naaru Sliver" },
+        {id: 35702, name: "Figurine - Shadowsong Panther" }
+
+    ];
+    loopSim().then(() => {
+        basedps = avgDPS;
+        // ************** AGI *******************
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        initialize();
+        return loopSim();       
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+
+        // ************** RAP *******************
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+
+        // ************** RANGECRIT *******************
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+
+        // ************** RANGEHIT *******************
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => { // save range hit
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** HASTE *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** ArP *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** MAP *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** MELEE HIT *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** MELEE CRIT *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        loopnum++;
+        gear.trinket1 = { id: trinketlist[loopnum].id };
+        console.log(gear.trinket1)
+        console.log("begin " + loopnum);
+        console.log(DPSdiff);
+        // ************** EXPERTISE *******************
+
+        initialize();
+        return loopSim();
+    }).then(() => {
+        // more followup work
+        
+        DPSdiff[loopnum] = { dps: (avgDPS - basedps), name: trinketlist[loopnum].name };
+        // more followup work
+
+        // ************* RESET AND DISPLAY ****************
+        gear.trinket1 = oldtrink1;
+        gear.trinket2 = oldtrink2;
+        initialize();
+        let performance2 = performance.now(); // test debug time check
+        executecodetime = (performance2 - performance1) / 1000; // milliseconds convert to sec
+        displayDPSResults();
+        //displayStatWeights();
+        console.log(DPSdiff);
+        iterations = olditerations;
+        useAverages = false;
+        isStatWeights = false;
+
         console.log("*****************");
     })
 

@@ -296,7 +296,8 @@ function calcBaseStats() {
   MeleeHitRating = hitrating + custom.meleehit;
 
   RangeHitRating = hitrating + (currentgear.stats.RangeHit || 0) + custom.rangehit;
-   let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance;
+   let racialhit = (selectedRace == 2) ? 1 : 0;
+   let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance + racialhit;
   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
 
@@ -334,14 +335,14 @@ function initialize(){
    checkWeaponType();
    currentgear = getStatsFromGear(gear);
    addGear();
-   console.log("current gear: ");
-   console.log(currentgear);
+   //console.log("current gear: ");
+   //console.log(currentgear);
    addBuffs();
    calcBaseStats();
    petStatsCalc();
    initializeWeps();
    initializeAuras();
-   
+   getHitData(); // used for gear display, simple formula to set hit cap goal
 }
 
 function initializeWeps() {
