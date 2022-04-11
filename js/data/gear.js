@@ -2601,7 +2601,7 @@ const FEET = {
         socketBonus: {
             Stam: 3
         },
-        Phase: 4,
+        Phase: 5,
         icon: "inv_boots_07",
         quality: "Epic"
     }
@@ -6854,7 +6854,7 @@ const MELEE_WEAPONS = {
         icon: "inv_weapon_hand_12",
         quality: "Epic"
     },
-    29962: {
+    31422: {
         name: "Heartless",
         stats: {
             Stam: 30,
@@ -7210,11 +7210,11 @@ const MELEE_WEAPONS = {
         icon: "inv_weapon_shortblade_03",
         quality: "Rare"
     },
-    31422: {
+    29962: {
         name: "Heartrazor",
         stats: {
-            Agi: 18,
-            Stam: 25
+            Agi: 20,
+            Stam: 30
         },
         Location: "The Eye",
         type: "dagger",

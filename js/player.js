@@ -342,7 +342,7 @@ function initialize(){
    petStatsCalc();
    initializeWeps();
    initializeAuras();
-   
+   getHitData(); // used for gear display, simple formula to set hit cap goal
 }
 
 function initializeWeps() {

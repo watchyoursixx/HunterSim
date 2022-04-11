@@ -24,6 +24,26 @@ var preferredGems = {
     Yellow: 31868,
     Meta: 32409
 }
+var hitCap = 142;
+var equippedHit = {
+    head: 0,
+    neck: 0,
+    shoulder: 0,
+    back: 0,
+    chest: 0,
+    wrist: 0,
+    mainhand: 0,
+    offhand: 0,
+    hand: 0,
+    waist: 0,
+    leg: 0,
+    feet: 0,
+    ring1: 0,
+    ring2: 0,
+    trinket1: 0,
+    trinket2: 0,
+    range: 0
+}
 
 var gemsTotalsEquipped = {};
 // on click listeners for slots and enchants
@@ -573,6 +593,38 @@ function textColorDisplay(slot,array){
     
 }
 
+// used for gear lists calculating hit in gear
+function getHitData(){
+    let ffbonus = document.getElementById("ffbonus").selected;
+    if (talents.surefooted > 0 && ffbonus) {
+       hitCap = 142 - (HitRatingRatio * talents.surefooted + HitRatingRatio * 3);
+    }
+    else if (ffbonus) {
+       hitCap = 142 - HitRatingRatio * 3;
+    }
+    else hitCap = 142;
+
+    equippedHit.head = (!!HEADS[gear.head.id].stats.Hit) ? HEADS[gear.head.id].stats.Hit : 0;
+    equippedHit.neck = (!!NECKS[gear.neck.id].stats.Hit) ? NECKS[gear.neck.id].stats.Hit : 0;
+    equippedHit.shoulder = (!!SHOULDERS[gear.shoulder.id].stats.Hit) ? SHOULDERS[gear.shoulder.id].stats.Hit : 0;
+    equippedHit.back = (!!BACKS[gear.back.id].stats.Hit) ? BACKS[gear.back.id].stats.Hit : 0;
+    equippedHit.chest = (!!CHESTS[gear.chest.id].stats.Hit) ? CHESTS[gear.chest.id].stats.Hit : 0;
+    equippedHit.wrist = (!!WRISTS[gear.wrist.id].stats.Hit) ? WRISTS[gear.wrist.id].stats.Hit : 0;
+    equippedHit.mainhand = (!!MELEE_WEAPONS[gear.mainhand.id].stats.Hit) ? MELEE_WEAPONS[gear.mainhand.id].stats.Hit : 0;
+    if (!offhandDisabled) {
+        equippedHit.offhand = (!!MELEE_WEAPONS[gear.offhand.id].stats.Hit) ? MELEE_WEAPONS[gear.offhand.id].stats.Hit : 0; }
+    equippedHit.range = (!!RANGED_WEAPONS[gear.range.id].stats.Hit) ? RANGED_WEAPONS[gear.range.id].stats.Hit : 0;
+    equippedHit.hand = (!!HANDS[gear.hand.id].stats.Hit) ? HANDS[gear.hand.id].stats.Hit : 0;
+    equippedHit.waist = (!!WAISTS[gear.waist.id].stats.Hit) ? WAISTS[gear.waist.id].stats.Hit : 0;
+    equippedHit.leg = (!!LEGS[gear.leg.id].stats.Hit) ? LEGS[gear.leg.id].stats.Hit : 0;
+    equippedHit.feet = (!!FEET[gear.feet.id].stats.Hit) ? FEET[gear.feet.id].stats.Hit : 0;
+    equippedHit.ring1 = (!!RINGS[gear.ring1.id].stats.Hit) ? RINGS[gear.ring1.id].stats.Hit : 0;
+    equippedHit.ring2 = (!!RINGS[gear.ring2.id].stats.Hit) ? RINGS[gear.ring2.id].stats.Hit : 0;
+    equippedHit.trinket1 = (!!TRINKETS[gear.trinket1.id].stats.Hit) ? TRINKETS[gear.trinket1.id].stats.Hit : 0;
+    equippedHit.trinket2 = (!!TRINKETS[gear.trinket2.id].stats.Hit) ? TRINKETS[gear.trinket2.id].stats.Hit : 0;
+
+}
+
 function estimateDps(item, weights) {
     let dps = 0;
     // check for meta gems
@@ -592,6 +644,9 @@ function estimateDps(item, weights) {
     // check for special weight
     else if (item.name == 'Beast-tamer\'s Shoulders') {
         dps += weights.beasttamer;
+    }
+    else if (item.name == 'Band of the Eternal Champion') {
+        dps += 15;
     }
     // check for weightstone/sharp stone for weps
     if ((activeslot == 'mainhand' || activeslot == 'offhand') && !!item.type) {
@@ -615,7 +670,15 @@ function estimateDps(item, weights) {
     }
     // add stats
     if (!!item.stats) {
-        dps += Object.entries(item.stats).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)
+        dps += Object.entries(item.stats).reduce((acc, [stat, value]) => {
+            let usedValue = value
+  
+            if (stat === "Hit") {
+                let currenthit = RangeHitRating - equippedHit[activeslot]
+                usedValue = currenthit < hitCap ? Math.min(hitCap - currenthit, value) : 0
+            }
+            return acc + (weights[stat] || 0) * usedValue
+          }, 0)
     } // if no stats, add specials, else return any previous calc'd value
     else if (!!item.special) {
         dps += Object.entries(item.special).reduce((acc, [stat, value]) => acc + (weights[stat] || 0) * value, 0)

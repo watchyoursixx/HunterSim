@@ -657,13 +657,13 @@ function statWeightLoop(){
         // more followup work
         statweights.RangeCrit = (Math.abs((avgDPS - basedps)/50)+statweights.RangeCrit) / 2;
         // ************** RANGEHIT *******************
-        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 10,rangecrit: 0,
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -10,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.RangeHit = Math.max((avgDPS - basedps) / 10, 0);
+        statweights.RangeHit = Math.max((basedps - avgDPS) / 10, 0);
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -10,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
@@ -718,12 +718,12 @@ function statWeightLoop(){
         statweights.MAP = (Math.abs((avgDPS - basedps)/100)+statweights.MAP) / 2;
         // ************** MELEE HIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
-            haste: 0,arp: 0,MAP: 0,meleehit: 10,meleecrit: 0,expertise: 0,mp5: 0};
+            haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.MeleeHit = Math.max((avgDPS - basedps) / 10, 0);
+        statweights.MeleeHit = Math.max((basedps - avgDPS) / 10, 0);
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
