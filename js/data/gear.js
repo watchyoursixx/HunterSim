@@ -9313,6 +9313,7 @@ const RANGED_WEAPONS = {
         name: "Fine Light Crossbow",
         type: "Xbow",
         mindmg: 29,
+        stats: {},
         maxdmg: 29,
         speed: 2.7,
         Phase: 1,
