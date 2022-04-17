@@ -130,6 +130,11 @@ function initializeModals(){
         importmodal.style.display = "none";
     }
 
+    let exportbtn = document.getElementById("exportbtn");
+    exportbtn.onclick = function() {
+        exportDataToFile();
+    }
+
     let logmodal = document.getElementById("logmodal");
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
@@ -147,8 +152,6 @@ function initializeModals(){
         }
     }
 }
-
-
 
 initializeModals();
 
@@ -241,8 +244,41 @@ function submitImportData(type) {
     
 }
 
+async function exportDataToFile() {
+    let opts = {
+        suggestedName: "HunterSim.json"
+    };
+    const handle = await showSaveFilePicker(opts);
+    const writable = await handle.createWritable();
+    await writable.write( exportSavedDataStorage() );
+    writable.close();
+}
+
+async function importDataFromFile() {
+    let opts = {
+        types: [
+            {
+                accept: {
+                    'json/*': ['.json']
+                },
+                excludeAcceptAllOption: true,
+                multiple: false
+            }
+        ]
+    };
+    [handle] = await showOpenFilePicker(opts);
+    const file = await handle.getFile();
+    const contents = await file.text();
+    let newstorage = JSON.parse(contents);
+    for (let key in newstorage) {
+        localStorage[key] = newstorage[key];
+    }
+    fetchData();
+    selectedOptionsResults();
+}
+
 function exportSavedDataStorage() {
-    JSON.stringify(localStorage)
+    return JSON.stringify(localStorage)
 }
 
 function importSavedDataStorage() {
