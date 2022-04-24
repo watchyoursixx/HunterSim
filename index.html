@@ -29,6 +29,19 @@
     <script class="u-script" type="text/javascript" src="js/pet.js"></script>
     <script class="u-script" type="text/javascript" src="js/player.js"></script>
     <script class="u-script" type="text/javascript" src="js/expected_dmg.js"></script>
+
+    <script class="u-script" type="text/javascript">
+      // Global error reporting to popup.
+      window.onerror = function(message, source, lineno, colno, error){
+        alert(`Message: ${JSON.stringify(message)}\nSource: ${source}\nLineNo: ${lineno}\nColNo: ${colno}\nError: ${error}`);
+      }
+      window.onunhandledrejection = function(e) {
+        alert(`Unhandled Promise Rejection: ${JSON.stringify(e)}`);
+      };
+      window.onrejectionhandled = function(e) {
+        console.log(`Rejection Handled: ${JSON.stringify(e)}`);
+      };
+    </script>
     
     <meta name="generator" content="Nicepage 3.28.7, nicepage.com">
     <script>const whTooltips = {colorLinks: false, iconizeLinks: false, renameLinks: false};</script>
@@ -1218,6 +1231,7 @@
       <button onclick="submitImportData('70U')">Submit 70U!</button>
       <button onclick="submitImportData('WA')">Submit WA Data!</button>
       <button onclick="importSavedDataStorage()">Submit Exported Data!</button>
+      <button onclick="importDataFromFile()">Submit Exported JSON File!</button>
 
       <p id="confirmimport" class="label-2"></p>
     </div>

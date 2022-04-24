@@ -824,9 +824,9 @@ function statWeightLoop(){
         statweights.Hit = statweights.RangeHit + statweights.MeleeHit;
         storeData();
         console.log("*****************");
-    })
-
-      
+    }).catch((e) => {
+        alert(`LoopSim error: ${JSON.stringify(e)}`);
+    });
 }
 
 function trinketSimLoop(){
@@ -1115,7 +1115,7 @@ function trinketSimLoop(){
         isStatWeights = false;
 
         console.log("*****************");
-    })
-
-      
+    }).catch((e) => {
+        alert(`LoopSim2 error: ${JSON.stringify(e)}`);
+    });
 }
