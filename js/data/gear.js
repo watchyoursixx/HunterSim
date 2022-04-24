@@ -7017,6 +7017,23 @@ const MELEE_WEAPONS = {
         icon: "inv_axe_40",
         quality: "Uncommon"
     },
+    33465: {
+        name: "Staff of Primal Fury",
+        stats: {
+            Agi: 49,
+            Stam: 70,
+            ArP: 315
+        },
+        Location: "Zul'Aman",
+        type: "staff",
+        speed: 3,
+        mindmg: 135,
+        maxdmg: 285,
+        hand: "Two",
+        Phase: 4,
+        icon: "inv_staff_12",
+        quality: "Epic"
+    },
     30396: {
         name: "Jeweled Halberd",
         stats: {
@@ -8312,6 +8329,24 @@ const MELEE_WEAPONS = {
         icon: "inv_weapon_halberd_20",
         quality: "Epic"
     },
+    34203: {
+        name: "Grip of Mannoroth",
+        stats: {
+            Hit: 20,
+            MAP: 46,
+            RAP: 46,
+            Haste: 31
+        },
+        Location: "Sunwell",
+        type: "fist",
+        speed: 1.5,
+        mindmg: 113,
+        maxdmg: 211,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_weapon_hand_15",
+        quality: "Epic"
+    },
     34197: {
         name: "Shiv of Exsanguination",
         stats: {
@@ -9315,6 +9350,7 @@ const RANGED_WEAPONS = {
         mindmg: 29,
         stats: {},
         maxdmg: 29,
+        stats: {},
         speed: 2.7,
         Phase: 1,
         icon: "inv_weapon_crossbow_02",

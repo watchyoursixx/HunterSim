@@ -436,11 +436,11 @@ ul {
     cursor: pointer;
   }
 .import-select-input {
-  margin-top: 2px;
-  margin-bottom: 2px;
   font-size: 18px;
   height: 30px;
-  width: 435px;
+  width: 90%;
+  display: block;
+  margin: 0 auto;
 }
 .gear-select-input {
   margin-top: 2px;

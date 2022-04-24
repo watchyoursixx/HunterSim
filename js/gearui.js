@@ -3,14 +3,14 @@ var prevslot = '';
 var activetab = '';
 
 var phase = parseInt(document.getElementById('phasecheck').value);
-var raidcheck = document.getElementById("raidcheck").checked;
-var pvpcheck = document.getElementById("pvpcheck").checked;
-var greencheck = document.getElementById("greencheck").checked;
-var boecheck = document.getElementById("boecheck").checked;
-var leathercheck = document.getElementById("leathercheck").checked;
-var repcheck = document.getElementById("repcheck").checked;
-var bosscheck = document.getElementById("bosscheck").checked;
-var craftcheck = document.getElementById("craftcheck").checked;
+var raidcheck = true;
+var pvpcheck = true;
+var greencheck = true;
+var boecheck = true;
+var leathercheck = true;
+var repcheck = true;
+var bosscheck = true;
+var craftcheck = true;
 var lastoffhand = gear.offhand; // placeholder to prevent an error
 document.getElementById("1hfilter").checked = true; // set true on load
 document.getElementById("2hfilter").checked = true; // set true on load
@@ -25,25 +25,48 @@ var preferredGems = {
     Meta: 32409
 }
 var hitCap = 142;
-var equippedHit = {
-    head: 0,
-    neck: 0,
-    shoulder: 0,
-    back: 0,
-    chest: 0,
-    wrist: 0,
-    mainhand: 0,
-    offhand: 0,
-    hand: 0,
-    waist: 0,
-    leg: 0,
-    feet: 0,
-    ring1: 0,
-    ring2: 0,
-    trinket1: 0,
-    trinket2: 0,
-    range: 0
+var ArmorPenCap = 10000;
+var equippedStats = {
+    head: {hit: 0, arp: 0},
+    neck: {hit: 0, arp: 0},
+    shoulder: {hit: 0, arp: 0},
+    back: {hit: 0, arp: 0},
+    chest: {hit: 0, arp: 0},
+    wrist: {hit: 0, arp: 0},
+    mainhand: {hit: 0, arp: 0},
+    offhand: {hit: 0, arp: 0},
+    hand: {hit: 0, arp: 0},
+    waist: {hit: 0, arp: 0},
+    leg: {hit: 0, arp: 0},
+    feet: {hit: 0, arp: 0},
+    ring1: {hit: 0, arp: 0},
+    ring2: {hit: 0, arp: 0},
+    trinket1: {hit: 0, arp: 0},
+    trinket2: {hit: 0, arp: 0},
+    range: {hit: 0, arp: 0}
 }
+
+var trinketDPS = [
+    {dps: 25.24981245976869, name: 'Badge of the Swarmguard'},
+    {dps: 71.46081991182291, name: "Slayer's Crest"},
+    {dps: 64.66295138453961, name: 'Mark of the Champion'},
+    {dps: 44.47401722455834, name: 'Figurine - Nightseye Panther'},
+    {dps: 61.611459166089844, name: 'Hourglass of the Unraveller'},
+    {dps: 69.16396449895183, name: 'Icon of Unyielding Courage'},
+    {dps: 64.39077620214039, name: 'Abacus of Violent Odds'},
+    {dps: 45.59554515485024, name: "Romulo's Poison Vial"},
+    {dps: 95.41318617760044, name: 'Dragonspine Trophy'},
+    {dps: 78.54442314914559, name: 'Bloodlust Brooch'},
+    {dps: 94.1888737152185, name: 'Tsunami Talisman'},
+    {dps: 58.27220034647098, name: 'Darkmoon Card: Crusade'},
+    {dps: 70.35606140933487, name: 'Ashtongue Talisman of Swiftness'},
+    {dps: 93.63456311854361, name: 'Madness of the Betrayer'},
+    {dps: 22.321146686504107, name: 'Crystalforged Trinket'},
+    {dps: 42.07608971154286, name: 'Badge of Tenacity'},
+    {dps: 99.29119030891479, name: "Berserker's Call"},
+    {dps: 149.97112029215214, name: 'Blackened Naaru Sliver'},
+    {dps: 74.71525427084089, name: 'Figurine - Shadowsong Panther'}
+]
 
 var gemsTotalsEquipped = {};
 // on click listeners for slots and enchants
@@ -593,8 +616,9 @@ function textColorDisplay(slot,array){
     
 }
 
-// used for gear lists calculating hit in gear
-function getHitData(){
+// used for gear lists calculating hit, ArP in gear and caps
+function getStatsCapData(){
+    // hit
     let ffbonus = document.getElementById("ffbonus").selected;
     if (talents.surefooted > 0 && ffbonus) {
        hitCap = 142 - (HitRatingRatio * talents.surefooted + HitRatingRatio * 3);
@@ -604,25 +628,33 @@ function getHitData(){
     }
     else hitCap = 142;
 
-    equippedHit.head = (!!HEADS[gear.head.id].stats.Hit) ? HEADS[gear.head.id].stats.Hit : 0;
-    equippedHit.neck = (!!NECKS[gear.neck.id].stats.Hit) ? NECKS[gear.neck.id].stats.Hit : 0;
-    equippedHit.shoulder = (!!SHOULDERS[gear.shoulder.id].stats.Hit) ? SHOULDERS[gear.shoulder.id].stats.Hit : 0;
-    equippedHit.back = (!!BACKS[gear.back.id].stats.Hit) ? BACKS[gear.back.id].stats.Hit : 0;
-    equippedHit.chest = (!!CHESTS[gear.chest.id].stats.Hit) ? CHESTS[gear.chest.id].stats.Hit : 0;
-    equippedHit.wrist = (!!WRISTS[gear.wrist.id].stats.Hit) ? WRISTS[gear.wrist.id].stats.Hit : 0;
-    equippedHit.mainhand = (!!MELEE_WEAPONS[gear.mainhand.id].stats.Hit) ? MELEE_WEAPONS[gear.mainhand.id].stats.Hit : 0;
-    if (!offhandDisabled) {
-        equippedHit.offhand = (!!MELEE_WEAPONS[gear.offhand.id].stats.Hit) ? MELEE_WEAPONS[gear.offhand.id].stats.Hit : 0; }
-    equippedHit.range = (!!RANGED_WEAPONS[gear.range.id].stats.Hit) ? RANGED_WEAPONS[gear.range.id].stats.Hit : 0;
-    equippedHit.hand = (!!HANDS[gear.hand.id].stats.Hit) ? HANDS[gear.hand.id].stats.Hit : 0;
-    equippedHit.waist = (!!WAISTS[gear.waist.id].stats.Hit) ? WAISTS[gear.waist.id].stats.Hit : 0;
-    equippedHit.leg = (!!LEGS[gear.leg.id].stats.Hit) ? LEGS[gear.leg.id].stats.Hit : 0;
-    equippedHit.feet = (!!FEET[gear.feet.id].stats.Hit) ? FEET[gear.feet.id].stats.Hit : 0;
-    equippedHit.ring1 = (!!RINGS[gear.ring1.id].stats.Hit) ? RINGS[gear.ring1.id].stats.Hit : 0;
-    equippedHit.ring2 = (!!RINGS[gear.ring2.id].stats.Hit) ? RINGS[gear.ring2.id].stats.Hit : 0;
-    equippedHit.trinket1 = (!!TRINKETS[gear.trinket1.id].stats.Hit) ? TRINKETS[gear.trinket1.id].stats.Hit : 0;
-    equippedHit.trinket2 = (!!TRINKETS[gear.trinket2.id].stats.Hit) ? TRINKETS[gear.trinket2.id].stats.Hit : 0;
+    // ARP cap calculation
+    let arp = 0;
+    arp += (debuffs.faeriefire.uptime_g > 0) ? debuffs.faeriefire.arp : 0;
+    arp += (debuffs.curseofreck.uptime_g > 0) ? debuffs.curseofreck.arp : 0;
+    if (debuffs.impexpose.uptime_g > 0) {
+        arp += debuffs.impexpose.arp;
+    }
+    else if (debuffs.sunder.uptime_g > 0) {
+        arp += 5 * debuffs.sunder.arp;
+    }
+    ArmorPenCap = target.armor - arp;
+    
+    for (slot in equippedStats) {
+        let SLOT_DATA = GEAR_MAP[slot];
+        let item = 0;
+        let ITEM_DATA = {};
+        if ((slot == "offhand" && !offhandDisabled) || slot !== "offhand") {
+            item = gear[slot].id;
+            ITEM_DATA = SLOT_DATA[item];
 
+            if (!!ITEM_DATA.stats) {
+            
+                equippedStats[slot].hit = (!!ITEM_DATA.stats.Hit) ? ITEM_DATA.stats.Hit : 0;
+                equippedStats[slot].arp = (!!ITEM_DATA.stats.ArP) ? ITEM_DATA.stats.ArP : 0;
+            }
+        }
+    }
 }
 
 function estimateDps(item, weights) {
@@ -668,14 +700,31 @@ function estimateDps(item, weights) {
     } else if (activeslot == 'range' && !!item.type) {
         dps += item.speed * 50 + ((item.mindmg + item.maxdmg) / 2) / item.speed * 5.8;
     }
-    // add stats
-    if (!!item.stats) {
+
+    if (activeslot == 'ammo') {
+        dps += item.ammo_dps;
+    } 
+    else if ((activeslot == 'trinket1' || activeslot == 'trinket2') && !!item.aura) {
+        
+        if (trinketDPS.length !== 0) {
+            let filteredarray = trinketDPS.filter(key => (key.name == item.name));
+            if (filteredarray.length !== 0){
+                dps += filteredarray[0].dps;
+            }
+        }
+    } // add stats
+    else if (!!item.stats) {
         dps += Object.entries(item.stats).reduce((acc, [stat, value]) => {
             let usedValue = value
   
             if (stat === "Hit") {
-                let currenthit = RangeHitRating - equippedHit[activeslot]
-                usedValue = currenthit < hitCap ? Math.min(hitCap - currenthit, value) : 0
+                let currenthit = RangeHitRating - equippedStats[activeslot].hit;
+                usedValue = currenthit < hitCap ? Math.min(hitCap - currenthit, value) : 0;
+            }
+            else if (stat === "ArP") {
+
+                let currentarp = ArmorPen - equippedStats[activeslot].arp;
+                usedValue = currentarp < ArmorPenCap ? Math.min(ArmorPenCap - currentarp, value) : 0;
             }
             return acc + (weights[stat] || 0) * usedValue
           }, 0)

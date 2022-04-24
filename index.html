@@ -86,8 +86,8 @@
           </div>
           <div class="u-custom-menu u-nav-container">
             <ul class="u-custom-font u-nav u-text-font u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-custom-color-2 u-nav-link u-text-active-custom-color-3 u-text-hover-custom-color-5" href="index.html" style="padding: 10px 20px;">Main</a>
-</li><li class="u-nav-item"><a class="u-button-style u-custom-color-2 u-nav-link u-text-active-custom-color-3 u-text-hover-custom-color-5" href="" style="padding: 10px 20px;">Gear Planner</a>
-</li><li class="u-nav-item"><a class="u-button-style u-custom-color-2 u-nav-link u-text-active-custom-color-3 u-text-hover-custom-color-5" href="" style="padding: 10px 20px;">Group Evaluation</a>
+</li><li class="u-nav-item"><a class="u-button-style u-custom-color-2 u-nav-link u-text-active-custom-color-3 u-text-hover-custom-color-5" href="" style="padding: 10px 20px;">Coming Soon!</a>
+</li><li class="u-nav-item"><a class="u-button-style u-custom-color-2 u-nav-link u-text-active-custom-color-3 u-text-hover-custom-color-5" href="" style="padding: 10px 20px;">Coming Soon!</a>
 </li></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
@@ -202,22 +202,68 @@
               </div>
               <div class="u-container-style u-layout-cell u-size-45 u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-2">
-                  <div class="u-container-style u-grey-75 u-group u-shape-rectangle u-group-1">
-                    <div class="u-container-layout u-valign-middle u-container-layout-3">
-                      <h4 class="u-align-left u-text u-text-custom-color-5 u-text-23">
-                        <select id="gearprofile" onchange="selectGearlist(this.value)" class="select hover-grey import-select-input">Sixx BiS P3 6% BM<br>
-                          </select>
-                      </h4>
+                  <div class="profiles-section"> <!-- header gear import/export save sets -->
+                    <div class="div-spec-display"> <!-- box for race, spec img and talents -->
+                      <div>
+                        <p class="u-align-center u-text u-text-custom-color-3 p-profile" id="racedisplay">Orc</p>
+                      </div>
+                      <div class="div-spec-image">
+                        <img id="specimg" class="u-border-2 u-border-black u-image u-image-default u-preserve-proportions u-image-1" src="images/Ability_Hunter_BeastTaming.png" alt="" data-image-width="60" data-image-height="60">
+                      </div>
+                      <div>
+                        <p class="u-align-center u-text u-text-custom-color-3 p-profile" id="currtalent">0/20/41</p>
+                      </div>
+                    </div>
+                    <div class="div-importexport-display"> <!-- box for all import/presets/etc-->
+                      <div class="div-profile-flex"><!-- box for ddls-->
+                        <div class="div-profile-50-inline"> <!-- box for preset and ddl -->
+                          <div>
+                            <p class="u-align-center u-text u-text-custom-color-3 p-profile">Presets</p>
+                          </div>
+                          <div>
+                            <select id="gearprofile" onchange="selectGearlist(this.value)" class="select hover-grey import-select-input">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="div-profile-50-inline"> <!-- box for saved sets and ddl-->
+                          <div>
+                            <p class="u-align-center u-text u-text-custom-color-3 p-profile">Saved Sets</p>
+                          </div>
+                          <div>
+                            <select id="savedset" class="select hover-grey import-select-input">
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="div-profile-50-inline auto-margin">
+                        <div>
+                          <input type="text" class="searchfield profile-text-field-margins" id="setNameText" placeholder="Enter Set Name..">
+                        </div>
+                      </div>
+                      <div class="flex-div">
+                        <div class="div-profile-25-inline">
+                          <a href="javascript:;" id="saveprofbtn" onclick="saveSet()" class="btn-profile-margins u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-profs">Save Set</a>
+                        </div>
+                        <div class="div-profile-25-inline">
+                          <a href="javascript:;" id="loadprofbtn" onclick="loadSet()" class="btn-profile-margins u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-profs">Load Set</a>
+                        </div>
+                        <div class="div-profile-25-inline">
+                          <a href="javascript:;" id="addprofbtn" onclick="addSet()" class="btn-profile-margins u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-profs">Add Set</a>
+                        </div>
+                        <div class="div-profile-25-inline">
+                          <a href="javascript:;" id="removeprofbtn" onclick="removeSet()" class="btn-profile-margins u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-profs">Remove Set</a>
+                        </div>
+                      </div>
+                      <div class="div-profile-flex"> <!-- box for import/export buttons-->
+                        <div class="div-profile-50-inline">
+                          <a href="javascript:;" id="importbtn" class="btn-profile-margins btn-float-right u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-4">Import</a>
+                        </div>
+                        <div class="div-profile-50-inline">
+                          <a href="javascript:;" id="exportbtn" class="btn-profile-margins btn-float-left u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-custom-color-2 u-hover-white u-radius-5 u-btn-5">Export</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <a href="javascript:;" id="importbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-4">Import<span style="font-size: 1rem;"></span>
-                  </a>
-                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-24">Hunter<br>
-                  </h4>
-                  <img class="u-border-2 u-border-black u-image u-image-default u-preserve-proportions u-image-1" src="images/Ability_Hunter_BeastTaming.png" alt="" data-image-width="60" data-image-height="60">
-                  <h4 class="u-align-center u-text u-text-custom-color-3 u-text-25" id="racedisplay">Orc<br>
-                  </h4>
-                  <a href="javascript:;" id="exportbtn" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-grey-70 u-hover-white u-radius-5 u-btn-5">Export</a>
                   <div class="u-container-style gear-section">
                     <!-- left gear box -->
                     <div class="u-left-gear">
@@ -597,7 +643,7 @@
             <option value="improved" id="shoutmod">Improved</option>
             <option selected value="base">Base</option>
           </select>
-          <select onchange="shoutCheck()" class="select hover-grey select-wide">
+          <select id="shoutbonus2" onchange="shoutCheck()" class="select hover-grey select-wide">
             <option value="t2solarian">T2 3pc+Solarian</option>
             <option value="t2">T2 3pc</option>
             <option value="solarian">Solarian</option>
@@ -635,7 +681,7 @@
         </select>
         <li><Label class="label-1">Battle Elixir</Label></li>
         <select onchange="battleSelection()" class="select hover-grey select-relative" id="battle">
-          <option value="majoragi">Elixir of Major Agility</option>
+          <option selected value="majoragi">Elixir of Major Agility</option>
           <option value="mongoose">Elixir of the Mongoose</option>
           <option value="demonslaying">Elixir of Demonslaying</option>
           <option value="felstrength">Fel Strength Elixir</option>
@@ -643,25 +689,25 @@
           <option value="greatagi">Elixir of Greater Agility</option>
           <option value="agility">Elixir of Agility</option>
           <option value="mastery">Elixir of Mastery</option>
-          <option selected value="none">No Battle Elixir</option>
+          <option value="none">No Battle Elixir</option>
         </select>
         <li><Label class="label-1">Guardian Elixir</Label></li>
         <select onchange="guardSelection()" class="select hover-grey select-relative" id="guardian">
-          <option value="majormageblood">Elixir of Major Mageblood</option>
+          <option selected value="majormageblood">Elixir of Major Mageblood</option>
           <option value="draenicwisdom">Elixir of Draenic Wisdom</option>
           <option value="mageblood">Mageblood Potion</option>
           <option value="intellect">Elixir of Greater Intellect</option>
           <option value="fortitude">Elixir of Fortitude</option>
-          <option selected value="none">No Guardian Elixir</option>
+          <option value="none">No Guardian Elixir</option>
         </select>
         <li><Label class="label-1">Scroll of Agility</Label></li>
         <select onchange="scrollagiSelection()" class="select hover-grey select-relative" id="scrollagi">
-          <option value="agi5">Scroll of Agility V</option>
+          <option selected value="agi5">Scroll of Agility V</option>
           <option value="agi4">Scroll of Agility IV</option>
           <option value="agi3">Scroll of Agility III</option>
           <option value="agi2">Scroll of Agility II</option>
           <option value="agi1">Scroll of Agility I</option>
-          <option selected value="none">No Agility Scroll</option>
+          <option value="none">No Agility Scroll</option>
         </select>
         <li><Label class="label-1">Scroll of Strength</Label></li>
         <select onchange="scrollstrSelection()" class="select hover-grey select-relative" id="scrollstr">
@@ -675,14 +721,14 @@
         <li><Label class="label-1">Food</Label></li>
         <select onchange="foodSelection()" class="select hover-grey select-relative" id="food">
           <option value="sporefish">Blackened Sporefish</option>
-          <option value="mudfish">Grilled Mudfish</option>
+          <option selected value="mudfish">Grilled Mudfish</option>
           <option value="squid">Grilled Squid</option>
           <option value="ravager">Ravager Dog</option>
           <option value="crawdad">Spicy Crawdad</option>
           <option value="spicytalbuk">Spicy Hot Talbuk</option>
           <option value="talbuk">Talbuk Steak</option>
           <option value="warp">Warp Burger</option>
-          <option selected value="none">No Food</option>
+          <option value="none">No Food</option>
         </select>
       </ul>
       <label class="settings-header-2">Pet Consumables</label>
@@ -700,18 +746,18 @@
         </select>
         <li><Label class="label-1">Scroll of Strength</Label></li>
         <select onchange="petscrollstrSelection()" class="select hover-grey select-relative" id="petscrollstr">
-          <option value="str5">Scroll of Strength V</option>
+          <option selected value="str5">Scroll of Strength V</option>
           <option value="str4">Scroll of Strength IV</option>
           <option value="str3">Scroll of Strength III</option>
           <option value="str2">Scroll of Strength II</option>
           <option value="str1">Scroll of Strength I</option>
-          <option selected value="none">No Strength Scroll</option>
+          <option value="none">No Strength Scroll</option>
         </select>
         <li><Label class="label-1">Food</Label></li>
         <select onchange="petfoodSelection()" class="select hover-grey select-relative" id="petfood">
-          <option value="kiblers">Kibler's Bits</option>
+          <option selected value="kiblers">Kibler's Bits</option>
           <option value="sporeling">Sporeling Snack</option>
-          <option selected value="none">No Pet Food</option>
+          <option value="none">No Pet Food</option>
         </select>
        </ul>
 
@@ -785,7 +831,7 @@
       <label class="settings-header-1">Aura Uptime Settings</label>
       <div class="settings-fight">
         <ul>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_hunter_snipershot.jpg" alt=""><label class="label-4">Hunter's Mark (Others)</label>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_hunter_snipershot.jpg" alt=""><label class="label-4">Hunter's Mark</label>
             <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="hmuptime" onchange=auraUptimeSettings() value="100"> %</li>
             <li><label class="label-5">HM - Bonus</label><select onchange=auraUptimeSettings() class="select hover-grey select-imp-auras-2">
               <option id="hmbonus" value="improved">Improved</option>
@@ -793,36 +839,36 @@
             </select>
             
           <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_rogue_findweakness.jpg" alt=""><label class="label-4">Expose Weakness (Others)</label>
-            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ewuptime" onchange=auraUptimeSettings() value="0"> %</li>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ewuptime" onchange=auraUptimeSettings() value="94"> %</li>
           <li><label class="label-5">EW - Agility</label><input type="number" step="1" min="500" max="2000" class="number-input hover-grey debuff-setting-input-1" id="ewagil" onchange=auraUptimeSettings() value="1000"></li>
           <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_righteousnessaura.jpg" alt=""><label class="label-4">Judgement of Wisdom</label>
-            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="jowuptime" onchange=auraUptimeSettings() value="90"> %</li>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="jowuptime" onchange=auraUptimeSettings() value="98"> %</li>
           <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_holysmite.jpg" alt=""><label class="label-4">Judgement of the Crusader</label>
-            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="jocuptime" onchange=auraUptimeSettings() value="90"> %</li>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="jocuptime" onchange=auraUptimeSettings() value="98"> %</li>
           <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_unholystrength.jpg" alt=""><label class="label-4">Curse of Recklessness</label>
-            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coruptime" onchange=auraUptimeSettings() value="95"> %</li>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coruptime" onchange=auraUptimeSettings() value="98"> %</li>
           <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_faeriefire.jpg" alt=""><label class="label-4">Faerie Fire</label>
-            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ffuptime" onchange=auraUptimeSettings() value="90"> %</li>
+            <input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ffuptime" onchange=auraUptimeSettings() value="98"> %</li>
           <div class="relative-wrapper">  
             <select onchange=auraUptimeSettings() class="select hover-grey select-imp-auras">
               <option id="ffbonus" value="improved">Improved</option>
               <option selected value="base">Base</option>
             </select>
           </div>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_sunder.jpg" alt=""><label class="label-6">Sunder Armor</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="sauptime" onchange=auraUptimeSettings() value="0"> %</li>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_sunder.jpg" alt=""><label class="label-6">Sunder Armor</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="sauptime" onchange=auraUptimeSettings() value="98"> %</li>
           <li><label class="label-8">SA - Stack time</label><input type="number" step="1" min="0" max="20" class="number-input hover-grey debuff-setting-input-1" id="sunderapp" onchange=auraUptimeSettings() value="5">sec</li>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_riposte.jpg" alt=""><label class="label-6">Improved Expose Armor</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ieuptime" onchange=auraUptimeSettings() value="100"> %</li>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_bloodfrenzy.jpg" alt=""><label class="label-6">Blood Frenzy</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="bfuptime" onchange=auraUptimeSettings() value="100"> %</li>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_misery.jpg" alt=""><label class="label-6">Misery</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="misuptime" onchange=auraUptimeSettings() value="100"> %</li>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_chilltouch.jpg" alt=""><label class="label-6">Curse of Ele.</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coeuptime" onchange=auraUptimeSettings() value="100"> %</li>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_riposte.jpg" alt=""><label class="label-6">Improved Expose Armor</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ieuptime" onchange=auraUptimeSettings() value="90"> %</li>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_warrior_bloodfrenzy.jpg" alt=""><label class="label-6">Blood Frenzy</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="bfuptime" onchange=auraUptimeSettings() value="98"> %</li>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_misery.jpg" alt=""><label class="label-6">Misery</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="misuptime" onchange=auraUptimeSettings() value="95"> %</li>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_shadow_chilltouch.jpg" alt=""><label class="label-6">Curse of Ele.</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="coeuptime" onchange=auraUptimeSettings() value="98"> %</li>
           <div class="relative-wrapper">
             <select onchange=auraUptimeSettings() class="select hover-grey select-imp-auras">
               <option id="coebonus" value="improved">Improved</option>
               <option selected value="base">Base</option>
             </select>
           </div>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_unleashedrage.jpg" alt=""><label class="label-6">Unleashed Rage</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="unlrageuptime" onchange=auraUptimeSettings() value="100"> %</li>
-          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_hunter_ferociousinspiration.jpg" alt=""><label class="label-6">Ferocious Insp. (Others)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ferocuptime" onchange=auraUptimeSettings() value="100"> %</li>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/spell_nature_unleashedrage.jpg" alt=""><label class="label-6">Unleashed Rage</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="unlrageuptime" onchange=auraUptimeSettings() value="0"> %</li>
+          <li><img class="settings-image-auras" src="https://wow.zamimg.com/images/wow/icons/large/ability_hunter_ferociousinspiration.jpg" alt=""><label class="label-6">Ferocious Insp. (Others)</label><input type="number" step="1" min="0" max="100" class="number-input hover-grey debuff-setting-input-1" id="ferocuptime" onchange=auraUptimeSettings() value="98"> %</li>
           <li><label class="label-5"># of BMs</label><select id="ferocstacks" onchange=auraUptimeSettings() class="select hover-grey select-imp-auras-2">
             <option value="4">4</option>
             <option value="3">3</option>
@@ -1022,9 +1068,9 @@
         <label class="container container-3">Crafted<input type="checkbox" id="craftcheck" onchange=updateGearLists()><span class="checkmark"></span></label>
       </div>
       <select class="select hover-grey select-filters" id="phasecheck" onchange=updateGearLists()>
-        <option value="5">Phase 5</option>
+        <option selected value="5">Phase 5</option>
         <option value="4">Phase 4</option>
-        <option selected value="3">Phase 3</option>
+        <option value="3">Phase 3</option>
         <option value="2">Phase 2</option>
         <option value="1">Phase 1</option>
       </select>

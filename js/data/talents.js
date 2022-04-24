@@ -128,7 +128,7 @@ const BM_TREE = [
   ],
   [
     {
-      name: "Serpent's Switfness",
+      name: "Serpent's Swiftness",
       abrv: 'serp_swift',
       max: 5,
       is_modifier: true,
