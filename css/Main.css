@@ -290,6 +290,8 @@ td {
   background-image: none;
   padding: 1px 15px 2px 15px;
   display:block;
+  overflow: visible;
+  white-space: pre-wrap;
 }
 .flex-div {
   display: flex;
@@ -616,6 +618,8 @@ td {
   margin-left: 0.625rem;
   position: relative;
   top: -5px;
+  overflow: hidden;
+  height:115%;
 }
 .detail-right-align {
   margin-right: 0.625rem;

@@ -1109,6 +1109,7 @@ function trinketSimLoop(){
         displayDPSResults();
         //displayStatWeights();
         console.log(DPSdiff);
+        trinketDPS = DPSdiff;
         iterations = olditerations;
         useAverages = false;
         isStatWeights = false;
