@@ -3,8 +3,8 @@ var currentiteration = 0;
 var weightiteration = 0;
 var maxWeightIteration = 0;
 var loopcheck = 0;
-var minfighttimer = 243;
-var maxfighttimer = 245;
+var minfighttimer = 180;
+var maxfighttimer = 182;
 var DPS = 0;
 var petDPS = 0;
 var mindps = 99999;
@@ -13,7 +13,7 @@ var totalduration = 0;
 var totaldmgdone = 0;
 var prevtimeend = 0;
 var executecodetime = 0.000;
-var latency = 0.05;
+var latency = 0.04;
 var currentgcd = 0;
 var autodmg = 0;
 var steadydmg = 0;
@@ -25,7 +25,7 @@ var meleedmg = 0;
 var sharedtrinketcd = 0;
 var playeruptime = 100;
 var petuptime = 100;
-var weavetime = 0.6;
+var weavetime = 0.8;
 var huntersinraid = 4;
 var simresults = {};
 var isStatWeights = false;
@@ -587,9 +587,26 @@ problematic cases: raptor + arcane, multi + arcane + raptor
 	return "autoshot";
 }
 
-var statweights = { Str: 0, Agi: 0.947, Int: 0, RAP: 0.428, RangeHit: 0.91, RangeCrit: 0.782, 
-    Haste: 0.779, ArP: 0.161, MAP: 0, MeleeHit: 0, MeleeCrit: 0, Expertise: 0, MP5: 0, Hit:0.91, Crit:0.782,
-    relentless:20.35, beasttamer: 22.11, dmgbonus: 0.75, rangedmgbonus: 0.75
+var statweights = { // accurate weights with 50k iterations at 7700 boss in default gear, p4 bis
+    Agi: 0.9605143836014804,
+    ArP: 0.16027539728151396,
+    Crit: 0.8845501877480455,
+    Expertise: 0.0017802250089289373,
+    Haste: 0.6429055024228614,
+    Hit: 1.0169360463006343,
+    Int: 0.008956822203713273,
+    MAP: 0.005536456701213411,
+    MP5: 0.001402849113087541,
+    MeleeCrit: 0.00013105937968703075,
+    MeleeHit: 0.005894374426353958,
+    RAP: 0.38799250528608353,
+    RangeCrit: 0.8844191283683585,
+    RangeHit: 1.0110416718742803,
+    Str: 0,
+    relentless:20.35, 
+    beasttamer: 22.11, 
+    dmgbonus: 0.75, 
+    rangedmgbonus: 0.75
 }
 
 function statWeightLoop(){
@@ -614,7 +631,7 @@ function statWeightLoop(){
         custom = {str: 0,agi: 50,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
-        iterations = 10000;
+        iterations = iterations/2;
         return loopSim();       
     }).then(() => {
         // more followup work
@@ -657,20 +674,20 @@ function statWeightLoop(){
         // more followup work
         statweights.RangeCrit = (Math.abs((avgDPS - basedps)/50)+statweights.RangeCrit) / 2;
         // ************** RANGEHIT *******************
-        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -10,rangecrit: 0,
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -30,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.RangeHit = Math.max((basedps - avgDPS) / 10, 0);
-        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -10,rangecrit: 0,
+        statweights.RangeHit = Math.max((basedps - avgDPS) / 30, 0);
+        custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: -30,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => { // save range hit
         // more followup work
-        statweights.RangeHit = (Math.abs((avgDPS - basedps)/10)+statweights.RangeHit) / 2;
+        statweights.RangeHit = (Math.abs((avgDPS - basedps)/30)+statweights.RangeHit) / 2;
         // ************** HASTE *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 100,arp: 0,MAP: 0,meleehit: 0,meleecrit: 0,expertise: 0,mp5: 0};
@@ -718,19 +735,19 @@ function statWeightLoop(){
         statweights.MAP = (Math.abs((avgDPS - basedps)/100)+statweights.MAP) / 2;
         // ************** MELEE HIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
-            haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
+            haste: 0,arp: 0,MAP: 0,meleehit: -30,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.MeleeHit = Math.max((basedps - avgDPS) / 10, 0);
+        statweights.MeleeHit = Math.max((basedps - avgDPS) / 30, 0);
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
-            haste: 0,arp: 0,MAP: 0,meleehit: -10,meleecrit: 0,expertise: 0,mp5: 0};
+            haste: 0,arp: 0,MAP: 0,meleehit: -30,meleecrit: 0,expertise: 0,mp5: 0};
         calcBaseStats();
         return loopSim();
     }).then(() => {
         // more followup work
-        statweights.MeleeHit = (Math.abs((avgDPS - basedps)/10)+statweights.MeleeHit) / 2;
+        statweights.MeleeHit = (Math.abs((avgDPS - basedps)/30)+statweights.MeleeHit) / 2;
         // ************** MELEE CRIT *******************
         custom = {str: 0,agi: 0,int: 0,RAP: 0,rangehit: 0,rangecrit: 0,
             haste: 0,arp: 0,MAP: 0,meleehit: 0,meleecrit: 50,expertise: 0,mp5: 0};
@@ -805,6 +822,7 @@ function statWeightLoop(){
         isStatWeights = false;
         statweights.Crit = statweights.RangeCrit + statweights.MeleeCrit;
         statweights.Hit = statweights.RangeHit + statweights.MeleeHit;
+        storeData();
         console.log("*****************");
     })
 

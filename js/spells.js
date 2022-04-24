@@ -2,8 +2,8 @@ var SPELLS = {
 
     autoshot: {cast:0.5, cd:0, dmg:0, cost:0, duration:0, gcd:false},
     steadyshot: {enable:true, cast:1.5, cd:0, dmg:0, cost:110, duration:0, rankdmg:150, gcd:true},
-    multishot: {enable:false, cast:0.5, cd:0, dmg:0, cost:275, duration:0, rankdmg:205, gcd:true},
-    arcaneshot: {enable:false, cast:0.0001, cd:0, dmg:0, cost:230, duration:0, rankdmg:273, gcd:true},
+    multishot: {enable:true, cast:0.5, cd:0, dmg:0, cost:275, duration:0, rankdmg:205, gcd:true},
+    arcaneshot: {enable:true, cast:0.0001, cd:0, dmg:0, cost:230, duration:0, rankdmg:273, gcd:true},
     aimedshot: {enable:false, cast:3, cd: 0, dmg:0, cost:370, duration:0, rankdmg:870, gcd:true},
     raptorstrike: {enable:false, cast:0.0, cd: 0, dmg:0, cost:120, rankdmg:170,gcd:false},
     melee: {enable:false, cast:0.0, cd:0, dmg:0, gcd:false},

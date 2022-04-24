@@ -1,15 +1,15 @@
 // default buffs for settings go here
 var buffslist = [
-    0, // bok
-    { id: 0, talented: false }, // bom
-    { id: 0, talented: false }, // bow
-    0, // lotp
-    { id: 0, talented: false }, // GoA
-    { id: 0, talented: false }, // SoE
-    0, // MsTot
-    0, // AI
-    { id: 0, talented: false }, // GotW
-    { id: 0, talented: false }, // PW:F
+    25898, // bok
+    { id: 27141, talented: true }, // bom
+    { id: 27143, talented: false }, // bow
+    17007, // lotp
+    { id: 25359, talented: true }, // GoA
+    { id: 25528, talented: true }, // SoE
+    25570, // MsTot
+    27127, // AI
+    { id: 26991, talented: true }, // GotW
+    { id: 25392, talented: true }, // PW:F
     { id: 0, talented: false }, // BP
     { id: 0, talented: false }, // WF
     0, // heroic presence
@@ -19,9 +19,19 @@ var buffslist = [
     0, // imp sanctity
     0  // feral crit idol
 ];
+var SavedSets = []; // blank array for saving sets, stored in localstorage?
+
 var filteredbuffs = [];
-var playerconsumes = {};
-var petconsumes = {};
+var playerconsumes = {
+    battle_elixir: 22831,
+    guardian_elixir: 22840,
+    agi_scroll: 27498,
+    food: 27664
+};
+var petconsumes = {
+    pet_food:33874,
+    str_scroll:27503
+};
 var talentindex = '6';
 var whtalentlink = '';
 var dpsresult = document.getElementById("dpsresult");
@@ -30,6 +40,11 @@ var dpsmax = document.getElementById("dpsmax");
 var dpserr = document.getElementById("dpserr");
 var executetime = document.getElementById("executetime");
 var dpscompare = document.getElementById("dpscompare");
+// disable input for player and pet uptimes
+document.getElementById("playeruptime").disabled = true;
+document.getElementById("petuptime").disabled = true;
+document.getElementById("weavepercent").disabled = true;
+document.getElementById("shoutbonus2").disabled = true;
 
 // show the stats on the HTML
 function displayStats(){
@@ -235,8 +250,7 @@ function submitImportData(type) {
         selectedOptionsResults();
     }
     catch(err){
-        document.getElementById("confirmimport").innerHTML = "Failed to import.. Check copied data and try again.";
-        console.log(err);
+        //throw new Error("Failed to import: " + err)
     }
     
 }
@@ -261,9 +275,74 @@ function importSavedDataStorage() {
         selectedOptionsResults();
     }
     catch(err){
-        document.getElementById("confirmimport").innerHTML = "Failed to import.. Check copied data and try again.";
         console.log(err);
     }
+}
+
+function loadSet() {
+
+    let val = parseInt(document.getElementById("savedset").value);
+    let activeset = SavedSets[val];
+    try {
+        
+        gear = activeset.data;
+        selectedOptionsResults();
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+function removeSet() {
+    
+    let currset = parseInt(document.getElementById("savedset").value);
+    let setname = document.getElementById("savedset").selectedOptions[0].text;
+    let remove = confirm("This will delete the set: '"+ setname + "' \nContinue?");
+    if (remove) {
+        SavedSets.splice(currset,1);
+        initializeSavedSets();
+    }
+}
+
+function saveSet() {
+
+    let currset = parseInt(document.getElementById("savedset").value);
+    let setname = document.getElementById("savedset").selectedOptions[0].text;
+    let save = confirm("This will overwrite the current set: '"+ setname + "' \nContinue?");
+    if (save) {
+        let currgear = JSON.parse(JSON.stringify(gear));
+        SavedSets[currset].data = currgear;
+        let test = JSON.stringify(SavedSets);
+        console.log(test.length)
+        storeData();
+    }
+}
+
+function addSet() {
+
+    let setName = document.getElementById("setNameText").value;
+    let currgear = JSON.parse(JSON.stringify(gear));
+    let newset = { setname: setName, data: currgear }
+    SavedSets.push(newset); 
+    let val = SavedSets.length;
+    initializeSavedSets(val - 1);
+
+    document.getElementById("setNameText").value = "";
+    storeData();
+}
+
+function initializeSavedSets(setnum) {
+    let value = (!!setnum) ? setnum : 0;
+    let sets = SavedSets;
+    let length = SavedSets.length;
+    var setOptions = "";
+    let i = 0;
+    for (i=0; i < length; i++) {
+        setOptions += "<option value="+i+" >" + sets[i].setname + "</option>";
+    }
+
+    document.getElementById("savedset").innerHTML = setOptions;
+    document.getElementById("savedset").value = value;
 }
 
 // called each time buffs change to filter zeros, get, recalc, and display them
@@ -329,9 +408,10 @@ initializeTargetDropdown();
 function initializeImportSets(){
 
     let imports = DEFAULT_GEAR_SETS;
+    let length = DEFAULT_GEAR_SETS.length;
     var importOptions = "";
     let i = 0;
-    for (i=0; i <= 7; i++) {
+    for (i=0; i <= 9; i++) {
         importOptions += "<option value= "+i+" >" + imports[i].description + "</option>";
     }
     //console.log(importOptions);
@@ -344,7 +424,6 @@ function selectGearlist() {
     let gearindex = document.getElementById("gearprofile").value;
     let gearobj = DEFAULT_GEAR_SETS[gearindex];
     gear = gearobj.data;
-    console.log(gear);
     selectedOptionsResults();
 }
 function auraUptimeSettings(){
@@ -387,6 +466,8 @@ function auraUptimeSettings(){
     partybuffs.unleashedrage.uptime_g = parseInt(unluptime);
     partybuffs.ferociousinsp.uptime_g = parseInt(ferocuptime);
     partybuffs.ferociousinsp.stacks = parseInt(ferocstacks);
+
+    getStatsCapData();
     storeData();
 }
 
@@ -942,10 +1023,9 @@ function spellOptions(){
 gearSlotsDisplay();
 
 // checks if saved before, if so - load saved data
-if(localStorage.getItem('savecheck') == 'true'){
-    fetchData();
-}
-if(localStorage.getItem('savecheck') != 'true'){
-    selectedOptionsResults();
-}
+
+fetchData();
+selectedOptionsResults();
+
 initializeImportSets();
+initializeSavedSets();

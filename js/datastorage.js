@@ -17,6 +17,7 @@ function storeData(){
     // partybuffs
     localStorage.setItem('partybuffs',JSON.stringify(partybuffs));
 
+    localStorage.setItem('statweights', JSON.stringify(statweights));
     
     localStorage.setItem('flask',document.getElementById("flask").value);
     localStorage.setItem('battle',document.getElementById("battle").value);
@@ -83,54 +84,61 @@ function storeData(){
     localStorage.setItem("repcheck", document.getElementById("repcheck").checked);
     localStorage.setItem("leathercheck", document.getElementById("leathercheck").checked);
 
+    localStorage.setItem("sets", JSON.stringify(SavedSets));
+
     localStorage.setItem('savecheck','true');
 }
 
 function fetchData(){
 
     // gear
-    gear = (JSON.parse(localStorage.getItem('gear')) != null) ? JSON.parse(localStorage.getItem('gear')) : gear;
+    gear = (localStorage.getItem('gear') != null) ? JSON.parse(localStorage.getItem('gear')) : gear;
     // buffs
-    buffslist = (JSON.parse(localStorage.getItem('buffs')) != null) ? JSON.parse(localStorage.getItem('buffs')) : buffslist;
+    buffslist = (localStorage.getItem('buffs') != null) ? JSON.parse(localStorage.getItem('buffs')) : buffslist;
     // player consumes
-    playerconsumes = (JSON.parse(localStorage.getItem('pla_consumes')) != null) ? JSON.parse(localStorage.getItem('pla_consumes')):playerconsumes;
+    playerconsumes = (localStorage.getItem('pla_consumes') != null) ? JSON.parse(localStorage.getItem('pla_consumes')):playerconsumes;
     // pet consumes
-    petconsumes = (JSON.parse(localStorage.getItem('pet_consumes')) != null) ? JSON.parse(localStorage.getItem('pet_consumes')):petconsumes;
+    petconsumes = (localStorage.getItem('pet_consumes') != null) ? JSON.parse(localStorage.getItem('pet_consumes')):petconsumes;
     // debuffs
-    debuffs = (JSON.parse(localStorage.getItem('debuffs')) != null) ? JSON.parse(localStorage.getItem('debuffs')):debuffs;
-    partybuffs = (JSON.parse(localStorage.getItem('partybuffs')) != null) ? JSON.parse(localStorage.getItem('partybuffs')):partybuffs;
+    debuffs = (localStorage.getItem('debuffs') != null) ? JSON.parse(localStorage.getItem('debuffs')):debuffs;
+    partybuffs = (localStorage.getItem('partybuffs') != null) ? JSON.parse(localStorage.getItem('partybuffs')):partybuffs;
+    // statweights
+    statweights = (localStorage.getItem('statweights') != null) ? JSON.parse(localStorage.getItem('statweights')):statweights;
+    displayStatWeights();
+
     // saves each value below as a string - fight settings
-    iterations = (parseInt(localStorage.getItem('iterations')) != null) ? parseInt(localStorage.getItem('iterations')) : iterations;
-    minfighttimer = (parseInt(localStorage.getItem('minfight')) != null) ? parseInt(localStorage.getItem('minfight')) : minfighttimer;
-    maxfighttimer = (parseInt(localStorage.getItem('maxfight')) != null) ? parseInt(localStorage.getItem('maxfight')) : maxfighttimer;
-    latency = (JSON.parse(localStorage.getItem('latency')) != null) ? JSON.parse(localStorage.getItem('latency')):latency;
-    playeruptime = (parseInt(localStorage.getItem('playeruptime')) != null) ? parseInt(localStorage.getItem('playeruptime')):playeruptime;
-    petuptime = (parseInt(localStorage.getItem('petuptime')) != null) ? parseInt(localStorage.getItem('petuptime')):petuptime;
-    weavetime = (JSON.parse(localStorage.getItem('weavetime')) != null) ? JSON.parse(localStorage.getItem('weavetime')):weavetime;
-    huntersinraid = (parseInt(localStorage.getItem('huntraid')) != null) ? parseInt(localStorage.getItem('huntraid')): huntersinraid;
-    BerserkStartHP = (parseInt(localStorage.getItem('berserkhp')) != null) ? parseInt(localStorage.getItem('berserkhp')):BerserkStartHP;
-    selectedPet = (parseInt(localStorage.getItem('petselect')) != null) ? parseInt(localStorage.getItem('petselect')):selectedPet;
-    selectedRace = (parseInt(localStorage.getItem('raceselect')) != null) ? parseInt(localStorage.getItem('raceselect')):selectedRace;
-    target = (JSON.parse(localStorage.getItem('target')) != null) ? JSON.parse(localStorage.getItem('target')):target;
+    iterations = (localStorage.getItem('iterations') != null) ? parseInt(localStorage.getItem('iterations')) : iterations;
+    minfighttimer = (localStorage.getItem('minfight') != null) ? parseInt(localStorage.getItem('minfight')) : minfighttimer;
+    maxfighttimer = (localStorage.getItem('maxfight') != null) ? parseInt(localStorage.getItem('maxfight')) : maxfighttimer;
+    latency = (localStorage.getItem('latency') != null) ? JSON.parse(localStorage.getItem('latency')):latency;
+    playeruptime = (localStorage.getItem('playeruptime') != null) ? parseInt(localStorage.getItem('playeruptime')):playeruptime;
+    petuptime = (localStorage.getItem('petuptime') != null) ? parseInt(localStorage.getItem('petuptime')):petuptime;
+    weavetime = (localStorage.getItem('weavetime') != null) ? JSON.parse(localStorage.getItem('weavetime')):weavetime;
+    huntersinraid = (localStorage.getItem('huntraid') != null) ? parseInt(localStorage.getItem('huntraid')): huntersinraid;
+    BerserkStartHP = (localStorage.getItem('berserkhp') != null) ? parseInt(localStorage.getItem('berserkhp')):BerserkStartHP;
+    selectedPet = (localStorage.getItem('petselect') != null) ? parseInt(localStorage.getItem('petselect')):selectedPet;
+    selectedRace = (localStorage.getItem('raceselect') != null) ? parseInt(localStorage.getItem('raceselect')):selectedRace;
+
+    target = (localStorage.getItem('target') != null) ? JSON.parse(localStorage.getItem('target')):target;
     // talents
     talentindex = (localStorage.getItem('talentindex') != null) ? localStorage.getItem('talentindex'):talentindex;
     whtalentlink = (localStorage.getItem('whtalentlink') != null) ? localStorage.getItem('whtalentlink'):whtalentlink;
-    talents = (JSON.parse(localStorage.getItem('talents')) != null) ? JSON.parse(localStorage.getItem('talents')):talents;
+    talents = (localStorage.getItem('talents') != null) ? JSON.parse(localStorage.getItem('talents')):talents;
     // spell enables
-    auras.rapid.enable = (JSON.parse(localStorage.getItem('rapidcheck')) != null) ? JSON.parse(localStorage.getItem('rapidcheck')):auras.rapid.enable;
-    beastenable = (JSON.parse(localStorage.getItem('beastcheck')) != null) ? JSON.parse(localStorage.getItem('beastcheck')):beastenable;
-    racialenable = (JSON.parse(localStorage.getItem('racialcheck')) != null) ? JSON.parse(localStorage.getItem('racialcheck')):racialenable;
-    auras.lust.enable = (JSON.parse(localStorage.getItem('lustcheck')) != null) ? JSON.parse(localStorage.getItem('lustcheck')):auras.lust.enable;
+    auras.rapid.enable = (localStorage.getItem('rapidcheck') != null) ? JSON.parse(localStorage.getItem('rapidcheck')):auras.rapid.enable;
+    beastenable = (localStorage.getItem('beastcheck') != null) ? JSON.parse(localStorage.getItem('beastcheck')):beastenable;
+    racialenable = (localStorage.getItem('racialcheck') != null) ? JSON.parse(localStorage.getItem('racialcheck')):racialenable;
+    auras.lust.enable = (localStorage.getItem('lustcheck') != null) ? JSON.parse(localStorage.getItem('lustcheck')):auras.lust.enable;
 
-    auras.drums.enable = (JSON.parse(localStorage.getItem('drumcheck')) != null) ? JSON.parse(localStorage.getItem('drumcheck')):auras.drums.enable;
-    auras.potion.primary = (JSON.parse(localStorage.getItem('hastecheck')) != null) ? JSON.parse(localStorage.getItem('hastecheck')):auras.potion.primary;
-    auras.potion.secondary = (JSON.parse(localStorage.getItem('secpotcheck')) != null) ? JSON.parse(localStorage.getItem('secpotcheck')):auras.potion.secondary;
+    auras.drums.enable = (localStorage.getItem('drumcheck') != null) ? JSON.parse(localStorage.getItem('drumcheck')):auras.drums.enable;
+    auras.potion.primary = (localStorage.getItem('hastecheck') != null) ? JSON.parse(localStorage.getItem('hastecheck')):auras.potion.primary;
+    auras.potion.secondary = (localStorage.getItem('secpotcheck') != null) ? JSON.parse(localStorage.getItem('secpotcheck')):auras.potion.secondary;
 
-    auras.rune.enable = (JSON.parse(localStorage.getItem('runecheck')) != null) ? JSON.parse(localStorage.getItem('runecheck')):auras.rune.enable;
-    SPELLS.multishot.enable = (JSON.parse(localStorage.getItem('multicheck')) != null) ? JSON.parse(localStorage.getItem('multicheck')):SPELLS.multishot.enable;
-    SPELLS.arcaneshot.enable = (JSON.parse(localStorage.getItem('arcanecheck')) != null) ? JSON.parse(localStorage.getItem('arcanecheck')):SPELLS.arcaneshot.enable;
-    SPELLS.raptorstrike.enable = (JSON.parse(localStorage.getItem('raptorcheck')) != null) ? JSON.parse(localStorage.getItem('raptorcheck')):SPELLS.raptorstrike.enable;
-    SPELLS.melee.enable = (JSON.parse(localStorage.getItem('meleecheck')) != null) ? JSON.parse(localStorage.getItem('meleecheck')):SPELLS.melee.enable;
+    auras.rune.enable = (localStorage.getItem('runecheck') != null) ? JSON.parse(localStorage.getItem('runecheck')):auras.rune.enable;
+    SPELLS.multishot.enable = (localStorage.getItem('multicheck') != null) ? JSON.parse(localStorage.getItem('multicheck')):SPELLS.multishot.enable;
+    SPELLS.arcaneshot.enable = (localStorage.getItem('arcanecheck') != null) ? JSON.parse(localStorage.getItem('arcanecheck')):SPELLS.arcaneshot.enable;
+    SPELLS.raptorstrike.enable = (localStorage.getItem('raptorcheck') != null) ? JSON.parse(localStorage.getItem('raptorcheck')):SPELLS.raptorstrike.enable;
+    SPELLS.melee.enable = (localStorage.getItem('meleecheck') != null) ? JSON.parse(localStorage.getItem('meleecheck')):SPELLS.melee.enable;
 
     // spell offsets
     auras.rapid.offset = (localStorage.getItem('rapidoffset') != null) ? parseInt(localStorage.getItem('rapidoffset')) : auras.rapid.offset;
@@ -159,7 +167,7 @@ function fetchData(){
             case "4":   auras.lust.duration = 160;
             break;
         }
-    }
+    } else lustoption = "1";
     auras.drums.type = (localStorage.getItem('drumoption') != null) ? localStorage.getItem('drumoption'):auras.drums.type;
     let spellcdoption = '';
     if (localStorage.getItem('spellcdoption') != null) {
@@ -181,7 +189,7 @@ function fetchData(){
                 setSpellCDs();
             break;
         }
-    }
+    } else { spellcdoption = "CD"; }
     secondaryPotion = (localStorage.getItem('secpotoption') != null) ? localStorage.getItem('secpotoption') : secondaryPotion;
     phase = (localStorage.getItem("phasecheck") != null) ? parseInt(localStorage.getItem("phasecheck")) : phase;
     raidcheck = (localStorage.getItem("raidcheck") != null) ? JSON.parse(localStorage.getItem("raidcheck")) : raidcheck;
@@ -213,15 +221,15 @@ function fetchData(){
     document.getElementById("typeSelect").value = target.type;
     document.getElementById("level").value = target.level;
 
-    document.getElementById("flask").value = localStorage.getItem('flask');
-    document.getElementById("battle").value = localStorage.getItem('battle');
-    document.getElementById("guardian").value = localStorage.getItem('guardian');
-    document.getElementById("scrollagi").value = localStorage.getItem('scrollagi');
-    document.getElementById("scrollstr").value = localStorage.getItem('scrollstr');
-    document.getElementById("food").value = localStorage.getItem('food');
-    document.getElementById("petscrollagi").value = localStorage.getItem('petscrollagi');
-    document.getElementById("petscrollstr").value = localStorage.getItem('petscrollstr');
-    document.getElementById("petfood").value = localStorage.getItem('petfood');
+    document.getElementById("flask").value = (localStorage.getItem("flask") != null) ?  localStorage.getItem('flask') : document.getElementById("flask").value;
+    document.getElementById("battle").value = (localStorage.getItem("battle") != null) ?  localStorage.getItem('battle') : document.getElementById("battle").value;
+    document.getElementById("guardian").value = (localStorage.getItem("guardian") != null) ?  localStorage.getItem('guardian') : document.getElementById("guardian").value;
+    document.getElementById("scrollagi").value = (localStorage.getItem("scrollagi") != null) ?  localStorage.getItem('scrollagi') : document.getElementById("scrollagi").value;
+    document.getElementById("scrollstr").value = (localStorage.getItem("scrollstr") != null) ?  localStorage.getItem('scrollstr') : document.getElementById("scrollstr").value;
+    document.getElementById("food").value = (localStorage.getItem("food") != null) ?  localStorage.getItem('food') : document.getElementById("food").value;
+    document.getElementById("petscrollagi").value = (localStorage.getItem("petscrollagi") != null) ?  localStorage.getItem('petscrollagi') : document.getElementById("petscrollagi").value;
+    document.getElementById("petscrollstr").value = (localStorage.getItem("petscrollstr") != null) ?  localStorage.getItem('petscrollstr') : document.getElementById("petscrollstr").value;
+    document.getElementById("petfood").value = (localStorage.getItem("petfood") != null) ?  localStorage.getItem('petfood') : document.getElementById("petfood").value;
 
     // buffs visual initialization
     document.getElementById("kings").checked = (buffslist[0] == 25898) ? true : false;
@@ -311,6 +319,9 @@ function fetchData(){
     document.getElementById("leathercheck").checked = leathercheck;
     document.getElementById("craftcheck").checked = craftcheck;
     document.getElementById("repcheck").checked = repcheck;
+
+    SavedSets = (localStorage.getItem('sets') != null) ? JSON.parse(localStorage.getItem('sets')) : SavedSets;
+
     // initialize the settings after loading
     selectedOptionsResults();
 }

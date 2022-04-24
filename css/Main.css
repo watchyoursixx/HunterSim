@@ -281,37 +281,111 @@ td {
 .u-section-1 .u-text-23 {
   margin: 0 0 0 3px;
 }
-
-.u-section-1 .u-btn-4 {
-  font-size: 1rem;
+.u-section-1 .u-btn-profs {
+  letter-spacing: 1px;
   border-style: solid;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
   background-image: none;
-  margin: -72px 43px 0 auto;
-  padding: 1px 31px 2px 29px;
+  padding: 1px 15px 2px 15px;
+  display:block;
+}
+.flex-div {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.u-section-1 .u-text-24 {
-  margin: 27px 698px 0 53px;
+.u-section-1 .u-btn-4 {
+  letter-spacing: 1px;
+  border-style: solid;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-image: none;
+  padding: 1px 31px 2px 29px;
 }
 
 .u-section-1 .u-image-1 {
   width: 60px;
   height: 60px;
-  margin: -63px auto 0 180px;
-}
-
-.u-section-1 .u-text-25 {
-  margin: -60px 698px 0 53px;
 }
 
 .u-section-1 .u-btn-5 {
-  background-image: none;
+  letter-spacing: 1px;
   border-style: solid;
-  margin: -15px 44px 0 auto;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-image: none;
   padding: 1px 31px 2px 30px;
 }
 
+.profiles-section {
+  display: flex;
+  position: relative;
+  top:0px;
+  left: 0px;
+}
 
+.div-spec-display {
+  width: 15%;
+}
+
+.div-importexport-display {
+  width: 80%;
+  margin: 0px 0px 10px 0px;
+}
+
+.div-spec-image {
+  display: flex;
+  justify-content: center;
+}
+
+.div-profile-flex {
+  width: 100%;
+  display:flex;
+}
+
+.p-profile {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;  
+}
+.btn-fixed-width {
+  width: 20%;
+}
+.btn-profile-margins {
+  margin: 5px 5px 5px 5px;
+}
+
+.btn-float-right {
+  float: right;
+}
+
+.btn-float-left {
+  float: left;
+}
+.div-profile-25-inline {
+  width: 25%;
+  display: block;
+  margin: auto;
+}
+.div-profile-50-inline {
+  width: 50%;
+  display: inline-block;
+}
+
+.div-profile-75-inline {
+  width: 75%;
+  display: inline-block;
+}
+.profile-text-field-margins {
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+
+.auto-margin {
+  display: block;
+  margin: auto;
+}
 
 .u-section-1 .u-group-2 {
   width: 56px;
@@ -520,8 +594,7 @@ td {
 .gear-section {
   display: flex;
   position: relative;
-  left: 3.2rem;
-  top: 5.5rem;
+  left: 1.6rem;
 }
 .gear-slot {
   display:flex;
@@ -552,6 +625,9 @@ td {
   width: 100%;
   word-wrap: normal;
   margin: 0px 0px 0px 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .u-section-1 .enchant-name {
@@ -595,8 +671,7 @@ td {
 .stat-weight-section {
   display: flex;
   position: relative;
-  left: 3rem;
-  top: 6rem;
+  left: 1.5rem;
   width:100%;
 }
 .stat-group {
@@ -654,8 +729,7 @@ td {
 }
 .u-section-1 .u-text-58 {
   position: relative;
-  left: 3rem;
-  top: 7rem;
+  left: 1.5rem;
   font-weight: 700;
 }
 

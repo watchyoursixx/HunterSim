@@ -113,25 +113,25 @@ const EnchantStats = {Str:0, Agi:0, Stam:0, Int:0, Spi:0, RAP:0, MAP:0, Crit:0, 
 
 // initial variables for itemid's (like a profile)
 var gear = {
-   head: { id: 30141, gems: [28362, 32409], enchant: 35452 },
-   neck: { id: 30017 },
-   shoulder: { id: 30143, gems: [24028, 24028], enchant: 35417 },
-   back: { id: 29994, enchant: 34004 },
-   chest: { id: 30139, gems: [30549, 28363, 28119], enchant: 27960 },
-   wrist: { id: 29966, gems: [24028], enchant: 34002 },
-   mainhand: { id: 32944, enchant: 42620 },
-   offhand: { id: 29948, enchant: 42620 },
-   hand: { id: 30140, enchant: 25080 },
-   waist: { id: 30040, gems: [24028, 24028] },
-   leg: { id: 29995, enchant: 35490 },
-   feet: { id: 30104, gems: [24055, 24028], enchant: 27951 },
-   ring1: { id: 29997 },
-   ring2: { id: 28791 },
-   trinket1: { id: 29383 },
-   trinket2: { id: 28830 },
-   range: { id: 30105, enchant: 30260 },// 15808 = fine light crossbow for testing
-   ammo: { id: 33803 },
-   quiver: { id: 18714 },
+   head:{id:32235,gems:[32409,32194],enchant:35452},
+   neck:{id:32260,gems:[]},
+   shoulder:{id:31006,gems:[32222,32212],enchant:29483},
+   back:{id:32323,gems:[],enchant:34004},
+   chest:{id:31004,gems:[32194,32222,32226],enchant:27960},
+   wrist:{id:32324,gems:[32222],enchant:34002},
+   mainhand:{id:33389,gems:[],enchant:42620,attachment:23529},
+   offhand:{id:33389,gems:[],enchant:42620,attachment:23529},
+   hand:{id:31001,gems:[32194],enchant:25080},
+   waist:{id:32346,gems:[]},
+   leg:{id:31005,gems:[32194],enchant:35490},
+   feet:{id:32366,gems:[32194,32222],enchant:27951},
+   ring1:{id:29301},
+   ring2:{id:33496,gems:[],enchant:0},
+   trinket1:{id:28830},
+   trinket2:{id:33831},
+   range:{id:30906,enchant:30260}, // 15808 for fine light crossbow for testing
+   ammo:{id:31737},
+   quiver:{id:34105},
 };
 
 // initialize variables for use
@@ -342,7 +342,7 @@ function initialize(){
    petStatsCalc();
    initializeWeps();
    initializeAuras();
-   getHitData(); // used for gear display, simple formula to set hit cap goal
+   getStatsCapData(); // used for gear display, simple formula to set stats cap goals
 }
 
 function initializeWeps() {

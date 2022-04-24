@@ -1,8 +1,8 @@
 var rapidcd = 300;
 var lustcd = 600;
 var sunderstart = 0;
-var racialenable = false;
-var beastenable = false;
+var racialenable = true;
+var beastenable = true;
 var temp_oil = false;
 
 var readiness = {enable:false, cooldown: 0, basecd: 300};
@@ -10,7 +10,7 @@ var queueReadiness = false;
 var auras = {
     // actives
     drums: {enable:true, timer:0, cooldown:0,basecd:120, duration:30, uptime:0, type:'battle', offset:0},// coded
-    potion: {timer:0, cooldown:0,basecd:120, duration:15, uptime:0, primary:false, secondary:false, used:"", ticks: 0, offset:0},// coded
+    potion: {timer:0, cooldown:0,basecd:120, duration:15, uptime:0, primary:true, secondary:false, used:"", ticks: 0, offset:0},// coded
     rune: {enable:true, cooldown:0,basecd:120, offset:0},
     abacus: {enable:false, timer:0, cooldown:0,basecd:120, duration:10, uptime:0},// coded
     lust: {enable:true, timer:0, cooldown:0,basecd:lustcd, duration:40, uptime:0, offset:0},// coded
@@ -25,8 +25,8 @@ var auras = {
     aptrink2: {enable:false, uptime:0, offset:0, basecd:120},// coded
     // procs
     dragonspine: {enable:false, timer:0, cooldown:0, ppm:1, duration:10, uptime:0},// coded
-    imphawk: {enable:true,timer:0, duration:12, uptime:0},// coded
-    beastlord: {enable:true, timer:0, duration:15, uptime:0}, // coded
+    imphawk: {enable:false,timer:0, duration:12, uptime:0},// coded
+    beastlord: {enable:false, timer:0, duration:15, uptime:0}, // coded
     executioner: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
     mongoose: {enable:false, timer:0, ppm:1, duration:15, uptime:0},// coded
     madness: {enable:false, timer:0, ppm:1,duration: 10, uptime:0},// coded
@@ -35,7 +35,7 @@ var auras = {
     naarusliver: {enable:false, timer:0, cooldown:0, procchance:10, duration: 20, stacks: 0, uptime:0},// coded
     eternalchamp: {enable:false, timer:0, cooldown:0, ppm:2, duration: 10, uptime:0},// coded
     donsantos: {enable:false, timer:0, ppm:1, duration: 10, uptime:0},// coded
-    mastertact: {enable:true, timer:0, procchance:6, duration: 8, uptime:0},// coded
+    mastertact: {enable:false, timer:0, procchance:6, duration: 8, uptime:0},// coded
     ashtongue: {enable:false, timer:0, procchance:15, duration: 8, uptime:0},// coded
     dmccrusade: {enable:false, timer:0, duration: 10, stacks:0, uptime:0}, // coded
     righteous: {enable:false, timer:0, ppm:1, cooldown:0, duration: 10, uptime:0},
@@ -44,22 +44,22 @@ var auras = {
  }
 
  var partybuffs = {
-    unleashedrage: {uptime_g:100, timer:0, duration:10, uptime:0},
-    ferociousinsp: {uptime_g:100, timer:0, duration:10, stacks: 1, uptime:0}
+    unleashedrage: {uptime_g:0, timer:0, duration:10, uptime:0},
+    ferociousinsp: {uptime_g:98, timer:0, duration:10, stacks: 1, uptime:0}
  }
 
  var debuffs = {
     hm: {uptime_g:100, timer:0, duration:120, improved:true, stacks:0, rap:110, map:0, uptime:0},
-    exposeweakness: {uptime_g:0, timer:0, duration:7, agi:0, uptime:0},
-    judgewisdom: {uptime_g:90, timer:0, duration:30, uptime:0},
-    judgecrusader: {uptime_g:90, timer:0, duration:30, crit:3, uptime:0},
-    sunder: {uptime_g:0, timer:0, duration:30, stacktime:10, stacks:1, arp:520, uptime:0},
-    faeriefire: {uptime_g:90, timer:0, duration:45, improved:true, hit:0, arp:610, uptime:0},
+    exposeweakness: {uptime_g:94, timer:0, duration:7, agi:1000, uptime:0},
+    judgewisdom: {uptime_g:98, timer:0, duration:30, uptime:0},
+    judgecrusader: {uptime_g:98, timer:0, duration:30, crit:3, uptime:0},
+    sunder: {uptime_g:98, timer:0, duration:30, stacktime:5, stacks:1, arp:520, uptime:0},
+    faeriefire: {uptime_g:98, timer:0, duration:45, improved:true, hit:0, arp:610, uptime:0},
     impexpose: {uptime_g:90, timer:0, duration:30, arp:3075, uptime:0},
-    curseofreck: {uptime_g:95, timer:0, duration:120, arp:800, uptime:0},
-    bloodfrenzy: {uptime_g:95, timer:0, duration:12, dmgbonus:1.04, uptime:0},
-    curseofele: {uptime_g:100, timer:0, duration:120, dmgbonus:1.1, uptime:0},
-    misery: {uptime_g:100, timer:0, duration:18, dmgbonus:1.05, uptime:0}
+    curseofreck: {uptime_g:98, timer:0, duration:120, arp:800, uptime:0},
+    bloodfrenzy: {uptime_g:98, timer:0, duration:12, dmgbonus:1.04, uptime:0},
+    curseofele: {uptime_g:98, timer:0, duration:120, improved:true, dmgbonus:1.1, uptime:0},
+    misery: {uptime_g:95, timer:0, duration:18, dmgbonus:1.05, uptime:0}
  
  }
 
