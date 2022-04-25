@@ -212,7 +212,7 @@ const P5_BM_9HIT_1H_GEAR = {
   ring1:{id:34189},
   ring2:{id:34361},
   trinket1:{id:34427},
-  trinket2:{id:32505},
+  trinket2:{id:33831},
   back:{id:34241,gems:[32220],enchant:34004},
   mainhand:{id:34331,gems:[32205,32205],enchant:42620,attachment:28421},
   range:{id:34334,gems:[],enchant:30260},
