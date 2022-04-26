@@ -262,10 +262,20 @@ async function exportDataToFile() {
     let opts = {
         suggestedName: "HunterSim.json"
     };
-    const handle = await showSaveFilePicker(opts);
-    const writable = await handle.createWritable();
-    await writable.write( exportSavedDataStorage() );
-    writable.close();
+    var success = false;
+    var handle;
+    try {
+        handle = await showSaveFilePicker(opts);
+        success = true;
+    } catch (e) {
+        success = false;
+    }
+    if(success) {
+        const writable = await handle.createWritable();
+        await writable.write( exportSavedDataStorage() );
+        writable.close();
+    }
+    
 }
 
 async function importDataFromFile() {
