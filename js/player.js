@@ -966,7 +966,7 @@ function dealdamage(dmg, result, spell) {
 }
 /** handling for procs by extra attacks */
 function procExtraAttacks(attack){
-   let windfuryenabled = (buffslist[11].id > 0) ? true : false;
+   let windfuryenabled = (buffslist[11].id > 0 && !gear.mainhand.attachment) ? true : false;
    if (attack === 'melee' && windfuryenabled) {
       let roll = rng10k();
       let tmp = 2000; // 20% chance to proc

@@ -40,6 +40,8 @@ var dpsmax = document.getElementById("dpsmax");
 var dpserr = document.getElementById("dpserr");
 var executetime = document.getElementById("executetime");
 var dpscompare = document.getElementById("dpscompare");
+var huntersinraid = 4;
+
 // disable input for player and pet uptimes
 document.getElementById("playeruptime").disabled = true;
 document.getElementById("petuptime").disabled = true;
@@ -243,10 +245,6 @@ function submitImportData(type) {
 
             gear = newgear;
         }
-        
-        
-        // initialize ammo before re-writing
-        
 
         document.getElementById("importdata").value = '';
         document.getElementById("confirmimport").innerHTML = "Successfully Imported!";
@@ -330,8 +328,8 @@ function loadSet() {
     let val = parseInt(document.getElementById("savedset").value);
     let activeset = SavedSets[val];
     try {
-        
-        gear = activeset.data;
+        let newgear = JSON.parse(JSON.stringify(activeset.data));
+        gear = newgear;
         selectedOptionsResults();
     }
     catch(err){
@@ -383,10 +381,17 @@ function initializeSavedSets(setnum) {
     let length = SavedSets.length;
     var setOptions = "";
     let i = 0;
-    for (i=0; i < length; i++) {
-        setOptions += "<option value="+i+" >" + sets[i].setname + "</option>";
-    }
 
+    if (length == 0) {
+        document.getElementById("saveprofbtn").style.pointerEvents = 'none';
+
+    } else {
+        document.getElementById("saveprofbtn").style.pointerEvents = 'auto';
+        
+        for (i=0; i < length; i++) {
+            setOptions += "<option value="+i+" >" + sets[i].setname + "</option>";
+        }
+    }
     document.getElementById("savedset").innerHTML = setOptions;
     document.getElementById("savedset").value = value;
 }
@@ -525,7 +530,7 @@ function fightSettings(){
     let playerup = document.getElementById("playeruptime").value;
     let petup = document.getElementById("petuptime").value;
     let weave = document.getElementById("weavetime").value;
-    let huntinraid = document.getElementById("huntersraid").value;
+    let huntercount = document.getElementById("huntersinraid").value;
     let berserkhp = document.getElementById("berserkinghp").value;
     iterations = parseInt(simulations);
     minfighttimer = parseInt(minfight);
@@ -534,7 +539,7 @@ function fightSettings(){
     playeruptime = parseInt(playerup);
     petuptime = parseInt(petup);
     weavetime = JSON.parse(weave);
-    huntersraid = parseInt(huntinraid);
+    huntersinraid = parseInt(huntercount);
     BerserkStartHP = parseInt(berserkhp);
     storeData();
 
