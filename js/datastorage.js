@@ -210,10 +210,11 @@ function fetchData(){
     document.getElementById("playeruptime").value = playeruptime;
     document.getElementById("petuptime").value = petuptime;
     document.getElementById("weavetime").value = weavetime.toFixed(1);
-    document.getElementById("huntersraid").value = huntersinraid;
+    document.getElementById("huntersinraid").value = huntersinraid;
     document.getElementById("berserkinghp").value = BerserkStartHP;
     document.getElementById("pet").value = selectedPet;
     document.getElementById("race").value = selectedRace;
+    document.getElementById("racedisplay").innerHTML = races[selectedRace].name;
     let targets = targetData.getNameKeyTargetPairs();
     let findtarget = targets.find(key => key.name == target.name);
     document.getElementById("targetSelect").value = findtarget.id;

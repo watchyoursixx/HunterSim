@@ -15,6 +15,7 @@ var prevtimeend = 0;
 var executecodetime = 0.000;
 var latency = 0.04;
 var currentgcd = 0;
+
 var autodmg = 0;
 var steadydmg = 0;
 var multidmg = 0;
@@ -26,7 +27,6 @@ var sharedtrinketcd = 0;
 var playeruptime = 100;
 var petuptime = 100;
 var weavetime = 0.8;
-var huntersinraid = 4;
 var simresults = {};
 var isStatWeights = false;
 var performancecheck1 = 0;
