@@ -13,7 +13,7 @@ function sumStats(src, dst, statModifier = st => st) {
 function addSpecial(src, dst) {
 
   Object.entries(src).forEach(([k,v])=> {
-    if (k === 'incWeapDmg') dst[k] = (dst[k] || 0) + v
+    if ((k === 'dmgbonus') || (k === 'rangedmgbonus')) dst[k] = (dst[k] || 0) + v
     else if (k === 'multishot_dmg_inc_ratio') dst[k] = dst[k] > 1 ? (dst[k] || 1) + v - 1 : v
     else dst[k] = v
   })
@@ -199,7 +199,7 @@ function getStatsFromEnchants(gear) {
     }
 
     return result
-  }, { stats: {}, special: { incWeapDmg: 0, moveSpeed: 1 }, auras: {} })
+  }, { stats: {}, special: { dmgbonus: 0, rangedmgbonus: 0, moveSpeed: 1 }, auras: {} })
 }
 
 /** Given the gear object, calculates stats, auras and special values obtained from enchants */
@@ -219,7 +219,7 @@ function getStatsFromAttachments(gear) {
     }
 
     return result
-  }, { stats: {}, special: { incWeapDmg: 0, moveSpeed: 1 }, auras: {} })
+  }, { stats: {}, special: { dmgbonus: 0, rangedmgbonus: 0, moveSpeed: 1 }, auras: {} })
 }
 
 /* Given the amount of pieces used for each set, calculates bonuses provided by each set.
