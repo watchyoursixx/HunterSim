@@ -105,6 +105,15 @@ document.getElementById("trinket1slot").addEventListener("click", function(){gea
 document.getElementById("trinket2slot").addEventListener("click", function(){gearModalDisplay("trinket2")}, false);
 document.getElementById("ammoslot").addEventListener("click", function(){gearModalDisplay("ammo")}, false);
 
+function updateAttachments(itemid, attachid) {
+    let attach = attachid;
+    
+    if (attach == 28421 || attach == 23529) {
+        attach = ((MELEE_WEAPONS[itemid].type == 'fist') || (MELEE_WEAPONS[itemid].type == 'staff')) ? 28421 : 23529;
+    }
+    return attach;
+}
+
 // select an item based on given itemid input, selected from a clicked row in the gear tbody
 function selectItem(itemid) {
     let ench = (!!gear[activeslot].enchant && gear[activeslot].enchant > 0) ? gear[activeslot].enchant : 0;
@@ -141,10 +150,7 @@ function selectItem(itemid) {
             if (ench == 27977 || ench == 42620 || ench == 27971 || ench == 27837) {
                 ench = (MELEE_WEAPONS[itemid].hand == 'Two') ? 27977 : 42620;
             }
-            // if attach is a stone, check if selected is fist then use weightstone, else use sharp stone
-            if (attach == 28421 || attach == 23529) {
-                attach = ((MELEE_WEAPONS[itemid].type == 'fist') || (MELEE_WEAPONS[itemid].type == 'staff')) ? 28421 : 23529;
-            }
+            attach = updateAttachments(itemid,attach);
             
             gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: ench, attachment: attach };
             checkWeaponType();
@@ -159,10 +165,8 @@ function selectItem(itemid) {
         case 'offhand':
             console.log("you selected "+ itemid);
 
-            // if attach is a stone, check if selected is fist then use weightstone, else use sharp stone
-            if (attach == 28421 || attach == 23529) {
-                attach = ((MELEE_WEAPONS[itemid].type == 'fist')) ? 28421 : 23529;
-            }
+            attach = updateAttachments(itemid,attach);
+            
             gear[activeslot] = { id: parseInt(itemid), gems: [], enchant: 42620, attachment: attach };
         break;
         case 'range':

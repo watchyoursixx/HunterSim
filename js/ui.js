@@ -232,6 +232,13 @@ function submitImportData(type) {
 
     let importedgear = document.getElementById("importdata").value;
     let newgear = {};
+    let attach = 0;
+
+    if (type == '70U') {
+        newgear = importFrom70U(JSON.parse(importedgear));
+    } else if (type == 'WA') {
+        newgear = importFromWA(importedgear);
+    }
 
     try {
         if (type == '70U') {
@@ -245,13 +252,26 @@ function submitImportData(type) {
 
             gear = newgear;
         }
+        // update imported gear to include attachments by default
+        if (!gear.mainhand.attachment) {
+            attach = updateAttachments(gear.mainhand.id, 28421);
+            gear.mainhand.attachment = attach;
+        }
+        if (!!gear.offhand && !gear.offhand.attachment) {
+            attach = updateAttachments(gear.offhand.id, 28421);
+            gear.offhand.attachment = attach;
+        }
 
         document.getElementById("importdata").value = '';
         document.getElementById("confirmimport").innerHTML = "Successfully Imported!";
         selectedOptionsResults();
     }
     catch(err){
-        //throw new Error("Failed to import: " + err)
+        if (type == '70U') {
+            throw new Error("Failed to import: " + newgear.gear.errors)
+        } else if (type == 'WA') {
+            throw new Error("Failed to import: " + newgear.errors)
+        }
     }
     
 }
@@ -298,18 +318,21 @@ function importSavedDataStorage() {
     let importeddata = document.getElementById("importdata").value;
     let newstorage = JSON.parse(importeddata);
     try {
-        
-        for (let key in newstorage) {
-            localStorage[key] = newstorage[key];
+        if (newstorage.savecheck) {
+            for (let key in newstorage) {
+                localStorage[key] = newstorage[key];
+            }
+    
+            document.getElementById("importdata").value = '';
+            document.getElementById("confirmimport").innerHTML = "Successfully Imported!";
+            fetchData();
+            selectedOptionsResults();
+        } else {
+            document.getElementById("confirmimport").innerHTML = "Failed to import.. Missing Data.";
         }
-
-        document.getElementById("importdata").value = '';
-        document.getElementById("confirmimport").innerHTML = "Successfully Imported!";
-        fetchData();
-        selectedOptionsResults();
     }
     catch(err){
-        console.log(err);
+        throw new Error("Failed to import: " + err);
     }
 }
 

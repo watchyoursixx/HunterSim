@@ -899,7 +899,7 @@ function attackSpell(spell,spellcost) {
    magicproc(attack);
 
    if(combatlogRun) {
-      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player " + SPELL_MAPPER[spell] + " " + RESULTARRAY[result] + " for " + done + ". RAP => " + combatRAP;
+      combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player " + SPELL_MAPPER[spell] + " " + RESULTARRAY[result] + " for " + done + ". RAP => " + combatRAP + ". Mana => " + currentMana;
       combatlogindex++;
    }
    return;
@@ -1050,7 +1050,7 @@ function procauto() {
 }
 /** handling for procs by steady only */
 function procsteady() {
-      // madness of the betrayer
+      // ashtongue
    if (auras.ashtongue.enable){
       let roll = rng10k(); 
       auras.ashtongue.timer = (roll <= auras.ashtongue.procchance * 100) ? auras.ashtongue.duration : auras.ashtongue.timer;

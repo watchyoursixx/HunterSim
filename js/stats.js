@@ -1,5 +1,7 @@
 var spreaddata = {};
 var uptimedata = {};
+var manadata = {};
+
 var actions = {
   auto: "Auto Shot",
   arcane: "Arcane Shot",
@@ -11,6 +13,38 @@ var actions = {
   kc: "Kill Command (Pet)",
   primary: "Primary (Pet)"
 };
+
+const AURA_MAPPER = {
+  drums: "Drums",
+  potion: "Potion",
+  abacus: "Haste (Abacus)",
+  lust: "Bloodlust",
+  rapid: "Rapid Fire",
+  berserk: "Berserking (Troll)",
+  unyieldingcourage: "Unyielding Courage",
+  bloodfury: "Bloodfury (Orc)",
+  swarmguard: "Insight of the Qiraji (Swarmguard)",
+  beastwithin: "The Beast Within",
+  tenacity: "Badge of Tenacity",
+  aptrink1: auras.aptrink1.name,
+  aptrink2: auras.aptrink2.name,
+  dragonspine: "Dragonspine Trophy",
+  imphawk: "Quick Shots (Imp Hawk)",
+  beastlord: "Beast Lord",
+  executioner: "Executioner",
+  mongoose: "Mongoose",
+  madness: "Forceful Strike (MotB)",
+  tsunami: "Fury of the Crashing Waves (TT)",
+  hourglass: "Rage of the Unraveler (HG)",
+  naarusliver: "Battle Trance (BNS)",
+  eternalchamp: "Band of the Eternal Champion",
+  donsantos: "Santo's Blessing",
+  mastertact: "Master Tactitian",
+  ashtongue: "Deadly Aim (Ash)",
+  dmccrusade: "Darkmoon Card: Crusade",
+  righteous: "Righteousness (Oil)",
+  shattered: "Light's Strength (Aldor)"
+}
 
 function buildData(spread){
 
@@ -60,6 +94,9 @@ function createHistogram(){
             title: {
               display:true,
               text: 'DPS',
+              font: {
+                size: 14,
+              },
               color: 'rgb(170,	211, 114)'
             }
           },
@@ -67,6 +104,9 @@ function createHistogram(){
             title: {
               display:true,
               text: 'Frequency',
+              font: {
+                size: 14,
+              },
               color: 'rgb(170,	211, 114)'
             },
             ticks: {
@@ -124,9 +164,89 @@ function createHistogram(){
         title: {
           display: true,
           text: 'Buff Uptimes',
+          font: {
+            size: 14,
+          },
           color: 'white'
+        },
+        tooltip: {
+          callbacks: {
+            title: function(d) {
+              return d[0].label;
+            },
+            label: function(d) {
+              return d.raw + " %";
+            }
+          }
         }
       }
+    },
+  });
+  managraph.destroy();
+  ctz = document.getElementById("line-chart").getContext('2d');
+  managraph = new Chart(ctz, {
+    type: 'line',
+    data: manadata,
+    options: {
+      elements: {
+        point:{
+            radius: 0
+        },
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Time (s)',
+            font: {
+              size: 14,
+            },
+            color: 'white'
+          },
+          ticks: {
+            color: 'white',
+            callback: function(value) { return this.getLabelForValue(value).toFixed(0) }
+          },
+        },
+        y: {
+          min: 0,
+          max: Mana,
+          title: {
+            display:true,
+            text: 'Mana',
+            font: {
+              size: 14,
+            },
+            color: 'white'
+          },
+          ticks: {
+            color: 'white'
+          }
+        }
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: 'Mana Usage on Final Iteration',
+          color: 'white'
+        },
+        tooltip: {
+          callbacks: {
+            title: function(tooltipItems, data) {
+              return '';
+            },
+            label: function(data) {
+              return data.raw + " Mana";
+              
+            }
+          }
+        },
+      },
     },
   });
 }
@@ -174,6 +294,7 @@ var histogram = new Chart(ctx, {
       }
   }
 });
+
 function buildBuffUptimes(){
 
   let filtereduptimes = Object.entries(buff_uptimes).filter(key => !key.includes('0.00'));
@@ -185,7 +306,7 @@ function buildBuffUptimes(){
   };
 
   for (key in filtereduptimes) {
-    uptimedata.labels.push(filtereduptimes[key][0]);
+    uptimedata.labels.push(AURA_MAPPER[filtereduptimes[key][0]]);
     data.push(filtereduptimes[key][1]);
   }
 
@@ -199,6 +320,7 @@ function buildBuffUptimes(){
   });
 
 }
+
 const barconfig = {
   type: 'bar',
   data: uptimedata,
@@ -227,6 +349,105 @@ const barconfig = {
 var cty = document.getElementById('horizontalbar').getContext('2d');
 var horizontalbar = new Chart(cty, barconfig);
 
+
+function buildManaData(){
+
+  let data = [];
+
+  manadata = {
+    labels: [],
+    datasets: []
+  };
+
+  let arrlength = manalogarray.length;
+
+  for (i=0; i < arrlength; i++) {
+    manadata.labels[i] = manalogarray[i][0];
+    data[i] = manalogarray[i][1];
+  }
+
+  manadata.datasets.push({
+    data: data,
+    borderColor: "#029ad1",
+    fill: false,
+  });
+
+}
+
+const lineconfig = {
+    type: 'line',
+    data: manadata,
+    options: {
+      elements: {
+        point:{
+            radius: 0
+        },
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Time (s)',
+            font: {
+              size: 14,
+            },
+            color: 'white'
+          },
+          ticks: {
+            color: 'white',
+            callback: function(value) { return this.getLabelForValue(value).toFixed(0) }
+          },
+        },
+        y: {
+          min: 0,
+          max: Mana,
+          title: {
+            display:true,
+            text: 'Mana',
+            font: {
+              size: 14,
+            },
+            color: 'white'
+          },
+          ticks: {
+            color: 'white'
+          }
+        }
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: 'Mana Usage on Final Iteration',
+          color: 'white'
+        },
+        tooltip: {
+          callbacks: {
+            title: function(tooltipItems, data) {
+              return '';
+            },
+            label: function(data) {
+              return data.raw + " Mana";
+              
+            }
+          }
+        },
+      },
+    },
+}
+
+var ctz = document.getElementById("line-chart").getContext('2d');
+var managraph = new Chart(ctz, lineconfig);
+
+
+
+// ***********************************************************************
+// ** STATS on abilities   
+// ***********************************************************************
 function damageResults(){
   simresults = {
       steady: {},

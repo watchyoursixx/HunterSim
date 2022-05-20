@@ -13,7 +13,7 @@ function sumStats(src, dst, statModifier = st => st) {
 function addSpecial(src, dst) {
 
   Object.entries(src).forEach(([k,v])=> {
-    if (k === 'incWeapDmg') dst[k] = (dst[k] || 0) + v
+    if ((k === 'dmgbonus') || (k === 'rangedmgbonus')) dst[k] = (dst[k] || 0) + v
     else if (k === 'multishot_dmg_inc_ratio') dst[k] = dst[k] > 1 ? (dst[k] || 1) + v - 1 : v
     else dst[k] = v
   })
@@ -199,7 +199,7 @@ function getStatsFromEnchants(gear) {
     }
 
     return result
-  }, { stats: {}, special: { incWeapDmg: 0, moveSpeed: 1 }, auras: {} })
+  }, { stats: {}, special: { dmgbonus: 0, rangedmgbonus: 0, moveSpeed: 1 }, auras: {} })
 }
 
 /** Given the gear object, calculates stats, auras and special values obtained from enchants */
@@ -219,7 +219,7 @@ function getStatsFromAttachments(gear) {
     }
 
     return result
-  }, { stats: {}, special: { incWeapDmg: 0, moveSpeed: 1 }, auras: {} })
+  }, { stats: {}, special: { dmgbonus: 0, rangedmgbonus: 0, moveSpeed: 1 }, auras: {} })
 }
 
 /* Given the amount of pieces used for each set, calculates bonuses provided by each set.
@@ -261,9 +261,9 @@ function getStatsFromGearPieces(gear) {
       if (!ALLOWED_IN_MAINHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
       if (gearPiece.hand === 'Two' && gear.offhand) throw new Error(`Can't use a two-handed weapon and an offhand weapon!`)
     } else if (type === 'offhand' && !ALLOWED_IN_OFFHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
-    else if (type === 'ammo') {
-      if (gearPiece.type === 'arrow' && gearPiece.range?.type === 'Gun') throw new Error(`Tried to use arrows on a gun`)
-      else if (gearPiece.type === 'bullet' && gearPiece.range?.type !== 'Gun') throw new Error(`Tried to use bullets on a bow/x-bow`)
+    else if (type === 'ammo' && activeslot == 'ammo') {
+      if (gearPiece.type === 'arrow' && RANGED_WEAPONS[gear.range.id].type === 'Gun') throw new Error(`Using arrows with a gun`)
+      else if (gearPiece.type === 'bullet' && RANGED_WEAPONS[gear.range.id].type !== 'Gun') throw new Error(`Using bullets with a Bow/X-Bow`)
     }
 
 
