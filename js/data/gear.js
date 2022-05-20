@@ -8830,7 +8830,7 @@ const MELEE_WEAPONS = {
         icon: "inv_axe_1h_blacksmithing_02",
         quality: "Epic"
     },
-    35308: {
+    35038: {
         name: "Brutal Gladiator's Left Ripper",
         stats: {
             Stam: 31,
