@@ -1758,7 +1758,7 @@ const CHESTS = {
             Hit: 30,
             Haste: 38
         },
-        Location: "Sunwell",
+        Location: "Crafting",
         sockets: [
             "Yellow",
             "Red",
@@ -8746,7 +8746,319 @@ const MELEE_WEAPONS = {
         Phase: 5,
         icon: "inv_weapon_shortblade_78",
         quality: "Epic"
-    }
+    },
+    34996: {
+        name: "Brutal Gladiator's Cleaver",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "axe",
+        speed: 2.6,
+        mindmg: 196,
+        maxdmg: 365,
+        hand: "One",
+        Phase: 5,
+        icon: "inv_axe_1h_blacksmithing_02",
+        quality: "Epic"
+    },
+    34997: {
+        name: "Brutal Gladiator's Decapitator",
+        stats: {
+            Stam: 66,
+            MAP: 100,
+            RAP: 100,
+            Crit: 50,
+            Hit: 19,
+            ArP: 98,
+            Resil: 33
+        },
+        Location: "Arena Reward",
+        type: "axe",
+        speed: 3.6,
+        mindmg: 404,
+        maxdmg: 606,
+        hand: "Two",
+        Phase: 5,
+        icon: "inv_axe_73",
+        quality: "Epic"
+    },
+    35015: {
+        name: "Brutal Gladiator's Greatsword",
+        stats: {
+            Stam: 66,
+            Str: 50,
+            Crit: 50,
+            Hit: 19,
+            ArP: 98,
+            Resil: 33
+        },
+        Location: "Arena Reward",
+        type: "sword",
+        speed: 3.6,
+        mindmg: 404,
+        maxdmg: 606,
+        hand: "Two",
+        Phase: 5,
+        icon: "inv_sword_116",
+        quality: "Epic"
+    },
+    35017: {
+        name: "Brutal Gladiator's Hacker",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "axe",
+        speed: 1.5,
+        mindmg: 113,
+        maxdmg: 211,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_axe_1h_blacksmithing_02",
+        quality: "Epic"
+    },
+    35308: {
+        name: "Brutal Gladiator's Left Ripper",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "fist",
+        speed: 1.5,
+        mindmg: 113,
+        maxdmg: 211,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_weapon_hand_15",
+        quality: "Epic"
+    },
+    35064: {
+        name: "Brutal Gladiator's Painsaw",
+        stats: {
+            Stam: 68,
+            MAP: 102,
+            RAP: 102,
+            Crit: 51,
+            Resil: 42
+        },
+        Location: "Arena Reward",
+        type: "polearm",
+        speed: 2.2,
+        mindmg: 247,
+        maxdmg: 371,
+        hand: "Two",
+        Phase: 5,
+        icon: "inv_weapon_halberd_20",
+        quality: "Epic"
+    },
+    35072: {
+        name: "Brutal Gladiator's Quickblade",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "sword",
+        speed: 1.5,
+        mindmg: 113,
+        maxdmg: 211,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_sword_114",
+        quality: "Epic"
+    },
+    35076: {
+        name: "Brutal Gladiator's Right Ripper",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "fist",
+        speed: 2.6,
+        mindmg: 196,
+        maxdmg: 365,
+        hand: "Main",
+        Phase: 5,
+        icon: "inv_weapon_hand_15",
+        quality: "Epic"
+    },
+    35093: {
+        name: "Brutal Gladiator's Shanker",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "dagger",
+        speed: 1.8,
+        mindmg: 155,
+        maxdmg: 233,
+        hand: "One",
+        Phase: 5,
+        icon: "inv_weapon_shortblade_75",
+        quality: "Epic"
+    },
+    35095: {
+        name: "Brutal Gladiator's Shiv",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "dagger",
+        speed: 1.4,
+        mindmg: 105,
+        maxdmg: 197,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_weapon_shortblade_75",
+        quality: "Epic"
+    },
+    35101: {
+        name: "Brutal Gladiator's Slicer",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "sword",
+        speed: 2.6,
+        mindmg: 224,
+        maxdmg: 337,
+        hand: "One",
+        Phase: 5,
+        icon: "inv_sword_114",
+        quality: "Epic"
+    },
+    35058: {
+        name: "Brutal Gladiator's Mutilator",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "dagger",
+        speed: 1.8,
+        mindmg: 136,
+        maxdmg: 253,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_weapon_shortblade_75",
+        quality: "Epic"
+    },
+    35110: {
+        name: "Brutal Gladiator's Waraxe",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "axe",
+        speed: 2.6,
+        mindmg: 196,
+        maxdmg: 365,
+        hand: "Main",
+        Phase: 5,
+        icon: "inv_axe_1h_blacksmithing_02",
+        quality: "Epic"
+    },
+    34995: {
+        name: "Brutal Gladiator's Chopper",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "axe",
+        speed: 2.6,
+        mindmg: 196,
+        maxdmg: 365,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_axe_1h_blacksmithing_02",
+        quality: "Epic"
+    },
+    35037: {
+        name: "Brutal Gladiator's Left Render",
+        stats: {
+            Stam: 31,
+            MAP: 38,
+            RAP: 38,
+            Crit: 22,
+            Hit: 9,
+            Resil: 12,
+            ArP: 49
+        },
+        Location: "Arena Reward",
+        type: "fist",
+        speed: 2.6,
+        mindmg: 196,
+        maxdmg: 365,
+        hand: "Off",
+        Phase: 5,
+        icon: "inv_weapon_hand_15",
+        quality: "Epic"
+    },
 }
 
 const NECKS = {
@@ -10304,7 +10616,58 @@ const RANGED_WEAPONS = {
         icon: "inv_weapon_crossbow_26",
         quality: "Epic",
         Location: "Badge Reward"
-    }
+    },
+    35018: {
+        name: "Brutal Gladiator's Heavy Crossbow",
+        stats: {
+            Stam: 27,
+            RAP: 38,
+            Crit: 17,
+            Resil: 13
+        },
+        type: "Xbow",
+        mindmg: 234,
+        maxdmg: 351,
+        speed: 3,
+        Phase: 5,
+        icon: "inv_weapon_crossbow_26",
+        quality: "Epic",
+        Location: "Arena Reward"
+    },
+    35047: {
+        name: "Brutal Gladiator's Longbow",
+        stats: {
+            Stam: 27,
+            RAP: 38,
+            Crit: 17,
+            Resil: 13
+        },
+        type: "Bow",
+        mindmg: 234,
+        maxdmg: 351,
+        speed: 3,
+        Phase: 5,
+        icon: "inv_weapon_bow_31",
+        quality: "Epic",
+        Location: "Arena Reward"
+    },
+    35075: {
+        name: "Brutal Gladiator's Rifle",
+        stats: {
+            Stam: 27,
+            RAP: 38,
+            Crit: 17,
+            Resil: 13
+        },
+        type: "Gun",
+        mindmg: 234,
+        maxdmg: 351,
+        speed: 3,
+        Phase: 5,
+        icon: "inv_weapon_rifle_21",
+        quality: "Epic",
+        Location: "Arena Reward"
+    },
 }
 
 const RINGS = {

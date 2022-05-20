@@ -261,9 +261,9 @@ function getStatsFromGearPieces(gear) {
       if (!ALLOWED_IN_MAINHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
       if (gearPiece.hand === 'Two' && gear.offhand) throw new Error(`Can't use a two-handed weapon and an offhand weapon!`)
     } else if (type === 'offhand' && !ALLOWED_IN_OFFHAND.includes(gearPiece.hand)) throw new Error(`Tried to use "${gearPiece.name}" in ${type} but its not allowed.`)
-    else if (type === 'ammo') {
-      if (gearPiece.type === 'arrow' && gearPiece.range?.type === 'Gun') throw new Error(`Tried to use arrows on a gun`)
-      else if (gearPiece.type === 'bullet' && gearPiece.range?.type !== 'Gun') throw new Error(`Tried to use bullets on a bow/x-bow`)
+    else if (type === 'ammo' && activeslot == 'ammo') {
+      if (gearPiece.type === 'arrow' && RANGED_WEAPONS[gear.range.id].type === 'Gun') throw new Error(`Using arrows with a gun`)
+      else if (gearPiece.type === 'bullet' && RANGED_WEAPONS[gear.range.id].type !== 'Gun') throw new Error(`Using bullets with a Bow/X-Bow`)
     }
 
 

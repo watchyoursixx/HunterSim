@@ -1,6 +1,6 @@
 const GEMS = {
   22459: {
-      name: "Void Sphere",
+      name: "Void Sphere (+4 Resist)",
       colors: [
           "red",
           "yellow",
@@ -12,7 +12,7 @@ const GEMS = {
       icon: "inv_enchant_voidsphere"
   },
   23097: {
-      name: "Delicate Blood Garnet",
+      name: "Delicate Blood Garnet (+6 Agi)",
       colors: [
           "red"
       ],
@@ -24,7 +24,7 @@ const GEMS = {
       icon: "inv_misc_gem_bloodgem_02"
   },
   23100: {
-      name: "Glinting Flame Spessarite",
+      name: "Glinting Flame Spessarite (+3 Agi +3 Hit)",
       colors: [
           "red",
           "yellow"
@@ -38,7 +38,7 @@ const GEMS = {
       icon: "inv_misc_gem_flamespessarite_02"
   },
   23104: {
-      name: "Jagged Deep Peridot",
+      name: "Jagged Deep Peridot (+4 Stam +3 Crit)",
       colors: [
           "yellow",
           "blue"
@@ -52,7 +52,7 @@ const GEMS = {
       icon: "inv_misc_gem_deepperidot_02"
   },
   23106: {
-      name: "Dazzling Deep Peridot",
+      name: "Dazzling Deep Peridot (+3 Int +1 Mp5)",
       colors: [
           "yellow",
           "blue"
@@ -66,7 +66,7 @@ const GEMS = {
       icon: "inv_misc_gem_deepperidot_02"
   },
   23110: {
-      name: "Shifting Shadow Draenite",
+      name: "Shifting Shadow Draenite (+3 Agi +4 Stam)",
       colors: [
           "red",
           "blue"
@@ -80,7 +80,7 @@ const GEMS = {
       icon: "inv_misc_gem_ebondraenite_02"
   },
   23113: {
-      name: "Brilliant Golden Draenite",
+      name: "Brilliant Golden Draenite (+6 Int)",
       colors: [
           "yellow"
       ],
@@ -92,7 +92,7 @@ const GEMS = {
       icon: "inv_misc_gem_goldendraenite_02"
   },
   23116: {
-      name: "Rigid Golden Draenite",
+      name: "Rigid Golden Draenite (+6 Hit)",
       colors: [
           "yellow"
       ],
@@ -104,7 +104,7 @@ const GEMS = {
       icon: "inv_misc_gem_goldendraenite_02"
   },
   23118: {
-      name: "Solid Azure Moonstone",
+      name: "Solid Azure Moonstone (+9 Stam)",
       colors: [
           "blue"
       ],
@@ -116,7 +116,7 @@ const GEMS = {
       icon: "inv_misc_gem_azuredraenite_02"
   },
   23121: {
-      name: "Lustrous Azure Moonstone",
+      name: "Lustrous Azure Moonstone (+2 Mp5)",
       colors: [
           "blue"
       ],
@@ -128,7 +128,7 @@ const GEMS = {
       icon: "inv_misc_gem_azuredraenite_02"
   },
   24028: {
-      name: "Delicate Living Ruby",
+      name: "Delicate Living Ruby (+8 Agi)",
       colors: [
           "red"
       ],
@@ -140,7 +140,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_livingruby_03"
   },
   24031: {
-      name: "Bright Living Ruby",
+      name: "Bright Living Ruby (+16 AP)",
       colors: [
           "red"
       ],
@@ -153,7 +153,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_livingruby_03"
   },
   24033: {
-      name: "Solid Star of Elune",
+      name: "Solid Star of Elune (+12 Stam)",
       colors: [
           "blue"
       ],
@@ -165,7 +165,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_starofelune_03"
   },
   24037: {
-      name: "Lustrous Star of Elune",
+      name: "Lustrous Star of Elune (+3 Mp5)",
       colors: [
           "blue"
       ],
@@ -177,7 +177,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_starofelune_03"
   },
   24047: {
-      name: "Brilliant Dawnstone",
+      name: "Brilliant Dawnstone (+8 Int)",
       colors: [
           "yellow"
       ],
@@ -189,7 +189,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_dawnstone_03"
   },
   24048: {
-      name: "Smooth Dawnstone",
+      name: "Smooth Dawnstone (+8 Crit)",
       colors: [
           "yellow"
       ],
@@ -201,7 +201,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_dawnstone_03"
   },
   24051: {
-      name: "Rigid Dawnstone",
+      name: "Rigid Dawnstone (+8 Hit)",
       colors: [
           "yellow"
       ],
@@ -213,7 +213,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_dawnstone_03"
   },
   24053: {
-      name: "Mystic Dawnstone",
+      name: "Mystic Dawnstone (+8 Resil)",
       colors: [
           "yellow"
       ],
@@ -225,7 +225,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_dawnstone_03"
   },
   24055: {
-      name: "Shifting Nightseye",
+      name: "Shifting Nightseye (+4 Agi +6 Stam)",
       colors: [
           "red",
           "blue"
@@ -239,7 +239,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nightseye_03"
   },
   24061: {
-      name: "Glinting Noble Topaz",
+      name: "Glinting Noble Topaz (+4 Agi +4 Hit)",
       colors: [
           "red",
           "yellow"
@@ -253,7 +253,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   24065: {
-      name: "Dazzling Talasite",
+      name: "Dazzling Talasite (+4 Int +2 Mp5)",
       colors: [
           "yellow",
           "blue"
@@ -267,7 +267,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   24067: {
-      name: "Jagged Talasite",
+      name: "Jagged Talasite (+6 Stam +4 Crit)",
       colors: [
           "yellow",
           "blue"
@@ -281,7 +281,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   25894: {
-      name: "Swift Skyfire Diamond",
+      name: "Swift Skyfire Diamond (+24 AP +8% Speed)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { swift_metagem_run_speed_increase: 1.00 }
@@ -301,7 +301,7 @@ const GEMS = {
       desc: "1 Red, 2 Yellow"
   },
   25895: {
-      name: "Enigmatic Skyfire Diamond",
+      name: "Enigmatic Skyfire Diamond (+12 Crit)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
@@ -318,7 +318,7 @@ const GEMS = {
       desc: "More Red than Yellow"
   },
   25896: {
-      name: "Powerful Earthstorm Diamond",
+      name: "Powerful Earthstorm Diamond (+18 Stam)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
@@ -335,7 +335,7 @@ const GEMS = {
       desc: "3 Blue"
   },
   25901: {
-      name: "Insightful Earthstorm Diamond",
+      name: "Insightful Earthstorm Diamond (+12 Int)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
@@ -352,7 +352,7 @@ const GEMS = {
       desc: "2 Red, 2 Yellow, 2 Blue"
   },
   27679: {
-      name: "Sublime Mystic Dawnstone",
+      name: "Sublime Mystic Dawnstone (+10 Resil)",
       colors: [
           "yellow"
       ],
@@ -365,7 +365,7 @@ const GEMS = {
       icon: "inv_misc_gem_topaz_01"
   },
   27809: {
-      name: "Barbed Deep Peridot",
+      name: "Barbed Deep Peridot (+3 Stam +4 Crit)",
       colors: [
           "yellow",
           "blue"
@@ -380,7 +380,7 @@ const GEMS = {
       icon: "inv_misc_gem_deepperidot_01"
   },
   28290: {
-      name: "Smooth Golden Draenite",
+      name: "Smooth Golden Draenite (+6 Crit)",
       colors: [
           "yellow"
       ],
@@ -392,7 +392,7 @@ const GEMS = {
       icon: "inv_misc_gem_goldendraenite_02"
   },
   28361: {
-      name: "Mighty Blood Garnet",
+      name: "Mighty Blood Garnet (+14 AP)",
       colors: [
           "red"
       ],
@@ -406,7 +406,7 @@ const GEMS = {
       icon: "inv_misc_gem_bloodstone_02"
   },
   28556: {
-      name: "Swift Windfire Diamond",
+      name: "Swift Windfire Diamond (+20 AP)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { swift_metagem_run_speed_increase: 1.00 }
@@ -425,7 +425,7 @@ const GEMS = {
       desc: "2 Yellow, 1 Red"
   },
   28595: {
-      name: "Bright Blood Garnet",
+      name: "Bright Blood Garnet (+12 AP)",
       colors: [
           "red"
       ],
@@ -438,7 +438,7 @@ const GEMS = {
       icon: "inv_misc_gem_bloodgem_02"
   },
   30549: {
-      name: "Shifting Tanzanite",
+      name: "Shifting Tanzanite (+5 Agi +6 Stam)",
       colors: [
           "red",
           "blue"
@@ -453,7 +453,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nightseye_03"
   },
   30550: {
-      name: "Sundered Chrysoprase",
+      name: "Sundered Chrysoprase (+5 Crit +2 Mp5)",
       colors: [
           "yellow",
           "blue"
@@ -468,7 +468,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   30553: {
-      name: "Pristine Fire Opal",
+      name: "Pristine Fire Opal (+10 AP +4 Hit)",
       colors: [
           "red",
           "yellow"
@@ -484,7 +484,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30556: {
-      name: "Glinting Fire Opal",
+      name: "Glinting Fire Opal (+5 Agi +4 Hit)",
       colors: [
           "red",
           "yellow"
@@ -499,7 +499,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30574: {
-      name: "Brutal Tanzanite",
+      name: "Brutal Tanzanite (+6 Stam +10 AP)",
       colors: [
           "red",
           "blue"
@@ -515,7 +515,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nightseye_03"
   },
   30582: {
-      name: "Deadly Fire Opal",
+      name: "Deadly Fire Opal (+8 AP +5 Crit)",
       colors: [
           "red",
           "yellow"
@@ -531,7 +531,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30583: {
-      name: "Timeless Chrysoprase",
+      name: "Timeless Chrysoprase (+6 Stam +5 Int)",
       colors: [
           "yellow",
           "blue"
@@ -546,7 +546,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   30589: {
-      name: "Dazzling Chrysoprase",
+      name: "Dazzling Chrysoprase (+5 Int +2 Mp5)",
       colors: [
           "yellow",
           "blue"
@@ -561,7 +561,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   30591: {
-      name: "Empowered Fire Opal",
+      name: "Empowered Fire Opal (+8 AP +5 Resil)",
       colors: [
           "red",
           "yellow"
@@ -577,7 +577,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   30592: {
-      name: "Steady Chrysoprase",
+      name: "Steady Chrysoprase (+6 Stam +5 Resil)",
       colors: [
           "yellow",
           "blue"
@@ -592,7 +592,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   30602: {
-      name: "Jagged Chrysoprase",
+      name: "Jagged Chrysoprase (+6 Stam +5 Crit)",
       colors: [
           "yellow",
           "blue"
@@ -607,7 +607,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   31118: {
-      name: "Pulsing Amethyst",
+      name: "Pulsing Amethyst (+6 Stam +10 AP)",
       colors: [
           "red",
           "blue"
@@ -623,7 +623,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nightseye_03"
   },
   31862: {
-      name: "Balanced Shadow Draenite",
+      name: "Balanced Shadow Draenite (+4 Stam +6 AP)",
       colors: [
           "red",
           "blue"
@@ -638,7 +638,7 @@ const GEMS = {
       icon: "inv_misc_gem_ebondraenite_02"
   },
   31863: {
-      name: "Balanced Nightseye",
+      name: "Balanced Nightseye (+6 Stam +8 AP)",
       colors: [
           "red",
           "blue"
@@ -653,7 +653,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nightseye_03"
   },
   31864: {
-      name: "Infused Shadow Draenite",
+      name: "Infused Shadow Draenite (+6 AP +1 Mp5)",
       colors: [
           "red",
           "blue"
@@ -668,7 +668,7 @@ const GEMS = {
       icon: "inv_misc_gem_ebondraenite_02"
   },
   31865: {
-      name: "Infused Nightseye",
+      name: "Infused Nightseye (+8 AP +2 Mp5)",
       colors: [
           "red",
           "blue"
@@ -683,7 +683,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nightseye_03"
   },
   31868: {
-      name: "Wicked Noble Topaz",
+      name: "Wicked Noble Topaz (+8 AP +4 Crit)",
       colors: [
           "red",
           "yellow"
@@ -698,7 +698,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_nobletopaz_03"
   },
   31869: {
-      name: "Wicked Flame Spessarite",
+      name: "Wicked Flame Spessarite (+6 AP +3 Crit)",
       colors: [
           "red",
           "yellow"
@@ -713,7 +713,7 @@ const GEMS = {
       icon: "inv_misc_gem_flamespessarite_02"
   },
   32194: {
-      name: "Delicate Crimson Spinel",
+      name: "Delicate Crimson Spinel (+10 Agi)",
       colors: [
           "red"
       ],
@@ -725,7 +725,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_crimsonspinel_02"
   },
   32200: {
-      name: "Solid Empyrean Sapphire",
+      name: "Solid Empyrean Sapphire (+15 Stam)",
       colors: [
           "blue"
       ],
@@ -737,7 +737,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
   32202: {
-      name: "Lustrous Empyrean Sapphire",
+      name: "Lustrous Empyrean Sapphire (+4 Mp5)",
       colors: [
           "blue"
       ],
@@ -749,7 +749,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
   32204: {
-      name: "Brilliant Lionseye",
+      name: "Brilliant Lionseye (+10 Int)",
       colors: [
           "yellow"
       ],
@@ -761,7 +761,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32205: {
-      name: "Smooth Lionseye",
+      name: "Smooth Lionseye (+10 Crit)",
       colors: [
           "yellow"
       ],
@@ -773,7 +773,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32206: {
-      name: "Rigid Lionseye",
+      name: "Rigid Lionseye (+10 Hit)",
       colors: [
           "yellow"
       ],
@@ -785,7 +785,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32209: {
-      name: "Mystic Lionseye",
+      name: "Mystic Lionseye (+10 Resil)",
       colors: [
           "yellow"
       ],
@@ -797,7 +797,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_lionseye_02"
   },
   32212: {
-      name: "Shifting Shadowsong Amethyst",
+      name: "Shifting Shadowsong Amethyst (+5 Agi +7 Stam)",
       colors: [
           "red",
           "blue"
@@ -811,7 +811,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32213: {
-      name: "Balanced Shadowsong Amethyst",
+      name: "Balanced Shadowsong Amethyst (+7 Stam +10 AP)",
       colors: [
           "red",
           "blue"
@@ -826,7 +826,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32214: {
-      name: "Infused Shadowsong Amethyst",
+      name: "Infused Shadowsong Amethyst (+10 AP +2 Mp5)",
       colors: [
           "red",
           "blue"
@@ -841,7 +841,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_shadowsongamethyst_02"
   },
   32220: {
-      name: "Glinting Pyrestone",
+      name: "Glinting Pyrestone (+5 Agi +5 Hit)",
       colors: [
           "red",
           "yellow"
@@ -855,7 +855,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_pyrestone_02"
   },
   32222: {
-      name: "Wicked Pyrestone",
+      name: "Wicked Pyrestone (+10 AP +5 Crit)",
       colors: [
           "red",
           "yellow"
@@ -870,7 +870,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_pyrestone_02"
   },
   32225: {
-      name: "Dazzling Seaspray Emerald",
+      name: "Dazzling Seaspray Emerald (+5 Int +2 Mp5)",
       colors: [
           "yellow",
           "blue"
@@ -884,7 +884,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_seasprayemerald_02"
   },
   32226: {
-      name: "Jagged Seaspray Emerald",
+      name: "Jagged Seaspray Emerald (+7 Stam +5 Crit)",
       colors: [
           "yellow",
           "blue"
@@ -898,7 +898,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_seasprayemerald_02"
   },
   32409: {
-      name: "Relentless Earthstorm Diamond",
+      name: "Relentless Earthstorm Diamond (+12 Crit +3% Crit Dmg)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = { relentless_metagem_crit_dmg_inc: 1.00 }
@@ -917,7 +917,7 @@ const GEMS = {
       desc: "2 Red, 2 Yellow, 2 Blue"
   },
   32410: {
-      name: "Thundering Skyfire Diamond",
+      name: "Thundering Skyfire Diamond (+240 Haste Proc)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
@@ -941,7 +941,7 @@ const GEMS = {
       desc: "2 Red, 2 Yellow, 2 Blue"
   },
   32634: {
-      name: "Unstable Amethyst",
+      name: "Unstable Amethyst (+6 Stam +8 AP)",
       colors: [
           "red",
           "blue"
@@ -957,7 +957,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_shadowsongamethyst_01"
   },
   32635: {
-      name: "Unstable Peridot",
+      name: "Unstable Peridot (+6 Stam +4 Int)",
       colors: [
           "yellow",
           "blue"
@@ -972,7 +972,7 @@ const GEMS = {
       icon: "inv_misc_gem_deepperidot_03"
   },
   32637: {
-      name: "Unstable Citrine",
+      name: "Unstable Citrine (+8 AP +4 Crit)",
       colors: [
           "red",
           "yellow"
@@ -988,7 +988,7 @@ const GEMS = {
       icon: "inv_misc_gem_opal_01"
   },
   32640: {
-      name: "Potent Unstable Diamond",
+      name: "Potent Unstable Diamond (+24 AP)",
       meta: "Y",
       activation: gemsUsed => {
         const bonus = {}
@@ -1007,7 +1007,7 @@ const GEMS = {
       desc: "More Blue than Yellow"
   },
   33131: {
-      name: "Crimson Sun",
+      name: "Crimson Sun (+32 AP)",
       colors: [
           "red"
       ],
@@ -1021,7 +1021,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_crimsonspinel_02"
   },
   33135: {
-      name: "Falling Star",
+      name: "Falling Star (+18 Stam)",
       colors: [
           "blue"
       ],
@@ -1033,21 +1033,8 @@ const GEMS = {
       unique: true,
       icon: "inv_jewelcrafting_empyreansapphire_02"
   },
-  33138: {
-      name: "Mystic Bladestone",
-      colors: [
-          "yellow"
-      ],
-      stats: {
-          Resil: 12
-      },
-      Phase: 3,
-      quality: "Epic",
-      unique: true,
-      icon: "inv_jewelcrafting_lionseye_02"
-  },
   33143: {
-      name: "Stone of Blades",
+      name: "Stone of Blades (+12 Crit)",
       colors: [
           "yellow"
       ],
@@ -1060,7 +1047,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_lionseye_02"
   },
   33782: {
-      name: "Steady Talasite",
+      name: "Steady Talasite (+6 Stam +4 Resil)",
       colors: [
           "yellow",
           "blue"
@@ -1074,7 +1061,7 @@ const GEMS = {
       icon: "inv_jewelcrafting_talasite_03"
   },
   34256: {
-      name: "Charmed Amani Jewel",
+      name: "Charmed Amani Jewel (+15 Stam)",
       colors: [
           "blue"
       ],
@@ -1086,8 +1073,21 @@ const GEMS = {
       unique: true,
       icon: "inv_misc_gem_pearl_07"
   },
+  32197: {
+    name: "Bright Crimson Spinel (+20 AP)",
+    colors: [
+        "red"
+    ],
+    stats: {
+        MAP: 20,
+        RAP: 20
+    },
+    Phase: 3,
+    quality: "Epic",
+    icon: "inv_jewelcrafting_crimsonspinel_02"
+  },
   35487: {
-      name: "Bright Crimson Spinel",
+      name: "Bright Crimson Spinel (+20 AP)",
       colors: [
           "red"
       ],
@@ -1095,12 +1095,12 @@ const GEMS = {
           MAP: 20,
           RAP: 20
       },
-      Phase: 3,
+      Phase: 5,
       quality: "Epic",
       icon: "inv_jewelcrafting_crimsonspinel_02"
   },
   28362: {
-      name: "Bold Ornate Ruby",
+      name: "Bold Ornate Ruby (+20 AP)",
       colors: [
           "red"
       ],
@@ -1114,7 +1114,7 @@ const GEMS = {
       icon: "inv_misc_gem_ruby_02"
   },
   28363: {
-      name: "Inscribed Ornate Topaz",
+      name: "Inscribed Ornate Topaz (+10 AP +5 Crit)",
       colors: [
           "red",
           "yellow"
@@ -1130,7 +1130,7 @@ const GEMS = {
       icon: "inv_misc_gem_opal_01"
   },
   28119: {
-      name: "Smooth Ornate Dawnstone",
+      name: "Smooth Ornate Dawnstone (+10 Crit)",
       colors: [
           "yellow"
       ],
@@ -1141,5 +1141,19 @@ const GEMS = {
       quality: "Epic",
       unique: true,
       icon: "inv_misc_gem_topaz_01"
+  },
+  30565: {
+      name: "Assassin's Fire Opal (+6 Crit +5 Dodge)",
+      colors: [
+          "red",
+          "yellow"
+      ],
+      stats: {
+          Crit: 6
+      },
+      Phase: 1,
+      quality: "Epic",
+      unique: true,
+      icon: "inv_jewelcrafting_nobletopaz_03"
   }
 };

@@ -82,6 +82,8 @@ var sumpetdmg = 0;
 var fightduration = 0;
 var combatlogarray = [];
 var combatlogindex = 0;
+var manalogarray = [];
+var manalogindex = 0;
 var filteredcombatlogarray = [];
 var combatlogRun = false;
 
@@ -223,6 +225,7 @@ function finalResults() {
         return Number(Math.floor(each_element / 5) * 5);
     });
     buildBuffUptimes();
+    buildManaData();
     buildData(newspread);
     createHistogram();
     console.log("*****************");
@@ -249,6 +252,8 @@ function runSim() {
     playerattackready = false;
     combatlogarray = [];
     combatlogindex = 0;
+    manalogarray = [];
+    manalogindex = 0;
     killcommand.ready = false;
 
     initializeSpells();
@@ -285,6 +290,11 @@ function runSim() {
         //console.log("step "+ steptime);
         petUpdateFocus();
         updateMana();
+
+        if((combatlogRun) && (playertimeend != prevtimeend)) {
+            manalogarray[manalogindex] = [playertimeend, currentMana];
+            manalogindex++;
+        }
         prevtimeend = steptimeend;
         totalduration = steptimeend;
         //console.log("total damage: " + totaldmgdone);
