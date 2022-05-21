@@ -23,7 +23,6 @@ var arcanedmg = 0;
 var raptordmg = 0;
 var meleedmg = 0;
 
-var sharedtrinketcd = 0;
 var playeruptime = 100;
 var petuptime = 100;
 var weavetime = 0.8;
@@ -31,7 +30,7 @@ var simresults = {};
 var isStatWeights = false;
 var performancecheck1 = 0;
 var performancecheck2 = 0;
-var RESULT = {
+const RESULT = {
     HIT: 0,
     MISS: 1,
     DODGE: 2,
@@ -62,7 +61,6 @@ var sumduration = 0;
 var steptime = 0;
 var steptimeend = 0;
 var playertimeend = 0;
-var autoarray = [];
 
 var autocount = 0;
 var steadycount = 0;
@@ -87,7 +85,30 @@ var manalogindex = 0;
 var filteredcombatlogarray = [];
 var combatlogRun = false;
 
-const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance", "Partial Resist"]; // debugging
+var statweights = { // accurate weights with 50k iterations at 7700 boss in default gear, p4 bis
+    Agi: 0.9605143836014804,
+    ArP: 0.16027539728151396,
+    Crit: 0.8845501877480455,
+    Expertise: 0.0017802250089289373,
+    Haste: 0.6429055024228614,
+    Hit: 1.0169360463006343,
+    Int: 0.008956822203713273,
+    MAP: 0.005536456701213411,
+    MP5: 0.001402849113087541,
+    MeleeCrit: 0.00013105937968703075,
+    MeleeHit: 0.005894374426353958,
+    RAP: 0.38799250528608353,
+    RangeCrit: 0.8844191283683585,
+    RangeHit: 1.0110416718742803,
+    Str: 0,
+    relentless:20.35, 
+    beasttamer: 22.11, 
+    dmgbonus: 0.75, 
+    rangedmgbonus: 0.75
+}
+
+const RESULTARRAY = ["Hit","Miss","Dodge","Crit","Glance", "Partial Resist"];
+
 /** Begins sim DPS functionality when ran with "Sim DPS - Loop" button. */
 function startSync() {
 
@@ -182,6 +203,7 @@ function loopSimHelper(callback, isStatWeights) {
     avgDPS = (sumdmg+sumpetdmg) / sumduration;
 
 }
+
 function finalResults() {
     avgDPS = (sumdmg+sumpetdmg) / sumduration;
     // sets uptime to a % instead of seconds
@@ -197,10 +219,10 @@ function finalResults() {
 
     damageResults();
     //console.log(pet);
-    console.log(buff_uptimes);
-    console.log(debuff_uptimes);
-    console.log(partybuff_uptimes);
-    console.log(currentMana);
+    //console.log(buff_uptimes);
+    //console.log(debuff_uptimes);
+    //console.log(partybuff_uptimes);
+    //console.log(currentMana);
 
     function standardError(x, u_x) {
         let n = x.length;
@@ -228,7 +250,7 @@ function finalResults() {
     buildManaData();
     buildData(newspread);
     createHistogram();
-    console.log("*****************");
+    //console.log("*****************");
 }
 /** Main loop function for simming iterations, ran for each iteration. */
 function runSim() {
@@ -499,10 +521,8 @@ function nextEvent(playertimestart){
 
 /** attempt at creating spell choices based on a ratio of speed and damage */
 function spell_choice_method_B(){
-
 /*
 problematic cases: raptor + arcane, multi + arcane + raptor
-
 */
 	let t_ready_auto = SPELLS.autoshot.cd;
 	let t_ready_steady = SPELLS.steadyshot.cd;
@@ -595,28 +615,6 @@ problematic cases: raptor + arcane, multi + arcane + raptor
 	}
 
 	return "autoshot";
-}
-
-var statweights = { // accurate weights with 50k iterations at 7700 boss in default gear, p4 bis
-    Agi: 0.9605143836014804,
-    ArP: 0.16027539728151396,
-    Crit: 0.8845501877480455,
-    Expertise: 0.0017802250089289373,
-    Haste: 0.6429055024228614,
-    Hit: 1.0169360463006343,
-    Int: 0.008956822203713273,
-    MAP: 0.005536456701213411,
-    MP5: 0.001402849113087541,
-    MeleeCrit: 0.00013105937968703075,
-    MeleeHit: 0.005894374426353958,
-    RAP: 0.38799250528608353,
-    RangeCrit: 0.8844191283683585,
-    RangeHit: 1.0110416718742803,
-    Str: 0,
-    relentless:20.35, 
-    beasttamer: 22.11, 
-    dmgbonus: 0.75, 
-    rangedmgbonus: 0.75
 }
 
 function statWeightLoop(){

@@ -4,13 +4,16 @@ var sunderstart = 0;
 var racialenable = true;
 var beastenable = true;
 var temp_oil = false;
-
-var readiness = {enable:false, cooldown: 0, basecd: 300};
+var sharedtrinketcd = 0;
+const readiness = {enable:false, cooldown: 0, basecd: 300};
 var queueReadiness = false;
-var auras = {
+var two_min_cds = 120;
+var three_min_cds = 180;
+
+const auras = {
     // actives
     drums: {enable:true, timer:0, cooldown:0,basecd:120, duration:30, uptime:0, type:'battle', offset:0},// coded
-    potion: {timer:0, cooldown:0,basecd:120, duration:15, uptime:0, primary:true, secondary:false, used:"", ticks: 0, offset:0},// coded
+    potion: {enable:true, timer:0, cooldown:0,basecd:120, duration:15, uptime:0, primary:true, secondary:false, used:"", ticks: 0, offset:0},// coded
     rune: {enable:true, cooldown:0,basecd:120, offset:0},
     abacus: {enable:false, timer:0, cooldown:0,basecd:120, duration:10, uptime:0},// coded
     lust: {enable:true, timer:0, cooldown:0,basecd:lustcd, duration:40, uptime:0, offset:0},// coded
@@ -63,7 +66,7 @@ var auras = {
  
  }
 
- var buff_uptimes = {
+ const buff_uptimes = {
     drums: 0,
     potion: 0,
     abacus: 0,
@@ -94,7 +97,7 @@ var auras = {
     righteous: 0,
     shattered: 0
 }
-var debuff_uptimes = {
+const debuff_uptimes = {
     hm: 0,
     exposeweakness: 0,
     judgewisdom: 0,
@@ -108,12 +111,12 @@ var debuff_uptimes = {
     misery: 0
 }
 
-var partybuff_uptimes = {
+const partybuff_uptimes = {
     unleashedrage: 0,
     ferociousinsp: 0
 }
 
-/** Initializes auras for procs and actives */
+/** Initializes auras for procs and actives, ran once per sim */
 function initializeAuras() {
     // set up on use AP trinkets diff from the rest of auras
     let aptrink1 = currentgear.auras[gear.trinket1.id] || {};
@@ -121,16 +124,12 @@ function initializeAuras() {
     let aptrink1rap = (aptrink1.hasOwnProperty('stats')) ? aptrink1.stats.RAP : 0;
     let aptrink2rap = (aptrink2.hasOwnProperty('stats')) ? aptrink2.stats.RAP : 0;
  
-    auras.aptrink1.timer = 0;
-    auras.aptrink1.cooldown = 0;
     auras.aptrink1.duration = aptrink1.duration;
     auras.aptrink1.basecd = aptrink1.cd;
     auras.aptrink1.AP = aptrink1rap;
     auras.aptrink1.enable = (!aptrink1.is_proc && auras.aptrink1.AP > 0) ? true : false;
     auras.aptrink1.name = TRINKETS[gear.trinket1.id].name;
 
-    auras.aptrink2.timer = 0;
-    auras.aptrink2.cooldown = 0;
     auras.aptrink2.duration = aptrink2.duration;
     auras.aptrink2.basecd = aptrink2.cd;
     auras.aptrink2.AP = aptrink2rap;
@@ -156,6 +155,9 @@ function initializeAuras() {
     auras.donsantos.enable = (gear.range.id === 31323) ? true : false;
     auras.eternalchamp.enable = ((gear.ring1.id === 29301) || (gear.ring2.id === 29301)) ? true : false;
     auras.imphawk.enable = (talents.imp_hawk > 1) ? true : false;
+    auras.potion.enable = (auras.potion.primary) ? true : false;
+
+    // check for attachments on mainhand or offhand to apply righteousness or not
     let mainhandcheck = (gear.mainhand.attachment !== undefined) && (gear.mainhand.attachment > 1);
     let offhandcheck = (gear.offhand != undefined) && (gear.offhand.attachment != undefined) && (gear.offhand.attachment > 1);
     if ((gear.offhand === undefined) && (gear.mainhand.attachment > 1)) {
@@ -199,6 +201,8 @@ function initializeAuras() {
 
     return;
  }
+
+ /** resets cds and timers to 0 or an offset if chosen, ran every iteration */
  function ResetAuras(){
     killcommand.cooldown = 0;
     pet.ferocious.timer = 0;
@@ -305,7 +309,7 @@ function updateAuras(steptime) {
 
     IntervalAuraHandler();
     stepauras(steptime);
-    uptimecalc();
+    uptimeCalc();
 
     // proc cooldowns
     if(auras.tsunami.cooldown > 0)            { auras.tsunami.cooldown = Math.max(auras.tsunami.cooldown - steptime,0); } 
@@ -399,7 +403,7 @@ function stepauras(steptime) {
 }
 
 /** totals the uptime in seconds of the buffs to be later extracted for % uptimes */
-function uptimecalc() {
+function uptimeCalc() {
     // actives
     if(auras.lust.timer > 0)               { auras.lust.uptime += Math.min(auras.lust.timer,steptime); }
     if(auras.berserk.timer > 0)            { auras.berserk.uptime += Math.min(auras.berserk.timer,steptime); }

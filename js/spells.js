@@ -210,7 +210,7 @@ function spellPetCalc(spellindex){
     let dmg = 0;
     let spelldmg = 0;
     let spellpwr = (pet.combatap - pet.ap) * 0.581818 + BaseRAP * 0.128; // spell power from hunter 12.8% - 58% of AP gained from combat
-    let basedmgmod = pet.dmgmod * pet.combatdmgmod / PETS[selectedPet].dmgmod;
+    let basedmgmod = pet.dmgmod * pet.combatdmgmod / PET_FAMILY[selectedPet].dmgmod;
     if(spellindex <= 3){ // phys spells
         mindmg = PET_SPELLS[spellindex].mindmg; // min dmg of phys spell selected
         maxdmg = PET_SPELLS[spellindex].maxdmg; 

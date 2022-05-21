@@ -361,7 +361,7 @@ function buildManaData(){
 
   let arrlength = manalogarray.length;
 
-  for (i=0; i < arrlength; i++) {
+  for (let i = 0; i < arrlength; i++) {
     manadata.labels[i] = manalogarray[i][0];
     data[i] = manalogarray[i][1];
   }
@@ -544,19 +544,19 @@ function damageResults(){
   let sortedsimresults = newsimresults.sort(compare);
   buildTable(sortedsimresults);
 
-  console.log("pet dmg => "+sumpetdmg / iterations);
-  console.log("total damage: " + sumdmg/iterations);
-  console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
+  //console.log("pet dmg => "+sumpetdmg / iterations);
+  //console.log("total damage: " + sumdmg/iterations);
+  //console.log("duration: " + (Math.round(sumduration/iterations * 100) / 100));
 }
 
 function buildTable(results){
-  actions.primary = PETS[selectedPet].primary + " (Pet)";
+  actions.primary = PET_FAMILY[selectedPet].primary + " (Pet)";
 
   let act = '';
   let tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
   
-  for (var i = 0; i < results.length; i++) {
+  for (let i = 0; i < results.length; i++) {
     let tr = "<tr>";
     if (results[i].results.dps > 0) {
       act = results[i].action; 

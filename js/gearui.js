@@ -24,8 +24,10 @@ var preferredGems = {
     Yellow: 31868,
     Meta: 32409
 }
+
 var hitCap = 142;
 var ArmorPenCap = 10000;
+
 var equippedStats = {
     head: {hit: 0, arp: 0},
     neck: {hit: 0, arp: 0},
@@ -46,7 +48,7 @@ var equippedStats = {
     range: {hit: 0, arp: 0}
 }
 
-var trinketDPS = [
+const trinketDPS = [
     {dps: 25.24981245976869, name: 'Badge of the Swarmguard'},
     {dps: 71.46081991182291, name: "Slayer's Crest"},
     {dps: 64.66295138453961, name: 'Mark of the Champion'},
@@ -644,7 +646,7 @@ function getStatsCapData(){
     }
     ArmorPenCap = target.armor - arp;
     
-    for (slot in equippedStats) {
+    for (let slot in equippedStats) {
         let SLOT_DATA = GEAR_MAP[slot];
         let item = 0;
         let ITEM_DATA = {};
@@ -826,6 +828,7 @@ function unequipItemFromGear(){
         delete gear[activeslot].attachment;
     }
     gearModalDisplay(activeslot);
+    selectedOptionsResults();
 }
 /** takes a given input and filters a given table based on slot, tab selected. */
 function filterField(input , table) {

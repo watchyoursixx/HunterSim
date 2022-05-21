@@ -16,9 +16,9 @@ function storeData(){
     localStorage.setItem('debuffs',JSON.stringify(debuffs));
     // partybuffs
     localStorage.setItem('partybuffs',JSON.stringify(partybuffs));
-
+    // statweights
     localStorage.setItem('statweights', JSON.stringify(statweights));
-    
+    // consumes
     localStorage.setItem('flask',document.getElementById("flask").value);
     localStorage.setItem('battle',document.getElementById("battle").value);
     localStorage.setItem('guardian',document.getElementById("guardian").value);
@@ -73,7 +73,7 @@ function storeData(){
     localStorage.setItem("drumoption", document.getElementById("drumoption").value);
     localStorage.setItem("spellcdoption", document.getElementById("spellcdoption").value);
     localStorage.setItem("secpotoption", document.getElementById("secpotoption").value);
-
+    // settings for gear filters
     localStorage.setItem("phasecheck", document.getElementById("phasecheck").value);
     localStorage.setItem("raidcheck", document.getElementById("raidcheck").checked);
     localStorage.setItem("pvpcheck", document.getElementById("pvpcheck").checked);
@@ -83,9 +83,9 @@ function storeData(){
     localStorage.setItem("greencheck", document.getElementById("greencheck").checked);
     localStorage.setItem("repcheck", document.getElementById("repcheck").checked);
     localStorage.setItem("leathercheck", document.getElementById("leathercheck").checked);
-
+    // saved gear sets
     localStorage.setItem("sets", JSON.stringify(SavedSets));
-
+    // checks if saved before
     localStorage.setItem('savecheck','true');
 }
 
