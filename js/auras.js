@@ -148,6 +148,7 @@ function initializeAuras() {
     auras.abacus.enable = ((gear.trinket1.id === 28288) || (gear.trinket2.id === 28288)) ? true : false; 
     auras.unyieldingcourage.enable = ((gear.trinket1.id === 28121) || (gear.trinket2.id === 28121)) ? true : false; 
     auras.dmccrusade.enable = ((gear.trinket1.id === 31856) || (gear.trinket2.id === 31856)) ? true : false;
+    auras.shattered.enable = (gear.neck.id === 34679) ? true : false;
  
     auras.beastlord.enable = (currentgear.special.beast_lord_4p_kc_arp > 0) ? true : false;
     auras.beastwithin.enable = ((talents.beast_within > 0) && beastenable) ? true : false;
