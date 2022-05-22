@@ -41,7 +41,7 @@ var petsteptime = 0;
 var spellindex = 0;
 var beast_tame_weight = false;
 
-var PETS = [
+const PET_FAMILY = [
     { 
         name: 'Ravager',
         dmgmod: 1.1,
@@ -82,6 +82,12 @@ var PETS = [
 var killcommand = {ready:false, timeremaining:0, basecd:5, cooldown:0};
 var selectedPet = 0;
 
+var petdmg = {
+    kcdmg:0,
+    attackdmg:0,
+    primarydmg:0,
+}
+
 function petStatsCalc(){
 
     let racialmod = (selectedRace === 3) ? 1.05 : 1; // 5% pet dmg if orc
@@ -91,7 +97,7 @@ function petStatsCalc(){
         beasttamers_dmg = 1.02;
         beasttamers_crit = 2;
     };
-    pet.dmgmod = PetHappiness * talents.unleash_fury * PETS[selectedPet].dmgmod * racialmod * beasttamers_dmg * selectedbuffs.special.impSancAura;
+    pet.dmgmod = PetHappiness * talents.unleash_fury * PET_FAMILY[selectedPet].dmgmod * racialmod * beasttamers_dmg * selectedbuffs.special.impSancAura;
 
     pet.str = Math.floor((PetBaseStr + (selectedbuffs.stats.Str || 0) + (petconsumestats.Str || 0)) * selectedbuffs.special.kingsMod);
     pet.agi = Math.floor((PetBaseAgi + (selectedbuffs.stats.Agi || 0) + (petconsumestats.Agi || 0)) * selectedbuffs.special.kingsMod);
@@ -108,7 +114,7 @@ function petStatsCalc(){
     //speed
     pet.speed = PetBaseSpeed / talents.serp_swift / 1.3; // 1.3 for cobra reflexes
     // spell selection by pet
-    let primary = PETS[selectedPet].primary;
+    let primary = PET_FAMILY[selectedPet].primary;
     switch (primary){
         case 'Bite': spellindex = 0; break;
         case 'Screech': spellindex = 1; break;
@@ -258,11 +264,7 @@ function petRollMagicSpell(){
     if (roll < tmp) return RESULT.CRIT;
     return RESULT.HIT;
 }
-petdmg = {
-    kcdmg:0,
-    attackdmg:0,
-    primarydmg:0,
-}
+
 function petAttack(){
 
     petUpdateStats();

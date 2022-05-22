@@ -82,8 +82,6 @@ var selectedRace = 3; // 0 for night elf, 1 for dwarf, 2 for draenei, 3 for orc,
 var offhandDisabled = false;
 var totaldmgdone = 0;
 var secondaryPotion = 'Super';
-var two_min_cds = 120;
-var three_min_cds = 180;
 var useAverages = false;
 
 var range_wep = {};
@@ -91,7 +89,7 @@ var mainhand_wep = {};
 var consumestats = {};
 var target = {};
 var currentgear = {auras:{0:{}}, stats:{},special:{}};
-var custom = {
+const custom = {
    str: 0,
    agi: 0,
    int: 0,
@@ -246,88 +244,88 @@ function addBuffs(){
 // initialize base stats - called when talents, gear/enchants, static buffs/consumes, race are changed
 function calcBaseStats() {
 
-  let slaying = 1;
-  let racialmod = 1;
-  if (target.type === 'Beast'){
-      slaying = talents.monster_slaying;
-      racialmod = (selectedRace === 4) ? 1.05 : 1;
-  } else if(target.type === 'Giant' || target.type === 'Dragonkin'){
-      slaying = talents.monster_slaying;
-  } else if(target.type === 'Humanoid') {
-      slaying = talents.humanoid_slaying;
-  }
+   let slaying = 1;
+   let racialmod = 1;
+   if (target.type === 'Beast'){
+         slaying = talents.monster_slaying;
+         racialmod = (selectedRace === 4) ? 1.05 : 1;
+   } else if(target.type === 'Giant' || target.type === 'Dragonkin'){
+         slaying = talents.monster_slaying;
+   } else if(target.type === 'Humanoid') {
+         slaying = talents.humanoid_slaying;
+   }
 
-  dmgmod = (1 + talents.focused_fire / 100) * selectedbuffs.special.impSancAura * slaying * racialmod;
-  rangedmgmod = dmgmod * (talents.ranged_weap_spec);
+   dmgmod = (1 + talents.focused_fire / 100) * selectedbuffs.special.impSancAura * slaying * racialmod;
+   rangedmgmod = dmgmod * (talents.ranged_weap_spec);
 
-  strmod = selectedbuffs.special.kingsMod;
-  agimod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp / 100) * talents.light_reflexes;
-  stammod = selectedbuffs.special.kingsMod;
-  intmod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp * 3 / 100);
-  spimod = selectedbuffs.special.kingsMod;
+   strmod = selectedbuffs.special.kingsMod;
+   agimod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp / 100) * talents.light_reflexes;
+   stammod = selectedbuffs.special.kingsMod;
+   intmod = selectedbuffs.special.kingsMod * (1 + talents.combat_exp * 3 / 100);
+   spimod = selectedbuffs.special.kingsMod;
 
-  mapmod = talents.surv_instincts * 1;
-  rapmod = talents.master_marksman * talents.surv_instincts * 1;
-  // Main Stats
-  Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str + custom.str) * strmod);
-  Agi  = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi + custom.agi) * agimod);
-  Stam = Math.floor((GearStats.Stam + BuffStats.Stam + EnchantStats.Stam + races[selectedRace].sta) * stammod);
-  Int  = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int + custom.int) * intmod);
-  Spi  = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
+   mapmod = talents.surv_instincts * 1;
+   rapmod = talents.master_marksman * talents.surv_instincts * 1;
+   // Main Stats
+   Str  = Math.floor((GearStats.Str + BuffStats.Str + EnchantStats.Str + races[selectedRace].str + custom.str) * strmod);
+   Agi  = Math.floor((GearStats.Agi + BuffStats.Agi + EnchantStats.Agi + races[selectedRace].agi + custom.agi) * agimod);
+   Stam = Math.floor((GearStats.Stam + BuffStats.Stam + EnchantStats.Stam + races[selectedRace].sta) * stammod);
+   Int  = Math.floor((GearStats.Int + BuffStats.Int + EnchantStats.Int + races[selectedRace].int + custom.int) * intmod);
+   Spi  = Math.floor((GearStats.Spi + BuffStats.Spi + EnchantStats.Spi + races[selectedRace].spi) * spimod);
 
-  // Attack Power
-  let tsa_ap = (talents.trueshot_aura > 0) ? 125 : 0;
-  BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP + tsa_ap + custom.MAP) * mapmod;
-  // flat 155 added for Aspect of the Hawk - need to change later
-  BaseRAP = (155 + GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * talents.careful_aim + tsa_ap + custom.RAP) * rapmod;
-  
-  // Crit rating and crit chance
+   // Attack Power
+   let tsa_ap = (talents.trueshot_aura > 0) ? 125 : 0;
+   BaseMAP = (GearStats.MAP + BuffStats.MAP + EnchantStats.MAP + Agi + Str + races[selectedRace].mAP + tsa_ap + custom.MAP) * mapmod;
+   // flat 155 added for Aspect of the Hawk - need to change later
+   BaseRAP = (155 + GearStats.RAP + BuffStats.RAP + EnchantStats.RAP + Agi + races[selectedRace].rAP + Int * talents.careful_aim + tsa_ap + custom.RAP) * rapmod;
+   
+   // Crit rating and crit chance
    let critrating = GearStats.Crit + BuffStats.Crit + EnchantStats.Crit;
-  MeleeCritRating = critrating + (currentgear.stats.MeleeCrit || 0) + custom.meleecrit;
-  RangeCritRating = critrating + (currentgear.stats.RangeCrit || 0) + custom.rangecrit;
+   MeleeCritRating = critrating + (currentgear.stats.MeleeCrit || 0) + custom.meleecrit;
+   RangeCritRating = critrating + (currentgear.stats.RangeCrit || 0) + custom.rangecrit;
    let crit = BaseCritChance + Agi / AgiToCrit + BuffStats.CritChance + talents.killer_instinct;
-  MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
-  RangeCritChance = crit + RangeCritRating / CritRatingRatio + talents.lethal_shots + races[selectedRace].critchance;
-  
-  MeleeCritDamage = 2 * (currentgear.special.relentless_metagem_crit_dmg_inc * 1);
-  RangeCritDamage = 1 + (talents.mortal_shots) * (2 * slaying * currentgear.special.relentless_metagem_crit_dmg_inc - 1);
-  // Hit rating and hit chance - split between ranged and melee because of hit scope and crit scope and racial
+   MeleeCritChance = crit + MeleeCritRating / CritRatingRatio;
+   RangeCritChance = crit + RangeCritRating / CritRatingRatio + talents.lethal_shots + races[selectedRace].critchance;
+   
+   MeleeCritDamage = 2 * (currentgear.special.relentless_metagem_crit_dmg_inc * 1);
+   RangeCritDamage = 1 + (talents.mortal_shots) * (2 * slaying * currentgear.special.relentless_metagem_crit_dmg_inc - 1);
+   // Hit rating and hit chance - split between ranged and melee because of hit scope and crit scope and racial
    let hitrating = GearStats.Hit + BuffStats.Hit + EnchantStats.Hit;
-  MeleeHitRating = hitrating + custom.meleehit;
+   MeleeHitRating = hitrating + custom.meleehit;
 
-  RangeHitRating = hitrating + (currentgear.stats.RangeHit || 0) + custom.rangehit;
+   RangeHitRating = hitrating + (currentgear.stats.RangeHit || 0) + custom.rangehit;
    let racialhit = (selectedRace == 2 && buffslist[12] == 0) ? 1 : 0;
    let hit = BaseHitChance + talents.surefooted + BuffStats.HitChance + racialhit;
-  MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
-  RangeHitChance = hit + RangeHitRating / HitRatingRatio;
+   MeleeHitChance = hit + MeleeHitRating / HitRatingRatio; // need dual wield condition
+   RangeHitChance = hit + RangeHitRating / HitRatingRatio;
 
    let penalty = (RangeHitChance >= 1) ? HitPenalty:0; // include penalty here? assumes lvl 73 target
    let dw_penalty = 0;
    if (!offhandDisabled && (gear.offhand !== undefined)) {
       dw_penalty = (gear.offhand.id > 0) ? -19:0; // offhand penalty for dual wielding 
    } else { dw_penalty = 0; }
-  MeleeMissChance = Math.max(8 - MeleeHitChance - penalty - dw_penalty,0);
-  RaptorMissChance = Math.max(8 - MeleeHitChance - penalty,0);
-  RangeMissChance = Math.max(8 - RangeHitChance - penalty,0);
+   MeleeMissChance = Math.max(8 - MeleeHitChance - penalty - dw_penalty,0);
+   RaptorMissChance = Math.max(8 - MeleeHitChance - penalty,0);
+   RangeMissChance = Math.max(8 - RangeHitChance - penalty,0);
 
-  // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
-  Expertise = Math.floor(GearStats.Exp / ExpertiseRatio + races[selectedRace].expertise + custom.expertise);
-  DodgeChance = 6.5 - Expertise * 0.25;
+   // Expertise and Dodge - every 3.9 rating is 1 expertise, 1 expertise = 0.25% reduction rounded down to nearest integer
+   Expertise = Math.floor(GearStats.Exp / ExpertiseRatio + races[selectedRace].expertise + custom.expertise);
+   DodgeChance = 6.5 - Expertise * 0.25;
 
-  ArmorPen = GearStats.ArP + custom.arp;
-  ManaPer5 = Math.floor(BuffStats.MP5 + GearStats.MP5 + EnchantStats.MP5 + custom.mp5);
-  // formula for spirit regen -> (5 * sqrt(intellect) * spirit * 0.009327) for hunters
-  fiveSecRulemp5 = Math.floor(5 * (Math.sqrt(Int) * Spi * BaseRegen));
+   ArmorPen = GearStats.ArP + custom.arp;
+   ManaPer5 = Math.floor(BuffStats.MP5 + GearStats.MP5 + EnchantStats.MP5 + custom.mp5);
+   // formula for spirit regen -> (5 * sqrt(intellect) * spirit * 0.009327) for hunters
+   fiveSecRulemp5 = Math.floor(5 * (Math.sqrt(Int) * Spi * BaseRegen));
 
-  // base of 3383 always then add int
-  Mana = BaseMana + (Int - 20) * 15 + 20;
-  // initialize current Mana to Max mana
-  currentMana = Mana;
-  
-  HasteRating = BuffStats.Haste + GearStats.Haste + EnchantStats.Haste + custom.haste;
-  
-  BaseRangeSpeed = RANGED_WEAPONS[gear.range.id].speed / QuiverSpeed / talents.serp_swift;
-  BaseMeleeSpeed = MELEE_WEAPONS[gear.mainhand.id].speed;
+   // base of 3383 always then add int
+   Mana = BaseMana + (Int - 20) * 15 + 20;
+   // initialize current Mana to Max mana
+   currentMana = Mana;
+   
+   HasteRating = BuffStats.Haste + GearStats.Haste + EnchantStats.Haste + custom.haste;
+   
+   BaseRangeSpeed = RANGED_WEAPONS[gear.range.id].speed / QuiverSpeed / talents.serp_swift;
+   BaseMeleeSpeed = MELEE_WEAPONS[gear.mainhand.id].speed;
   
 }
 
@@ -335,8 +333,6 @@ function initialize(){
    checkWeaponType();
    currentgear = getStatsFromGear(gear);
    addGear();
-   //console.log("current gear: ");
-   //console.log(currentgear);
    addBuffs();
    calcBaseStats();
    petStatsCalc();
@@ -891,9 +887,8 @@ function attackSpell(spell,spellcost) {
       arcanedmg += done;
    } else if (spell === 'raptorstrike'){
       raptordmg += done;
-   } else if (spell === 'melee'){
-      meleedmg += done;
-   }
+   } 
+
    procattack(attack,result);
    procMana(attack,result); // expensiveish
    magicproc(attack);
@@ -1227,7 +1222,7 @@ function procattack(attack,result) {
    } 
    return;
 }
-var romulos = 0;
+
 // handling for magic dmg procs from items (think rumulo's)
 function magicproc(attack) {
 
@@ -1259,7 +1254,6 @@ function magicproc(attack) {
             dmg *= 0.65; // average reduction of 35% on partial resists
          }
          let done = dealdamage(dmg,result,'magic');
-         romulos += done;
          totaldmgdone += done;
          if(combatlogRun) {
             combatlogarray[combatlogindex] = playertimeend.toFixed(3) + " - Player Romulo's Poison " + RESULTARRAY[result] + " for " + done;
@@ -1295,6 +1289,8 @@ function magicproc(attack) {
 // handling for physical dmg procs from items (if any?)
 function physproc() {
 }
+
+// using runes
 function runeHandling() {
    let runemana = 0;
    let prev_mana = 0;
@@ -1318,6 +1314,8 @@ function runeHandling() {
    }
    return true;
 }
+
+// using potions
 function potionHandling() {
 
    let primary = auras.potion.primary;

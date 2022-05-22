@@ -1,4 +1,4 @@
-var races = [
+const races = [
    {
       name: 'Night Elf',
       str: 61,

@@ -53,7 +53,7 @@ function getHasteMelee(t) {
 }
 
 // handling for dmg mod changes from auras
-function updateDamageMod() {
+function exp_updateDamageMod() {
    combatdmgmod = 1;
    physdmgmod = 1;
    if(auras.beastwithin.timer > 0) { combatdmgmod *= 1.1;} // beast within
@@ -128,7 +128,7 @@ function exp_dmgMod_Arcane() {
 function exp_update(){
    updateAgi();
    updateAP();
-   updateDamageMod();
+   exp_updateDamageMod();
    _combatCritChance = updateCritChance();
 	
 }
