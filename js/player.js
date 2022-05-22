@@ -89,7 +89,7 @@ var mainhand_wep = {};
 var consumestats = {};
 var target = {};
 var currentgear = {auras:{0:{}}, stats:{},special:{}};
-const custom = {
+var custom = {
    str: 0,
    agi: 0,
    int: 0,
