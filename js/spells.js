@@ -11,7 +11,7 @@ var SPELLS = {
 };
 
 // for referencing spell names in combatlog
-SPELL_MAPPER = {
+const SPELL_MAPPER = {
     autoshot: "Auto Shot",
     steadyshot: 'Steady Shot',
     multishot: 'Multi Shot',

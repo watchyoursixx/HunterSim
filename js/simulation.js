@@ -416,7 +416,7 @@ function killCommandCheck(){
 /**This function decides which event to choose next for player or pet, kind of like an event queue. */
 function nextEvent(playertimestart){
 
-    update();
+    update(); // updates ArP and haste
     let rangehastemod =  range_wep.speed / rangespeed;
 
     if(playerattackready === false){
@@ -833,7 +833,7 @@ function statWeightLoop(){
         storeData();
         console.log("*****************");
     }).catch((e) => {
-        alert(`LoopSim error: ${JSON.stringify(e)}`);
+        throw new Error("Stat weight loop: " + e);
     });
 }
 
@@ -1124,6 +1124,6 @@ function trinketSimLoop(){
 
         console.log("*****************");
     }).catch((e) => {
-        alert(`LoopSim2 error: ${JSON.stringify(e)}`);
+        throw new Error("trinket Sim loop: " + e);
     });
 }
