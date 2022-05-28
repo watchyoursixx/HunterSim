@@ -5,12 +5,12 @@ var racialenable = true;
 var beastenable = true;
 var temp_oil = false;
 var sharedtrinketcd = 0;
-const readiness = {enable:false, cooldown: 0, basecd: 300};
+var readiness = {enable:false, cooldown: 0, basecd: 300};
 var queueReadiness = false;
 var two_min_cds = 120;
 var three_min_cds = 180;
 
-const auras = {
+var auras = {
     // actives
     drums: {enable:true, timer:0, cooldown:0,basecd:120, duration:30, uptime:0, type:'battle', offset:0},// coded
     potion: {enable:true, timer:0, cooldown:0,basecd:120, duration:15, uptime:0, primary:true, secondary:false, used:"", ticks: 0, offset:0},// coded
@@ -66,7 +66,7 @@ const auras = {
  
  }
 
- const buff_uptimes = {
+ var buff_uptimes = {
     drums: 0,
     potion: 0,
     abacus: 0,
@@ -97,7 +97,7 @@ const auras = {
     righteous: 0,
     shattered: 0
 }
-const debuff_uptimes = {
+var debuff_uptimes = {
     hm: 0,
     exposeweakness: 0,
     judgewisdom: 0,
@@ -111,7 +111,7 @@ const debuff_uptimes = {
     misery: 0
 }
 
-const partybuff_uptimes = {
+var partybuff_uptimes = {
     unleashedrage: 0,
     ferociousinsp: 0
 }
@@ -129,12 +129,14 @@ function initializeAuras() {
     auras.aptrink1.AP = aptrink1rap;
     auras.aptrink1.enable = (!aptrink1.is_proc && auras.aptrink1.AP > 0) ? true : false;
     auras.aptrink1.name = TRINKETS[gear.trinket1.id].name;
+    AURA_MAPPER.aptrink1 = auras.aptrink1.name;
 
     auras.aptrink2.duration = aptrink2.duration;
     auras.aptrink2.basecd = aptrink2.cd;
     auras.aptrink2.AP = aptrink2rap;
     auras.aptrink2.enable = (!aptrink2.is_proc && auras.aptrink2.AP > 0) ? true : false;
     auras.aptrink2.name = TRINKETS[gear.trinket2.id].name;
+    AURA_MAPPER.aptrink2 = auras.aptrink2.name;
     
     // proc trinket enables
     auras.dragonspine.enable = ((gear.trinket1.id === 28830) || (gear.trinket2.id === 28830)) ? true : false; // enable dragonspine

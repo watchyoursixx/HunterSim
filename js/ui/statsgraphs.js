@@ -2,7 +2,7 @@ var spreaddata = {};
 var uptimedata = {};
 var manadata = {};
 
-var actions = {
+const actions = {
   auto: "Auto Shot",
   arcane: "Arcane Shot",
   steady: "Steady Shot",
@@ -14,7 +14,7 @@ var actions = {
   primary: "Primary (Pet)"
 };
 
-const AURA_MAPPER = {
+var AURA_MAPPER = {
   drums: "Drums",
   potion: "Potion",
   abacus: "Haste (Abacus)",
