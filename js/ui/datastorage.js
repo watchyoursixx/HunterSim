@@ -261,6 +261,7 @@ function fetchData(){
     document.getElementById("sanct").checked = (buffslist[16] == 31870) ? true : false;
     document.getElementById("talentselect").value = talentindex;
     document.getElementById("customtalent").value = whtalentlink;
+    selectTalents(talentindex);
 
     // initialize saved debuffs visuals
     document.getElementById("hmuptime").value = debuffs.hm.uptime_g;

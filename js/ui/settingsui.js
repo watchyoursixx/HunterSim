@@ -546,31 +546,38 @@ function selectTalents(talent){
         case "6":
             talents = T_41_20_0;
             document.getElementById("currtalent").innerHTML = "41/20/0";
+            document.getElementById("specimg").src = "images/Ability_Hunter_BeastTaming.png";
         break;
         case "5":
             talents = T_0_20_41;
             document.getElementById("currtalent").innerHTML = "0/20/41";
+            document.getElementById("specimg").src = "images/Ability_Hunter_Camoflauge.png";
         break;
         case "4":
             talents = T_7_20_34;
             document.getElementById("currtalent").innerHTML = "7/20/34";
+            document.getElementById("specimg").src = "images/Ability_Hunter_Camoflauge.png";
         break;
         case "3":
             talents = T_5_20_36;
             document.getElementById("currtalent").innerHTML = "5/20/36";
+            document.getElementById("specimg").src = "images/Ability_Hunter_Camoflauge.png";
         break;
         case "2":
             talents = T_0_27_34;
             document.getElementById("currtalent").innerHTML = "0/27/34";
+            document.getElementById("specimg").src = "images/Ability_Hunter_Camoflauge.png";
         break;
         case "1":
             talents = T_17_44_0;
             document.getElementById("currtalent").innerHTML = "17/44/0";
+            document.getElementById("specimg").src = "images/Ability_Marksmanship.png";
         break;
         case "0":
             if (customtalentlink !== "") {
                 talents = parseTalents(customtalents);
                 document.getElementById("currtalent").innerHTML = "custom";
+                document.getElementById("specimg").src = "images/Ability_Marksmanship.png";
             }
         break;
     }
