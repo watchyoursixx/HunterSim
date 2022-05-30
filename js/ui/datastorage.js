@@ -86,6 +86,7 @@ function storeData(){
     // saved gear sets
     localStorage.setItem("sets", JSON.stringify(SavedSets));
     // checks if saved before
+    console.log(localStorage.getItem('sets'))
     localStorage.setItem('savecheck','true');
 }
 
@@ -261,7 +262,6 @@ function fetchData(){
     document.getElementById("sanct").checked = (buffslist[16] == 31870) ? true : false;
     document.getElementById("talentselect").value = talentindex;
     document.getElementById("customtalent").value = whtalentlink;
-    selectTalents(talentindex);
 
     // initialize saved debuffs visuals
     document.getElementById("hmuptime").value = debuffs.hm.uptime_g;
@@ -321,11 +321,12 @@ function fetchData(){
     document.getElementById("leathercheck").checked = leathercheck;
     document.getElementById("craftcheck").checked = craftcheck;
     document.getElementById("repcheck").checked = repcheck;
-
+    console.log(localStorage.getItem('sets'))
     SavedSets = (localStorage.getItem('sets') != null) ? JSON.parse(localStorage.getItem('sets')) : SavedSets;
+    
+    // sets talents and initializes selected options
+    selectTalents(talentindex);
 
-    // initialize the settings after loading
-    selectedOptionsResults();
 }
 
 function clearSettingsCache(){
